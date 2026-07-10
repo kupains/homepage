@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAINS - 소모임</title>
+    <style>
+        /* ============================ */
+        /* [1] 기본 스타일 및 레이아웃 너비 설정 */
+        /* ============================ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        section { 
+            max-width: 1000px !important; 
+            width: 100%;
+            margin: 0 auto 28px auto !important; 
+        }
+        
+        h2 { font-size: 2.2rem; margin-bottom: 40px; text-align: center; }
+
+        .event-description {
+            text-align: left;
+            font-size: 1.1rem;
+            color: #333333;
+            margin-top: -20px;
+            line-height: 1.5;
+            word-break: keep-all;
+            padding: 0 5px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .event-description {
+                font-size: 0.95rem;
+                margin-top: -10px;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* ============================ */
+        /* [2] Society 리스트 전용 스타일 */
+        /* ============================ */
+        .society-list {
+            display: flex;
+            flex-direction: column;
+            gap: 50px; 
+        }
+
+        .society-btn {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 180px; 
+            border-radius: 16px;
+            overflow: hidden;
+            text-decoration: none;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .society-btn::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 0, 0, 0.55); 
+            z-index: 1;
+            transition: background-color 0.4s ease;
+        }
+
+        .society-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+        }
+        
+        /* [수정] 마우스 오버 시 또는 모바일 터치(active) 시 배경이 더 어두워짐 (글씨 가독성 확보) */
+        .society-btn:hover::before,
+        .society-btn.active::before {
+            background-color: rgba(0, 0, 0, 0.75); 
+        }
+
+        /* 큰 제목 스타일 */
+        .society-btn .society-name {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            color: #ffffff;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+            width: 100%;
+            text-align: center;
+            letter-spacing: 2px;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        /* [핵심] 마우스 오버 또는 모바일 터치 시 큰 제목 사라짐 */
+        .society-btn:hover .society-name,
+        .society-btn.active .society-name {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* ============================ */
+        /* [3] 상세 설명 레이아웃 스타일 */
+        /* ============================ */
+        .society-details {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 3;
+            display: flex;
+            flex-direction: column; /* 제목과 아래 설명(모임장,선,내용)을 위아래로 배치 */
+            align-items: center;
+            justify-content: center;
+            padding: 0 40px;
+            color: #ffffff;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        /* 마우스 오버 또는 모바일 터치 시 상세 설명 나타남 */
+        .society-btn:hover .society-details,
+        .society-btn.active .society-details {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 상세 설명 안의 상단 제목 */
+        .detail-title {
+            font-size: 1.4rem; /* 설명문(1.05rem)보다 크고 기존 제목(2.5rem)보다 작음 */
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        /* 모임장, 구분선, 설명을 가로로 묶어주는 박스 */
+        .detail-content-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .detail-leader {
+            flex: 0 0 120px;
+            text-align: right;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+        }
+
+        .detail-divider {
+            width: 2px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.7);
+            margin: 0 30px;
+        }
+
+        .detail-desc {
+            flex: 1;
+            text-align: left;
+            font-size: 1.05rem;
+            line-height: 1.5;
+            word-break: keep-all;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+        }
+
+        /* ============================ */
+        /* [4] 반응형 스타일 (모바일) */
+        /* ============================ */
+        @media (max-width: 600px) { 
+            h2 { font-size: 1.8rem; margin-bottom: 25px; }
+            .society-btn { height: 200px; } /* 모바일에서는 위아래 요소가 많아져 높이를 조금 더 키움 */
+            .society-btn .society-name { font-size: 1.8rem; }
+            
+            .society-details { padding: 15px; }
+            .detail-title { font-size: 1.2rem; margin-bottom: 10px; }
+            
+            .detail-content-row {
+                flex-direction: column;
+            }
+            .detail-leader {
+                flex: auto;
+                text-align: center;
+                margin-bottom: 8px;
+            }
+            .detail-divider {
+                width: 60%;
+                height: 1px; /* 모바일에서는 가로선으로 변경 */
+                margin: 0 0 12px 0;
+            }
+            .detail-desc {
+                text-align: center;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header></header>
+    <div class="sidebar" id="sidebar"></div>
+    <div class="overlay" id="overlay"></div>
+
+    <section>
+        <h2>PAINS 소모임 안내</h2>
+        <p class="event-description">PAINS에서는 다양한 소모임을 통해 비슷한 관심사를 가진 부원들 간의 친목을 장려하고 있습니다. <br>
+        아래 현재 개설된 소모임을 확인해보세요! <br>
+        자세한 내용은 PAINS 공지방과 잡담방을 확인해주시기 바랍니다.</p>
+        
+        <div class="society-list">
+            
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/e스포츠 소모임.jpg');">
+                <span class="society-name">e스포츠 소모임</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">e스포츠 소모임</div>
+                    
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 손영현</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">e스포츠를 하는 것, 보는 것을 즐기는 모든 분들에게 열려있습니다. 많은 관심 부탁드립니다!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/LG 트윈스 팬 소모임.png');">
+                <span class="society-name">LG 트윈스 팬 소모임</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">LG 트윈스 팬 소모임</div>
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 김가현</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">LG팬분들 많은 관심 부탁드립니다!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/F1 소모임.jpg');">
+                <span class="society-name">F1 소모임</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">F1 소모임</div>
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 이가람</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">F1에 관심 있으신 분들 많은 관심 부탁드립니다!!</div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/카츠손으로먹기연구회.png');">
+                <span class="society-name">카츠손으로먹기연구회</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">카츠손으로먹기연구회</div>
+                    
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 최나훈</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">주기적으로 서울 투어 및 맛집 탐방하실 열정적인 부원들을 모집합니다!!</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/보드게임 소모임.jpg');">
+                <span class="society-name">보드게임 소모임</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">보드게임 소모임</div>
+                    
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 정윤도</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">공강 긴 분, 금요일 할 것 없는 분, 보드게임 잘 모르는 분 모두 환영합니다!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/KIA 타이거즈 팬 소모임.jpg');">
+                <span class="society-name">KIA 타이거즈 팬 소모임</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">KIA 타이거즈 팬 소모임</div>
+                    
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 서지우</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">타 소모임 팀과 연합하여 경기 직관합시다~!<br>KIA 타이거즈 팬 분들, 혹은 팬이 되실 분들 많은 관심 부탁드립니다:)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/롯데자이언츠의우승을위한소모임.jpg');">
+                <span class="society-name">롯데자이언츠의우승을위한소모임</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">롯데자이언츠의우승을위한소모임</div>
+                    
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 전영재</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">롯데 우승 or nothing<br>롯데가 우승하기 전까지 절대 해체하지 않을 소모임입니다.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/영화소모임.png');">
+                <span class="society-name">영화소모임</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">영화소모임</div>
+                    
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 이지섭</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">장르 관계 없이 다양한 영화 같이 보실 분 모집합니다!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/두산 소모임.png');">
+                <span class="society-name">두산 소모임</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">두산 소모임</div>
+                    
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 이지섭</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">함께 직관 및 단관하실 두산 팬 모집!!<br>선예매도 가능합니다!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/NC 다이노스 소모임.png');">
+                <span class="society-name">NC 다이노스 소모임</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">NC 다이노스 소모임</div>
+                    
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 최나훈</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">KBO 리그 9번째 심장, NC 다이노스와 함께할 부원들을 모집합니다. 단체 직관 및 친목 활동 함께하실 분들 환영해요😀</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/호박고구마회.jpg');">
+                <span class="society-name">호박고구마회 🎃🍠</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">호박고구마회 🎃🍠</div>
+                    
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 김가현</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">호박고구마회 하면 1년에 책 3권 이상 읽을 수 있습니다📚<br>같이 좋은 책 발굴해요!!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/회귀분석 스터디 소모임.png');">
+                <span class="society-name">회귀분석 스터디 소모임</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">회귀분석 스터디 소모임</div>
+                    
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 이지섭</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">박민규 교수님 '회귀분석' 수업 들으시는 분들 같이 공부하고 의견나누면 좋겠습니다!!!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/키움 히어로즈 소모임.png');">
+                <span class="society-name">키움 히어로즈 소모임</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">키움 히어로즈 소모임</div>
+                    
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 이정호</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">키움 히어로즈 직관/단관 소모임입니다!<br>p.s. 저점매수 관심 있으신 분??</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/노래방 소모임.jpg');">
+                <span class="society-name">🎤노래방🎶 소모임</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">🎤노래방🎶 소모임</div>
+                    
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 하승민</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">노래방이 제2의 집인 사람, 혼자 노래 부르기 심심했던 사람 모두 환영입니다!<br>모임장이 노래를 제일 못하기 떄문에 노래 실력은 상관없습니다!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/삼성 라이온즈 소모임.jpg');">
+                <span class="society-name">삼성 라이온즈 소모임</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">삼성 라이온즈 소모임</div>
+                    
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 성유현</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">이젠 할 때가 됐다! V9 <br>삼팬들 모입시다🔵🦁🔵🦁</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/Champains.jpg');">
+                <span class="society-name">Champains</span>
+                
+                <div class="society-details">
+                    <div class="detail-title">Champains</div>
+                    
+                    <div class="detail-content-row">
+                        <div class="detail-leader">모임장: 전영재</div>
+                        <div class="detail-divider"></div>
+                        <div class="detail-desc">Champains supernova</div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </section>
+
+    <footer></footer>
+
+    <script>
+        document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
+        
+        // 모바일 터치 대응을 위한 자바스크립트
+        function toggleDetails(element) {
+            // 터치 시 해당 요소에 active 클래스 토글 (PC에서는 CSS :hover로 이미 작동함)
+            element.classList.toggle('active');
+        }
+    </script>
+    
+    <script>
+        if (typeof loadSidebar === 'function') {
+            loadSidebar('society');
+        }
+    </script>
+    <script src="https://pains-chatbot.vercel.app/widget/chatbot.js" data-endpoint="https://pains-chatbot.vercel.app/api/chat"></script>
+</body>
+</html>

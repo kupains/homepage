@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAINS - 신입부원 모집</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* ============================ */
+        /* [1] 폰트 및 공통 스타일        */
+        /* ============================ */
+        @font-face { font-family: 'KBO_Dia'; src: url('KBO_medium.woff') format('woff'); font-weight: normal; font-style: normal; }
+        @font-face { font-family: 'SCDream'; src: url('SCDream5.otf'); font-weight: normal; font-style: normal; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'SCDream', sans-serif; line-height: 1.6; position: relative; }
+        h1, h2, h3, h4 { font-family: 'KBO_Dia', sans-serif; }
+        
+        /* ============================ */
+        /* [2] 배너 스타일 (유지)         */
+        /* ============================ */
+        .left-wing {
+            width: 170px; 
+            position: fixed;
+            top: 150px;
+            left: calc(50% - 660px); 
+            z-index: 900;
+        }
+        .wing-box {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-top: 3px solid #ab3333;
+        }
+        .wing-box h3 { 
+            font-size: 15px; margin-bottom: 10px; color: #ab3333; text-align: center;
+            border-bottom: 2px solid #eee; padding-bottom: 8px;
+        }
+        .wing-box ul { list-style: none; }
+        .wing-box li { 
+            padding: 8px 0; border-bottom: 1px solid #eee; cursor: pointer; 
+            font-size: 13px; transition: all 0.2s ease; color: #666;
+        }
+        .wing-box li:last-child { border-bottom: none; }
+        .wing-box li.active { color: #ab3333; font-weight: bold; padding-left: 5px; }
+        .wing-box li.active::after { content: ' >'; }
+        .wing-box li:hover { color: #ab3333; }
+
+        .bottom-banner {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: linear-gradient(90deg, #ab3333, #8f2a2a);
+            color: white; padding: 12px 0; text-align: center; z-index: 999;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            display: flex; justify-content: center; align-items: center; gap: 20px; cursor: pointer;
+        }
+        .banner-text { font-size: 16px; font-weight: bold; }
+        .banner-btn {
+            background: #fff; color: #ab3333; border: none; padding: 6px 15px;
+            border-radius: 20px; font-weight: bold; font-size: 14px;
+        }
+
+        @media (max-width: 1300px) { .left-wing { display: none; } }
+        @media (max-width: 768px) {
+            .bottom-banner { padding: 10px; flex-direction: column; gap: 5px; }
+            .banner-text { font-size: 14px; }
+        }
+
+        /* ============================ */
+        /* [3] 본문 세부 스타일           */
+        /* ============================ */
+        section { max-width: 900px; margin: 0 auto; scroll-margin-top: 80px; }
+        h3 { font-size: 1.8rem; margin-bottom: 1.5rem; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        p { margin-bottom: 10px; }
+        strong { color: #ab3333; }
+        
+        .hero-apply { background-color: #ab3333; color: white; text-align: center; padding: 4rem 1rem; border-radius: 28px; margin-bottom: 28px; }
+        .hero-apply h2 { font-size: 2.5rem; margin-bottom: 15px; }
+        
+        /* 타임라인 */
+        .timeline { position: relative; max-width: 100%; margin: 0 auto; padding: 20px 0; }
+        .timeline::after { content: ''; position: absolute; width: 3px; background-color: #eee; top: 50px; bottom: 0; left: 20px; margin-left: -1.5px; }
+        .timeline-item { padding: 10px 20px 20px 50px; position: relative; background-color: inherit; width: 100%; }
+        .timeline-item::after { content: ''; position: absolute; width: 16px; height: 16px; right: auto; left: 20px; top: 15px; border-radius: 50%; z-index: 1; background-color: #cf8b8b; border: 3px solid white; margin-left: -8px; }
+        .timeline-content { padding: 15px; background-color: white; position: relative; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid #ab3333; }
+        .timeline-date { font-weight: bold; color: #ab3333; margin-bottom: 5px; display: block; }
+        .timeline-title { font-weight: bold; font-size: 1.1rem; }
+        .track-wrapper { display: flex; gap: 20px; }
+        .track-col { flex: 1; }
+        .track-col:first-child { border-right: 1px solid #eee; padding-right: 20px; }
+        .track-col:last-child { padding-left: 10px; }
+        .timeline-header { display: flex; gap: 20px; padding-left: 50px; margin-bottom: 10px; }
+        .header-col { flex: 1; text-align: center; background-color: #eee; padding: 8px; border-radius: 8px; font-weight: bold; color: #555; }
+        .track-label { display: none; font-size: 0.85rem; color: #555; background-color:#eee; padding:2px 8px; border-radius:4px; margin-bottom: 8px; font-weight: bold; }
+
+        /* 기타 요소 (카드 디자인) */
+        .dept-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; }
+        .dept-card { flex: 1; min-width: 250px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 4px solid #cf8b8b; transition: transform 0.2s; }
+        .dept-card:hover { transform: translateY(-5px); }
+        .dept-card h4 { color: #ab3333; margin-bottom: 10px; font-size: 1.2rem; }
+        
+        .activity-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 20px; }
+        .activity-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee; transition: transform 0.3s; }
+        .activity-card:hover { transform: translateY(-5px); }
+        .activity-img-wrapper { width: 100%; height: 200px; background-color: #f0f0f0; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .activity-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .activity-card:hover img { transform: scale(1.05); }
+        .activity-text { padding: 20px; }
+        .activity-text h4 { color: #ab3333; margin-bottom: 10px; font-size: 1.2rem; }
+
+        .check-list { list-style: none; padding: 0; }
+        .check-list li { position: relative; padding-left: 25px; margin-bottom: 10px; font-size: 1rem; color: #444; }
+        .check-list li::before { content: '✔'; position: absolute; left: 0; top: 0; color: #ab3333; font-weight: bold; }
+
+        .chart-container-wrapper { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; margin-top: 30px; }
+        .chart-box { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: center; display: flex; flex-direction: column; }
+        .chart-box.full-width { flex: 0 0 100%; height: 180px; }
+        .chart-box.half-width { flex: 1 1 calc(50% - 20px); height: 400px; min-width: 300px; }
+        .chart-box canvas { flex: 1; width: 100% !important; height: 100% !important; max-height: 300px; }
+        .chart-box h4 { margin-bottom: 15px; color: #ab3333; font-size: 1.1rem; }
+
+        /* 지원하기 버튼 영역 */
+        .apply-cta { text-align: center; padding: 5rem 2rem; background-color: #f9f9f9; border-top: 1px solid #eee; border-radius: 28px; margin-bottom: 28px; }
+        .btn-apply-big { display: inline-block; background-color: #ab3333; color: white; padding: 18px 50px; border-radius: 40px; font-size: 1.4rem; font-weight: bold; text-decoration: none; transition: background 0.3s, transform 0.2s; box-shadow: 0 8px 20px rgba(171, 51, 51, 0.3); }
+        .btn-apply-big:hover { background-color: #8f2a2a; transform: translateY(-3px); }
+
+        @media (max-width: 600px) {
+            .hero-apply h2 { font-size: 2rem; }
+            .chart-container-wrapper { flex-direction: column; }
+            .dept-container { flex-direction: column; }
+            .activity-container { grid-template-columns: 1fr; } 
+            .timeline-header { display: none; }
+            .track-label { display: inline-block; }
+            .track-wrapper { flex-direction: column; gap: 15px; }
+            .track-col:first-child { border-right: none; border-bottom: 1px solid #eee; padding-right: 0; padding-bottom: 15px; }
+            .track-col:last-child { padding-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="left-wing">
+        <div class="wing-box">
+            <h3>11기 신입부원 모집</h3>
+            <ul>
+                <li data-target="sec-overview" onclick="scrollToId('sec-overview')">모집 개요</li>
+                <li data-target="sec-intro" onclick="scrollToId('sec-intro')">동아리 소개</li>
+                <li data-target="sec-recruit" onclick="scrollToId('sec-recruit')">모집 일정</li>
+                <li data-target="sec-activity" onclick="scrollToId('sec-activity')">활동 일정</li>
+                <li data-target="sec-fee" onclick="scrollToId('sec-fee')">회비 안내</li>
+                <li data-target="sec-contact" onclick="scrollToId('sec-contact')">문의하기</li>
+                <li data-target="apply-target" onclick="scrollToId('apply-target')">지원하기</li>
+            </ul>
+        </div>
+    </aside>
+
+    <div class="bottom-banner" onclick="scrollToId('apply-target')">
+        <span class="banner-text">🔥 PAINS 11기 신입부원 모집 마감 임박!</span>
+        <button class="banner-btn">지금 지원하기 &gt;</button>
+    </div>
+
+    <header></header>
+    <div class="sidebar" id="sidebar"></div>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="hero-apply">
+        <h2>PAINS 신입부원 모집</h2>
+        <p>고려대학교 교내 유일 스포츠 통계분석 동아리 PAINS가 11기 신입부원을 모집합니다.</p>
+    </div>
+
+    <section id="sec-overview">
+        <h3>📢 모집 개요</h3>
+        <p>
+            스포츠 통계분석 동아리 PAINS가 <strong>2026년을 함께할 11기 신입 부원</strong>을 모집합니다!<br>
+            PAINS는 2020년에 스포츠와 통계분석에 관심이 많은 사람들이 모여 만든 동아리입니다.<br>
+            PAINS는 2024년까지 통계학과 동아리로 활동했으며, 2026년부터는 애기능동아리연합회 소속 동아리로 출범하게 됩니다.
+            스포츠를 사랑하고 데이터 분석에 열정이 있다면 전공에 관계없이 누구나 환영합니다.
+        </p>
+    </section>
+
+    <section id="sec-intro">
+        <h3>🎯 동아리 소개</h3>
+        <p style="margin-bottom: 20px;">
+            현재 PAINS는 45명의 부원들이 하나의 관심사를 깊이 나누며 활동하고 있습니다. <br>
+            성별, 학과, 학번 그 무엇도 상관없습니다. 스포츠에 대한 관심과 열정만 있으면 충분합니다.
+        </p>
+        
+        <div class="chart-container-wrapper">
+            <div class="chart-box full-width">
+                <h4>부원 성별 분포</h4>
+                <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 0 20px;">
+                    <div style="width: 100%; height: 60px;">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-box half-width">
+                <h4>부원 전공 분포</h4>
+                <canvas id="majorChart"></canvas>
+            </div>
+
+            <div class="chart-box half-width">
+                <h4>학번 분포</h4>
+                <canvas id="idChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>📸 PAINS 활동 톺아보기</h3>
+        <p style="margin-bottom: 20px;">PAINS에서는 학기 중 다양한 학술 활동과 친목 활동을 진행합니다.</p>
+        
+        <div class="activity-container">
+            <div class="activity-card">
+                <div class="activity-img-wrapper">
+                    <img src="images/activity_edited_1.png" alt="정기 세미나 사진">
+                </div>
+                <div class="activity-text">
+                    <h4>정기 세미나</h4>
+                    <p>학기 중과 방학 중 2번씩 개최되는 정기 세미나에서는 조별 프로젝트를 공유하고 피드백을 주고받는 시간을 가집니다.</p>
+                </div>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-img-wrapper">
+                    <img src="images/activity2.png" alt="정기 활동 사진">
+                </div>
+                <div class="activity-text">
+                    <h4>통계 세미나와 연사 초청 강연</h4>
+                    <p>기초 통계학 강의와 연사 초청 강연 등의 활동을 통해 부원들의 통계분석 역량 향상을 도모합니다.</p>
+                </div>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-img-wrapper">
+                    <img src="images/activity03.png" alt="체육대회 사진">
+                </div>
+                <div class="activity-text">
+                    <h4>PAINS 체육대회</h4>
+                    <p>보는 것만큼 직접 하는 것도 열정적인 부원들과 함께 매 학기 체육대회를 개최합니다.</p>
+                </div>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-img-wrapper">
+                    <img src="images/activity4.png" alt="MT 및 기타 행사 사진">
+                </div>
+                <div class="activity-text">
+                    <h4>MT 및 기타 행사</h4>
+                    <p>학기 초와 방학 중 MT, 단체 직관 행사 등 여러 부원들과 친해질 수 있는 행사들이 개최됩니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>🏢 부서 운영</h3>
+        <p style="margin-bottom: 20px;">모든 부원들은 아래 3개 부서 중 하나에 소속되어 활동할 수 있습니다.</p>
+        <div class="dept-container">
+            <div class="dept-card">
+                <h4>📅 기획부</h4>
+                <p>세미나 준비, MT 등 전반적인 친목 활동 기획 및 기타 이벤트 기획</p>
+            </div>
+            <div class="dept-card">
+                <h4>📢 홍보부</h4>
+                <p>홍보 플랫폼(SNS, 블로그) 관리, 리쿠르팅 홍보, 동아리 내 디자인 업무(포스터 등)</p>
+            </div>
+            <div class="dept-card">
+                <h4>📘 교육부</h4>
+                <p>초심자용 강의 제작 (Python / 세이버메트릭스 강의), 동아리 자료 및 파일 관리</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="sec-recruit">
+        <h3>📅 모집 일정</h3>
+        
+        <div class="timeline-header">
+            <div class="header-col">1차 모집 (신입생 지원 불가)</div>
+            <div class="header-col">2차 모집</div>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="track-wrapper">
+                        <div class="track-col">
+                            <span class="track-label">1차 모집</span>
+                            <span class="timeline-date">2026. 02. 09 (월) - 2026. 02. 22 (일)</span>
+                            <span class="timeline-title">서류 신청 마감</span>
+                        </div>
+                        <div class="track-col">
+                            <span class="track-label">2차 모집</span>
+                            <span class="timeline-date">2026. 02. 26 (목) - 2026. 03. 07 (토)</span>
+                            <span class="timeline-title">서류 신청 마감</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="track-wrapper">
+                        <div class="track-col">
+                            <span class="track-label">1차 모집</span>
+                            <span class="timeline-date">2026. 02. 24 (화) 중</span>
+                            <span class="timeline-title">서류 합격자 발표</span>
+                            <p style="font-size:0.9rem; color:#666;">홈페이지 안내</p>
+                        </div>
+                        <div class="track-col">
+                            <span class="track-label">2차 모집</span>
+                            <span class="timeline-date">2026. 03. 09 (월) 중</span>
+                            <span class="timeline-title">서류 합격자 발표</span>
+                            <p style="font-size:0.9rem; color:#666;">홈페이지 안내</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="track-wrapper">
+                        <div class="track-col">
+                            <span class="track-label">1차 모집</span>
+                            <span class="timeline-date">2026. 02. 26 (목) - 2026. 03. 01 (일)</span>
+                            <span class="timeline-title">비대면 면접 진행</span>
+                            <p style="font-size:0.9rem; color:#666;">기간 중 일정 협의</p>
+                        </div>
+                        <div class="track-col">
+                            <span class="track-label">2차 모집</span>
+                            <span class="timeline-date">2026. 03. 11 (수) - 2026. 03. 13 (금)</span>
+                            <span class="timeline-title">대면 면접 진행</span>
+                            <p style="font-size:0.9rem; color:#666;">기간 중 일정 협의</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="track-wrapper">
+                        <div class="track-col">
+                            <span class="track-label">1차 모집</span>
+                            <span class="timeline-date">2026. 03. 05 (목) 중</span>
+                            <span class="timeline-title">최종 선발 공지</span>
+                            <p style="font-size:0.9rem; color:#666;">홈페이지 안내</p>
+                        </div>
+                        <div class="track-col">
+                            <span class="track-label">2차 모집</span>
+                            <span class="timeline-date">2026. 03. 15 (일) 중</span>
+                            <span class="timeline-title">최종 선발 공지</span>
+                            <p style="font-size:0.9rem; color:#666;">홈페이지 안내</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content" style="background-color: #ab3333; color: white;">
+                    <span class="timeline-date" style="color: #ffffff;">2026. 03. 16 (월) 19:00</span>
+                    <span class="timeline-title">신입 기수 OT</span>
+                    <p style="font-size:0.9rem;"><strong style="color: #ffffff;">참여 필수</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sec-activity">
+        <div style="margin-bottom: 40px;">
+            <h3>✅ 지원 자격</h3>
+            <ul class="check-list">
+                <li>연속 또는 비연속으로 <strong>1년(2학기) 이상 활동 가능</strong>한 재/휴학 대학생 (신입생 환영) - 한 학기 활동은 개강부터 방학 중 세미나까지를 기준으로 합니다.</li>
+                <li>3월 16일 월요일 <strong>OT에 대면 참여</strong>가 가능한 사람</li>
+                <li><strong>즐겨보는 스포츠</strong>가 있는 사람</li>
+                <li>스포츠를 <strong>데이터 분석의 측면에서 접근</strong>해보고 싶은 사람</li>
+            </ul>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 40px;">
+            <div style="flex: 1; min-width: 300px;">
+                <h3>🗓️ 정기 활동 일정</h3>
+                <ul class="check-list" style="color: #555;">
+                    <li><strong>일반 정기 활동:</strong> 3월 19일, 3월 27일, 5월 1일</li>
+                    <li><strong>PAINS 체육대회:</strong> 5월 중(미정)</li>
+                    <li><strong>학기 중 세미나:</strong> 5월 14일, 5월 15일</li>
+                    <li><strong>방학 중 세미나:</strong> 8월 중(미정)</li>
+                </ul>
+            </div>
+
+            <div style="flex: 1; min-width: 300px;">
+                <h3>⚡ 비정기 활동 일정</h3>
+                <ul class="check-list" style="color: #555;">
+                    <li><strong>봄 MT:</strong> 4월 3일 - 4월 4일 (예정)</li>
+                    <li><strong>스포츠 단체 직관:</strong> 5월 중(미정)</li>
+                    <li><strong>월드컵 단체 관람:</strong> 월드컵 기간(계획 중)</li>
+                    <li><strong>여름 MT:</strong> 7월 중(미정)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="sec-fee">
+        <h3>💸 회비 안내</h3>
+        <p style="font-size: 1.1rem; color: #ab3333; font-weight: bold;">학기 당 3만~3만 5천원 (추후 확정)</p>
+        <p style="font-size: 0.95rem; color: #666; background: #eee; padding: 15px; border-radius: 8px;">
+            회비는 주로 동아리 활동 중 장소대여, 홍보자료 제작, 프로젝트 지원 등에 사용됩니다.<br>
+            회비 사용 내역은 <a href="fee.html" style="color: #ab3333; text-decoration: underline;"><strong>회비 내역 조회 페이지</strong></a>에서 부원들에게 투명하게 공개되고 있습니다.
+        </p>
+    </section>
+
+    <section id="sec-contact">
+        <h3 style="text-align: center;">📞 문의사항</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; text-align: center;">
+            <div style="flex: 1; min-width: 250px; background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                <a href="https://www.instagram.com/ku_pains" target="_blank" style="text-decoration: none; color: #555;"><strong>인스타그램 DM</strong></a><br>
+                <a href="https://www.instagram.com/ku_pains" target="_blank" style="text-decoration: none; color: #555;">@ku_pains</a>
+            </div>
+            <div style="flex: 1; min-width: 250px; background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                <strong>회장 전영재</strong><br>
+                010-3952-1473
+            </div>
+            <div style="flex: 1; min-width: 250px; background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                <strong>PAINS 공식 이메일</strong><br>
+                painsports1905@gmail.com
+            </div>
+        </div>
+    </section>
+
+    <div class="apply-cta" id="apply-target">
+        <h3 style="border: none; text-align: center;">11기 2차 지원하기</h3>
+        <p style="margin-bottom: 30px;">신입생, 재학생 모두 환영합니다!</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSerzRF12IQLupIIg6-hfn9EPHYFL3riEmm19peCYW6aciNvlw/formResponse" target="_blank" class="btn-apply-big">지원서 작성하러 가기</a>
+        <p style="margin-top: 20px; color: #666; font-size: 0.9rem;">지원 기간: 2026년 02월 26일 - 2026년 03월 07일</p>
+    </div>
+
+    <footer></footer>
+
+    <script>
+        document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
+    </script>
+    
+    <script>
+        function scrollToId(id) {
+            const element = document.getElementById(id);
+            if(element) {
+                element.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        }
+
+        // 스크롤 감지 및 메뉴 활성화 (ScrollSpy)
+        document.addEventListener("DOMContentLoaded", function() {
+            const sections = [
+                "sec-overview", "sec-intro", "sec-recruit", 
+                "sec-activity", "sec-fee", "sec-contact", "apply-target"
+            ];
+            const menuItems = document.querySelectorAll(".wing-box li");
+
+            window.addEventListener("scroll", () => {
+                let current = "";
+                const scrollPos = window.scrollY + 200; // 헤더 높이 등을 고려한 오프셋
+
+                sections.forEach(sectionId => {
+                    const section = document.getElementById(sectionId);
+                    if (section) {
+                        const sectionTop = section.offsetTop;
+                        const sectionHeight = section.offsetHeight;
+                        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                            current = sectionId;
+                        }
+                    }
+                });
+
+                // 페이지 끝에 도달하면 무조건 마지막 '지원하기' 활성화
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+                    current = "apply-target";
+                }
+
+                menuItems.forEach(li => {
+                    li.classList.remove("active");
+                    if (li.getAttribute("data-target") === current) {
+                        li.classList.add("active");
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        // 메뉴 및 스마트 헤더 활성화
+        loadSidebar('apply'); 
+
+        // 1. 성별 분포
+        const ctxGender = document.getElementById('skillsChart').getContext('2d');
+        new Chart(ctxGender, {
+            type: 'bar',
+            data: {
+                labels: ['성별 비율'],
+                datasets: [
+                    { label: '여자', data: [20], backgroundColor: '#FF6B81', barThickness: 40 },
+                    { label: '남자', data: [80], backgroundColor: '#4D96FF', barThickness: 40 }
+                ]
+            },
+            options: {
+                indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                scales: { x: { stacked: true, display: false }, y: { stacked: true, display: false } },
+                plugins: { legend: { position: 'bottom' }, tooltip: { callbacks: { label: function(context) { return `${context.dataset.label}: ${context.raw}%`; } } } }
+            }
+        });
+
+        // 2. 전공 분포
+        const ctxMajor = document.getElementById('majorChart').getContext('2d');
+        const rawLabels = ['데이터과학과', '통계학과', '중어중문학과', '경제학과', '언어학과', '컴퓨터학과', '경영학과', '행정학과', '화학과', '사회학과', '국제학부', '영어영문학과', '기계공학부', '화공생명공학과', '스마트보안학부', '미디어학부', '교육학과', '산업경영공학부', '보건환경융합과학부', '불어불문학과', '체육교육과', '한문학', '서어서문학과'];
+        const rawData = [6, 6, 4, 3, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+        const rawColors = ['#FF6B6B', '#FF9F43', '#FDCB6E', '#20BF6B', '#0FB9B1', '#2D98DA', '#3867D6', '#8854D0', '#A55EEA', '#F06292', '#4B6584', '#00B894', '#00CEC9', '#6C5CE7', '#FD79A8', '#E17055', '#55E6C1', '#F8EFBA', '#D6A2E8', '#25CCF7', '#1B9CFC', '#58B19F', '#EAB543'];
+
+        let finalLabels = [], finalData = [], finalColors = [], etcSum = 0;
+        for (let i = 0; i < rawData.length; i++) {
+            if (rawData[i] > 1) {
+                finalLabels.push(rawLabels[i]); finalData.push(rawData[i]); finalColors.push(rawColors[i]);
+            } else { etcSum += rawData[i]; }
+        }
+        if (etcSum > 0) { finalLabels.push('기타'); finalData.push(etcSum); finalColors.push('#9980FA'); }
+
+        new Chart(ctxMajor, {
+            type: 'doughnut',
+            data: { labels: finalLabels, datasets: [{ data: finalData, backgroundColor: finalColors, borderWidth: 2, borderColor: '#ffffff', hoverOffset: 10 }] },
+            options: { responsive: true, maintainAspectRatio: false, layout: { padding: 10 }, plugins: { legend: { position: window.innerWidth < 600 ? 'bottom' : 'right', labels: { color: '#333', boxWidth: 12, font: { size: 11 } } } } }
+        });
+
+        // 3. 학번 분포
+        const ctxId = document.getElementById('idChart').getContext('2d');
+        new Chart(ctxId, {
+            type: 'bar',
+            data: {
+                labels: ['19', '20', '21', '22', '23', '24', '25'],
+                datasets: [{ label: '인원(명)', data: [1, 2, 3, 4, 4, 17, 14], backgroundColor: '#ab3333', borderRadius: 4 }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+            }
+        });
+    </script>
+    <script src="https://pains-chatbot.vercel.app/widget/chatbot.js" data-endpoint="https://pains-chatbot.vercel.app/api/chat"></script>
+</body>
+</html>

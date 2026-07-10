@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAINS - 고려대학교 스포츠 통계분석 동아리</title>
+    <meta name="description" content="고려대학교 유일의 스포츠 통계분석 동아리 PAINS(페인스)입니다. 스포츠통계 데이터를 분석하고 다양한 프로젝트를 진행하는 고려대학교 동아리입니다.">
+    <meta name="keywords" content="PAINS, 페인스, 스포츠통계, 스포츠통계동아리, 고려대학교, 고려대학교 동아리, 스포츠데이터">
+    <meta name="author" content="PAINS">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="PAINS - 고려대학교 스포츠 통계분석 동아리">
+    <meta property="og:description" content="고려대학교 유일의 스포츠 통계분석 동아리 PAINS(페인스)입니다.">
+    <meta property="og:url" content="https://pains1905.github.io/main/">
+    <meta property="og:image" content="https://pains1905.github.io/main/images/PAINS_logo.png">
+
+    <style>
+        /* ============================ */
+        /* [1] 기본 설정 및 레이아웃 너비 맞춤 */
+        /* ============================ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* menu.js에서 폰트를 관리하므로 중복 폰트 코드는 삭제되었습니다. */
+
+        .hero {
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+            /* 👇 About Us 상자와 완벽하게 동일한 너비 적용 */
+            max-width: 1000px !important; 
+            width: 100%;
+            margin: 0 auto 28px auto !important; 
+        }
+
+        section {
+            /* 👇 모든 섹션(About Us 포함)의 너비를 통일 */
+            max-width: 1000px !important; 
+            width: 100%;
+            margin: 0 auto 28px auto !important;
+        }
+
+        /* ============================ */
+        /* [2] 콘텐츠 세부 스타일       */
+        /* ============================ */
+        .intro-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .hero-image {
+            max-width: 80%;
+            width: 400px;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 12px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        strong { color: #ab3333; }
+
+        .inline-link {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .about-us-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        /* ============================ */
+        /* [3] 달력 및 컴포넌트 스타일  */
+        /* ============================ */
+        .calendar-container {
+            width: 100%;
+            /* 👇 이중 상자 느낌을 제거하여 About Us 상자 너비에 꽉 차게 변경 */
+            background: transparent !important; 
+            box-shadow: none !important; 
+            border: none !important; 
+            border-radius: 0 !important; 
+            position: relative;
+            overflow: visible;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent !important; /* 투명하게 변경 */
+            padding: 15px 0; /* 좌우 여백 제거 */
+            border-bottom: 1px solid #eee;
+            position: relative;
+            gap: 10px;
+            z-index: 50;
+        }
+
+        .btn-today-reset {
+            padding: 5px 12px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-left: auto;
+            transition: all 0.2s;
+        }
+
+        .btn-today-reset:hover {
+            background-color: #eee;
+        }
+
+        .calendar-nav-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .calendar-title {
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .calendar-title:hover {
+            text-decoration: underline;
+        }
+
+        .date-picker {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 280px;
+            height: 240px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 2000;
+            border-radius: 4px;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .date-picker.active { display: flex; }
+
+        .picker-header {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .picker-close {
+            cursor: pointer;
+            color: #999;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        .picker-close:hover { color: #333; }
+
+        .picker-body {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .picker-col {
+            flex: 1;
+            overflow-y: auto;
+            border-right: 1px solid #eee;
+        }
+
+        .picker-col:last-child { border-right: none; }
+
+        .picker-col::-webkit-scrollbar { width: 6px; }
+
+        .picker-col::-webkit-scrollbar-thumb {
+            background-color: #ddd;
+            border-radius: 3px;
+        }
+
+        .picker-col::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        .picker-item {
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .picker-item:hover { background-color: #f5f5f5; }
+
+        .picker-item.selected {
+            background-color: #f0f8ff;
+            color: #ab3333;
+            font-weight: bold;
+        }
+
+        .calendar-nav-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s;
+            padding: 0 5px;
+        }
+
+        .calendar-nav-btn:hover { color: #ab3333; }
+
+        .calendar-body {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .weekday-row {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            border-bottom: 1px solid #eee;
+            background-color: transparent !important; /* 배경 투명하게 */
+        }
+
+        .weekday {
+            text-align: center;
+            padding: 10px 0;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .weekday.sun { color: #e74c3c; }
+        .weekday.sat { color: #3498db; }
+
+        .week-row {
+            position: relative;
+            min-height: 100px;
+            border-bottom: 1px solid #eee;
+            background-color: transparent !important; /* 배경 투명하게 */
+        }
+
+        .day-bg-layer {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .day-cell-bg {
+            border-right: 1px solid #eee;
+            padding: 5px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .day-cell-bg:last-child { border-right: none; }
+
+        .day-number {
+            font-size: 0.9rem;
+            color: #333;
+        }
+
+        .day-cell-bg.sun .day-number { color: #e74c3c; }
+        .day-cell-bg.sat .day-number { color: #3498db; }
+
+        .day-cell-bg.other-month { background-color: rgba(249, 249, 249, 0.5); }
+        .day-cell-bg.other-month .day-number { color: #ccc; }
+
+        .day-cell-bg.today { background-color: #fff5f5; }
+        .day-cell-bg.today .day-number {
+            font-weight: bold;
+            color: #ab3333;
+            text-decoration: underline;
+        }
+
+        .day-cell-bg.holiday .day-number { color: #e74c3c !important; }
+
+        .events-layer {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            margin-top: 30px;
+            padding-bottom: 5px;
+        }
+
+        .event-bar {
+            position: absolute;
+            height: 22px;
+            line-height: 22px;
+            border-radius: 4px;
+            padding: 0 6px;
+            font-size: 0.75rem;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .event-bar:hover {
+            opacity: 0.9;
+            transform: scale(1.01);
+            z-index: 10;
+        }
+
+        .event-bar.holiday { background-color: #e74c3c; }
+        .event-bar.academic { background-color: #e36767; }
+        .event-bar.recruiting { background-color: #0abde3; }
+        .event-bar.irregular { background-color: #e67e22; }
+        .event-bar.regular { background-color: #27ae60; }
+        .event-bar.etc { background-color: #7f8c8d; }
+
+        .activities {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            flex: 1;
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            min-width: 280px;
+        }
+
+        .card h4 {
+            color: #ab3333;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* 상세 모달 */
+        .event-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .event-modal {
+            background: white;
+            width: 350px;
+            max-width: 90%;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .event-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            color: #999;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .event-modal-close:hover { color: #333; }
+
+        .event-modal-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .event-modal-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            word-break: keep-all;
+        }
+
+        .event-modal-info {
+            padding: 0;
+            margin: 0;
+        }
+
+        .event-modal-info li {
+            list-style: none;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #555;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .event-modal-info strong {
+            color: #333;
+            margin-right: 10px;
+            white-space: nowrap;
+            width: 35px;
+            flex-shrink: 0;
+        }
+
+        /* 팝업 */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .popup-content {
+            background: white;
+            width: 400px;
+            max-width: 90%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .popup-img-box {
+            width: 100%;
+            background-color: #fff;
+        }
+
+        .popup-img-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .popup-footer {
+            display: flex;
+            border-top: 1px solid #eee;
+        }
+
+        .popup-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+
+        .popup-btn:hover { background-color: #f5f5f5; }
+
+        .btn-today {
+            border-right: 1px solid #eee;
+            color: #666;
+        }
+
+        .btn-close {
+            color: #ab3333;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .week-row { min-height: 80px; }
+            .event-bar { font-size: 0.7rem; height: 20px; line-height: 20px; }
+            .calendar-title { font-size: 1.2rem; }
+            .btn-today-reset { font-size: 0.8rem; padding: 4px 8px; }
+            .hero { padding: 3rem 1rem; }
+            .activities { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header></header>
+    <div class="sidebar" id="sidebar"></div>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="hero">
+        <img src="images/logo_transparent.png" alt="PAINS 메인 로고" class="hero-image">
+        <p>고려대학교 교내 유일 스포츠 통계분석 동아리 PAINS</p>
+    </div>
+
+    <section class="intro-text">
+        <h3>About Us</h3>
+        <img src="images/소개사진.jpg" alt="PAINS 단체사진" class="about-us-image">
+        <p>
+            2020년 설립되어 2026학년도 1학기에 11기로 활동하는 PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다. <br>
+            야구, 축구, 농구, 배구, F1, e-sports등 다양한 종목에 대한 흥미와 열정을 지닌 부원들이 매 학기 열정적으로 프로젝트를 수행하고 있습니다. 탐구 프로젝트뿐만 아니라 스포츠 경기 단체 관람, 연사초청, MT, 체육대회 등 다양한 친목활동을 개최하여 서로 다른 관심 종목을 가진 부원들 간의 교류도 활발하게 진행하고 있습니다. <br>
+            또한 연세대학교 스포츠 통계 분석 학회 YSAL과 교류하며, 매 기수 합동 세미나를 개최해 상호 간 진행한 프로젝트에서 얻은 인사이트를 공유하고 있습니다. <br>
+            전공, 학번, 성별에 상관없이 통계 지식과 스포츠에 대한 열정만 있다면 누구든 환영합니다!
+        </p>
+    </section>
+
+    <section class="intro-text">
+        <h3>회장 인사말</h3>
+        <p>
+            안녕하십니까, 고려대학교 스포츠 통계분석 동아리 PAINS의 11기 회장 전영재입니다. <br>
+            PAINS는 스포츠를 사랑하는 사람들이 모여, 익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로
+            해석해 보고자 만들어진 동아리입니다. 단순히 승패와 득실을 넘어 기록 속에 숨은 맥락과 의미를 발견하고
+            데이터를 통해 스포츠를 더 깊이 이해하는 경험을 함께 나누고 있습니다. <br>
+            각기 다른 배경을 가진 부원들이 모여 뜨거운 열정으로 스포츠에 대한 궁금증을 해소하는 경험을 함께 하는 동시에 통계 뿐만이 아닌 AI와 데이터 과학 분야를 공부하며 부원 모두가 함께 성장하는 환경을 갖추고 있습니다. <br>
+            매순간 달라지고 발전하는 PAINS의 활동에 많은 관심을 가져주시고 함께 해주셔서 감사합니다.
+        </p>
+    </section>
+
+    <section>
+        <h3>일정 안내</h3>
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <div class="calendar-nav-group">
+                    <button class="calendar-nav-btn" onclick="changeMonth(-1)">&#9664;</button>
+                    <div class="calendar-title" id="calendar-title" onclick="toggleDatePicker()">2026. 01</div>
+                    <button class="calendar-nav-btn" onclick="changeMonth(1)">&#9654;</button>
+
+                    <div class="date-picker" id="date-picker">
+                        <div class="picker-header">
+                            <span>직접 선택</span>
+                            <span class="picker-close" onclick="closeDatePicker()">&times;</span>
+                        </div>
+                        <div class="picker-body">
+                            <div class="picker-col" id="picker-years"></div>
+                            <div class="picker-col" id="picker-months"></div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-today-reset" onclick="goToToday()">오늘</button>
+            </div>
+
+            <div class="calendar-body" id="calendar-body">
+                <div class="weekday-row">
+                    <div class="weekday sun">일</div>
+                    <div class="weekday">월</div>
+                    <div class="weekday">화</div>
+                    <div class="weekday">수</div>
+                    <div class="weekday">목</div>
+                    <div class="weekday">금</div>
+                    <div class="weekday sat">토</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>Our Activities</h3>
+        <div class="activities">
+            <div class="card">
+                <h4>📚 정기 스터디</h4>
+                <p>지원자들을 대상으로 통계 분석과 관련된 심도 있는 스터디와 강의를 진행합니다.</p>
+            </div>
+            <div class="card">
+                <h4>🤝 프로젝트</h4>
+                <p>배운 내용과 관심 있는 주제를 바탕으로 학기 중, 방학 중에 한 번씩 정기 팀 프로젝트를 진행하며 포트폴리오를 만들고 실전 경험을 쌓습니다.</p>
+            </div>
+            <div class="card">
+                <h4>🎉 친목 활동</h4>
+                <p>선후배 및 부원 간 교류 활동, MT, 스포츠 경기 단체 관람 등 다양한 친목 활동을 진행하고 있습니다.</p>
+            </div>
+        </div>
+        <p style="margin-top: 30px; text-align: center;">
+            더 자세한 활동은 <a href="#" onclick="alert('지원 기간이 아닙니다.'); return false;" class="inline-link"><strong>11기 지원하기 페이지</strong></a>와 <a href="https://www.instagram.com/ku_pains" target="_blank" class="inline-link"><strong>PAINS 공식 인스타그램 계정</strong></a>을 참고해주세요!
+        </p>
+    </section>
+
+    <footer></footer>
+
+    <div id="event-modal-overlay" class="event-modal-overlay" onclick="closeEventModal()">
+        <div class="event-modal" onclick="event.stopPropagation()">
+            <span class="event-modal-close" onclick="closeEventModal()">&times;</span>
+            <div id="modal-badge" class="event-modal-badge"></div>
+            <div id="modal-title" class="event-modal-title"></div>
+            <ul class="event-modal-info">
+                <li id="li-date"><strong>일시:</strong> <span id="modal-date"></span></li>
+                <li id="li-time"><strong>시각:</strong> <span id="modal-time"></span></li>
+                <li id="li-location"><strong>장소:</strong> <span id="modal-location"></span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- <div id="img-popup" class="popup-overlay">
+        <div class="popup-content">
+            <div class="popup-img-box">
+                <img src="images/NOTICE_ACTIVITIES.png" alt="활동 메뉴 안내">
+            </div>
+            <div class="popup-footer">
+                <button class="popup-btn btn-today" onclick="closePopupToday()">오늘 하루 안 보기</button>
+                <button class="popup-btn btn-close" onclick="closePopup()">닫기</button>
+            </div>
+        </div>
+    </div> -->
+
+    <script>
+        document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
+    </script>
+
+    <script>
+        loadSidebar('home');
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const popup = document.getElementById('img-popup');
+            const hideDate = localStorage.getItem('pains_popup_hide_date');
+            const today = new Date().toDateString();
+            if (hideDate !== today) {
+                popup.style.display = "flex";
+            }
+        });
+
+        function closePopup() {
+            document.getElementById('img-popup').style.display = "none";
+        }
+
+        function closePopupToday() {
+            localStorage.setItem('pains_popup_hide_date', new Date().toDateString());
+            closePopup();
+        }
+
+        function getKoreanHolidays(year) {
+            const holidays = new Set();
+
+            const solarHolidays = [
+                '01-01', '03-01', '05-05', '06-06', '08-15', '10-03', '10-09', '12-25'
+            ];
+            solarHolidays.forEach(date => holidays.add(`${year}-${date}`));
+
+            const lunarMap = {
+                2020: { seol: '01-25', buddha: '04-30', chuseok: '10-01' },
+                2021: { seol: '02-12', buddha: '05-19', chuseok: '09-21' },
+                2022: { seol: '02-01', buddha: '05-08', chuseok: '09-10' },
+                2023: { seol: '01-22', buddha: '05-27', chuseok: '09-29' },
+                2024: { seol: '02-10', buddha: '05-15', chuseok: '09-17' },
+                2025: { seol: '01-29', buddha: '05-05', chuseok: '10-06' },
+                2026: { seol: '02-17', buddha: '05-24', chuseok: '09-25' },
+                2027: { seol: '02-07', buddha: '05-13', chuseok: '09-15' },
+                2028: { seol: '01-27', buddha: '05-02', chuseok: '10-03' },
+                2029: { seol: '02-13', buddha: '05-20', chuseok: '09-22' },
+                2030: { seol: '02-03', buddha: '05-09', chuseok: '09-12' },
+                2031: { seol: '01-23', buddha: '05-28', chuseok: '10-01' },
+                2032: { seol: '02-11', buddha: '05-16', chuseok: '09-19' },
+                2033: { seol: '01-31', buddha: '05-06', chuseok: '10-07' },
+                2034: { seol: '02-19', buddha: '05-25', chuseok: '09-27' },
+                2035: { seol: '02-08', buddha: '05-15', chuseok: '09-16' },
+                2036: { seol: '01-28', buddha: '05-02', chuseok: '10-04' },
+                2037: { seol: '02-15', buddha: '05-22', chuseok: '09-24' },
+                2038: { seol: '02-04', buddha: '05-11', chuseok: '09-13' },
+                2039: { seol: '01-24', buddha: '05-02', chuseok: '10-02' },
+                2040: { seol: '02-12', buddha: '05-18', chuseok: '09-21' }
+            };
+
+            if (lunarMap[year]) {
+                const map = lunarMap[year];
+
+                const seol = new Date(`${year}-${map.seol}`);
+                [-1, 0, 1].forEach(offset => {
+                    const d = new Date(seol);
+                    d.setDate(d.getDate() + offset);
+                    holidays.add(getFmtDate(d));
+                });
+
+                holidays.add(`${year}-${map.buddha}`);
+
+                const chuseok = new Date(`${year}-${map.chuseok}`);
+                [-1, 0, 1].forEach(offset => {
+                    const d = new Date(chuseok);
+                    d.setDate(d.getDate() + offset);
+                    holidays.add(getFmtDate(d));
+                });
+            }
+
+            let sortedHolidays = Array.from(holidays).sort();
+
+            sortedHolidays.forEach(dateStr => {
+                const dateParts = dateStr.split('-');
+                const md = `${dateParts[1]}-${dateParts[2]}`;
+                const dateObj = new Date(dateStr);
+                const day = dateObj.getDay();
+
+                let isSubstituteTarget = false;
+
+                const groupA = ['03-01', '05-05', '08-15', '10-03', '10-09', '12-25'];
+                if (lunarMap[year] && md === lunarMap[year].buddha) isSubstituteTarget = true;
+                if (groupA.includes(md)) isSubstituteTarget = true;
+
+                if (isSubstituteTarget && (day === 0 || day === 6)) {
+                    addSubstitute(dateObj, holidays);
+                }
+
+                if (lunarMap[year]) {
+                    const seolMain = new Date(`${year}-${lunarMap[year].seol}`);
+                    const chuseokMain = new Date(`${year}-${lunarMap[year].chuseok}`);
+
+                    if (isNearDate(dateObj, seolMain) || isNearDate(dateObj, chuseokMain)) {
+                        if (day === 0) {
+                            addSubstitute(dateObj, holidays);
+                        }
+                    }
+                }
+            });
+
+            return holidays;
+        }
+
+        function isNearDate(target, center) {
+            const diff = (target - center) / (1000 * 60 * 60 * 24);
+            return Math.abs(diff) <= 1.1;
+        }
+
+        function addSubstitute(fromDate, holidaySet) {
+            let nextDate = new Date(fromDate);
+            while (true) {
+                nextDate.setDate(nextDate.getDate() + 1);
+                const nextStr = getFmtDate(nextDate);
+                if (!holidaySet.has(nextStr)) {
+                    holidaySet.add(nextStr);
+                    break;
+                }
+            }
+        }
+
+        function getFmtDate(date) {
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+
+        let allEvents = [];
+        let currentYear = new Date().getFullYear();
+        let currentMonth = new Date().getMonth() + 1;
+        const todayObj = new Date();
+        let pickerSelectedYear = currentYear;
+
+        const GOOGLESHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBnuUvyE2CDV-hG26xCVdnt88JhQgtusdEndJwTzaI62TXPdWTNldVvua9RLkXj1s34qiM0CEcNvbr/pub?gid=305458048&single=true&output=csv";
+
+        async function fetchAndInitCalendar() {
+            try {
+                const response = await fetch(GOOGLESHEET_URL);
+                const data = await response.text();
+                const rows = data.split("\n").map(row => row.trim()).filter(row => row.length > 0);
+
+                allEvents = rows.slice(1).map(row => {
+                    const cols = row.split(",");
+                    if (cols.length < 7) return null;
+
+                    return {
+                        name: cols[0].trim(),
+                        startDate: cols[1].trim(),
+                        startTime: cols[2].trim(),
+                        endDate: cols[3].trim() || cols[1].trim(),
+                        endTime: cols[4].trim(),
+                        location: cols[5].trim(),
+                        type: cols[6].trim()
+                    };
+                }).filter(event => event !== null);
+
+                renderCalendar(currentYear, currentMonth);
+
+            } catch (error) {
+                console.error("일정을 불러오는 데 실패했습니다:", error);
+                document.getElementById('calendar-title').innerText = "일정 로딩 실패";
+            }
+        }
+
+        function renderCalendar(year, month) {
+            const calendarBody = document.getElementById('calendar-body');
+            const title = document.getElementById('calendar-title');
+
+            title.innerText = `${year}. ${String(month).padStart(2, '0')}`;
+
+            const oldRows = calendarBody.querySelectorAll('.week-row');
+            oldRows.forEach(r => r.remove());
+
+            const holidaySet = getKoreanHolidays(year);
+
+            const firstDateOfMonth = new Date(year, month - 1, 1);
+            const lastDateOfMonth = new Date(year, month, 0);
+
+            const startDate = new Date(firstDateOfMonth);
+            startDate.setDate(startDate.getDate() - firstDateOfMonth.getDay());
+
+            const endDate = new Date(lastDateOfMonth);
+            if (endDate.getDay() !== 6) {
+                endDate.setDate(endDate.getDate() + (6 - endDate.getDay()));
+            }
+
+            let currentDate = new Date(startDate);
+
+            while (currentDate <= endDate) {
+                const weekRow = document.createElement('div');
+                weekRow.className = 'week-row';
+
+                const dayBgLayer = document.createElement('div');
+                dayBgLayer.className = 'day-bg-layer';
+
+                const eventsLayer = document.createElement('div');
+                eventsLayer.className = 'events-layer';
+
+                let weekDates = [];
+
+                for (let i = 0; i < 7; i++) {
+                    const d = new Date(currentDate);
+                    weekDates.push(d);
+
+                    const bgCell = document.createElement('div');
+                    bgCell.className = 'day-cell-bg';
+
+                    if (d.getMonth() + 1 !== month) bgCell.classList.add('other-month');
+                    if (d.getDay() === 0) bgCell.classList.add('sun');
+                    if (d.getDay() === 6) bgCell.classList.add('sat');
+
+                    const dateStr = getFmtDate(d);
+                    if (holidaySet.has(dateStr)) {
+                        bgCell.classList.add('holiday');
+                    }
+
+                    if (
+                        d.getFullYear() === todayObj.getFullYear() &&
+                        d.getMonth() === todayObj.getMonth() &&
+                        d.getDate() === todayObj.getDate()
+                    ) {
+                        bgCell.classList.add('today');
+                    }
+
+                    const numSpan = document.createElement('span');
+                    numSpan.className = 'day-number';
+                    numSpan.innerText = d.getDate();
+
+                    bgCell.appendChild(numSpan);
+                    dayBgLayer.appendChild(bgCell);
+
+                    currentDate.setDate(currentDate.getDate() + 1);
+                }
+
+                const weekStart = weekDates[0].getTime();
+                const weekEnd = weekDates[6].getTime();
+
+                let weekEvents = allEvents.filter(evt => {
+                    const [sy, sm, sd] = evt.startDate.split('-').map(Number);
+                    const sTime = new Date(sy, sm - 1, sd).getTime();
+                    const [ey, em, ed] = evt.endDate.split('-').map(Number);
+                    const eTime = new Date(ey, em - 1, ed).getTime();
+
+                    return sTime <= weekEnd && eTime >= weekStart;
+                }).map(evt => {
+                    const [sy, sm, sd] = evt.startDate.split('-').map(Number);
+                    const sDate = new Date(sy, sm - 1, sd);
+                    const [ey, em, ed] = evt.endDate.split('-').map(Number);
+                    const eDate = new Date(ey, em - 1, ed);
+
+                    let startIndex = 0;
+                    if (sDate > weekDates[0]) {
+                        startIndex = Math.floor((sDate - weekDates[0]) / (1000 * 60 * 60 * 24));
+                    }
+
+                    let endIndex = 6;
+                    if (eDate < weekDates[6]) {
+                        endIndex = 6 - Math.floor((weekDates[6] - eDate) / (1000 * 60 * 60 * 24));
+                    }
+
+                    const span = endIndex - startIndex + 1;
+
+                    return {
+                        original: evt,
+                        startIndex,
+                        endIndex,
+                        span,
+                        sDate,
+                        eDate,
+                        duration: eDate - sDate
+                    };
+                });
+
+                weekEvents.sort((a, b) => {
+                    if (a.startIndex !== b.startIndex) return a.startIndex - b.startIndex;
+                    return b.duration - a.duration;
+                });
+
+                let slots = [];
+
+                weekEvents.forEach(evt => {
+                    let row = 0;
+                    while (true) {
+                        if (!slots[row]) slots[row] = Array(7).fill(false);
+
+                        let isClear = true;
+                        for (let d = evt.startIndex; d <= evt.endIndex; d++) {
+                            if (slots[row][d]) {
+                                isClear = false;
+                                break;
+                            }
+                        }
+
+                        if (isClear) {
+                            for (let d = evt.startIndex; d <= evt.endIndex; d++) {
+                                slots[row][d] = true;
+                            }
+                            evt.row = row;
+                            break;
+                        }
+                        row++;
+                    }
+                });
+
+                const maxRow = slots.length;
+                if (maxRow > 0) {
+                    const minH = 100;
+                    const contentH = 30 + (maxRow * 24) + 10;
+                    if (contentH > minH) {
+                        weekRow.style.minHeight = contentH + 'px';
+                    }
+                }
+
+                weekEvents.forEach(evt => {
+                    const bar = document.createElement('div');
+                    bar.innerText = evt.original.name;
+                    bar.className = 'event-bar';
+
+                    if (evt.original.type.includes('공휴일')) bar.classList.add('holiday');
+                    else if (evt.original.type.includes('학사일정')) bar.classList.add('academic');
+                    else if (evt.original.type.includes('리크루팅')) bar.classList.add('recruiting');
+                    else if (evt.original.type.includes('비정기')) bar.classList.add('irregular');
+                    else if (evt.original.type.includes('정기')) bar.classList.add('regular');
+                    else bar.classList.add('etc');
+
+                    bar.style.top = (evt.row * 24) + 'px';
+
+                    const ONE_DAY_PCT = 14.2857;
+                    const GAP = 0.5;
+
+                    let leftPct = evt.startIndex * ONE_DAY_PCT;
+                    let widthPct = evt.span * ONE_DAY_PCT;
+
+                    const isStartInWeek = (evt.sDate >= weekDates[0]);
+                    const isEndInWeek = (evt.eDate <= weekDates[6]);
+
+                    if (isStartInWeek) {
+                        leftPct += GAP;
+                        widthPct -= GAP;
+                    }
+                    if (isEndInWeek) {
+                        widthPct -= GAP;
+                    }
+
+                    bar.style.left = leftPct + '%';
+                    bar.style.width = widthPct + '%';
+
+                    if (!isStartInWeek) {
+                        bar.style.borderTopLeftRadius = '0';
+                        bar.style.borderBottomLeftRadius = '0';
+                    }
+                    if (!isEndInWeek) {
+                        bar.style.borderTopRightRadius = '0';
+                        bar.style.borderBottomRightRadius = '0';
+                    }
+
+                    bar.onclick = (e) => {
+                        e.stopPropagation();
+                        openEventModal(evt.original);
+                    };
+
+                    eventsLayer.appendChild(bar);
+                });
+
+                weekRow.appendChild(dayBgLayer);
+                weekRow.appendChild(eventsLayer);
+                calendarBody.appendChild(weekRow);
+            }
+        }
+
+        function openEventModal(evt) {
+            const modal = document.getElementById('event-modal-overlay');
+            const badge = document.getElementById('modal-badge');
+            const title = document.getElementById('modal-title');
+            const date = document.getElementById('modal-date');
+            const time = document.getElementById('modal-time');
+            const loc = document.getElementById('modal-location');
+            const liDate = document.getElementById('li-date');
+            const liTime = document.getElementById('li-time');
+            const liLocation = document.getElementById('li-location');
+
+            badge.innerText = evt.type || "기타";
+            badge.className = "event-modal-badge";
+
+            if (evt.type.includes('공휴일')) badge.style.backgroundColor = "#e74c3c";
+            else if (evt.type.includes('학사일정')) badge.style.backgroundColor = "#e36767";
+            else if (evt.type.includes('리크루팅')) badge.style.backgroundColor = "#0abde3";
+            else if (evt.type.includes('비정기')) badge.style.backgroundColor = "#e67e22";
+            else if (evt.type.includes('정기')) badge.style.backgroundColor = "#27ae60";
+            else badge.style.backgroundColor = "#7f8c8d";
+
+            title.innerText = evt.name;
+
+            const sDateStr = formatModalDate(evt.startDate);
+            const eDateStr = formatModalDate(evt.endDate);
+            const sTime = evt.startTime ? evt.startTime.trim() : "";
+            const eTime = evt.endTime ? evt.endTime.trim() : "";
+
+            const isInvalidTime = (t) => !t || ["TBC", "TBD", "미정", "TBA"].includes(t.toUpperCase());
+            const hasValidTime = !isInvalidTime(sTime) || !isInvalidTime(eTime);
+
+            liTime.style.display = "none";
+
+            if (evt.startDate !== evt.endDate) {
+                let startPart = sDateStr;
+                let endPart = eDateStr;
+
+                if (hasValidTime) {
+                    startPart += ` ${isInvalidTime(sTime) ? '' : sTime}`;
+                    endPart += ` ${isInvalidTime(eTime) ? '' : eTime}`;
+                }
+                date.innerHTML = `${startPart} -<br>${endPart}`;
+            } else {
+                date.innerText = sDateStr;
+
+                if (hasValidTime) {
+                    liTime.style.display = "flex";
+                    if (sTime && eTime) time.innerText = `${sTime} ~ ${eTime}`;
+                    else if (sTime) time.innerText = sTime + " ~";
+                    else time.innerText = "~ " + eTime;
+                }
+            }
+
+            if (evt.location && evt.location.trim() !== "") {
+                liLocation.style.display = "flex";
+                loc.innerText = evt.location;
+            } else {
+                liLocation.style.display = "none";
+            }
+
+            modal.style.display = "flex";
+        }
+
+        function closeEventModal() {
+            document.getElementById('event-modal-overlay').style.display = "none";
+        }
+
+        function formatModalDate(dateStr) {
+            if (!dateStr) return "";
+            const [y, m, d] = dateStr.split('-');
+            const date = new Date(y, m - 1, d);
+            const days = ['일', '월', '화', '수', '목', '금', '토'];
+            return `${y}. ${m}. ${d}. (${days[date.getDay()]})`;
+        }
+
+        function goToToday() {
+            currentYear = todayObj.getFullYear();
+            currentMonth = todayObj.getMonth() + 1;
+            renderCalendar(currentYear, currentMonth);
+        }
+
+        function changeMonth(step) {
+            currentMonth += step;
+            if (currentMonth < 1) {
+                currentMonth = 12;
+                currentYear--;
+            } else if (currentMonth > 12) {
+                currentMonth = 1;
+                currentYear++;
+            }
+            renderCalendar(currentYear, currentMonth);
+        }
+
+        function toggleDatePicker(e) {
+            const picker = document.getElementById('date-picker');
+            if (e) e.stopPropagation();
+
+            if (picker.classList.contains('active')) {
+                closeDatePicker();
+            } else {
+                pickerSelectedYear = currentYear;
+                renderPickerContent();
+                picker.classList.add('active');
+                document.addEventListener('click', closeDatePickerOutside);
+            }
+        }
+
+        function closeDatePicker() {
+            const picker = document.getElementById('date-picker');
+            picker.classList.remove('active');
+            document.removeEventListener('click', closeDatePickerOutside);
+        }
+
+        function closeDatePickerOutside(event) {
+            const picker = document.getElementById('date-picker');
+            const title = document.getElementById('calendar-title');
+            if (!picker.contains(event.target) && !title.contains(event.target)) {
+                closeDatePicker();
+            }
+        }
+
+        function renderPickerContent() {
+            const yearCol = document.getElementById('picker-years');
+            const monthCol = document.getElementById('picker-months');
+
+            yearCol.innerHTML = '';
+            monthCol.innerHTML = '';
+
+            for (let y = 2020; y <= 2030; y++) {
+                const div = document.createElement('div');
+                div.className = 'picker-item';
+                div.innerText = y + '년';
+                if (y === pickerSelectedYear) div.classList.add('selected');
+                div.onclick = (e) => {
+                    e.stopPropagation();
+                    pickerSelectedYear = y;
+                    renderPickerContent();
+                };
+                yearCol.appendChild(div);
+            }
+
+            setTimeout(() => {
+                const selectedEl = yearCol.querySelector('.selected');
+                if (selectedEl) selectedEl.scrollIntoView({ block: "center" });
+            }, 0);
+
+            for (let m = 1; m <= 12; m++) {
+                const div = document.createElement('div');
+                div.className = 'picker-item';
+                div.innerText = m + '월';
+                if (pickerSelectedYear === currentYear && m === currentMonth) div.classList.add('selected');
+                div.onclick = (e) => {
+                    e.stopPropagation();
+                    currentYear = pickerSelectedYear;
+                    currentMonth = m;
+                    renderCalendar(currentYear, currentMonth);
+                    closeDatePicker();
+                };
+                monthCol.appendChild(div);
+            }
+        }
+
+        fetchAndInitCalendar();
+    </script>
+    <script src="https://pains-chatbot.vercel.app/widget/chatbot.js" data-endpoint="https://pains-chatbot.vercel.app/api/chat"></script>
+</body>
+</html>

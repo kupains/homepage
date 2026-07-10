@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PAINS - 공지사항</title>
+  <style>
+    /* ============================ */
+    /* [1] 폰트 설정                */
+    /* ============================ */
+    @font-face { font-family: 'KBO_Dia'; src: url('KBO_medium.woff') format('woff'); font-weight: normal; font-style: normal; }
+    @font-face { font-family: 'SCDream'; src: url('SCDream5.otf'); font-weight: normal; font-style: normal; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'SCDream', sans-serif; line-height: 1.6; }
+    header h1, section h2 { font-family: 'KBO_Dia', sans-serif; }
+
+    /* ============================ */
+    /* [2] 본문 및 세부 콘텐츠 스타일*/
+    /* ============================ */
+    section {
+      max-width: 800px !important;
+      width: calc(100% - 48px) !important;
+      margin: 0 auto 28px auto !important;
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 40px;
+    }
+
+    @media (max-width: 768px) {
+      section {
+        width: calc(100% - 32px) !important;
+        padding: 20px !important;
+      }
+    }
+    
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    
+    .subnote {
+      text-align: center;
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 28px;
+    }
+
+    /* 필터 영역 */
+    .filters {
+      display: grid;
+      /* 데스크톱: 4개의 열로 구성하여 각 1/4씩 차지 */
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      background: white;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+    
+    .filter-item label {
+      display: block;
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    
+    /* 검색, 날짜 등의 모든 input과 다중 선택기 높이 및 테두리 통일 */
+    .filter-item input {
+      width: 100%;
+      height: 40px; /* 더 작은 쪽으로 높이 일괄 적용 */
+      padding: 0 12px;
+      outline: none;
+      border: 1px solid #e3e3e3;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+    }
+
+    /* 다중선택 필터 */
+    .multi-filter {
+      border: 1px solid #e3e3e3;
+      border-radius: 14px;
+      background: #fff;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .multi-filter[open] {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .multi-filter summary {
+      list-style: none;
+      cursor: pointer;
+      height: 38px; /* 테두리 2px를 제외한 높이 */
+      line-height: 38px; /* 세로 중앙 정렬 */
+      padding: 0 16px;
+      font-size: 0.95rem;
+      color: #222;
+      font-weight: 700;
+      user-select: none;
+      position: relative;
+      background: #fff;
+      border-radius: 14px;
+    }
+
+    .multi-filter summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .multi-filter summary::after {
+      content: "▴";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8d8d8d;
+      font-size: 0.7rem;
+      line-height: 1;
+    }
+
+    .multi-filter:not([open]) summary::after {
+      content: "▾";
+    }
+
+    .multi-filter-summary-text {
+      display: block;
+      padding-right: 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .multi-filter-panel {
+      border-top: 1px solid #ededed;
+      padding: 10px 14px 10px;
+      max-height: 430px;
+      overflow-y: auto;
+      background: #fff;
+      border-bottom-left-radius: 14px;
+      border-bottom-right-radius: 14px;
+
+      position: absolute;
+      top: 100%;
+      left: -1px;
+      width: calc(100% + 2px);
+      z-index: 999;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+      
+      border: 1px solid #e3e3e3;
+      border-top: 1px solid #ededed;
+      margin-top: -1px;
+      box-sizing: border-box;
+    }
+
+    .multi-filter-panel::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    .multi-filter-panel::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .multi-filter-panel::-webkit-scrollbar-thumb {
+      background: #9a9a9a;
+      border-radius: 999px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+
+    .multi-filter-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      column-gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .mini-btn {
+      appearance: none !important;
+      -webkit-appearance: none !important;
+      border: none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      display: inline-block !important;
+      width: auto !important;
+      min-width: 0 !important;
+      max-width: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      color: #6b6b6b !important;
+      font-size: 0.82rem !important;
+      font-weight: 700 !important;
+      line-height: 1.2 !important;
+      white-space: nowrap !important;
+      cursor: pointer;
+      border-radius: 0 !important;
+      text-decoration: none !important;
+    }
+
+    .multi-filter-actions .mini-btn:first-child {
+      justify-self: start;
+      text-align: left;
+    }
+
+    .multi-filter-actions .mini-btn:last-child {
+      justify-self: end;
+      text-align: right;
+    }
+
+    .mini-btn:hover {
+      color: #404040 !important;
+      text-decoration: underline !important;
+      text-underline-offset: 2px;
+      background: transparent !important;
+    }
+
+    .multi-filter-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0 !important;
+      align-content: start;
+    }
+
+    .check-option {
+      display: grid !important;
+      grid-template-columns: 16px 1fr !important;
+      column-gap: 12px !important;
+      align-items: center !important;
+      min-height: 24px !important;
+      padding: 1px 0 !important;
+      margin: 0 !important;
+      font-size: 0.92rem;
+      color: #2f4f6f;
+      line-height: 1 !important;
+      cursor: pointer;
+      word-break: keep-all;
+    }
+
+    .check-option input[type="checkbox"] {
+      appearance: none !important;
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      width: 16px !important;
+      height: 16px !important;
+      min-width: 16px !important;
+      max-width: 16px !important;
+      min-height: 16px !important;
+      max-height: 16px !important;
+      display: block !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 1.5px solid #9a9a9a !important;
+      border-radius: 4px !important;
+      outline: none !important;
+      box-shadow: none !important;
+      background: #fff !important;
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      justify-self: start !important;
+      align-self: center !important;
+      flex: none !important;
+    }
+
+    .check-option input[type="checkbox"]:checked {
+      border-color: #ab3333 !important;
+      background: #ab3333 !important;
+    }
+
+    .check-option input[type="checkbox"]:checked::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      width: 4px;
+      height: 8px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .check-option span {
+      display: block !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      line-height: 1.05 !important;
+      color: #355675;
+      font-size: 0.96rem;
+      font-weight: 500;
+      justify-self: start !important;
+      align-self: center !important;
+    }
+
+    /* 검색창 넓게 쓰기 */
+    .search-item {
+      grid-column: 1 / -1; 
+    }
+
+    .filter-actions {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: end;
+      justify-content: flex-end;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: bold;
+      user-select: none;
+    }
+
+    #btn-reset {
+      background: transparent !important;
+      color: #4a4a4a !important;
+      border: 1px solid transparent !important;
+      box-shadow: none !important;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      padding-left: 4px;
+      padding-right: 4px;
+      border-radius: 6px !important;
+    }
+
+    #btn-reset:hover {
+      background: rgba(0, 0, 0, 0.03) !important;
+      color: #2f2f2f !important;
+    }
+
+    /* 결과 영역 */
+    .results-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 10px 0 12px;
+      padding: 0 2px;
+    }
+
+    .results-count {
+      color: #666;
+      font-size: 0.95rem;
+      font-weight: bold;
+    }
+
+    .results-hint {
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    .project-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .project-card {
+      background: white;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    
+    .project-card.is-important {
+      background: rgba(171, 51, 51, 0.03);
+      border-color: rgba(171, 51, 51, 0.3);
+    }
+    
+    .badge-important {
+      color: #ab3333;
+      font-weight: 900;
+      margin-right: 6px;
+      font-size: 0.9rem;
+    }
+
+    .project-main { min-width: 0; }
+
+    .project-title {
+      display: inline-block;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #2c3e50;
+      text-decoration: none;
+      word-break: keep-all;
+    }
+
+    .project-title:hover {
+      text-decoration: underline;
+      text-decoration-color: rgba(171, 51, 51, 0.6);
+    }
+
+    .project-meta {
+      margin-top: 6px;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .project-actions .btn {
+      border-radius: 6px !important;
+    }
+
+    .empty {
+      background: #fff;
+      border: 1px dashed #ddd;
+      border-radius: 12px;
+      padding: 26px;
+      text-align: center;
+      color: #777;
+    }
+
+    /* 반응형 (태블릿 크기) */
+    @media (max-width: 900px) {
+      .filters {
+        /* 2열 구성으로 변경. 날짜 2개 첫줄, 기수/부서 두번째 줄 차지 */
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .filter-actions {
+        justify-content: stretch;
+      }
+      .filter-actions .btn {
+        width: 100%;
+      }
+    }
+
+    /* 반응형 (모바일 크기) */
+    @media (max-width: 520px) {
+      .filters {
+        /* 모바일에서도 여전히 2열 유지 -> 날짜 2개 첫줄, 기수/부서 두번째 줄 */
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .project-card {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .project-actions {
+        justify-content: flex-end;
+      }
+      .multi-filter-actions {
+        column-gap: 6px;
+      }
+      .check-option {
+        column-gap: 10px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <header></header>
+  <div class="sidebar" id="sidebar"></div>
+  <div class="overlay" id="overlay"></div>
+
+  <section>
+    <h2>공지사항</h2>
+    <p class="subnote">
+      PAINS의 주요 공지 및 활동에서 사용된 안내 자료를 확인하세요.
+    </p>
+
+    <div class="filters" aria-label="공지 필터">
+      
+      <div class="filter-item">
+        <label for="filter-date-start">시작일 (부터)</label>
+        <input id="filter-date-start" type="date" aria-label="시작일" />
+      </div>
+
+      <div class="filter-item">
+        <label for="filter-date-end">종료일 (까지)</label>
+        <input id="filter-date-end" type="date" aria-label="종료일" />
+      </div>
+
+      <div class="filter-item">
+        <label for="filter-generation-options">기수</label>
+        <details class="multi-filter" id="filter-generation">
+          <summary><span class="multi-filter-summary-text">전체</span></summary>
+          <div class="multi-filter-panel">
+            <div class="multi-filter-actions">
+              <button type="button" class="mini-btn" data-action="select-all" data-target="gen">전체 선택</button>
+              <button type="button" class="mini-btn" data-action="clear-all" data-target="gen">전체 해제</button>
+            </div>
+            <div class="multi-filter-options" id="filter-generation-options"></div>
+          </div>
+        </details>
+      </div>
+
+      <div class="filter-item">
+        <label for="filter-department-options">부서</label>
+        <details class="multi-filter" id="filter-department">
+          <summary><span class="multi-filter-summary-text">전체</span></summary>
+          <div class="multi-filter-panel">
+            <div class="multi-filter-actions">
+              <button type="button" class="mini-btn" data-action="select-all" data-target="dept">전체 선택</button>
+              <button type="button" class="mini-btn" data-action="clear-all" data-target="dept">전체 해제</button>
+            </div>
+            <div class="multi-filter-options" id="filter-department-options"></div>
+          </div>
+        </details>
+      </div>
+
+      <div class="filter-item search-item">
+        <label for="filter-q">검색(제목)</label>
+        <input id="filter-q" type="search" placeholder="검색어 입력…" />
+      </div>
+
+      <div class="filter-actions">
+        <button class="btn" id="btn-reset" type="button">필터 초기화</button>
+      </div>
+    </div>
+
+    <div class="results-header">
+      <div class="results-count" id="results-count">로딩 중…</div>
+      <div class="results-hint">* 제목 또는 뷰어로 보기: 미리보기(새 탭) / 다운로드 버튼: 파일 저장</div>
+    </div>
+
+    <ul class="project-list" id="project-list" aria-label="공지 목록"></ul>
+
+    <div class="empty" id="empty" style="display:none;">
+      조건에 맞는 공지가 없습니다.<br />
+      필터를 줄이거나 검색어를 변경해 보세요.
+    </div>
+  </section>
+
+  <footer></footer>
+
+  <script>
+    document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
+  </script>
+  <script>
+    if (typeof loadSidebar === "function") loadSidebar('notice');
+  </script>
+
+  <script src="js/notice.js"></script>
+    <script src="https://pains-chatbot.vercel.app/widget/chatbot.js" data-endpoint="https://pains-chatbot.vercel.app/api/chat"></script>
+</body>
+</html>
