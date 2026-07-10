@@ -70,28 +70,6 @@
         .loader { display: none; margin: 20px auto; border: 4px solid #f3f3f3; border-top: 4px solid #ab3333; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
-    <script>
-        (function () {
-            document.documentElement.classList.add('pains-cms-loading');
-            window.__painsCmsLoadingTimer = window.setTimeout(function () {
-                document.documentElement.classList.remove('pains-cms-loading');
-            }, 3500);
-        }());
-    </script>
-    <style id="pains-cms-loading-style">
-        html.pains-cms-loading body {
-            background: #f8f9fb !important;
-        }
-
-        html.pains-cms-loading body > * {
-            opacity: 0 !important;
-            pointer-events: none !important;
-        }
-
-        html.pains-cms-ready body > * {
-            transition: opacity 0.22s ease;
-        }
-    </style>
     <script defer src="js/content-loader.js?v=20260528"></script>
 </head>
 <body>

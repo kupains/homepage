@@ -242,28 +242,6 @@
             }
         }
     </style>
-    <script>
-        (function () {
-            document.documentElement.classList.add('pains-cms-loading');
-            window.__painsCmsLoadingTimer = window.setTimeout(function () {
-                document.documentElement.classList.remove('pains-cms-loading');
-            }, 3500);
-        }());
-    </script>
-    <style id="pains-cms-loading-style">
-        html.pains-cms-loading body {
-            background: #f8f9fb !important;
-        }
-
-        html.pains-cms-loading body > * {
-            opacity: 0 !important;
-            pointer-events: none !important;
-        }
-
-        html.pains-cms-ready body > * {
-            transition: opacity 0.22s ease;
-        }
-    </style>
     <script defer src="js/content-loader.js?v=20260528"></script>
 </head>
 <body>
