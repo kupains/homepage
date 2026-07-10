@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAINS - 11기 최종 합격자 안내</title>
+    <style>
+        /* ============================ */
+        /* [1] 폰트 및 기본 스타일        */
+        /* ============================ */
+        @font-face { font-family: 'KBO_Dia'; src: url('KBO_medium.woff') format('woff'); }
+        @font-face { font-family: 'SCDream'; src: url('SCDream5.otf'); }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'SCDream', sans-serif; line-height: 1.6; }
+
+        /* ============================ */
+        /* [2] 메인 컨텐츠 세부 스타일    */
+        /* ============================ */
+        .container { max-width: 700px; margin: 0 auto; padding: 0 1rem; text-align: center; }
+
+        .search-card {
+            background: white; border-radius: 12px; padding: 2.5rem 2rem;
+            margin-bottom: 2rem;
+            /* 테두리와 그림자는 menu.js에서 동적 주입 (.search-card 대신 기본 속성에 맞게) */
+        }
+        .search-card h2 { font-family: 'KBO_Dia', sans-serif; color: #ab3333; margin-bottom: 0.5rem; font-size: 1.6rem; }
+        .sub-title { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
+
+        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; color: #555; }
+        .input-group input {
+            width: 100%; padding: 12px; border-radius: 8px; font-size: 1rem; font-family: 'SCDream', sans-serif; outline: none;
+            /* 테두리 등은 menu.js가 덮어씌움 */
+        }
+
+        .btn-submit {
+            width: 100%; padding: 12px; background-color: #ab3333; color: white; border: none; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.3s; margin-top: 10px;
+        }
+        .btn-submit:hover { background-color: #8f2a2a; }
+
+        #result-area { margin-top: 30px; display: none; padding-top: 30px; border-top: 2px dashed #eee; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .result-msg { font-size: 1.1rem; margin-bottom: 15px; }
+        .status-badge {
+            display: inline-block; padding: 8px 20px; border-radius: 30px;
+            font-size: 1.5rem; font-weight: bold; color: white; margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .status-pass { background-color: #27ae60; }
+        .status-fail { background-color: #e74c3c; }
+
+        .interview-box {
+            background-color: #f8f9fa; border-radius: 10px; padding: 20px;
+            text-align: left; border-left: 5px solid #ab3333; margin-top: 20px;
+            display: none;
+        }
+        .interview-box h4 { margin-bottom: 10px; color: #333; font-weight: bold; }
+        .interview-info li { list-style: none; margin-bottom: 5px; color: #555; }
+        .interview-info strong { color: #333; margin-right: 5px; display: inline-block; width: 45px; }
+
+        .map-image {
+            width: 100%; height: auto; margin-top: 15px; border-radius: 8px; border: 1px solid #ddd; display: none;
+        }
+
+        .warning-msg { font-size: 0.85rem; color: #e74c3c; margin-top: 15px; font-weight: bold; word-break: keep-all; }
+        .notice-msg { font-size: 0.8rem; color: #888; margin-top: 8px; word-break: keep-all; }
+
+        .loader { display: none; margin: 20px auto; border: 4px solid #f3f3f3; border-top: 4px solid #ab3333; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+    <script>
+        (function () {
+            document.documentElement.classList.add('pains-cms-loading');
+            window.__painsCmsLoadingTimer = window.setTimeout(function () {
+                document.documentElement.classList.remove('pains-cms-loading');
+            }, 3500);
+        }());
+    </script>
+    <style id="pains-cms-loading-style">
+        html.pains-cms-loading body {
+            background: #f8f9fb !important;
+        }
+
+        html.pains-cms-loading body > * {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        html.pains-cms-ready body > * {
+            transition: opacity 0.22s ease;
+        }
+    </style>
+    <script defer src="js/content-loader.js?v=20260528"></script>
+</head>
+<body>
+
+    <header></header>
+    <div class="sidebar" id="sidebar"></div>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="container">
+        <div class="search-card">
+            <h2>11기 최종 합격자 안내</h2>
+            <p class="sub-title">지원 시 제출한 학번과 이름을 입력해주세요.</p>
+
+            <div class="input-group">
+                <label for="input-id">학번 (ID)</label>
+                <input type="text" id="input-id" placeholder="예: 2026123456">
+            </div>
+            <div class="input-group">
+                <label for="input-name">이름 (Name)</label>
+                <input type="text" id="input-name" placeholder="예: 홍길동">
+            </div>
+
+            <button class="btn-submit" onclick="checkResult()" id="btn-search">결과 확인하기</button>
+            <div class="loader" id="loader"></div>
+
+            <div id="result-area">
+                <p class="result-msg"><span id="user-name-display" style="font-weight:bold;"></span>님의 결과입니다.</p>
+
+                <div id="status-badge" class="status-badge">결과 로딩중</div>
+
+                <p id="result-desc" style="color: #666; font-size: 0.95rem; word-break: keep-all; text-align: left; line-height: 1.7; padding: 10px 5px;">
+                </p>
+
+                <div class="interview-box" id="interview-box">
+                    <h4>OT 일정 안내</h4>
+                    <ul class="interview-info">
+                        <li><strong>일자:</strong> <span id="display-date"></span></li>
+                        <li><strong>시간:</strong> <span id="display-time"></span></li>
+                        <li><strong>장소:</strong> <span id="display-location"></span></li>
+                    </ul>
+
+                    <img id="display-map" class="map-image" src="" alt="면접장소 약도">
+
+                    <p class="warning-msg">* OT는 3월 16일 월요일 오후 7시 상남정경관 101호에서 진행될 예정입니다.</p>
+                    <p class="notice-msg">* 합격자는 OT 시작 전 채팅방에 초대되어 OT에 대한 안내가 진행될 예정입니다.</p>
+                    <p class="notice-msg">* 정당한 사유 없이 OT에 불참할 경우 합격이 취소될 수 있으니 유의바랍니다.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer></footer>
+
+    <script>
+        document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
+    </script>
+
+    <script>
+        loadSidebar('result');
+
+        function firstFilled(...values) {
+            return values.find((value) => value !== undefined && value !== null && String(value).trim() !== '');
+        }
+
+        async function getResultConfig() {
+            const content = await window.PainsContent?.load?.();
+            return {
+                content: content || window.__painsContentLatest || {},
+                settings: content?.settings || window.__painsContentLatest?.settings || {},
+                page: content?.resultPage || window.__painsContentLatest?.resultPage || {}
+            };
+        }
+
+        function resultText(page, key, fallback) {
+            return firstFilled(page[key], fallback);
+        }
+
+        function fillTemplate(value, vars) {
+            if (window.PainsContent?.template) return window.PainsContent.template(value, vars);
+            return String(value || '').replace(/\{(\w+)\}/g, (_, key) => vars[key] ?? '');
+        }
+
+        async function checkResult() {
+            const { content, settings, page } = await getResultConfig();
+            const resultOpen = window.PainsContent?.featureGate
+                ? window.PainsContent.featureGate(content, 'result', false)
+                : true;
+            const closedMessage = firstFilled(page.closedMessage, settings.resultClosedMessage);
+
+            if (!resultOpen) {
+                alert(closedMessage);
+                return;
+            }
+
+            document.getElementById('input-id').blur();
+            document.getElementById('input-name').blur();
+            await new Promise(r => setTimeout(r, 200));
+
+            const id = document.getElementById('input-id').value.trim();
+            const name = document.getElementById('input-name').value.trim();
+
+            if (!id || !name) {
+                alert(resultText(page, 'missingInputMessage', ''));
+                return;
+            }
+
+            const resultApiUrl = firstFilled(settings.resultApiUrl, page.apiUrl);
+            if (!resultApiUrl) {
+                alert(resultText(page, 'missingApiMessage', ''));
+                return;
+            }
+
+            const btn = document.getElementById('btn-search');
+            const loader = document.getElementById('loader');
+            const resultArea = document.getElementById('result-area');
+
+            btn.disabled = true;
+            btn.innerText = resultText(page, 'loadingLabel', btn.innerText);
+            loader.style.display = "block";
+            resultArea.style.display = "none";
+
+            try {
+                const timestamp = new Date().getTime();
+                const targetUrl = `${resultApiUrl}?id=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}&t=${timestamp}`;
+
+                const response = await fetch(targetUrl, {
+                    cache: 'no-store'
+                });
+                const data = await response.json();
+
+                if (data.result === "fail") {
+                    alert(resultText(page, 'notFoundMessage', ''));
+                    return;
+                }
+
+                if (data.result === "locked") {
+                    alert(fillTemplate(
+                        resultText(page, 'lockedMessageTemplate', ''),
+                        data
+                    ));
+                    return;
+                }
+
+                document.getElementById('user-name-display').innerText = name;
+                const badge = document.getElementById('status-badge');
+                const desc = document.getElementById('result-desc');
+                const interviewBox = document.getElementById('interview-box');
+                const mapImage = document.getElementById('display-map');
+                const defaultValue = resultText(page, 'defaultValue', '');
+                const messageTemplate = resultText(page, 'resultMessageTemplate', '{name}');
+                const resultMsg = document.querySelector('.result-msg');
+                if (resultMsg) {
+                    resultMsg.innerHTML = fillTemplate(messageTemplate, {
+                        name: `<span id="user-name-display" style="font-weight:bold;">${name}</span>`
+                    });
+                }
+
+                if (data.status === "합격") {
+                    badge.innerText = resultText(page, 'passStatusLabel', '');
+                    badge.className = "status-badge status-pass";
+                    desc.innerHTML = resultText(page, 'passDescription', '');
+
+                    const loc = data.interviewLocation || defaultValue;
+                    document.getElementById('display-date').innerText = data.interviewDate || defaultValue;
+                    document.getElementById('display-time').innerText = data.interviewTime || defaultValue;
+                    document.getElementById('display-location').innerText = loc;
+
+                    const mapUrl = firstFilled(data.mapUrl, page.mapImage);
+                    if (mapUrl) {
+                        mapImage.src = window.PainsContent?.assetUrl ? window.PainsContent.assetUrl(mapUrl) : mapUrl;
+                        mapImage.style.display = 'block';
+                    }
+
+                    interviewBox.style.display = "block";
+
+                } else {
+                    badge.innerText = resultText(page, 'failStatusLabel', '');
+                    badge.className = "status-badge status-fail";
+
+                    desc.innerHTML = resultText(page, 'failDescription', '');
+
+                    interviewBox.style.display = "none";
+                    mapImage.style.display = 'none';
+                }
+
+                resultArea.style.display = "block";
+
+            } catch (error) {
+                console.error("에러 발생:", error);
+                alert(resultText(page, 'errorMessage', ''));
+            } finally {
+                btn.disabled = false;
+                btn.innerText = resultText(page, 'buttonLabel', btn.innerText);
+                loader.style.display = "none";
+            }
+        }
+    </script>
+    <script src="widget/chatbot.js"></script>
+</body>
+</html>
