@@ -234,6 +234,12 @@
     if (window.__painsContentPromise) return window.__painsContentPromise;
 
     const cachedContent = readContentCache();
+    const fallbackPromise = fetch(`${FALLBACK_CONTENT_URL}?v=${Date.now()}`, { cache: 'no-store' })
+      .then((res) => {
+        if (!res.ok) throw new Error(`Fallback content fetch failed: ${res.status}`);
+        return res.json();
+      })
+      .catch(() => null);
     const refreshPromise = fetch(`${REMOTE_CONTENT_URL}?v=${Date.now()}`, { cache: 'no-store' })
       .then((res) => {
         if (!res.ok) throw new Error(`Remote content fetch failed: ${res.status}`);
@@ -243,18 +249,14 @@
         writeContentCache(content);
         return content;
       })
-      .catch(() => fetch(`${FALLBACK_CONTENT_URL}?v=${Date.now()}`, { cache: 'no-store' })
-        .then((res) => {
-          if (!res.ok) throw new Error(`Fallback content fetch failed: ${res.status}`);
-          return res.json();
-        }))
+      .catch(() => fallbackPromise)
       .catch((error) => {
         console.warn('[PAINS] 콘텐츠 데이터를 불러오지 못했습니다. HTML fallback을 유지합니다.', error);
         return null;
       });
 
     window.__painsContentRefreshPromise = refreshPromise;
-    window.__painsContentPromise = cachedContent ? Promise.resolve(cachedContent) : refreshPromise;
+    window.__painsContentPromise = cachedContent ? Promise.resolve(cachedContent) : fallbackPromise;
 
     return window.__painsContentPromise;
   }
