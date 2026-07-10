@@ -10,16 +10,16 @@
         /* ============================ */
         @font-face { font-family: 'KBO_Dia'; src: url('KBO_medium.woff') format('woff'); font-weight: normal; font-style: normal; }
         @font-face { font-family: 'SCDream'; src: url('SCDream5.otf'); font-weight: normal; font-style: normal; }
-        
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         /* body를 Flex 컨테이너로 만들어서 푸터를 아래로 밀어냄 */
-        body { 
-            font-family: 'SCDream', sans-serif; 
-            line-height: 1.6; 
+        body {
+            font-family: 'SCDream', sans-serif;
+            line-height: 1.6;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; 
+            min-height: 100vh;
         }
 
         h1, h2, h3 { font-family: 'KBO_Dia', sans-serif; }
@@ -27,29 +27,29 @@
         /* ============================ */
         /* [2] 메인 컨텐츠 세부 스타일    */
         /* ============================ */
-        .container { 
-            max-width: 800px; 
-            margin: 0 auto; 
-            padding: 0 1.5rem; 
-            flex: 1; 
-            width: 100%; 
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            width: 100%;
         }
-        
+
         .section-card {
             background: white; border-radius: 12px; padding: 2rem;
             margin-bottom: 2rem;
             /* 테두리와 그림자는 menu.js에서 동적 주입 */
         }
         .section-card h3 { font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
-        
+
         .input-group { margin-bottom: 15px; }
         .input-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
-        .input-group input { 
+        .input-group input {
             width: 100%; padding: 12px; font-size: 1rem; font-family: 'SCDream', sans-serif; outline: none;
             /* 테두리, 둥근 모서리 등은 menu.js 덮어씌움 */
         }
-        
-        .btn-check { 
+
+        .btn-check {
             width: 100%; padding: 12px; background-color: #ab3333; color: white; border: none; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.3s; margin-top: 10px;
         }
         .btn-check:hover { background-color: #8f2a2a; }
@@ -66,7 +66,7 @@
         .fee-table td { padding: 12px; border-bottom: 1px solid #eee; color: #333; }
         .fee-table tr:last-child td { border-bottom: none; }
         .fee-table tr:hover { background-color: #f9f9f9; }
-        
+
         .td-date { text-align: center; color: #666; font-size: 0.9rem; width: 15%; }
         .td-desc { text-align: left; font-weight: bold; width: 45%; }
         .td-amount { text-align: right; color: #e74c3c; font-weight: bold; width: 20%; }
@@ -75,10 +75,33 @@
         .msg-welcome { font-size: 1.1rem; margin-bottom: 20px; color: #333; }
         .msg-welcome strong { color: #ab3333; }
 
-        @media (max-width: 600px) { 
+        @media (max-width: 600px) {
             .fee-table th, .fee-table td { font-size: 0.85rem; padding: 10px 8px; }
         }
     </style>
+    <script>
+        (function () {
+            document.documentElement.classList.add('pains-cms-loading');
+            window.__painsCmsLoadingTimer = window.setTimeout(function () {
+                document.documentElement.classList.remove('pains-cms-loading');
+            }, 3500);
+        }());
+    </script>
+    <style id="pains-cms-loading-style">
+        html.pains-cms-loading body {
+            background: #f8f9fb !important;
+        }
+
+        html.pains-cms-loading body > * {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        html.pains-cms-ready body > * {
+            transition: opacity 0.22s ease;
+        }
+    </style>
+    <script defer src="js/content-loader.js?v=20260528"></script>
 </head>
 <body>
 
@@ -87,14 +110,14 @@
     <div class="overlay" id="overlay"></div>
 
     <div class="container">
-        
+
         <div class="section-card" id="auth-section">
             <h3>회비 내역 확인</h3>
             <p style="color:#666; font-size:0.9rem; margin-bottom:20px;">
                 회비 내역은 PAINS 부원만 열람 가능합니다.<br>
                 학번과 이름을 입력해주세요.
             </p>
-            
+
             <div class="input-group">
                 <label>학번</label>
                 <input type="text" id="check-id" placeholder="예: 2024123456">
@@ -103,13 +126,13 @@
                 <label>이름</label>
                 <input type="text" id="check-name" placeholder="예: 홍길동">
             </div>
-            
+
             <button class="btn-check" onclick="checkMemberAndFees()" id="btn-auth">조회하기</button>
         </div>
 
         <div class="section-card" id="fee-area">
             <h3>회비 입출금 내역</h3>
-            
+
             <div class="fee-table-wrapper">
                 <table class="fee-table">
                     <thead>
@@ -134,7 +157,7 @@
     <script>
         document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
     </script>
-    
+
     <script>
         loadSidebar('fee');
 
@@ -145,15 +168,15 @@ async function checkMemberAndFees() {
             const nameInput = document.getElementById('check-name');
             const id = idInput.value.trim();
             const name = nameInput.value.trim();
-            
+
             if (!id || !name) { alert("학번과 이름을 모두 입력해주세요."); return; }
 
             const btn = document.getElementById('btn-auth');
             const originalText = btn.innerText;
-            
+
             btn.disabled = true;
             btn.innerText = "확인 중...";
-            
+
             try {
                 // 👇 [수정 1] URL 끝에 보안 토큰(&token=PAINS_2026_CUSTOM_KEY) 추가
                 const response = await fetch(`${SCRIPT_URL}?id=${id}&name=${name}&type=fee&token=PAINS_2026_CUSTOM_KEY`);
@@ -162,9 +185,9 @@ async function checkMemberAndFees() {
                 // 👇 [수정 2] data.isMember === true 조건 추가
                 if (data.result === "success" && data.isMember === true) {
                     // document.getElementById('user-name-display').innerHTML = `<strong>${name}</strong>`;
-                    document.getElementById('auth-section').style.display = 'none'; 
-                    document.getElementById('fee-area').style.display = 'block';    
-                    
+                    document.getElementById('auth-section').style.display = 'none';
+                    document.getElementById('fee-area').style.display = 'block';
+
                     renderFeeTable(data.feeData);
                 } else {
                     alert("일치하는 부원 정보가 없습니다.\n(등록된 부원만 열람 가능합니다)");
@@ -177,15 +200,15 @@ async function checkMemberAndFees() {
                 btn.innerText = originalText;
             }
         }
-        
+
         function renderFeeTable(feeData) {
             const tbody = document.getElementById('fee-tbody');
-            
+
             if (!feeData || feeData.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:20px;">회비 내역이 없습니다.</td></tr>';
                 return;
             }
-            
+
             if (typeof feeData === "string") {
                  tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:20px; color:red;">${feeData}</td></tr>`;
                  return;
@@ -202,7 +225,7 @@ async function checkMemberAndFees() {
                     </tr>
                 `;
             });
-            
+
             tbody.innerHTML = html;
         }
 

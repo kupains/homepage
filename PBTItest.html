@@ -11,24 +11,24 @@
         /* ============================ */
         /* [1] 폰트 및 공통 스타일        */
         /* ============================ */
-        @font-face { 
-            font-family: 'ATOZ4'; 
-            src: url('fonts/ATOZ4.woff') format('woff'), 
+        @font-face {
+            font-family: 'ATOZ4';
+            src: url('fonts/ATOZ4.woff') format('woff'),
                  url('fonts/ATOZ4.ttf') format('truetype'),
                  url('fonts/ATOZ4.otf') format('opentype');
-            font-weight: normal; 
-            font-style: normal; 
-        }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body, button, input, textarea { 
-            font-family: 'ATOZ4', sans-serif !important; 
+            font-weight: normal;
+            font-style: normal;
         }
 
-        body { 
-            line-height: 1.6; 
-            background-color: #f9f9f9; 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body, button, input, textarea {
+            font-family: 'ATOZ4', sans-serif !important;
+        }
+
+        body {
+            line-height: 1.6;
+            background-color: #f9f9f9;
             display: flex;
             justify-content: center;
         }
@@ -36,19 +36,19 @@
         /* ============================ */
         /* [2] 메인 컨테이너 및 카드      */
         /* ============================ */
-        .container { 
-            width: 100%; 
-            max-width: 520px; 
-            min-height: 100vh; 
-            padding: 2rem 1.5rem; 
+        .container {
+            width: 100%;
+            max-width: 520px;
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
             display: flex;
             flex-direction: column;
         }
 
         .section-card {
-            background: white; 
-            border-radius: 12px; 
-            padding: 2rem; 
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
@@ -67,7 +67,7 @@
         .screen.active {
             display: flex;
         }
-        
+
         .mobile-break { display: none; }
         @media (max-width: 480px) {
             .mobile-break { display: initial; }
@@ -123,7 +123,7 @@
         }
         .progress-bar-fill {
             height: 100%;
-            background-color: #990000; 
+            background-color: #990000;
             width: 0%;
             transition: width 0.3s ease;
         }
@@ -142,7 +142,7 @@
         .question-text {
             font-size: 1.3rem;
             line-height: 1.5;
-            white-space: pre-wrap; 
+            white-space: pre-wrap;
         }
 
         .answer-section {
@@ -158,15 +158,15 @@
             width: 100%;
             min-height: 70px;
             padding: 15px 20px;
-            background-color: #990000; 
+            background-color: #990000;
             color: white;
             border: none;
             border-radius: 12px;
-            font-size: 0.95rem; 
+            font-size: 0.95rem;
             cursor: pointer;
             transition: background-color 0.2s ease;
             line-height: 1.4;
-            white-space: pre-wrap; 
+            white-space: pre-wrap;
         }
         .ci-btn:hover {
             background-color: #6b0d0d;
@@ -192,7 +192,7 @@
             margin-bottom: 1.5rem;
             word-break: keep-all;
         }
-        
+
         .grid-2x2 {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -221,7 +221,7 @@
             line-height: 1.4;
             word-break: keep-all;
         }
-        
+
         .btn-group {
             display: flex;
             flex-direction: column;
@@ -244,7 +244,7 @@
         /* [7] 모달 및 모바일 반응형      */
         /* ============================ */
         .modal-overlay {
-            display: none; 
+            display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.5);
@@ -280,16 +280,16 @@
         /* 모바일 환경일 때의 처리 */
         @media (max-width: 480px) {
             .trait-card .trait-desc {
-                display: none; 
+                display: none;
             }
             .trait-card {
-                cursor: pointer; 
-                text-align: center; 
-                overflow: hidden; 
+                cursor: pointer;
+                text-align: center;
+                overflow: hidden;
             }
             .trait-card .trait-title {
-                margin-bottom: 0; 
-                white-space: nowrap; 
+                margin-bottom: 0;
+                white-space: nowrap;
             }
         }
     </style>
@@ -298,7 +298,7 @@
 
     <div class="container">
         <div class="section-card">
-            
+
             <div id="start-screen" class="screen active">
                 <div class="title-group">
                     <h1 class="main-title">PAINS<br>스포츠 응원<br class="mobile-break">유형 테스트</h1>
@@ -329,9 +329,9 @@
             <div id="result-screen" class="screen">
                 <h3 class="result-subtitle">당신의 응원 스타일은</h3>
                 <h2 class="result-title" id="result-title">AAAA</h2>
-                
+
                 <div class="grid-2x2" id="result-grid"></div>
-                
+
                 <div class="btn-group">
                     <div class="btn-row">
                         <button class="ci-btn" onclick="shareResult()">결과 공유하기</button>
@@ -355,7 +355,7 @@
     <div id="capture-area" style="position: fixed; top: -9999px; left: -9999px; width: 600px; background-color: #ffffff; padding: 40px; box-sizing: border-box; text-align: center; font-family: 'ATOZ4', sans-serif;">
         <h3 style="color: #555; font-size: 1.5rem; margin-top: 10px; margin-bottom: 2rem; font-weight: normal;">당신의 응원 스타일은</h3>
         <h2 id="capture-title" style="color: #990000; font-size: 4rem; margin-bottom: 2.5rem; letter-spacing: 2px;">AAAA</h2>
-        
+
         <div id="capture-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left;">
             </div>
     </div>
@@ -428,25 +428,25 @@
             shuffle(options);
 
             qText.innerText = currentData.q;
-            
+
             btnA.innerText = options[0].text;
             btnA.onclick = () => nextQuestion(options[0].val);
-            
+
             btnB.innerText = options[1].text;
             btnB.onclick = () => nextQuestion(options[1].val);
 
             stepCounter.innerText = `${currentStep + 1}/${totalSteps}`;
-            const progressPercent = (currentStep / totalSteps) * 100; 
+            const progressPercent = (currentStep / totalSteps) * 100;
             progressFill.style.width = progressPercent + "%";
         }
 
         function nextQuestion(selectedVal) {
             scores[selectedVal] += 1;
             currentStep++;
-            
+
             if (currentStep >= totalSteps) {
                 progressFill.style.width = "100%";
-                setTimeout(showResult, 300); 
+                setTimeout(showResult, 300);
             } else {
                 renderQuestion();
             }
@@ -464,11 +464,11 @@
 
             resultTitle.innerText = resultType;
             resultGrid.innerHTML = "";
-            
+
             for (let i = 0; i < resultType.length; i++) {
                 const char = resultType[i];
                 const info = traitDesc[char];
-                
+
                 const cardHtml = `
                     <div class="trait-card" onclick="openModal('${char}')">
                         <div class="trait-title">${info.title}</div>
@@ -484,16 +484,16 @@
 
         function adjustGridTitles() {
             const titles = document.querySelectorAll('#result-grid .trait-title');
-            
+
             titles.forEach(title => {
                 if (window.innerWidth > 480) {
                     title.style.fontSize = '1.1rem';
                     return;
                 }
-                
+
                 title.style.fontSize = '1.1rem';
-                let currentSize = 1.1; 
-                
+                let currentSize = 1.1;
+
                 while (title.scrollWidth > title.clientWidth && currentSize > 0.5) {
                     currentSize -= 0.05;
                     title.style.fontSize = currentSize + 'rem';
@@ -528,9 +528,9 @@
         });
 
         function shareResult() {
-            const resultType = resultTitle.innerText; 
-            const siteUrl = 'https://pains1905.github.io/main/PBTItest'; 
-            
+            const resultType = resultTitle.innerText;
+            const siteUrl = 'https://kupains.github.io/homepage/PBTItest';
+
             const shareTitle = 'PAINS 스포츠 응원 유형 테스트';
             const shareText = `내 응원 스타일은 ${resultType}! 너의 응원 유형은 뭐야?`;
 
@@ -555,13 +555,13 @@
         // ==========================================
         function saveResult() {
             const resultType = resultTitle.innerText;
-            
+
             // 1. 숨겨진 캡처 영역에 결과값 채워넣기
             document.getElementById('capture-title').innerText = resultType;
-            
+
             const captureGrid = document.getElementById('capture-grid');
             captureGrid.innerHTML = ""; // 기존 내용 비우기
-            
+
             // 사진과 동일한 디자인을 위해 캡처 영역의 카드 디자인을 하드코딩으로 고정
             for (let i = 0; i < resultType.length; i++) {
                 const char = resultType[i];
@@ -577,10 +577,10 @@
 
             // 2. html2canvas를 이용해 이미지로 변환 후 다운로드
             const captureArea = document.getElementById('capture-area');
-            
+
             html2canvas(captureArea, {
                 scale: 2, // 이미지가 흐려지지 않도록 해상도 2배 뻥튀기
-                useCORS: true, 
+                useCORS: true,
                 backgroundColor: "#ffffff"
             }).then(canvas => {
                 const link = document.createElement('a');

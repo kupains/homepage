@@ -8,9 +8,9 @@
         /* ============================ */
         /* [1] 폰트 및 공통 스타일        */
         /* ============================ */
-        @font-face { font-family: 'KBO_Dia'; src: url('KBO_medium.woff') format('woff'); font-weight: normal; font-style: normal; }
-        @font-face { font-family: 'SCDream'; src: url('SCDream5.otf'); font-weight: normal; font-style: normal; }
-        
+        @font-face { font-family: 'KBO_Dia'; src: url('fonts/KBO_medium.woff') format('woff'); font-weight: normal; font-style: normal; }
+        @font-face { font-family: 'SCDream'; src: url('fonts/SCDream5.otf'); font-weight: normal; font-style: normal; }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'SCDream', sans-serif; line-height: 1.6; }
         h1, h2, h3 { font-family: 'KBO_Dia', sans-serif; }
@@ -19,14 +19,14 @@
         /* [2] 메인 컨텐츠 세부 스타일    */
         /* ============================ */
         .container { max-width: 800px; margin: 0 auto; padding: 0 1.5rem; }
-        
+
         .section-card {
             background: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem;
             /* box-shadow 및 border는 menu.js에서 동적 적용 */
         }
         .section-card h3 { font-size: 1.5rem; margin-bottom: 1rem; border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; }
         .section-card h4 { color: #333; font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
-        
+
         /* 텍스트 및 리스트 스타일 */
         .content-text { color: #555; font-size: 0.95rem; margin-bottom: 15px; line-height: 1.7; }
         .info-list { padding-left: 20px; margin-bottom: 15px; color: #555; font-size: 0.95rem; }
@@ -49,10 +49,33 @@
             font-size: 0.85rem; color: #888; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #ffcccc;
         }
 
-        @media (max-width: 600px) { 
+        @media (max-width: 600px) {
             .study-table th, .study-table td { padding: 10px; font-size: 0.85rem; }
         }
     </style>
+    <script>
+        (function () {
+            document.documentElement.classList.add('pains-cms-loading');
+            window.__painsCmsLoadingTimer = window.setTimeout(function () {
+                document.documentElement.classList.remove('pains-cms-loading');
+            }, 3500);
+        }());
+    </script>
+    <style id="pains-cms-loading-style">
+        html.pains-cms-loading body {
+            background: #f8f9fb !important;
+        }
+
+        html.pains-cms-loading body > * {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        html.pains-cms-ready body > * {
+            transition: opacity 0.22s ease;
+        }
+    </style>
+    <script defer src="js/content-loader.js?v=20260528"></script>
 </head>
 <body>
 
@@ -61,10 +84,10 @@
     <div class="overlay" id="overlay"></div>
 
     <div class="container">
-        
+
         <div class="section-card">
             <h3>PAINS 11기 스포츠데이터분석 스터디 계획 안내</h3>
-            
+
             <h4>스터디 목표</h4>
             <p class="content-text">
                 다양한 데이터 분석 방법에 대해 학습하고, 실습을 통해 분석 과정을 이해하며 최종적으로 간단한 프로젝트를 진행하며 동아리 활동에 유용한 기본적인 데이터 분석 능력을 기릅니다. </p>
@@ -91,7 +114,7 @@
 
         <div class="section-card">
             <h3>차시별 주제 (예정)</h3>
-            
+
             <table class="study-table">
                 <tbody>
                     <tr>
@@ -127,7 +150,7 @@
 
          <div class="section-card">
             <h3>세이버메트릭스 차시별 주제 (예정)</h3>
-            
+
             <table class="study-table">
                 <tbody>
                     <tr>
@@ -163,7 +186,7 @@
 
         <div class="section-card">
             <h3>유의 사항</h3>
-            
+
             <ul class="info-list">
                 <li>과제 제출 기한은 <strong>다음 차시 전날 11시까지</strong>이며, 조교의 개인톡으로 제출합니다. </li>
                 <li>과제 지각 제출 시 벌금이 부과되며, 벌금은 추후 스터디 회식에서 사용됩니다. </li>

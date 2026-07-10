@@ -5,27 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PAINS - 신입부원 모집</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <style>
         /* ============================ */
         /* [1] 폰트 및 공통 스타일        */
         /* ============================ */
         @font-face { font-family: 'KBO_Dia'; src: url('KBO_medium.woff') format('woff'); font-weight: normal; font-style: normal; }
         @font-face { font-family: 'SCDream'; src: url('SCDream5.otf'); font-weight: normal; font-style: normal; }
-        
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: 'SCDream', sans-serif; line-height: 1.6; position: relative; }
         h1, h2, h3, h4 { font-family: 'KBO_Dia', sans-serif; }
-        
+
         /* ============================ */
         /* [2] 배너 스타일 (유지)         */
         /* ============================ */
         .left-wing {
-            width: 170px; 
+            width: 170px;
             position: fixed;
             top: 150px;
-            left: calc(50% - 660px); 
+            left: calc(50% - 660px);
             z-index: 900;
         }
         .wing-box {
@@ -36,13 +36,13 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             border-top: 3px solid #ab3333;
         }
-        .wing-box h3 { 
+        .wing-box h3 {
             font-size: 15px; margin-bottom: 10px; color: #ab3333; text-align: center;
             border-bottom: 2px solid #eee; padding-bottom: 8px;
         }
         .wing-box ul { list-style: none; }
-        .wing-box li { 
-            padding: 8px 0; border-bottom: 1px solid #eee; cursor: pointer; 
+        .wing-box li {
+            padding: 8px 0; border-bottom: 1px solid #eee; cursor: pointer;
             font-size: 13px; transition: all 0.2s ease; color: #666;
         }
         .wing-box li:last-child { border-bottom: none; }
@@ -76,10 +76,10 @@
         h3 { font-size: 1.8rem; margin-bottom: 1.5rem; border-bottom: 2px solid #eee; padding-bottom: 10px; }
         p { margin-bottom: 10px; }
         strong { color: #ab3333; }
-        
+
         .hero-apply { background-color: #ab3333; color: white; text-align: center; padding: 4rem 1rem; border-radius: 28px; margin-bottom: 28px; }
         .hero-apply h2 { font-size: 2.5rem; margin-bottom: 15px; }
-        
+
         /* 타임라인 */
         .timeline { position: relative; max-width: 100%; margin: 0 auto; padding: 20px 0; }
         .timeline::after { content: ''; position: absolute; width: 3px; background-color: #eee; top: 50px; bottom: 0; left: 20px; margin-left: -1.5px; }
@@ -101,7 +101,7 @@
         .dept-card { flex: 1; min-width: 250px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 4px solid #cf8b8b; transition: transform 0.2s; }
         .dept-card:hover { transform: translateY(-5px); }
         .dept-card h4 { color: #ab3333; margin-bottom: 10px; font-size: 1.2rem; }
-        
+
         .activity-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 20px; }
         .activity-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #eee; transition: transform 0.3s; }
         .activity-card:hover { transform: translateY(-5px); }
@@ -131,7 +131,7 @@
             .hero-apply h2 { font-size: 2rem; }
             .chart-container-wrapper { flex-direction: column; }
             .dept-container { flex-direction: column; }
-            .activity-container { grid-template-columns: 1fr; } 
+            .activity-container { grid-template-columns: 1fr; }
             .timeline-header { display: none; }
             .track-label { display: inline-block; }
             .track-wrapper { flex-direction: column; gap: 15px; }
@@ -139,6 +139,29 @@
             .track-col:last-child { padding-left: 0; }
         }
     </style>
+    <script>
+        (function () {
+            document.documentElement.classList.add('pains-cms-loading');
+            window.__painsCmsLoadingTimer = window.setTimeout(function () {
+                document.documentElement.classList.remove('pains-cms-loading');
+            }, 3500);
+        }());
+    </script>
+    <style id="pains-cms-loading-style">
+        html.pains-cms-loading body {
+            background: #f8f9fb !important;
+        }
+
+        html.pains-cms-loading body > * {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        html.pains-cms-ready body > * {
+            transition: opacity 0.22s ease;
+        }
+    </style>
+    <script defer src="js/content-loader.js?v=20260528"></script>
 </head>
 <body>
 
@@ -187,7 +210,7 @@
             현재 PAINS는 45명의 부원들이 하나의 관심사를 깊이 나누며 활동하고 있습니다. <br>
             성별, 학과, 학번 그 무엇도 상관없습니다. 스포츠에 대한 관심과 열정만 있으면 충분합니다.
         </p>
-        
+
         <div class="chart-container-wrapper">
             <div class="chart-box full-width">
                 <h4>부원 성별 분포</h4>
@@ -213,7 +236,7 @@
     <section>
         <h3>📸 PAINS 활동 톺아보기</h3>
         <p style="margin-bottom: 20px;">PAINS에서는 학기 중 다양한 학술 활동과 친목 활동을 진행합니다.</p>
-        
+
         <div class="activity-container">
             <div class="activity-card">
                 <div class="activity-img-wrapper">
@@ -278,13 +301,13 @@
 
     <section id="sec-recruit">
         <h3>📅 모집 일정</h3>
-        
+
         <div class="timeline-header">
             <div class="header-col">1차 모집 (신입생 지원 불가)</div>
             <div class="header-col">2차 모집</div>
         </div>
 
-        <div class="timeline">
+        <div id="js-apply-timeline" class="timeline">
             <div class="timeline-item">
                 <div class="timeline-content">
                     <div class="track-wrapper">
@@ -420,12 +443,12 @@
                 <a href="https://www.instagram.com/ku_pains" target="_blank" style="text-decoration: none; color: #555;">@ku_pains</a>
             </div>
             <div style="flex: 1; min-width: 250px; background: #f9f9f9; padding: 15px; border-radius: 8px;">
-                <strong>회장 전영재</strong><br>
-                010-3952-1473
+                <strong id="js-apply-phone-label">회장 전영재</strong><br>
+                <span id="js-apply-phone">010-3952-1473</span>
             </div>
             <div style="flex: 1; min-width: 250px; background: #f9f9f9; padding: 15px; border-radius: 8px;">
                 <strong>PAINS 공식 이메일</strong><br>
-                painsports1905@gmail.com
+                <span id="js-apply-email">painsports1905@gmail.com</span>
             </div>
         </div>
     </section>
@@ -433,7 +456,7 @@
     <div class="apply-cta" id="apply-target">
         <h3 style="border: none; text-align: center;">11기 2차 지원하기</h3>
         <p style="margin-bottom: 30px;">신입생, 재학생 모두 환영합니다!</p>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSerzRF12IQLupIIg6-hfn9EPHYFL3riEmm19peCYW6aciNvlw/formResponse" target="_blank" class="btn-apply-big">지원서 작성하러 가기</a>
+        <a href="#" target="_blank" class="btn-apply-big">지원서 작성하러 가기</a>
         <p style="margin-top: 20px; color: #666; font-size: 0.9rem;">지원 기간: 2026년 02월 26일 - 2026년 03월 07일</p>
     </div>
 
@@ -442,7 +465,7 @@
     <script>
         document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
     </script>
-    
+
     <script>
         function scrollToId(id) {
             const element = document.getElementById(id);
@@ -454,7 +477,7 @@
         // 스크롤 감지 및 메뉴 활성화 (ScrollSpy)
         document.addEventListener("DOMContentLoaded", function() {
             const sections = [
-                "sec-overview", "sec-intro", "sec-recruit", 
+                "sec-overview", "sec-intro", "sec-recruit",
                 "sec-activity", "sec-fee", "sec-contact", "apply-target"
             ];
             const menuItems = document.querySelectorAll(".wing-box li");
@@ -491,7 +514,7 @@
 
     <script>
         // 메뉴 및 스마트 헤더 활성화
-        loadSidebar('apply'); 
+        loadSidebar('apply');
 
         // 1. 성별 분포
         const ctxGender = document.getElementById('skillsChart').getContext('2d');

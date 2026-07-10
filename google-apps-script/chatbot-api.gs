@@ -225,3 +225,5 @@ function answerAttendancePlan_(member) {
   return type + ' 출석 기준을 아직 충족하지 못했습니다.\n\n' + base.join('\n') +
     '\n\n최소 ' + best.total + '회 더 출석해야 합니다.\n필요 조합: 정기활동 ' + best.regular + '회, 비정기활동 ' + best.irregular + '회';
 }
+
+

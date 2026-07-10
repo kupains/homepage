@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" /> 
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PAINS - 공지사항</title>
   <style>
@@ -33,13 +33,13 @@
         padding: 20px !important;
       }
     }
-    
+
     h2 {
       font-size: 2rem;
       margin-bottom: 12px;
       text-align: center;
     }
-    
+
     .subnote {
       text-align: center;
       color: #666;
@@ -59,7 +59,7 @@
       padding: 16px;
       margin-bottom: 18px;
     }
-    
+
     .filter-item label {
       display: block;
       font-size: 0.85rem;
@@ -67,7 +67,7 @@
       margin-bottom: 6px;
       font-weight: 600;
     }
-    
+
     /* 검색, 날짜 등의 모든 input과 다중 선택기 높이 및 테두리 통일 */
     .filter-item input {
       width: 100%;
@@ -152,7 +152,7 @@
       width: calc(100% + 2px);
       z-index: 999;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
-      
+
       border: 1px solid #e3e3e3;
       border-top: 1px solid #ededed;
       margin-top: -1px;
@@ -300,7 +300,7 @@
 
     /* 검색창 넓게 쓰기 */
     .search-item {
-      grid-column: 1 / -1; 
+      grid-column: 1 / -1;
     }
 
     .filter-actions {
@@ -309,7 +309,7 @@
       align-items: end;
       justify-content: flex-end;
     }
-    
+
     .btn {
       display: inline-flex;
       align-items: center;
@@ -376,12 +376,12 @@
       justify-content: space-between;
       gap: 14px;
     }
-    
+
     .project-card.is-important {
       background: rgba(171, 51, 51, 0.03);
       border-color: rgba(171, 51, 51, 0.3);
     }
-    
+
     .badge-important {
       color: #ab3333;
       font-weight: 900;
@@ -465,9 +465,32 @@
       }
     }
   </style>
+    <script>
+        (function () {
+            document.documentElement.classList.add('pains-cms-loading');
+            window.__painsCmsLoadingTimer = window.setTimeout(function () {
+                document.documentElement.classList.remove('pains-cms-loading');
+            }, 3500);
+        }());
+    </script>
+    <style id="pains-cms-loading-style">
+        html.pains-cms-loading body {
+            background: #f8f9fb !important;
+        }
+
+        html.pains-cms-loading body > * {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        html.pains-cms-ready body > * {
+            transition: opacity 0.22s ease;
+        }
+    </style>
+    <script defer src="js/content-loader.js?v=20260528"></script>
 </head>
 <body>
-  
+
   <header></header>
   <div class="sidebar" id="sidebar"></div>
   <div class="overlay" id="overlay"></div>
@@ -479,7 +502,7 @@
     </p>
 
     <div class="filters" aria-label="공지 필터">
-      
+
       <div class="filter-item">
         <label for="filter-date-start">시작일 (부터)</label>
         <input id="filter-date-start" type="date" aria-label="시작일" />

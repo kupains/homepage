@@ -15,6 +15,7 @@ const PAINS_LAYOUT = {
             id: 'aboutpains',
             label: 'PAINS 소개',
             items: [
+                { href: 'about', id: 'about', label: 'PAINS 소개' },
                 { href: 'ci', id: 'ci', label: 'CI' },
                 { href: 'members', id: 'members', label: '조직도' }
             ]
@@ -46,8 +47,8 @@ const PAINS_LAYOUT = {
             id: 'applying',
             label: '지원',
             items: [
-                { href: 'javascript:void(0)', id: 'apply', label: '지원하기', onclick: "alert('지원 기간이 아닙니다.'); return false;" },
-                { href: 'javascript:void(0)', id: 'result', label: '지원 결과 안내', onclick: "alert('지원 결과 조회 기간이 아닙니다.'); return false;" }
+                { href: 'apply', id: 'apply', label: '지원하기' },
+                { href: 'result', id: 'result', label: '지원 결과 안내' }
             ]
         }
     ]
@@ -416,6 +417,11 @@ function initGlobalStyles() {
             font-weight: 800 !important;
         }
 
+        body.pains-theme .sidebar a.is-disabled-link {
+            color: #9aa3b2 !important;
+            cursor: not-allowed;
+        }
+
         body.pains-theme .sidebar a.menu-toggle {
             cursor: pointer;
         }
@@ -465,6 +471,7 @@ function initGlobalStyles() {
             background: rgba(15, 23, 42, 0.28) !important;
             opacity: 0;
             visibility: hidden;
+            pointer-events: none;
             transition: opacity 0.24s ease, visibility 0.24s ease;
             z-index: 1090 !important;
             display: block !important;
@@ -473,6 +480,7 @@ function initGlobalStyles() {
         body.pains-theme .overlay.active {
             opacity: 1;
             visibility: visible;
+            pointer-events: auto;
         }
 
         /* 📌 푸터 하단 고정 (Sticky Footer) */
@@ -689,6 +697,7 @@ function toggleMenu() {
     sidebar.classList.toggle('active', willOpen);
     overlay.classList.toggle('active', willOpen);
     document.body.classList.toggle('menu-open', willOpen);
+    document.documentElement.classList.toggle('home-menu-open', willOpen);
 
     if (burger) {
         burger.setAttribute('aria-expanded', String(willOpen));
@@ -703,6 +712,7 @@ function closeMenu() {
     if (sidebar) sidebar.classList.remove('active');
     if (overlay) overlay.classList.remove('active');
     document.body.classList.remove('menu-open');
+    document.documentElement.classList.remove('home-menu-open');
 
     if (burger) {
         burger.setAttribute('aria-expanded', 'false');
@@ -715,9 +725,49 @@ function toggleSubmenu(menuId, arrowId) {
     if (!submenu) return;
 
     const isOpen = submenu.classList.contains('open');
-    submenu.classList.toggle('open', !isOpen);
+    const shouldOpen = !isOpen;
+
+    document.querySelectorAll('.submenu.open').forEach(openMenu => {
+        if (openMenu === submenu) return;
+        openMenu.classList.remove('open');
+
+        const toggle = openMenu.previousElementSibling;
+        const openArrow = toggle ? toggle.querySelector('.menu-arrow') : null;
+        if (openArrow) openArrow.style.transform = 'rotate(0deg)';
+    });
+
+    submenu.classList.toggle('open', shouldOpen);
 
     if (arrow) {
-        arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+        arrow.style.transform = shouldOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+
+    if (shouldOpen) {
+        window.setTimeout(() => {
+            submenu.scrollIntoView({ block: 'nearest' });
+        }, 80);
     }
 }
+
+function ensureContentLoader() {
+    const src = 'js/content-loader.js';
+    if (Array.from(document.scripts).some((script) => script.src.includes(src))) return;
+
+    const script = document.createElement('script');
+    script.src = `${src}?v=${Date.now()}`;
+    script.defer = true;
+    document.head.appendChild(script);
+}
+
+ensureContentLoader();
+
+document.addEventListener('pains:content-ready', function (event) {
+    var r = event.detail && event.detail.recruitment;
+    if (!r) return;
+
+    var applyLink = document.getElementById('link-apply');
+    if (applyLink && r.applyVisible !== false) {
+        applyLink.href = 'apply';
+        applyLink.removeAttribute('onclick');
+    }
+});

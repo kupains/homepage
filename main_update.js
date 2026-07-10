@@ -15,6 +15,7 @@ const PAINS_LAYOUT = {
             id: 'aboutpains',
             label: 'PAINS 소개',
             items: [
+                { href: 'about', id: 'about', label: 'PAINS 소개' },
                 { href: 'ci', id: 'ci', label: 'CI' },
                 { href: 'members', id: 'members', label: '조직도' }
             ]

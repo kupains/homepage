@@ -9,13 +9,13 @@
         /* [1] 기본 스타일 및 레이아웃 너비 설정 */
         /* ============================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        section { 
-            max-width: 1000px !important; 
+
+        section {
+            max-width: 1000px !important;
             width: 100%;
-            margin: 0 auto 28px auto !important; 
+            margin: 0 auto 28px auto !important;
         }
-        
+
         h2 { font-size: 2.2rem; margin-bottom: 40px; text-align: center; }
 
         .event-description {
@@ -43,20 +43,20 @@
         .society-list {
             display: flex;
             flex-direction: column;
-            gap: 50px; 
+            gap: 50px;
         }
 
         .society-btn {
             position: relative;
             display: block;
             width: 100%;
-            height: 180px; 
+            height: 180px;
             border-radius: 16px;
             overflow: hidden;
             text-decoration: none;
             background-size: cover;
             background-position: center;
-            cursor: pointer; 
+            cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -64,20 +64,20 @@
             content: "";
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.55); 
+            background-color: rgba(0, 0, 0, 0.55);
             z-index: 1;
             transition: background-color 0.4s ease;
         }
 
         .society-btn:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
-        
+
         /* [수정] 마우스 오버 시 또는 모바일 터치(active) 시 배경이 더 어두워짐 (글씨 가독성 확보) */
         .society-btn:hover::before,
         .society-btn.active::before {
-            background-color: rgba(0, 0, 0, 0.75); 
+            background-color: rgba(0, 0, 0, 0.75);
         }
 
         /* 큰 제목 스타일 */
@@ -174,14 +174,14 @@
         /* ============================ */
         /* [4] 반응형 스타일 (모바일) */
         /* ============================ */
-        @media (max-width: 600px) { 
+        @media (max-width: 600px) {
             h2 { font-size: 1.8rem; margin-bottom: 25px; }
             .society-btn { height: 200px; } /* 모바일에서는 위아래 요소가 많아져 높이를 조금 더 키움 */
             .society-btn .society-name { font-size: 1.8rem; }
-            
+
             .society-details { padding: 15px; }
             .detail-title { font-size: 1.2rem; margin-bottom: 10px; }
-            
+
             .detail-content-row {
                 flex-direction: column;
             }
@@ -201,6 +201,29 @@
             }
         }
     </style>
+    <script>
+        (function () {
+            document.documentElement.classList.add('pains-cms-loading');
+            window.__painsCmsLoadingTimer = window.setTimeout(function () {
+                document.documentElement.classList.remove('pains-cms-loading');
+            }, 3500);
+        }());
+    </script>
+    <style id="pains-cms-loading-style">
+        html.pains-cms-loading body {
+            background: #f8f9fb !important;
+        }
+
+        html.pains-cms-loading body > * {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        html.pains-cms-ready body > * {
+            transition: opacity 0.22s ease;
+        }
+    </style>
+    <script defer src="js/content-loader.js?v=20260528"></script>
 </head>
 <body>
 
@@ -213,15 +236,15 @@
         <p class="event-description">PAINS에서는 다양한 소모임을 통해 비슷한 관심사를 가진 부원들 간의 친목을 장려하고 있습니다. <br>
         아래 현재 개설된 소모임을 확인해보세요! <br>
         자세한 내용은 PAINS 공지방과 잡담방을 확인해주시기 바랍니다.</p>
-        
+
         <div class="society-list">
-            
+
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/e스포츠 소모임.jpg');">
                 <span class="society-name">e스포츠 소모임</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">e스포츠 소모임</div>
-                    
+
                     <div class="detail-content-row">
                         <div class="detail-leader">모임장: 손영현</div>
                         <div class="detail-divider"></div>
@@ -232,7 +255,7 @@
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/LG 트윈스 팬 소모임.png');">
                 <span class="society-name">LG 트윈스 팬 소모임</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">LG 트윈스 팬 소모임</div>
                     <div class="detail-content-row">
@@ -245,7 +268,7 @@
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/F1 소모임.jpg');">
                 <span class="society-name">F1 소모임</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">F1 소모임</div>
                     <div class="detail-content-row">
@@ -255,14 +278,14 @@
                     </div>
                 </div>
             </div>
-            
+
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/카츠손으로먹기연구회.png');">
                 <span class="society-name">카츠손으로먹기연구회</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">카츠손으로먹기연구회</div>
-                    
+
                     <div class="detail-content-row">
                         <div class="detail-leader">모임장: 최나훈</div>
                         <div class="detail-divider"></div>
@@ -274,10 +297,10 @@
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/보드게임 소모임.jpg');">
                 <span class="society-name">보드게임 소모임</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">보드게임 소모임</div>
-                    
+
                     <div class="detail-content-row">
                         <div class="detail-leader">모임장: 정윤도</div>
                         <div class="detail-divider"></div>
@@ -288,10 +311,10 @@
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/KIA 타이거즈 팬 소모임.jpg');">
                 <span class="society-name">KIA 타이거즈 팬 소모임</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">KIA 타이거즈 팬 소모임</div>
-                    
+
                     <div class="detail-content-row">
                         <div class="detail-leader">모임장: 서지우</div>
                         <div class="detail-divider"></div>
@@ -302,10 +325,10 @@
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/롯데자이언츠의우승을위한소모임.jpg');">
                 <span class="society-name">롯데자이언츠의우승을위한소모임</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">롯데자이언츠의우승을위한소모임</div>
-                    
+
                     <div class="detail-content-row">
                         <div class="detail-leader">모임장: 전영재</div>
                         <div class="detail-divider"></div>
@@ -316,10 +339,10 @@
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/영화소모임.png');">
                 <span class="society-name">영화소모임</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">영화소모임</div>
-                    
+
                     <div class="detail-content-row">
                         <div class="detail-leader">모임장: 이지섭</div>
                         <div class="detail-divider"></div>
@@ -330,10 +353,10 @@
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/두산 소모임.png');">
                 <span class="society-name">두산 소모임</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">두산 소모임</div>
-                    
+
                     <div class="detail-content-row">
                         <div class="detail-leader">모임장: 이지섭</div>
                         <div class="detail-divider"></div>
@@ -344,10 +367,10 @@
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/NC 다이노스 소모임.png');">
                 <span class="society-name">NC 다이노스 소모임</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">NC 다이노스 소모임</div>
-                    
+
                     <div class="detail-content-row">
                         <div class="detail-leader">모임장: 최나훈</div>
                         <div class="detail-divider"></div>
@@ -358,10 +381,10 @@
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/호박고구마회.jpg');">
                 <span class="society-name">호박고구마회 🎃🍠</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">호박고구마회 🎃🍠</div>
-                    
+
                     <div class="detail-content-row">
                         <div class="detail-leader">모임장: 김가현</div>
                         <div class="detail-divider"></div>
@@ -372,10 +395,10 @@
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/회귀분석 스터디 소모임.png');">
                 <span class="society-name">회귀분석 스터디 소모임</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">회귀분석 스터디 소모임</div>
-                    
+
                     <div class="detail-content-row">
                         <div class="detail-leader">모임장: 이지섭</div>
                         <div class="detail-divider"></div>
@@ -386,10 +409,10 @@
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/키움 히어로즈 소모임.png');">
                 <span class="society-name">키움 히어로즈 소모임</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">키움 히어로즈 소모임</div>
-                    
+
                     <div class="detail-content-row">
                         <div class="detail-leader">모임장: 이정호</div>
                         <div class="detail-divider"></div>
@@ -400,10 +423,10 @@
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/노래방 소모임.jpg');">
                 <span class="society-name">🎤노래방🎶 소모임</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">🎤노래방🎶 소모임</div>
-                    
+
                     <div class="detail-content-row">
                         <div class="detail-leader">모임장: 하승민</div>
                         <div class="detail-divider"></div>
@@ -414,10 +437,10 @@
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/삼성 라이온즈 소모임.jpg');">
                 <span class="society-name">삼성 라이온즈 소모임</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">삼성 라이온즈 소모임</div>
-                    
+
                     <div class="detail-content-row">
                         <div class="detail-leader">모임장: 성유현</div>
                         <div class="detail-divider"></div>
@@ -428,10 +451,10 @@
 
             <div class="society-btn" onclick="toggleDetails(this)" style="background-image: url('images/Champains.jpg');">
                 <span class="society-name">Champains</span>
-                
+
                 <div class="society-details">
                     <div class="detail-title">Champains</div>
-                    
+
                     <div class="detail-content-row">
                         <div class="detail-leader">모임장: 전영재</div>
                         <div class="detail-divider"></div>
@@ -449,14 +472,13 @@
 
     <script>
         document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
-        
+
         // 모바일 터치 대응을 위한 자바스크립트
         function toggleDetails(element) {
             // 터치 시 해당 요소에 active 클래스 토글 (PC에서는 CSS :hover로 이미 작동함)
             element.classList.toggle('active');
         }
     </script>
-    
     <script>
         if (typeof loadSidebar === 'function') {
             loadSidebar('society');

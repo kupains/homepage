@@ -9,13 +9,13 @@
         /* [1] 기본 스타일 및 레이아웃 너비 설정 */
         /* ============================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        section { 
-            max-width: 1000px !important; 
+
+        section {
+            max-width: 1000px !important;
             width: 100%;
-            margin: 0 auto 28px auto !important; 
+            margin: 0 auto 28px auto !important;
         }
-        
+
         h2 { font-size: 2.2rem; margin-bottom: 40px; text-align: center; }
 
         .event-description {
@@ -43,7 +43,7 @@
         .event-list {
             display: flex;
             flex-direction: column;
-            gap: 40px; 
+            gap: 40px;
         }
 
         .event-btn {
@@ -56,7 +56,7 @@
             text-decoration: none;
             background-size: cover;
             background-position: center;
-            cursor: pointer; 
+            cursor: pointer;
             /* [수정] 부드러운 크기 확대 및 그림자 효과 추가 */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -65,7 +65,7 @@
             content: "";
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0, 0, 0, 0.4); 
+            background-color: rgba(0, 0, 0, 0.4);
             z-index: 1;
             /* [수정] 배경색 변경을 위한 전환 효과 */
             transition: background-color 0.3s ease;
@@ -74,9 +74,9 @@
         /* [수정] 마우스 오버 시 박스가 약간 커지고 어두워짐 */
         .event-btn:hover {
             transform: scale(1.02); /* 크기 2% 확대 */
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25); 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
         }
-        
+
         .event-btn:hover::before,
         .event-btn:active::before {
             background-color: rgba(0, 0, 0, 0.65); /* 색상이 더 어두워짐 */
@@ -101,12 +101,35 @@
         /* ============================ */
         /* [3] 반응형 스타일 (모바일) */
         /* ============================ */
-        @media (max-width: 600px) { 
+        @media (max-width: 600px) {
             h2 { font-size: 1.8rem; margin-bottom: 25px; }
             .event-btn { height: 180px; }
             .event-btn .event-name { font-size: 1.8rem; }
         }
     </style>
+    <script>
+        (function () {
+            document.documentElement.classList.add('pains-cms-loading');
+            window.__painsCmsLoadingTimer = window.setTimeout(function () {
+                document.documentElement.classList.remove('pains-cms-loading');
+            }, 3500);
+        }());
+    </script>
+    <style id="pains-cms-loading-style">
+        html.pains-cms-loading body {
+            background: #f8f9fb !important;
+        }
+
+        html.pains-cms-loading body > * {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        html.pains-cms-ready body > * {
+            transition: opacity 0.22s ease;
+        }
+    </style>
+    <script defer src="js/content-loader.js?v=20260528"></script>
 </head>
 <body>
 
@@ -119,10 +142,10 @@
         <p class="event-description">
             PAINS에서 진행하는 다양한 이벤트에 참여해보세요!
         </p>
-        
+
         <div class="event-list">
-            
-            <div class="event-btn" onclick="location.href='PBTItest'" style="background-image: url('images/PBTI.jpg');">
+
+            <div class="event-btn" onclick="location.href='PBTItest'" style="background-image: url('images/NOTICE_ACTIVITIES.png');">
                 <span class="event-name">나의 응원 유형은? - PBTI</span>
             </div>
 
@@ -134,7 +157,6 @@
     <script>
         document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
     </script>
-    
     <script>
         // 사이드바 호출 함수 (기존 society에서 event로 임의 변경)
         if (typeof loadSidebar === 'function') {

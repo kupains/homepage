@@ -29,36 +29,36 @@
 
         .input-group { margin-bottom: 15px; }
         .input-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
-        .input-group input, .input-group select { 
+        .input-group input, .input-group select {
             width: 100%; padding: 12px; font-size: 1rem; outline: none;
         }
-        
-        .btn-check, .btn-submit { 
+
+        .btn-check, .btn-submit {
             width: 100%; padding: 12px; color: white; border: none; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.3s, transform 0.2s; margin-top: 10px;
         }
         .btn-check { background-color: #444; }
         .btn-submit { background-color: #ab3333; }
-        
+
         .btn-check:hover { background-color: #222; transform: translateY(-1px); }
         .btn-submit:hover { background-color: #8f2a2a; transform: translateY(-1px); }
 
-        #result-area { 
-            display: none; 
-            margin-top: 25px; 
-            text-align: center; 
-            padding-top: 20px; 
-            border-top: 1px dashed #ddd; 
+        #result-area {
+            display: none;
+            margin-top: 25px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px dashed #ddd;
             animation: fadeIn 0.4s ease;
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .badge-container { display: flex; justify-content: center; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
-        
-        .count-badge { 
+
+        .count-badge {
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             padding: 15px 20px; border-radius: 12px; background-color: #333; color: white; flex: 1; min-width: 120px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.08); transition: all 0.3s ease;
@@ -72,7 +72,7 @@
         .rule-box {
             background-color: #fff5f5; border-left: 5px solid #ab3333;
             border-radius: 8px; padding: 18px; margin-top: 20px; text-align: left; font-size: 0.95rem; color: #555; line-height: 1.6;
-            word-break: keep-all; 
+            word-break: keep-all;
         }
         .rule-box strong { color: #ab3333; font-weight: bold; }
 
@@ -186,6 +186,29 @@
     </style>
 
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        (function () {
+            document.documentElement.classList.add('pains-cms-loading');
+            window.__painsCmsLoadingTimer = window.setTimeout(function () {
+                document.documentElement.classList.remove('pains-cms-loading');
+            }, 3500);
+        }());
+    </script>
+    <style id="pains-cms-loading-style">
+        html.pains-cms-loading body {
+            background: #f8f9fb !important;
+        }
+
+        html.pains-cms-loading body > * {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        html.pains-cms-ready body > * {
+            transition: opacity 0.22s ease;
+        }
+    </style>
+    <script defer src="js/content-loader.js?v=20260528"></script>
 </head>
 <body>
 
@@ -198,7 +221,7 @@
         <p style="text-align: center; color:#666; font-size:0.95rem; margin-bottom:25px; word-break: keep-all;">
             학번과 이름을 입력하여 회원 정보를 확인하세요.
         </p>
-        
+
         <div class="input-group">
             <label>학번</label>
             <input type="text" id="check-id" placeholder="예: 2024123456">
@@ -207,12 +230,12 @@
             <label>이름</label>
             <input type="text" id="check-name" placeholder="예: 홍길동">
         </div>
-        
+
         <button class="btn-check" onclick="checkUsedCount()" id="btn-check-submit">조회하기</button>
 
         <div id="result-area">
             <p class="result-msg"><span id="user-name-display" style="font-weight:bold; color:#ab3333; font-size: 1.2rem;"></span>님의 정보 및 출석 현황</p>
-            
+
             <div class="badge-container">
                 <div class="count-badge" id="status-badge" style="background-color: #f5f5f5; box-shadow: none;">
                     <span class="label-text" id="status-label" style="color: #666;">회원 자격</span>
@@ -336,7 +359,7 @@
     <script>
         document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
     </script>
-    
+
     <script>
         // 전역 변수로 선언하여 모듈 스크립트에서도 쓸 수 있도록 합니다.
         window.SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxL7shd9op70ZSSuEYe3Iod6wSoRfQ_UKLs7DU1TdOAWoFr1Xr-d8ZDzBBQ_Iq1kEivPg/exec";
@@ -363,7 +386,7 @@
             if (!status) return { text: "-", className: "status-default", hoverable: false };
             if (status === "출석") return { text: status, className: "status-blue", hoverable: true };
             if (isIrregular && status === "결석") return { text: status, className: "status-red", hoverable: true };
-            
+
             if (["사전 통지 결석", "사전 통지 지각", "사전 통지 조퇴"].includes(status)) {
                 return { text: status, className: "status-green", hoverable: true };
             }
@@ -388,7 +411,7 @@
                 const title = String(item.title || "").trim() || "-";
                 const meta = getAttendanceStatusMeta(item.status, isIrregular);
                 let statusHtml = escapeHtml(meta.text);
-                
+
                 if (meta.hoverable && meta.text !== "-") {
                     statusHtml = `<span class="status-hoverable" data-status="${escapeHtml(meta.text)}">${escapeHtml(meta.text)}</span>`;
                 }
@@ -439,26 +462,26 @@
         async function checkUsedCount() {
             document.getElementById('check-id').blur();
             document.getElementById('check-name').blur();
-            
+
             const id = document.getElementById('check-id').value.trim();
             const name = document.getElementById('check-name').value.trim();
             if (!id || !name) { alert("학번과 이름을 입력해주세요."); return; }
 
             const btn = document.getElementById('btn-check-submit');
             const resultArea = document.getElementById('result-area');
-            
+
             btn.disabled = true;
             btn.innerText = "조회 중...";
-            
+
             try {
                 const response = await fetch(`${window.SCRIPT_URL}?type=attendance&id=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}`);
                 const data = await response.json();
 
                 if (data.result === "success") {
                     document.getElementById('user-name-display').innerText = name;
-                    document.getElementById('member-status').innerText = data.memberStatus; 
+                    document.getElementById('member-status').innerText = data.memberStatus;
                     document.getElementById('used-count').innerText = data.usedCount;
-                    
+
                     let rawRate = String(data.attendanceRate).replace('%', '').trim();
                     let rateNum = parseFloat(rawRate);
                     if (isNaN(rateNum)) rateNum = 0;
@@ -469,21 +492,21 @@
 
                     const attendanceBadge = document.getElementById('attendance-badge');
                     attendanceBadge.style.background = `linear-gradient(to right, #ab3333 ${rateNum}%, #dca5a5 ${rateNum}%)`;
-                    
-                    const statusName = String(data.memberStatus).replace(/\s/g, ''); 
+
+                    const statusName = String(data.memberStatus).replace(/\s/g, '');
                     const statusBadge = document.getElementById('status-badge');
                     const statusText = document.getElementById('member-status');
                     const statusLabel = document.getElementById('status-label');
 
                     let bgColor = "#f5f5f5", textColor = "#333", hasCustomColor = false;
 
-                    if (statusName.includes('준회원')) { bgColor = '#c4eed0'; textColor = '#0a6442'; hasCustomColor = true; } 
-                    else if (statusName.includes('정회원')) { bgColor = '#d3e3fd'; textColor = '#0c579b'; hasCustomColor = true; } 
+                    if (statusName.includes('준회원')) { bgColor = '#c4eed0'; textColor = '#0a6442'; hasCustomColor = true; }
+                    else if (statusName.includes('정회원')) { bgColor = '#d3e3fd'; textColor = '#0c579b'; hasCustomColor = true; }
                     else if (statusName.includes('활동OB')) { bgColor = '#eaddff'; textColor = '#52217c'; hasCustomColor = true; }
 
                     if (hasCustomColor) {
                         statusBadge.style.backgroundColor = bgColor;
-                        statusBadge.style.border = "none"; 
+                        statusBadge.style.border = "none";
                         statusText.style.color = textColor;
                         statusLabel.style.color = textColor;
                     } else {
@@ -520,24 +543,24 @@
                 const response = await fetch(SCHEDULE_CSV_URL);
                 const data = await response.text();
                 const rows = data.split("\n").map(row => row.trim()).filter(row => row.length > 0);
-                
+
                 const today = new Date();
-                today.setHours(0,0,0,0); 
-                
+                today.setHours(0,0,0,0);
+
                 let availableEvents = [];
 
                 for(let i = 1; i < rows.length; i++) {
                     const cols = rows[i].split(",");
-                    if (cols.length < 7) continue; 
+                    if (cols.length < 7) continue;
 
                     const eventName = cols[0].trim();
-                    const dateStr = cols[1].trim(); 
-                    const type = cols[6].trim();    
+                    const dateStr = cols[1].trim();
+                    const type = cols[6].trim();
 
                     const [y, m, d] = dateStr.split('-').map(Number);
                     const eventDate = new Date(y, m - 1, d);
                     eventDate.setHours(0,0,0,0);
-                    
+
                     const diffTime = eventDate.getTime() - today.getTime();
                     const diffDays = Math.round(diffTime / (1000 * 3600 * 24));
 
@@ -574,13 +597,13 @@
 
         loadUpcomingEvents();
     </script>
-    
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
         // doc과 setDoc 함수가 추가되었습니다.
         import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
-        
+
         const firebaseConfig = {
             apiKey: "AIzaSyD_NFkxSRQ9hkxuSdiwtqpBhhP0mN5jUTg",
             authDomain: "attendance-6ee39.firebaseapp.com",
@@ -590,7 +613,7 @@
             appId: "1:604064062511:web:80fade1c35157b688efada",
             measurementId: "G-7J2BLPRPNN"
         };
-    
+
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const db = getFirestore(app);
@@ -600,17 +623,17 @@
             const id = document.getElementById('submit-id').value.trim();
             const name = document.getElementById('submit-name').value.trim();
             const selected = document.querySelector('input[name="selected_event"]:checked');
-            const absenceType = document.getElementById('submit-type').value; 
-            
+            const absenceType = document.getElementById('submit-type').value;
+
             if (!id || !name) { alert("학번과 이름을 입력해주세요."); return; }
             if (!selected) { alert("결석계를 제출할 활동을 선택해주세요."); return; }
 
             const btn = document.getElementById('btn-submit-form');
             const originalBtnText = btn.innerText;
 
-            const eventName = selected.value; 
+            const eventName = selected.value;
             const dateMatch = eventName.match(/\((\d{4}-\d{2}-\d{2})\)$/);
-            const dateStr = dateMatch ? dateMatch[1] : ""; 
+            const dateStr = dateMatch ? dateMatch[1] : "";
 
             btn.disabled = true;
             btn.innerText = "정보 확인 중...";
@@ -625,14 +648,14 @@
                     alert("이미 해당 활동에 대한 결석계를 제출하셨습니다.\n결석계 취소나 변경을 원하실 경우, 운영진에게 문의해주세요.");
                     btn.disabled = false;
                     btn.innerText = originalBtnText;
-                    return; 
+                    return;
                 }
 
                 if (checkData.result === 'fail' || checkData.result === 'invalid_member') {
                     alert("일치하는 부원 정보가 없습니다.\n학번과 이름을 다시 확인해주세요.");
                     btn.disabled = false;
                     btn.innerText = originalBtnText;
-                    return; 
+                    return;
                 }
 
                 // 2. 제출 확인 알림창
@@ -650,9 +673,9 @@
                 // 요구사항 반영: 학번_일정날짜 조합으로 커스텀 문서 ID 생성
 
                 const pureEventName = eventName.replace(/\//g, ' ');
-                
+
                 const customDocumentId = `${id}_${pureEventName}`;
-                
+
                 const firebaseSubmitData = {
                     studentId: id,
                     name: name,
@@ -678,7 +701,7 @@
                         name: name,
                         eventName: eventName,
                         date: dateStr,
-                        absenceType: absenceType 
+                        absenceType: absenceType
                     })
                 });
 
@@ -686,7 +709,7 @@
                 alert("결석계가 성공적으로 제출 및 이중 저장되었습니다.");
                 selected.checked = false;
                 document.getElementById('submit-type').value = "결석";
-                
+
                 // 원하신다면 제출 후 학번과 이름을 비울 수도 있습니다.
                 // document.getElementById('submit-id').value = "";
                 // document.getElementById('submit-name').value = "";

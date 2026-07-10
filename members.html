@@ -8,8 +8,8 @@
         /* ============================ */
         /* [1] 폰트 및 기본 스타일        */
         /* ============================ */
-        @font-face { font-family: 'KBO_Dia'; src: url('KBO_medium.woff') format('woff'); font-weight: normal; font-style: normal; }
-        @font-face { font-family: 'SCDream'; src: url('SCDream5.otf'); font-weight: normal; font-style: normal; }
+        @font-face { font-family: 'KBO_Dia'; src: url('fonts/KBO_medium.woff') format('woff'); font-weight: normal; font-style: normal; }
+        @font-face { font-family: 'SCDream'; src: url('fonts/SCDream5.otf'); font-weight: normal; font-style: normal; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'SCDream', sans-serif; line-height: 1.6; }
@@ -26,17 +26,17 @@
         /* ============================ */
         .org-chart-wrapper { overflow-x: auto; padding: 20px 0; text-align: center; -webkit-overflow-scrolling: touch; }
         .tree-container { display: inline-block; position: relative; padding-top: 20px; min-width: 700px; }
-        
-        .org-card { 
-            background: white; border: 2px solid #ab3333; border-radius: 12px; padding: 15px; text-align: center; width: 160px; position: relative; z-index: 2; margin: 0 auto; 
+
+        .org-card {
+            background: white; border: 2px solid #ab3333; border-radius: 12px; padding: 15px; text-align: center; width: 160px; position: relative; z-index: 2; margin: 0 auto;
             /* 기본 그림자(box-shadow)는 menu.js에서 동적 주입 (.org-card) */
         }
-        
+
         .org-img { width: 80px; height: 80px; background-color: #eee; border-radius: 50%; margin: 0 auto 10px; background-size: cover; background-position: center; transition: background-image 0.3s ease-in-out; }
         .org-role { color: #ab3333; font-weight: bold; font-size: 0.9rem; margin-bottom: 4px; }
         .org-name { font-size: 1.1rem; font-weight: bold; margin-bottom: 4px; }
         .org-major { font-size: 0.8rem; color: #666; word-break: keep-all; }
-        
+
         /* 조직도 선 및 배치 연결 */
         .level-1, .level-2, .level-3 { display: flex; justify-content: center; position: relative; }
         .level-1 { margin-bottom: 50px; }
@@ -57,6 +57,29 @@
 
         @media (max-width: 600px) { section { padding: 2rem 0; } }
     </style>
+    <script>
+        (function () {
+            document.documentElement.classList.add('pains-cms-loading');
+            window.__painsCmsLoadingTimer = window.setTimeout(function () {
+                document.documentElement.classList.remove('pains-cms-loading');
+            }, 3500);
+        }());
+    </script>
+    <style id="pains-cms-loading-style">
+        html.pains-cms-loading body {
+            background: #f8f9fb !important;
+        }
+
+        html.pains-cms-loading body > * {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        html.pains-cms-ready body > * {
+            transition: opacity 0.22s ease;
+        }
+    </style>
+    <script defer src="js/content-loader.js?v=20260528"></script>
 </head>
 <body>
 
@@ -71,7 +94,7 @@
                 <div class="level-1">
                     <div style="position: relative;">
                         <div class="org-card" data-role="회장v2">
-                            <div class="org-img"></div> 
+                            <div class="org-img"></div>
                             <div class="org-role">회장</div>
                             <div class="org-name">전영재</div>
                             <div class="org-major">언어학과 24</div>
@@ -131,7 +154,6 @@
     <script>
         document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
     </script>
-    
     <script>
         loadSidebar('members');
         // 부원 명단 이미지 로컬 설정

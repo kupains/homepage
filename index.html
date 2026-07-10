@@ -11,15 +11,15 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="PAINS - 고려대학교 스포츠 통계분석 동아리">
     <meta property="og:description" content="고려대학교 유일의 스포츠 통계분석 동아리 PAINS(페인스)입니다.">
-    <meta property="og:url" content="https://pains1905.github.io/main/">
-    <meta property="og:image" content="https://pains1905.github.io/main/images/PAINS_logo.png">
+    <meta property="og:url" content="https://kupains.github.io/homepage/">
+    <meta property="og:image" content="https://kupains.github.io/homepage/images/PAINS_logo.png">
 
     <style>
         /* ============================ */
         /* [1] 기본 설정 및 레이아웃 너비 맞춤 */
         /* ============================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         /* menu.js에서 폰트를 관리하므로 중복 폰트 코드는 삭제되었습니다. */
 
         .hero {
@@ -27,14 +27,14 @@
             text-align: center;
             padding: 4rem 2rem;
             /* 👇 About Us 상자와 완벽하게 동일한 너비 적용 */
-            max-width: 1000px !important; 
+            max-width: 1000px !important;
             width: 100%;
-            margin: 0 auto 28px auto !important; 
+            margin: 0 auto 28px auto !important;
         }
 
         section {
             /* 👇 모든 섹션(About Us 포함)의 너비를 통일 */
-            max-width: 1000px !important; 
+            max-width: 1000px !important;
             width: 100%;
             margin: 0 auto 28px auto !important;
         }
@@ -88,10 +88,10 @@
         .calendar-container {
             width: 100%;
             /* 👇 이중 상자 느낌을 제거하여 About Us 상자 너비에 꽉 차게 변경 */
-            background: transparent !important; 
-            box-shadow: none !important; 
-            border: none !important; 
-            border-radius: 0 !important; 
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+            border-radius: 0 !important;
             position: relative;
             overflow: visible;
         }
@@ -515,7 +515,2348 @@
             .hero { padding: 3rem 1rem; }
             .activities { flex-direction: column; }
         }
+
+        body.pains-theme .home-shell {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        body.pains-theme .home-shell .home-hero {
+            position: relative;
+            max-width: none !important;
+            width: 100% !important;
+            min-height: calc(100vh - 132px);
+            margin: 0 0 40px 0 !important;
+            padding: 0 !important;
+            display: grid;
+            align-items: stretch;
+            overflow: hidden;
+            border: 0 !important;
+            border-radius: 0 !important;
+            background: #9f252b !important;
+            box-shadow: none !important;
+            color: #fff;
+        }
+
+        body.pains-theme .home-hero__media {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        body.pains-theme .home-hero__media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.72) contrast(0.92);
+            opacity: 0.34;
+            transform: scale(1.04);
+        }
+
+        body.pains-theme .home-hero__shade {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(80, 10, 24, 0.92) 0%, rgba(124, 24, 34, 0.78) 42%, rgba(124, 24, 34, 0.2) 100%),
+                linear-gradient(180deg, rgba(10, 16, 26, 0.18), rgba(10, 16, 26, 0.52));
+        }
+
+        body.pains-theme .home-hero__content {
+            position: relative;
+            z-index: 1;
+            width: min(1120px, calc(100% - 48px));
+            margin: 0 auto;
+            padding: 86px 0 78px;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 360px;
+            align-items: end;
+            gap: 56px;
+        }
+
+        body.pains-theme .home-hero__copy {
+            max-width: 680px;
+            text-align: left;
+        }
+
+        body.pains-theme .home-eyebrow {
+            margin: 0 0 18px;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 0.92rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        body.pains-theme .home-hero__copy h2 {
+            margin: 0;
+            border: 0 !important;
+            color: #fff !important;
+            font-size: 4.6rem;
+            line-height: 0.95;
+            font-weight: 900;
+        }
+
+        body.pains-theme .home-hero__copy p {
+            margin: 22px 0 0;
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 1.16rem;
+            line-height: 1.72;
+        }
+
+        body.pains-theme .home-hero__actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        body.pains-theme .home-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 0 18px;
+            border-radius: 999px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: transform 0.18s ease, background-color 0.18s ease, border-color 0.18s ease;
+        }
+
+        body.pains-theme .home-cta:hover {
+            transform: translateY(-2px);
+        }
+
+        body.pains-theme .home-cta--primary {
+            background: #fff;
+            color: #9f1239;
+        }
+
+        body.pains-theme .home-cta--secondary {
+            border: 1px solid rgba(255, 255, 255, 0.42);
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        body.pains-theme .home-hero__logo {
+            align-self: center;
+            justify-self: end;
+            width: 100%;
+            border-radius: 28px;
+            padding: 32px;
+            background: rgba(255, 255, 255, 0.88);
+            box-shadow: 0 30px 70px rgba(42, 8, 18, 0.32);
+        }
+
+        body.pains-theme .home-hero__logo img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        body.pains-theme .home-section {
+            max-width: none !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 72px 0 !important;
+            scroll-margin-top: 92px;
+            border: 0 !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+        body.pains-theme .home-section--soft {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 245, 247, 0.64)) !important;
+        }
+
+        body.pains-theme .home-section__inner {
+            width: min(1000px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        body.pains-theme .home-section__heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        body.pains-theme .home-section__heading h3 {
+            margin: 0;
+            padding: 0;
+            border: 0 !important;
+            color: #111827 !important;
+            font-size: 2.2rem;
+            line-height: 1.15;
+        }
+
+        body.pains-theme .home-section__heading p {
+            max-width: 420px;
+            margin: 0;
+            color: #647084;
+            line-height: 1.7;
+        }
+
+        body.pains-theme .calendar-container {
+            padding: 18px 22px 22px;
+            border: 1px solid rgba(216, 222, 232, 0.95) !important;
+            border-radius: 26px !important;
+            background: rgba(255, 255, 255, 0.9) !important;
+            box-shadow: 0 20px 52px rgba(16, 24, 40, 0.08) !important;
+            overflow: visible;
+        }
+
+        body.pains-theme .activities {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        body.pains-theme .activities .card {
+            min-width: 0;
+            border: 1px solid rgba(216, 222, 232, 0.9);
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 16px 38px rgba(16, 24, 40, 0.07);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+        }
+
+        body.pains-theme .activities .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(171, 51, 51, 0.24);
+            box-shadow: 0 24px 52px rgba(171, 51, 51, 0.11);
+        }
+
+        body.pains-theme .activity-note {
+            margin-top: 30px;
+            text-align: center;
+            color: #647084;
+            line-height: 1.7;
+        }
+
+        body.pains-theme .home-shell {
+            background: #f5f5f7;
+        }
+
+        body.pains-theme .home-shell .home-hero {
+            min-height: calc(100svh - var(--pains-header-height));
+            margin: 0 !important;
+        }
+
+        body.pains-theme .home-hero__content {
+            grid-template-columns: 1fr;
+            align-items: center;
+            justify-items: center;
+            gap: 42px;
+            min-height: calc(100svh - var(--pains-header-height));
+            padding: 54px 0 70px;
+            text-align: center;
+        }
+
+        body.pains-theme .home-hero__copy {
+            max-width: 760px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        body.pains-theme .home-hero__copy h2 {
+            font-size: 5.4rem;
+            letter-spacing: 0;
+        }
+
+        body.pains-theme .home-hero__copy p {
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        body.pains-theme .home-hero__actions {
+            justify-content: center;
+        }
+
+        body.pains-theme .home-hero__logo {
+            justify-self: center;
+            width: min(420px, 82vw);
+            padding: 34px;
+        }
+
+        body.pains-theme .home-eyebrow {
+            letter-spacing: 0;
+        }
+
+        body.pains-theme .home-billboard {
+            position: relative;
+            width: min(100% - 24px, 1500px) !important;
+            min-height: calc(100svh - 96px);
+            margin: 12px auto !important;
+            padding: 64px 48px !important;
+            display: grid;
+            align-items: center;
+            overflow: hidden;
+            border: 0 !important;
+            border-radius: 28px;
+            background: #fff;
+            color: #111827;
+            box-shadow: none !important;
+        }
+
+        body.pains-theme .home-billboard--intro {
+            background:
+                radial-gradient(circle at 50% 115%, rgba(153, 0, 0, 0.12), transparent 44%),
+                #fbfbfd;
+        }
+
+        body.pains-theme .home-billboard--dark {
+            grid-template-columns: minmax(0, 0.78fr) minmax(0, 1fr);
+            gap: 48px;
+            background:
+                radial-gradient(circle at 84% 18%, rgba(219, 39, 70, 0.34), transparent 34%),
+                linear-gradient(135deg, #111827 0%, #2b0f19 52%, #6b1029 100%);
+            color: #fff;
+        }
+
+        body.pains-theme .home-billboard--cream {
+            background:
+                linear-gradient(180deg, #fff 0%, #fff7f8 100%);
+            border: 1px solid rgba(153, 0, 0, 0.08) !important;
+        }
+
+        body.pains-theme .home-billboard__content {
+            position: relative;
+            z-index: 1;
+            max-width: 820px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        body.pains-theme .home-billboard--dark .home-billboard__content {
+            max-width: 520px;
+            margin: 0;
+            text-align: left;
+        }
+
+        body.pains-theme .home-billboard__content h3 {
+            margin: 0;
+            padding: 0;
+            border: 0 !important;
+            color: inherit !important;
+            font-size: 4.1rem;
+            line-height: 1.04;
+            letter-spacing: 0;
+        }
+
+        body.pains-theme .home-billboard__content p {
+            max-width: 680px;
+            margin: 22px auto 0;
+            color: #5f6b7a;
+            font-size: 1.14rem;
+            line-height: 1.75;
+        }
+
+        body.pains-theme .home-billboard--dark .home-billboard__content p {
+            margin-left: 0;
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        body.pains-theme .home-billboard--dark .home-eyebrow {
+            color: rgba(255, 255, 255, 0.68);
+        }
+
+        body.pains-theme .home-billboard__actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        body.pains-theme .home-billboard:not(.home-billboard--dark) .home-cta--primary {
+            background: #9f1239;
+            color: #fff;
+        }
+
+        body.pains-theme .home-billboard--dark .home-billboard__actions {
+            justify-content: flex-start;
+        }
+
+        body.pains-theme .home-billboard__media {
+            position: relative;
+            z-index: 1;
+            width: min(980px, 100%);
+            aspect-ratio: 16 / 8;
+            margin: 44px auto 0;
+            overflow: hidden;
+            border-radius: 26px;
+            background: #111827;
+            box-shadow: 0 32px 90px rgba(16, 24, 40, 0.16);
+        }
+
+        body.pains-theme .home-billboard--dark .home-billboard__media {
+            margin: 0;
+            aspect-ratio: 16 / 10;
+            box-shadow: 0 32px 90px rgba(0, 0, 0, 0.32);
+        }
+
+        body.pains-theme .home-media-fill {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        body.pains-theme .home-media-fill--muted {
+            filter: saturate(0.9) contrast(0.96);
+        }
+
+        body.pains-theme .home-mosaic {
+            width: min(980px, 100%);
+            margin: 44px auto 0;
+            display: grid;
+            grid-template-columns: 1.12fr 0.88fr;
+            gap: 16px;
+            align-items: stretch;
+        }
+
+        body.pains-theme .home-mosaic__item {
+            min-height: 360px;
+            overflow: hidden;
+            border-radius: 26px;
+            background: #fff;
+            box-shadow: 0 24px 70px rgba(16, 24, 40, 0.1);
+        }
+
+        body.pains-theme .home-mosaic__item--small {
+            min-height: 260px;
+            align-self: end;
+        }
+
+        body.pains-theme .home-section {
+            background: #f5f5f7 !important;
+        }
+
+        body.pains-theme .home-section--calendar {
+            padding-top: 92px !important;
+        }
+
+        body.pains-theme .home-section--activities {
+            background: #fff !important;
+        }
+
+        body.pains-theme .home-section__inner {
+            width: min(1080px, calc(100% - 48px));
+        }
+
+        body.pains-theme .home-section__heading h3 {
+            font-size: 3rem;
+            letter-spacing: 0;
+        }
+
+        body.pains-theme .activities .card h4 {
+            margin-bottom: 12px;
+            color: #111827;
+            font-size: 1.18rem;
+        }
+
+        body.pains-theme .reveal {
+            opacity: 1;
+            transform: none;
+            will-change: opacity, transform;
+        }
+
+        body.pains-theme .reveal.is-visible {
+            animation: revealPop 0.78s ease both;
+        }
+
+        @keyframes revealPop {
+            from {
+                opacity: 0;
+                transform: translateY(28px) scale(0.985);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @media (max-width: 860px) {
+            body.pains-theme .home-shell .home-hero {
+                min-height: auto;
+            }
+
+            body.pains-theme .home-hero__content {
+                grid-template-columns: 1fr;
+                width: min(100% - 32px, 680px);
+                padding: 56px 0 48px;
+                gap: 34px;
+                min-height: auto;
+            }
+
+            body.pains-theme .home-hero__copy h2 {
+                font-size: 3.2rem;
+            }
+
+            body.pains-theme .home-hero__logo {
+                justify-self: start;
+                max-width: 280px;
+                padding: 24px;
+            }
+
+            body.pains-theme .home-billboard {
+                width: min(100% - 20px, 680px) !important;
+                min-height: auto;
+                padding: 44px 22px !important;
+                border-radius: 22px;
+            }
+
+            body.pains-theme .home-billboard--dark {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            body.pains-theme .home-billboard--dark .home-billboard__content,
+            body.pains-theme .home-billboard__content {
+                max-width: 100%;
+                text-align: left;
+            }
+
+            body.pains-theme .home-billboard__content h3 {
+                font-size: 2.45rem;
+                line-height: 1.08;
+            }
+
+            body.pains-theme .home-billboard__content p {
+                margin-left: 0;
+                font-size: 1rem;
+            }
+
+            body.pains-theme .home-billboard__actions,
+            body.pains-theme .home-billboard--dark .home-billboard__actions {
+                justify-content: flex-start;
+            }
+
+            body.pains-theme .home-billboard__media,
+            body.pains-theme .home-billboard--dark .home-billboard__media {
+                margin-top: 30px;
+                aspect-ratio: 4 / 3;
+                border-radius: 20px;
+            }
+
+            body.pains-theme .home-billboard--dark .home-billboard__media {
+                margin-top: 0;
+            }
+
+            body.pains-theme .home-mosaic {
+                grid-template-columns: 1fr;
+                margin-top: 30px;
+            }
+
+            body.pains-theme .home-mosaic__item,
+            body.pains-theme .home-mosaic__item--small {
+                min-height: 260px;
+                border-radius: 20px;
+            }
+
+            body.pains-theme .home-section {
+                padding: 50px 0 !important;
+            }
+
+            body.pains-theme .home-section__inner {
+                width: min(100% - 32px, 680px);
+            }
+
+            body.pains-theme .home-section__heading {
+                display: block;
+            }
+
+            body.pains-theme .home-section__heading h3 {
+                font-size: 2.2rem;
+                margin-bottom: 10px;
+            }
+
+            body.pains-theme .activities {
+                grid-template-columns: 1fr;
+            }
+
+            body.pains-theme .calendar-container {
+                padding: 14px 12px 16px;
+                border-radius: 22px !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body.pains-theme .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            body.pains-theme .home-cta,
+            body.pains-theme .activities .card {
+                transition: none;
+            }
+        }
+
+        body.pains-theme .home-shell {
+            background: #f5f5f7;
+        }
+
+        body.pains-theme .motion-panel {
+            --phase: 1;
+            --motion-opacity: 1;
+            --motion-y: 0px;
+            --motion-scale: 1;
+            --mask-start: 0%;
+            --mask-end: 100%;
+            opacity: var(--motion-opacity);
+            transform: translateY(var(--motion-y)) scale(var(--motion-scale));
+            transform-origin: center;
+            -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 var(--mask-start), #000 var(--mask-end), transparent 100%);
+            mask-image: linear-gradient(180deg, transparent 0%, #000 var(--mask-start), #000 var(--mask-end), transparent 100%);
+            transition: opacity 0.08s linear, transform 0.08s linear;
+            will-change: opacity, transform, mask-image;
+        }
+
+        body.pains-theme .home-shell .home-hero {
+            min-height: calc(100svh - var(--pains-header-height));
+            margin: 0 !important;
+            isolation: isolate;
+        }
+
+        body.pains-theme .home-hero__shade {
+            background:
+                linear-gradient(180deg, rgba(20, 7, 12, 0.32) 0%, rgba(110, 10, 31, 0.8) 44%, rgba(68, 7, 21, 0.92) 100%),
+                linear-gradient(90deg, rgba(76, 8, 24, 0.88), rgba(154, 30, 45, 0.5) 52%, rgba(20, 7, 12, 0.74)) !important;
+        }
+
+        body.pains-theme .home-hero__content {
+            grid-template-columns: minmax(0, 0.95fr) minmax(280px, 0.62fr);
+            align-items: center;
+            gap: 58px;
+            min-height: calc(100svh - var(--pains-header-height));
+            padding: 68px 0 74px;
+        }
+
+        body.pains-theme .home-hero__copy {
+            max-width: 780px;
+        }
+
+        body.pains-theme .home-hero__copy h2 {
+            font-size: clamp(4.4rem, 10vw, 9rem);
+            letter-spacing: 0;
+        }
+
+        body.pains-theme .home-hero__copy p {
+            max-width: 660px;
+        }
+
+        body.pains-theme .home-hero__logo {
+            justify-self: end;
+            width: min(420px, 100%);
+        }
+
+        body.pains-theme .home-hero__metrics {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            max-width: 620px;
+            margin-top: 34px;
+        }
+
+        body.pains-theme .home-stat {
+            min-height: 88px;
+            padding: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(14px);
+        }
+
+        body.pains-theme .home-stat strong {
+            display: block;
+            color: #fff !important;
+            font-size: 1.55rem;
+            line-height: 1;
+        }
+
+        body.pains-theme .home-stat span {
+            display: block;
+            margin-top: 8px;
+            font-size: 0.88rem;
+            line-height: 1.35;
+        }
+
+        body.pains-theme .home-strategy {
+            width: min(100% - 32px, 1280px) !important;
+            margin: 18px auto !important;
+            padding: 74px 48px !important;
+            scroll-margin-top: calc(var(--pains-header-height) + 24px);
+            border: 1px solid rgba(220, 225, 233, 0.96) !important;
+            border-radius: 32px;
+            background: #fff !important;
+            box-shadow: 0 32px 90px rgba(16, 24, 40, 0.08) !important;
+        }
+
+        body.pains-theme .home-strategy__inner {
+            width: 100%;
+            display: grid;
+            grid-template-columns: minmax(280px, 0.44fr) minmax(0, 1fr);
+            gap: 36px;
+            align-items: stretch;
+        }
+
+        body.pains-theme .home-strategy__copy h3,
+        body.pains-theme .home-feature-cloud__rail h3,
+        body.pains-theme .home-feature-card__copy h3 {
+            margin: 0;
+            padding: 0;
+            border: 0 !important;
+            color: #111827 !important;
+            font-size: clamp(2.6rem, 5vw, 5rem);
+            line-height: 1.02;
+            letter-spacing: 0;
+        }
+
+        body.pains-theme .home-strategy__copy p,
+        body.pains-theme .home-feature-cloud__rail p,
+        body.pains-theme .home-feature-card__copy p {
+            margin-top: 20px;
+            color: #5f6b7a;
+            font-size: 1.05rem;
+            line-height: 1.74;
+        }
+
+        body.pains-theme .home-axis-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        body.pains-theme .home-axis {
+            position: relative;
+            min-height: 420px;
+            overflow: hidden;
+            border-radius: 28px;
+            background: #111827;
+            text-decoration: none;
+            color: #fff;
+            box-shadow: 0 24px 70px rgba(16, 24, 40, 0.11);
+        }
+
+        body.pains-theme .home-axis img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.04);
+            transition: transform 0.4s ease;
+        }
+
+        body.pains-theme .home-axis:hover img {
+            transform: scale(1.09);
+        }
+
+        body.pains-theme .home-axis::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(8, 14, 24, 0.08), rgba(8, 14, 24, 0.78));
+        }
+
+        body.pains-theme .home-axis--projects::after {
+            background: linear-gradient(180deg, rgba(89, 10, 30, 0.06), rgba(89, 10, 30, 0.84));
+        }
+
+        body.pains-theme .home-axis__body {
+            position: absolute;
+            left: 22px;
+            right: 22px;
+            bottom: 22px;
+            z-index: 1;
+        }
+
+        body.pains-theme .home-axis__body span {
+            display: block;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 0.78rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        body.pains-theme .home-axis__body strong {
+            display: block;
+            margin-top: 7px;
+            color: #fff !important;
+            font-size: 1.5rem;
+            line-height: 1.08;
+        }
+
+        body.pains-theme .home-feature-cloud {
+            width: min(100% - 32px, 1280px);
+            margin: 24px auto 0;
+            padding: 32px 0 72px;
+            display: grid;
+            grid-template-columns: minmax(260px, 0.38fr) minmax(0, 1fr);
+            gap: 32px;
+            align-items: start;
+        }
+
+        body.pains-theme .home-feature-cloud__rail {
+            position: sticky;
+            top: calc(var(--pains-header-height) + 36px);
+            min-height: 540px;
+            padding: 36px 10px 36px 0;
+        }
+
+        body.pains-theme .home-story-nav {
+            display: grid;
+            gap: 8px;
+            margin-top: 30px;
+        }
+
+        body.pains-theme .home-story-nav a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 48px;
+            padding: 0 14px;
+            border: 1px solid rgba(216, 222, 232, 0.95);
+            border-radius: 999px;
+            color: #344054;
+            background: rgba(255, 255, 255, 0.72);
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        body.pains-theme .home-story-nav a::after {
+            content: "↗";
+            color: #990000;
+        }
+
+        body.pains-theme .home-feature-stack {
+            display: grid;
+            gap: 22px;
+        }
+
+        body.pains-theme .home-feature-card {
+            position: relative;
+            min-height: 640px;
+            display: grid;
+            grid-template-columns: minmax(0, 0.74fr) minmax(0, 1fr);
+            gap: 36px;
+            align-items: center;
+            overflow: hidden;
+            padding: 46px;
+            scroll-margin-top: calc(var(--pains-header-height) + 24px);
+            border-radius: 32px;
+            background: #fff;
+            border: 1px solid rgba(216, 222, 232, 0.9);
+            box-shadow: 0 28px 80px rgba(16, 24, 40, 0.08);
+        }
+
+        body.pains-theme .home-feature-card--projects {
+            grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+            background: linear-gradient(135deg, #121826 0%, #2a101a 52%, #7a1530 100%);
+            color: #fff;
+        }
+
+        body.pains-theme .home-feature-card--community {
+            grid-template-columns: 1fr;
+            background: linear-gradient(180deg, #fff 0%, #fff7f8 100%);
+        }
+
+        body.pains-theme .home-feature-card--projects .home-feature-card__copy h3,
+        body.pains-theme .home-feature-card--projects .home-feature-card__copy p {
+            color: #fff !important;
+        }
+
+        body.pains-theme .home-feature-card--projects .home-feature-card__copy p {
+            color: rgba(255, 255, 255, 0.78) !important;
+        }
+
+        body.pains-theme .home-feature-card__copy {
+            position: relative;
+            z-index: 1;
+        }
+
+        body.pains-theme .home-feature-card__copy .home-eyebrow {
+            color: #990000;
+        }
+
+        body.pains-theme .home-feature-card--projects .home-eyebrow {
+            color: rgba(255, 255, 255, 0.72);
+        }
+
+        body.pains-theme .home-feature-card__media {
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            min-height: 400px;
+            border-radius: 26px;
+            background: #111827;
+            box-shadow: 0 24px 70px rgba(16, 24, 40, 0.16);
+        }
+
+        body.pains-theme .home-feature-card__media img,
+        body.pains-theme .home-mosaic__item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        body.pains-theme .home-feature-card__media--wide {
+            min-height: 460px;
+        }
+
+        body.pains-theme .home-mosaic {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+            gap: 16px;
+            margin-top: 34px;
+        }
+
+        body.pains-theme .home-mosaic__item {
+            min-height: 390px;
+            overflow: hidden;
+            border-radius: 26px;
+            background: #fff;
+            box-shadow: 0 24px 70px rgba(16, 24, 40, 0.1);
+        }
+
+        body.pains-theme .home-mosaic__item--small {
+            min-height: 270px;
+            align-self: end;
+        }
+
+        body.pains-theme .home-section--calendar {
+            padding-top: 94px !important;
+        }
+
+        body.pains-theme .home-section__heading h3 {
+            font-size: clamp(2.4rem, 4.8vw, 4rem);
+            letter-spacing: 0;
+        }
+
+        body.pains-theme .activities .card h4 {
+            margin-bottom: 12px;
+            color: #111827;
+            font-size: 1.18rem;
+        }
+
+        @media (max-width: 980px) {
+            body.pains-theme .home-hero__content,
+            body.pains-theme .home-strategy__inner,
+            body.pains-theme .home-feature-cloud,
+            body.pains-theme .home-feature-card,
+            body.pains-theme .home-feature-card--projects {
+                grid-template-columns: 1fr;
+            }
+
+            body.pains-theme .home-hero__content {
+                width: min(100% - 32px, 720px);
+                min-height: auto;
+                padding: 58px 0 52px;
+                gap: 34px;
+            }
+
+            body.pains-theme .home-hero__logo {
+                justify-self: start;
+                width: min(300px, 82vw);
+                padding: 24px;
+            }
+
+            body.pains-theme .home-hero__metrics {
+                grid-template-columns: 1fr;
+            }
+
+            body.pains-theme .home-strategy {
+                width: min(100% - 20px, 720px) !important;
+                padding: 42px 22px !important;
+                border-radius: 24px;
+            }
+
+            body.pains-theme .home-axis-grid {
+                grid-template-columns: 1fr;
+            }
+
+            body.pains-theme .home-axis {
+                min-height: 280px;
+            }
+
+            body.pains-theme .home-feature-cloud {
+                width: min(100% - 20px, 720px);
+                padding-top: 16px;
+            }
+
+            body.pains-theme .home-feature-cloud__rail {
+                position: static;
+                min-height: auto;
+                padding: 12px 0;
+            }
+
+            body.pains-theme .home-feature-card {
+                min-height: auto;
+                padding: 32px 22px;
+                border-radius: 24px;
+            }
+
+            body.pains-theme .home-feature-card__media,
+            body.pains-theme .home-feature-card__media--wide {
+                min-height: 300px;
+                border-radius: 20px;
+            }
+
+            body.pains-theme .home-mosaic {
+                grid-template-columns: 1fr;
+            }
+
+            body.pains-theme .home-mosaic__item,
+            body.pains-theme .home-mosaic__item--small {
+                min-height: 260px;
+                border-radius: 20px;
+            }
+        }
+
+        body.pains-theme.home-page {
+            background: #111 !important;
+        }
+
+        body.pains-theme.home-page header,
+        body.pains-theme.home-page .pains-header {
+            background: rgba(16, 16, 16, 0.82) !important;
+            border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+            box-shadow: none !important;
+            backdrop-filter: blur(18px);
+        }
+
+        body.pains-theme.home-page header h1 a,
+        body.pains-theme.home-page .pains-header h1 a {
+            color: #fff !important;
+        }
+
+        body.pains-theme.home-page .hamburger-btn {
+            background: rgba(255, 255, 255, 0.04) !important;
+            border-color: rgba(255, 255, 255, 0.22) !important;
+            box-shadow: none !important;
+        }
+
+        body.pains-theme.home-page .hamburger-btn span {
+            background: #fff !important;
+        }
+
+        body.pains-theme .home-shell {
+            position: relative;
+            overflow: hidden;
+            background: #111 !important;
+            color: #fff;
+        }
+
+        body.pains-theme .home-shell::before {
+            content: "";
+            position: fixed;
+            inset: var(--pains-header-height) 0 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                linear-gradient(90deg,
+                    transparent 0,
+                    transparent calc(25% - 1px),
+                    rgba(255, 255, 255, 0.08) calc(25% - 1px),
+                    rgba(255, 255, 255, 0.08) 25%,
+                    transparent 25%,
+                    transparent calc(50% - 1px),
+                    rgba(255, 255, 255, 0.08) calc(50% - 1px),
+                    rgba(255, 255, 255, 0.08) 50%,
+                    transparent 50%,
+                    transparent calc(75% - 1px),
+                    rgba(255, 255, 255, 0.08) calc(75% - 1px),
+                    rgba(255, 255, 255, 0.08) 75%,
+                    transparent 75%);
+            opacity: 0.9;
+        }
+
+        body.pains-theme .home-shell > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        body.pains-theme .home-shell .home-hero {
+            min-height: calc(112svh - var(--pains-header-height));
+            background:
+                radial-gradient(circle at 74% 18%, rgba(153, 0, 0, 0.26), transparent 34%),
+                linear-gradient(180deg, #111 0%, #171112 58%, #111 100%) !important;
+        }
+
+        body.pains-theme .home-hero__media {
+            top: auto;
+            left: 16.5%;
+            right: auto;
+            bottom: 56px;
+            width: 67%;
+            height: 36vh;
+            min-height: 300px;
+            border-radius: 0;
+            opacity: 1;
+            box-shadow: 0 34px 120px rgba(0, 0, 0, 0.42);
+        }
+
+        body.pains-theme .home-hero__media img {
+            opacity: 0.72 !important;
+            filter: saturate(0.62) contrast(1.05) brightness(0.76) !important;
+            transform: none !important;
+        }
+
+        body.pains-theme .home-hero__shade {
+            background:
+                linear-gradient(180deg, rgba(17, 17, 17, 0.08), rgba(17, 17, 17, 0.42)),
+                linear-gradient(90deg, rgba(153, 0, 0, 0.28), rgba(0, 0, 0, 0.1)) !important;
+        }
+
+        body.pains-theme .home-hero__content {
+            width: min(1280px, calc(100% - 80px));
+            min-height: calc(112svh - var(--pains-header-height));
+            grid-template-columns: 1fr;
+            align-content: start;
+            justify-items: start;
+            padding: 15vh 0 46vh;
+            gap: 36px;
+        }
+
+        body.pains-theme .home-hero__copy {
+            max-width: 780px;
+            text-align: left;
+        }
+
+        body.pains-theme .home-hero__copy h2 {
+            display: grid;
+            gap: 6px;
+            margin: 0;
+            font-size: clamp(4.4rem, 8.4vw, 8.2rem);
+            line-height: 0.96;
+            letter-spacing: 0;
+            word-break: keep-all;
+        }
+
+        body.pains-theme .home-hero__copy h2 span {
+            display: block;
+        }
+
+        body.pains-theme .home-hero__copy p {
+            max-width: 660px;
+            margin: 32px 0 0;
+            color: rgba(255, 255, 255, 0.72);
+            font-size: 1.18rem;
+        }
+
+        body.pains-theme .home-hero__actions {
+            justify-content: flex-start;
+            margin-top: 34px;
+        }
+
+        body.pains-theme .home-hero__logo {
+            display: none;
+        }
+
+        body.pains-theme .home-hero__metrics {
+            max-width: 760px;
+            margin-top: 36px;
+            border-top: 1px solid rgba(255, 255, 255, 0.16);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        body.pains-theme .home-stat {
+            border: 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 0;
+            background: transparent;
+            backdrop-filter: none;
+        }
+
+        body.pains-theme .home-stat:last-child {
+            border-right: 0;
+        }
+
+        body.pains-theme .home-strategy {
+            width: min(100% - 80px, 1280px) !important;
+            margin: 0 auto !important;
+            padding: 112px 0 !important;
+            border: 0 !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.13) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.13) !important;
+            border-radius: 0;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+        body.pains-theme .home-strategy__inner {
+            grid-template-columns: 0.42fr 1fr;
+            gap: 58px;
+        }
+
+        body.pains-theme .home-strategy__copy h3,
+        body.pains-theme .home-feature-cloud__rail h3,
+        body.pains-theme .home-feature-card__copy h3 {
+            color: #fff !important;
+        }
+
+        body.pains-theme .home-strategy__copy p,
+        body.pains-theme .home-feature-cloud__rail p,
+        body.pains-theme .home-feature-card__copy p {
+            color: rgba(255, 255, 255, 0.62);
+        }
+
+        body.pains-theme .home-axis-grid {
+            gap: 0;
+            border-left: 1px solid rgba(255, 255, 255, 0.13);
+            border-right: 1px solid rgba(255, 255, 255, 0.13);
+        }
+
+        body.pains-theme .home-axis {
+            min-height: 520px;
+            border-radius: 0;
+            box-shadow: none;
+            border-right: 1px solid rgba(255, 255, 255, 0.13);
+        }
+
+        body.pains-theme .home-axis:last-child {
+            border-right: 0;
+        }
+
+        body.pains-theme .home-axis::after {
+            background: linear-gradient(180deg, rgba(17, 17, 17, 0.12), rgba(17, 17, 17, 0.86));
+        }
+
+        body.pains-theme .home-feature-cloud {
+            width: min(100% - 80px, 1280px);
+            padding: 110px 0 92px;
+            color: #fff;
+        }
+
+        body.pains-theme .home-feature-cloud__rail {
+            top: calc(var(--pains-header-height) + 58px);
+        }
+
+        body.pains-theme .home-story-nav a {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.86);
+            border-color: rgba(255, 255, 255, 0.18);
+        }
+
+        body.pains-theme .home-feature-stack {
+            gap: 42px;
+        }
+
+        body.pains-theme .home-feature-card,
+        body.pains-theme .home-feature-card--projects,
+        body.pains-theme .home-feature-card--community {
+            min-height: 640px;
+            border-radius: 0;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.015)) !important;
+            box-shadow: none;
+            color: #fff;
+        }
+
+        body.pains-theme .home-feature-card--projects {
+            background:
+                radial-gradient(circle at 82% 18%, rgba(153, 0, 0, 0.34), transparent 36%),
+                linear-gradient(135deg, #151515, #1d0f14 58%, #3a111f) !important;
+        }
+
+        body.pains-theme .home-feature-card__copy .home-eyebrow,
+        body.pains-theme .home-eyebrow {
+            color: rgba(255, 255, 255, 0.64);
+        }
+
+        body.pains-theme .home-feature-card__media,
+        body.pains-theme .home-mosaic__item {
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        body.pains-theme .home-section {
+            background: #111 !important;
+            color: #fff;
+        }
+
+        body.pains-theme .home-section--activities {
+            background: #151515 !important;
+        }
+
+        body.pains-theme .home-section__heading h3 {
+            color: #fff !important;
+        }
+
+        body.pains-theme .home-section__heading p,
+        body.pains-theme .activity-note {
+            color: rgba(255, 255, 255, 0.62);
+        }
+
+        body.pains-theme .calendar-container,
+        body.pains-theme .activities .card {
+            background: rgba(255, 255, 255, 0.94) !important;
+        }
+
+        body.pains-theme .activities .card {
+            border-radius: 0;
+        }
+
+        @media (max-width: 980px) {
+            body.pains-theme .home-shell::before {
+                background:
+                    linear-gradient(90deg,
+                        transparent 0,
+                        transparent calc(50% - 1px),
+                        rgba(255, 255, 255, 0.08) calc(50% - 1px),
+                        rgba(255, 255, 255, 0.08) 50%,
+                        transparent 50%);
+            }
+
+            body.pains-theme .home-shell .home-hero {
+                min-height: calc(118svh - var(--pains-header-height));
+            }
+
+            body.pains-theme .home-hero__content {
+                width: min(100% - 32px, 720px);
+                min-height: calc(118svh - var(--pains-header-height));
+                padding: 92px 0 40vh;
+            }
+
+            body.pains-theme .home-hero__copy h2 {
+                font-size: clamp(3.1rem, 14vw, 4.6rem);
+            }
+
+            body.pains-theme .home-hero__metrics {
+                grid-template-columns: 1fr;
+            }
+
+            body.pains-theme .home-stat {
+                border-right: 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+            }
+
+            body.pains-theme .home-stat:last-child {
+                border-bottom: 0;
+            }
+
+            body.pains-theme .home-hero__media {
+                left: 0;
+                bottom: 36px;
+                width: 100%;
+                height: 34vh;
+                min-height: 260px;
+            }
+
+            body.pains-theme .home-strategy,
+            body.pains-theme .home-feature-cloud {
+                width: min(100% - 32px, 720px) !important;
+            }
+
+            body.pains-theme .home-strategy {
+                padding: 72px 0 !important;
+            }
+
+            body.pains-theme .home-strategy__inner,
+            body.pains-theme .home-feature-cloud,
+            body.pains-theme .home-feature-card,
+            body.pains-theme .home-feature-card--projects {
+                grid-template-columns: 1fr;
+            }
+
+            body.pains-theme .home-axis-grid {
+                grid-template-columns: 1fr;
+                border-top: 1px solid rgba(255, 255, 255, 0.13);
+            }
+
+            body.pains-theme .home-axis {
+                min-height: 320px;
+                border-right: 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+            }
+
+            body.pains-theme .home-feature-card {
+                padding: 30px 22px;
+            }
+        }
+
+        body.pains-theme.home-page {
+            background: #4f0718 !important;
+        }
+
+        body.pains-theme.home-page header,
+        body.pains-theme.home-page .pains-header {
+            background: rgba(79, 7, 24, 0.88) !important;
+            border-bottom-color: rgba(255, 232, 238, 0.18) !important;
+        }
+
+        body.pains-theme .home-shell {
+            background:
+                radial-gradient(circle at 82% 8%, rgba(255, 188, 202, 0.14), transparent 26%),
+                linear-gradient(180deg, #4f0718 0%, #760d2a 44%, #5f081d 72%, #4b0616 100%) !important;
+        }
+
+        body.pains-theme .home-shell::before {
+            background:
+                linear-gradient(90deg,
+                    transparent 0,
+                    transparent calc(25% - 1px),
+                    rgba(255, 236, 241, 0.14) calc(25% - 1px),
+                    rgba(255, 236, 241, 0.14) 25%,
+                    transparent 25%,
+                    transparent calc(50% - 1px),
+                    rgba(255, 236, 241, 0.14) calc(50% - 1px),
+                    rgba(255, 236, 241, 0.14) 50%,
+                    transparent 50%,
+                    transparent calc(75% - 1px),
+                    rgba(255, 236, 241, 0.14) calc(75% - 1px),
+                    rgba(255, 236, 241, 0.14) 75%,
+                    transparent 75%);
+        }
+
+        body.pains-theme .home-shell .home-hero {
+            background:
+                radial-gradient(circle at 78% 18%, rgba(255, 180, 197, 0.18), transparent 34%),
+                linear-gradient(180deg, #4f0718 0%, #760d2a 56%, #4b0616 100%) !important;
+        }
+
+        body.pains-theme .home-hero__media {
+            box-shadow: 0 34px 120px rgba(67, 0, 18, 0.46);
+        }
+
+        body.pains-theme .home-hero__shade {
+            background:
+                linear-gradient(180deg, rgba(79, 7, 24, 0.08), rgba(79, 7, 24, 0.5)),
+                linear-gradient(90deg, rgba(153, 0, 0, 0.42), rgba(68, 6, 20, 0.16)) !important;
+        }
+
+        body.pains-theme .home-stat,
+        body.pains-theme .home-strategy,
+        body.pains-theme .home-axis-grid,
+        body.pains-theme .home-axis,
+        body.pains-theme .home-feature-card,
+        body.pains-theme .home-feature-card--projects,
+        body.pains-theme .home-feature-card--community {
+            border-color: rgba(255, 232, 238, 0.2) !important;
+        }
+
+        body.pains-theme .home-strategy,
+        body.pains-theme .home-feature-cloud {
+            color: #fff8fa;
+        }
+
+        body.pains-theme .home-axis::after {
+            background: linear-gradient(180deg, rgba(79, 7, 24, 0.08), rgba(79, 7, 24, 0.88));
+        }
+
+        body.pains-theme .home-axis--projects::after {
+            background: linear-gradient(180deg, rgba(153, 0, 0, 0.08), rgba(79, 7, 24, 0.9));
+        }
+
+        body.pains-theme .home-feature-card,
+        body.pains-theme .home-feature-card--community {
+            background:
+                linear-gradient(135deg, rgba(255, 246, 248, 0.09), rgba(255, 246, 248, 0.03)) !important;
+        }
+
+        body.pains-theme .home-feature-card--projects {
+            background:
+                radial-gradient(circle at 82% 18%, rgba(255, 180, 197, 0.2), transparent 36%),
+                linear-gradient(135deg, #4f0718, #7c102e 58%, #990000) !important;
+        }
+
+        body.pains-theme .home-story-nav a {
+            color: #fff8fa;
+            border-color: rgba(255, 232, 238, 0.24);
+        }
+
+        body.pains-theme .home-story-nav a::after,
+        body.pains-theme .home-feature-card__copy .home-eyebrow,
+        body.pains-theme .home-eyebrow {
+            color: rgba(255, 226, 233, 0.72);
+        }
+
+        body.pains-theme .home-section {
+            background: linear-gradient(180deg, #4b0616 0%, #6f0b24 100%) !important;
+        }
+
+        body.pains-theme .home-section--activities {
+            background: #fff7f8 !important;
+            color: #111827;
+        }
+
+        body.pains-theme .home-section--activities .home-section__heading h3 {
+            color: #111827 !important;
+        }
+
+        body.pains-theme .home-section--activities .home-section__heading p,
+        body.pains-theme .home-section--activities .activity-note {
+            color: #647084;
+        }
+
+        body.pains-theme .activities .card {
+            border-radius: 0;
+            border-color: rgba(153, 0, 0, 0.12);
+        }
+
+        @media (max-width: 980px) {
+            body.pains-theme .home-shell::before {
+                background:
+                    linear-gradient(90deg,
+                        transparent 0,
+                        transparent calc(50% - 1px),
+                        rgba(255, 236, 241, 0.14) calc(50% - 1px),
+                        rgba(255, 236, 241, 0.14) 50%,
+                        transparent 50%);
+            }
+        }
+
+        /* Media ratio guard: photos keep their natural proportions; frames follow the asset. */
+        body.pains-theme .home-hero__media {
+            height: auto !important;
+            min-height: 0 !important;
+            aspect-ratio: 1848 / 991;
+        }
+
+        body.pains-theme .home-hero__media img,
+        body.pains-theme .home-axis img,
+        body.pains-theme .home-feature-card__media img,
+        body.pains-theme .home-mosaic__item img {
+            width: 100% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            display: block;
+            transform: none !important;
+        }
+
+        body.pains-theme .home-axis {
+            min-height: 0 !important;
+            height: auto !important;
+            align-self: start;
+            background:
+                linear-gradient(135deg, rgba(255, 246, 248, 0.08), rgba(255, 246, 248, 0.02));
+        }
+
+        body.pains-theme .home-axis img {
+            position: static !important;
+        }
+
+        body.pains-theme .home-axis::after {
+            background:
+                linear-gradient(180deg, rgba(79, 7, 24, 0), rgba(79, 7, 24, 0.84)) !important;
+        }
+
+        body.pains-theme .home-feature-card {
+            min-height: 0 !important;
+        }
+
+        body.pains-theme .home-feature-card__media,
+        body.pains-theme .home-feature-card__media--wide,
+        body.pains-theme .home-mosaic__item,
+        body.pains-theme .home-mosaic__item--small {
+            min-height: 0 !important;
+            height: auto !important;
+            background:
+                linear-gradient(135deg, rgba(255, 246, 248, 0.12), rgba(255, 246, 248, 0.04));
+        }
+
+        body.pains-theme .home-feature-card__media,
+        body.pains-theme .home-mosaic__item {
+            overflow: hidden;
+        }
+
+        body.pains-theme .home-feature-card__media::before,
+        body.pains-theme .home-mosaic__item::before {
+            content: "";
+            display: none;
+        }
+
+        body.pains-theme .home-media-placeholder {
+            min-height: 360px;
+            border: 1px solid rgba(255, 232, 238, 0.24);
+            background:
+                linear-gradient(135deg, rgba(255, 246, 248, 0.14), rgba(153, 0, 0, 0.16)),
+                repeating-linear-gradient(90deg, transparent 0 90px, rgba(255, 255, 255, 0.08) 90px 91px);
+        }
+
+        @media (max-width: 980px) {
+            body.pains-theme .home-hero__media {
+                height: auto !important;
+                min-height: 0 !important;
+                aspect-ratio: 1848 / 991;
+            }
+        }
+
+        /* Final composition pass: keep photos uncut while letting media frames set the rhythm. */
+        body.pains-theme .home-shell .home-strategy,
+        body.pains-theme .home-shell .home-feature-cloud,
+        body.pains-theme .home-shell .home-section {
+            max-width: none !important;
+        }
+
+        body.pains-theme .home-strategy {
+            width: min(calc(100% - 80px), 1280px) !important;
+        }
+
+        body.pains-theme .home-strategy__inner {
+            grid-template-columns: minmax(280px, 0.34fr) minmax(0, 0.66fr) !important;
+        }
+
+        body.pains-theme .home-axis-grid {
+            display: grid !important;
+            grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+            align-items: start;
+            gap: 18px !important;
+            border: 0 !important;
+        }
+
+        body.pains-theme .home-axis {
+            border: 1px solid rgba(255, 232, 238, 0.22) !important;
+            background: rgba(255, 246, 248, 0.08) !important;
+        }
+
+        body.pains-theme .home-axis--about {
+            grid-column: 1 / span 7;
+        }
+
+        body.pains-theme .home-axis--projects {
+            grid-column: 6 / span 7;
+        }
+
+        body.pains-theme .home-axis--community {
+            grid-column: 2 / span 6;
+        }
+
+        body.pains-theme .home-feature-cloud {
+            width: min(calc(100% - 80px), 1280px) !important;
+            background: transparent !important;
+            grid-template-columns: minmax(280px, 0.31fr) minmax(0, 0.69fr) !important;
+            gap: 58px !important;
+        }
+
+        body.pains-theme .home-feature-card,
+        body.pains-theme .home-feature-card--about,
+        body.pains-theme .home-feature-card--community {
+            background:
+                linear-gradient(135deg, rgba(255, 246, 248, 0.12), rgba(255, 246, 248, 0.035)) !important;
+            color: #fff8fa !important;
+        }
+
+        body.pains-theme .home-feature-card--projects {
+            background:
+                radial-gradient(circle at 82% 18%, rgba(255, 180, 197, 0.2), transparent 36%),
+                linear-gradient(135deg, #4f0718, #7c102e 58%, #990000) !important;
+        }
+
+        body.pains-theme .home-feature-card__copy h3,
+        body.pains-theme .home-feature-cloud__rail h3,
+        body.pains-theme .home-strategy__copy h3 {
+            color: #fff8fa !important;
+        }
+
+        body.pains-theme .home-feature-card__copy p,
+        body.pains-theme .home-feature-cloud__rail p,
+        body.pains-theme .home-strategy__copy p {
+            color: rgba(255, 236, 241, 0.72) !important;
+        }
+
+        body.pains-theme .home-feature-card__media,
+        body.pains-theme .home-mosaic__item {
+            width: 100%;
+            border: 1px solid rgba(255, 232, 238, 0.18);
+        }
+
+        body.pains-theme .home-feature-card__media img,
+        body.pains-theme .home-mosaic__item img,
+        body.pains-theme .home-axis img {
+            filter: saturate(0.78) contrast(0.96) brightness(0.82);
+        }
+
+        @media (max-width: 980px) {
+            body.pains-theme .home-strategy,
+            body.pains-theme .home-feature-cloud {
+                width: min(calc(100% - 28px), 720px) !important;
+            }
+
+            body.pains-theme .home-strategy__inner,
+            body.pains-theme .home-feature-cloud {
+                grid-template-columns: 1fr !important;
+            }
+
+            body.pains-theme .home-axis-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            body.pains-theme .home-axis--about,
+            body.pains-theme .home-axis--projects,
+            body.pains-theme .home-axis--community {
+                grid-column: auto;
+            }
+        }
+
+        body.pains-theme .home-hero__copy {
+            max-width: 920px !important;
+        }
+
+        body.pains-theme .home-hero__copy h2.home-hero__title--en {
+            max-width: 780px;
+            font-size: 7.8rem !important;
+            line-height: 0.86 !important;
+            text-transform: uppercase;
+            word-break: keep-all;
+        }
+
+        body.pains-theme .home-hero__title--en span {
+            display: block;
+        }
+
+        body.pains-theme .home-title-line {
+            display: block;
+        }
+
+        body.pains-theme .home-strategy__copy h3,
+        body.pains-theme .home-feature-cloud__rail h3,
+        body.pains-theme .home-feature-card__copy h3 {
+            word-break: keep-all;
+            overflow-wrap: normal;
+            text-wrap: balance;
+        }
+
+        body.pains-theme .home-strategy__copy h3 {
+            font-size: 5.6rem !important;
+            line-height: 0.94 !important;
+        }
+
+        body.pains-theme .home-feature-cloud__rail h3 {
+            font-size: 3.8rem !important;
+            line-height: 1.08 !important;
+        }
+
+        body.pains-theme .home-feature-card__copy h3 {
+            font-size: 4.35rem !important;
+            line-height: 1.02 !important;
+        }
+
+        body.pains-theme .home-feature-card--projects .home-feature-card__copy h3.home-project-title {
+            max-width: 100%;
+            font-size: clamp(2.65rem, 4.1vw, 3.45rem) !important;
+            line-height: 1.18 !important;
+            overflow: visible;
+        }
+
+        body.pains-theme .home-hero__timeline {
+            width: min(920px, 100%);
+            margin-top: 34px;
+            padding: 4px 0 0;
+            color: #fff8fa;
+        }
+
+        body.pains-theme .home-timeline__track {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            min-height: 176px;
+        }
+
+        body.pains-theme .home-timeline__track::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background: rgba(255, 232, 238, 0.36);
+        }
+
+        body.pains-theme .home-timeline__item {
+            position: relative;
+            min-width: 0;
+        }
+
+        body.pains-theme .home-timeline__item::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: calc(50% - 5px);
+            width: 10px;
+            height: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            background: #990000;
+            transform: translateX(-50%);
+            box-shadow: 0 0 0 8px rgba(255, 232, 238, 0.08);
+        }
+
+        body.pains-theme .home-timeline__content {
+            position: absolute;
+            left: 50%;
+            width: min(174px, calc(100% - 14px));
+            transform: translateX(-50%);
+            word-break: keep-all;
+        }
+
+        body.pains-theme .home-timeline__item--top .home-timeline__content {
+            bottom: calc(50% + 24px);
+        }
+
+        body.pains-theme .home-timeline__item--bottom .home-timeline__content {
+            top: calc(50% + 24px);
+        }
+
+        body.pains-theme .home-timeline__content strong {
+            display: block;
+            color: #fff !important;
+            font-size: 2.15rem;
+            line-height: 0.95;
+        }
+
+        body.pains-theme .home-timeline__content span {
+            display: block;
+            margin-top: 8px;
+            color: rgba(255, 232, 238, 0.78);
+            font-size: 0.94rem;
+            font-weight: 800;
+            line-height: 1.35;
+        }
+
+        body.pains-theme .home-axis__body {
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+        }
+
+        body.pains-theme .home-axis__body strong {
+            margin: 0;
+            font-size: 1.9rem !important;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 980px) {
+            body.pains-theme .home-hero__copy h2.home-hero__title--en {
+                font-size: 5.4rem !important;
+                line-height: 0.9 !important;
+            }
+
+            body.pains-theme .home-hero__timeline {
+                margin-top: 30px;
+            }
+
+            body.pains-theme .home-timeline__track {
+                display: block;
+                min-height: 0;
+                padding-left: 24px;
+            }
+
+            body.pains-theme .home-timeline__track::before {
+                left: 5px;
+                right: auto;
+                top: 2px;
+                bottom: 2px;
+                width: 1px;
+                height: auto;
+            }
+
+            body.pains-theme .home-timeline__item {
+                padding: 0 0 22px;
+            }
+
+            body.pains-theme .home-timeline__item::before {
+                left: -19px;
+                top: 7px;
+                transform: none;
+            }
+
+            body.pains-theme .home-timeline__content,
+            body.pains-theme .home-timeline__item--top .home-timeline__content,
+            body.pains-theme .home-timeline__item--bottom .home-timeline__content {
+                position: static;
+                width: auto;
+                transform: none;
+            }
+
+            body.pains-theme .home-timeline__content strong {
+                font-size: 1.8rem;
+            }
+
+            body.pains-theme .home-timeline__content span {
+                max-width: 280px;
+                font-size: 0.96rem;
+            }
+
+            body.pains-theme .home-strategy__copy h3 {
+                font-size: 4rem !important;
+                line-height: 0.98 !important;
+            }
+
+            body.pains-theme .home-feature-cloud__rail h3 {
+                font-size: 3rem !important;
+            }
+
+            body.pains-theme .home-feature-card__copy h3 {
+                font-size: 3.05rem !important;
+                line-height: 1.08 !important;
+            }
+
+            body.pains-theme .home-feature-card--projects .home-feature-card__copy h3.home-project-title {
+                font-size: 2.18rem !important;
+                line-height: 1.22 !important;
+            }
+
+            body.pains-theme .home-axis__body strong {
+                font-size: 1.55rem !important;
+            }
+        }
+
+        @media (max-width: 560px) {
+            body.pains-theme .home-hero__copy h2.home-hero__title--en {
+                font-size: 4.25rem !important;
+            }
+
+            body.pains-theme .home-feature-card {
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+            }
+
+            body.pains-theme .home-feature-card__copy h3 {
+                font-size: 2.52rem !important;
+            }
+
+            body.pains-theme .home-feature-card--projects .home-feature-card__copy h3.home-project-title {
+                font-size: 1.58rem !important;
+                line-height: 1.24 !important;
+            }
+        }
+
+        @media (min-width: 981px) {
+            body.pains-theme .home-hero__media {
+                bottom: -48px !important;
+            }
+        }
+
+        html.home-snap-page {
+            scroll-padding-top: var(--pains-header-height);
+            scroll-snap-type: y proximity;
+        }
+
+        html.home-snap-page.home-menu-open {
+            scroll-snap-type: none;
+        }
+
+        body.pains-theme.home-page {
+            overscroll-behavior-y: contain;
+        }
+
+        body.pains-theme.home-page .home-shell {
+            isolation: isolate;
+            background:
+                linear-gradient(90deg,
+                    transparent 0,
+                    transparent calc(25% - 1px),
+                    rgba(255, 236, 241, 0.14) calc(25% - 1px),
+                    rgba(255, 236, 241, 0.14) 25%,
+                    transparent 25%,
+                    transparent calc(50% - 1px),
+                    rgba(255, 236, 241, 0.14) calc(50% - 1px),
+                    rgba(255, 236, 241, 0.14) 50%,
+                    transparent 50%,
+                    transparent calc(75% - 1px),
+                    rgba(255, 236, 241, 0.14) calc(75% - 1px),
+                    rgba(255, 236, 241, 0.14) 75%,
+                    transparent 75%),
+                radial-gradient(circle at 82% 8%, rgba(255, 188, 202, 0.14), transparent 26%),
+                linear-gradient(180deg, #4f0718 0%, #760d2a 44%, #5f081d 72%, #4b0616 100%) !important;
+        }
+
+        body.pains-theme.home-page .home-shell::before {
+            display: none;
+        }
+
+        body.pains-theme.home-page .home-shell > * {
+            z-index: 2;
+        }
+
+        body.pains-theme.home-page .home-feature-card,
+        body.pains-theme.home-page .home-section--calendar {
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+        }
+
+        body.pains-theme.home-page .home-feature-card,
+        body.pains-theme.home-page .home-section--calendar {
+            min-height: calc(100svh - var(--pains-header-height)) !important;
+        }
+
+        body.pains-theme.home-page .home-shell .home-hero,
+        body.pains-theme.home-page .home-hero__content {
+            min-height: calc(100svh - var(--pains-header-height)) !important;
+        }
+
+        body.pains-theme.home-page .home-strategy {
+            display: flex;
+            align-items: center;
+            margin-top: 28px !important;
+            margin-bottom: 38px !important;
+            padding: clamp(48px, 6vw, 86px) clamp(22px, 4.6vw, 62px) !important;
+        }
+
+        body.pains-theme.home-page .home-axis-grid {
+            display: grid !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+            align-items: stretch;
+            gap: 18px !important;
+        }
+
+        body.pains-theme.home-page .home-axis {
+            min-height: clamp(360px, 54svh, 560px) !important;
+            height: 100% !important;
+            align-self: stretch;
+            grid-column: auto !important;
+        }
+
+        body.pains-theme.home-page .home-axis img {
+            position: absolute !important;
+            inset: 0;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            transform: none !important;
+        }
+
+        body.pains-theme.home-page .home-feature-cloud {
+            margin-top: 0 !important;
+            padding-top: clamp(34px, 5vw, 72px) !important;
+        }
+
+        body.pains-theme.home-page .home-feature-cloud__rail {
+            min-height: calc(100svh - var(--pains-header-height) - 72px);
+        }
+
+        body.pains-theme.home-page .home-feature-card {
+            min-height: calc(100svh - var(--pains-header-height)) !important;
+            padding: clamp(28px, 4vw, 56px) !important;
+        }
+
+        body.pains-theme.home-page .home-feature-card__media,
+        body.pains-theme.home-page .home-feature-card__media--wide,
+        body.pains-theme.home-page .home-mosaic__item,
+        body.pains-theme.home-page .home-mosaic__item--small {
+            min-height: clamp(280px, 48svh, 540px) !important;
+            height: 100% !important;
+        }
+
+        body.pains-theme.home-page .home-feature-card__media img,
+        body.pains-theme.home-page .home-mosaic__item img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+        }
+
+        body.pains-theme.home-page .motion-panel {
+            --motion-x: 0px;
+            opacity: 1 !important;
+            transform: translate(var(--motion-x), var(--motion-y)) scale(var(--motion-scale));
+        }
+
+        body.pains-theme.home-page .motion-from-left {
+            --motion-side: left;
+        }
+
+        body.pains-theme.home-page .home-feature-card--projects {
+            width: min(1280px, calc(100vw - 80px));
+            max-width: none;
+            margin-left: calc(100% - min(1280px, calc(100vw - 80px)));
+        }
+
+        body.pains-theme.home-page .home-feature-card--projects .home-feature-card__copy {
+            justify-self: start;
+            max-width: 560px;
+            text-align: left;
+        }
+
+        body.pains-theme.home-page .home-feature-card--projects .home-billboard__actions {
+            justify-content: flex-start;
+        }
+
+        body.pains-theme.home-page .home-strategy,
+        body.pains-theme.home-page .home-axis,
+        body.pains-theme.home-page .home-feature-cloud__rail,
+        body.pains-theme.home-page .home-feature-card,
+        body.pains-theme.home-page .home-section__inner {
+            position: relative;
+            isolation: isolate;
+        }
+
+        body.pains-theme.home-page .home-strategy,
+        body.pains-theme.home-page .home-feature-card,
+        body.pains-theme.home-page .home-feature-card--about,
+        body.pains-theme.home-page .home-feature-card--community {
+            background: linear-gradient(135deg, #760d2a 0%, #6d0b24 52%, #560719 100%) !important;
+        }
+
+        body.pains-theme.home-page .home-feature-card--projects {
+            background:
+                radial-gradient(circle at 82% 18%, rgba(255, 180, 197, 0.22), transparent 36%),
+                linear-gradient(135deg, #4f0718, #7c102e 58%, #990000) !important;
+        }
+
+        body.pains-theme.home-page .home-strategy::before,
+        body.pains-theme.home-page .home-axis::before,
+        body.pains-theme.home-page .home-feature-cloud__rail::before,
+        body.pains-theme.home-page .home-feature-card::before,
+        body.pains-theme.home-page .home-section__inner::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 78% 14%, rgba(255, 180, 197, 0.1), transparent 34%),
+                linear-gradient(135deg, #760d2a 0%, #6d0b24 52%, #560719 100%);
+            box-shadow: 0 24px 80px rgba(62, 0, 18, 0.16);
+        }
+
+        body.pains-theme.home-page .home-axis::before {
+            inset: 0;
+            border: 1px solid rgba(255, 232, 238, 0.22);
+            border-radius: inherit;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        body.pains-theme.home-page .home-axis img {
+            z-index: 0;
+        }
+
+        body.pains-theme.home-page .home-axis::after {
+            z-index: 1;
+        }
+
+        body.pains-theme.home-page .home-axis__body {
+            position: absolute !important;
+            z-index: 2;
+        }
+
+        body.pains-theme.home-page .home-strategy::before {
+            inset: 0;
+            border-radius: 0;
+        }
+
+        body.pains-theme.home-page .home-feature-cloud__rail::before {
+            inset: -26px -18px;
+            border: 1px solid rgba(255, 232, 238, 0.12);
+            border-radius: 28px;
+            background:
+                linear-gradient(135deg, #760d2a, #560719);
+        }
+
+        body.pains-theme.home-page .home-feature-card::before {
+            border: 1px solid rgba(255, 232, 238, 0.18);
+            border-radius: inherit;
+        }
+
+        body.pains-theme.home-page .home-feature-card--projects::before {
+            background:
+                radial-gradient(circle at 82% 18%, rgba(255, 180, 197, 0.22), transparent 36%),
+                linear-gradient(135deg, #4f0718, #7c102e 58%, #990000);
+        }
+
+        body.pains-theme.home-page .home-section__inner::before {
+            inset: -32px;
+            border-radius: 30px;
+            background:
+                linear-gradient(180deg, #760d2a, #4f0718);
+        }
+
+        body.pains-theme.home-page .home-strategy > *,
+        body.pains-theme.home-page .home-feature-cloud__rail > *,
+        body.pains-theme.home-page .home-feature-card > *,
+        body.pains-theme.home-page .home-section__inner > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        body.pains-theme.home-page .home-section--calendar .home-section__heading {
+            max-width: min(100%, 920px);
+        }
+
+        body.pains-theme.home-page .home-section--calendar .home-section__heading p {
+            max-width: none !important;
+            word-break: keep-all;
+            overflow-wrap: normal;
+            text-wrap: balance;
+        }
+
+        @media (min-width: 900px) {
+            body.pains-theme.home-page .home-section--calendar .home-section__heading p {
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 980px) {
+            body.pains-theme.home-page .home-strategy,
+            body.pains-theme.home-page .home-feature-card,
+            body.pains-theme.home-page .home-section--calendar {
+                min-height: auto !important;
+            }
+
+            body.pains-theme.home-page .home-axis {
+                min-height: 320px !important;
+            }
+
+            body.pains-theme.home-page .home-feature-cloud__rail {
+                min-height: auto;
+            }
+
+            body.pains-theme.home-page .home-feature-card--projects {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 760px) {
+            body.pains-theme.home-page .home-shell {
+                background:
+                    linear-gradient(90deg,
+                        transparent 0,
+                        transparent calc(50% - 1px),
+                        rgba(255, 236, 241, 0.12) calc(50% - 1px),
+                        rgba(255, 236, 241, 0.12) 50%,
+                        transparent 50%),
+                    radial-gradient(circle at 82% 8%, rgba(255, 188, 202, 0.12), transparent 28%),
+                    linear-gradient(180deg, #4f0718 0%, #760d2a 44%, #5f081d 72%, #4b0616 100%) !important;
+            }
+
+            body.pains-theme.home-page .home-feature-cloud {
+                width: min(calc(100% - 28px), 640px) !important;
+                gap: 28px !important;
+                padding-top: 28px !important;
+            }
+
+            body.pains-theme.home-page .home-hero__copy > p {
+                max-width: 100% !important;
+                white-space: nowrap !important;
+                word-break: keep-all;
+                font-size: clamp(0.78rem, 3.45vw, 1rem) !important;
+                line-height: 1.45 !important;
+            }
+
+            body.pains-theme.home-page .home-axis-grid {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+            }
+
+            body.pains-theme.home-page .home-axis {
+                min-height: 190px !important;
+                border-radius: 20px !important;
+            }
+
+            body.pains-theme.home-page .home-axis__body {
+                left: 18px !important;
+                right: 18px !important;
+                bottom: 18px !important;
+            }
+
+            body.pains-theme.home-page .home-axis__body strong {
+                white-space: nowrap !important;
+                overflow: visible !important;
+                font-size: clamp(1.28rem, 6.2vw, 1.62rem) !important;
+                line-height: 1.08 !important;
+            }
+
+            body.pains-theme.home-page .home-feature-cloud__rail {
+                position: relative !important;
+                top: auto !important;
+                min-height: auto !important;
+                margin-bottom: 30px !important;
+                padding: 24px 18px !important;
+                overflow: visible !important;
+            }
+
+            body.pains-theme.home-page .home-feature-cloud__rail::before {
+                inset: 0 !important;
+                border-radius: 22px !important;
+            }
+
+            body.pains-theme.home-page .home-feature-cloud__rail h3 {
+                max-width: 100% !important;
+                font-size: clamp(2.18rem, 9.6vw, 2.62rem) !important;
+                line-height: 1.12 !important;
+                overflow: visible !important;
+                word-break: keep-all;
+            }
+
+            body.pains-theme.home-page .home-story-nav a {
+                width: 100%;
+                min-width: 0;
+                min-height: 44px;
+                padding: 0 16px;
+                font-size: 0.95rem !important;
+                white-space: nowrap !important;
+                overflow: visible !important;
+            }
+
+            body.pains-theme.home-page .home-story-nav a::after {
+                flex: 0 0 auto;
+                margin-left: 12px;
+            }
+
+            body.pains-theme.home-page .home-feature-card {
+                padding: 24px 18px !important;
+            }
+
+            body.pains-theme.home-page .home-feature-card__copy h3,
+            body.pains-theme.home-page .home-feature-card--projects .home-feature-card__copy h3.home-project-title {
+                font-size: clamp(2rem, 9.2vw, 2.55rem) !important;
+                line-height: 1.14 !important;
+                overflow: visible !important;
+            }
+
+            body.pains-theme.home-page .home-feature-card--projects .home-billboard__actions {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                justify-content: flex-start !important;
+                gap: 8px !important;
+            }
+
+            body.pains-theme.home-page .home-feature-card--projects .home-cta {
+                flex: 1 1 0 !important;
+                width: auto !important;
+                min-width: 0 !important;
+                max-width: 145px;
+                min-height: 42px;
+                padding: 0 8px !important;
+                white-space: nowrap !important;
+                font-size: clamp(0.78rem, 3.55vw, 0.92rem) !important;
+            }
+        }
     </style>
+    <script>
+        (function () {
+            document.documentElement.classList.add('pains-cms-loading');
+            window.__painsCmsLoadingTimer = window.setTimeout(function () {
+                document.documentElement.classList.remove('pains-cms-loading');
+            }, 3500);
+        }());
+    </script>
+    <style id="pains-cms-loading-style">
+        html.pains-cms-loading body {
+            background: #f8f9fb !important;
+        }
+
+        html.pains-cms-loading body > * {
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        html.pains-cms-ready body > * {
+            transition: opacity 0.22s ease;
+        }
+    </style>
+    <script defer src="js/content-loader.js?v=20260528"></script>
 </head>
 <body>
 
@@ -523,91 +2864,193 @@
     <div class="sidebar" id="sidebar"></div>
     <div class="overlay" id="overlay"></div>
 
-    <div class="hero">
-        <img src="images/logo_transparent.png" alt="PAINS 메인 로고" class="hero-image">
-        <p>고려대학교 교내 유일 스포츠 통계분석 동아리 PAINS</p>
-    </div>
-
-    <section class="intro-text">
-        <h3>About Us</h3>
-        <img src="images/소개사진.jpg" alt="PAINS 단체사진" class="about-us-image">
-        <p>
-            2020년 설립되어 2026학년도 1학기에 11기로 활동하는 PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다. <br>
-            야구, 축구, 농구, 배구, F1, e-sports등 다양한 종목에 대한 흥미와 열정을 지닌 부원들이 매 학기 열정적으로 프로젝트를 수행하고 있습니다. 탐구 프로젝트뿐만 아니라 스포츠 경기 단체 관람, 연사초청, MT, 체육대회 등 다양한 친목활동을 개최하여 서로 다른 관심 종목을 가진 부원들 간의 교류도 활발하게 진행하고 있습니다. <br>
-            또한 연세대학교 스포츠 통계 분석 학회 YSAL과 교류하며, 매 기수 합동 세미나를 개최해 상호 간 진행한 프로젝트에서 얻은 인사이트를 공유하고 있습니다. <br>
-            전공, 학번, 성별에 상관없이 통계 지식과 스포츠에 대한 열정만 있다면 누구든 환영합니다!
-        </p>
-    </section>
-
-    <section class="intro-text">
-        <h3>회장 인사말</h3>
-        <p>
-            안녕하십니까, 고려대학교 스포츠 통계분석 동아리 PAINS의 11기 회장 전영재입니다. <br>
-            PAINS는 스포츠를 사랑하는 사람들이 모여, 익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로
-            해석해 보고자 만들어진 동아리입니다. 단순히 승패와 득실을 넘어 기록 속에 숨은 맥락과 의미를 발견하고
-            데이터를 통해 스포츠를 더 깊이 이해하는 경험을 함께 나누고 있습니다. <br>
-            각기 다른 배경을 가진 부원들이 모여 뜨거운 열정으로 스포츠에 대한 궁금증을 해소하는 경험을 함께 하는 동시에 통계 뿐만이 아닌 AI와 데이터 과학 분야를 공부하며 부원 모두가 함께 성장하는 환경을 갖추고 있습니다. <br>
-            매순간 달라지고 발전하는 PAINS의 활동에 많은 관심을 가져주시고 함께 해주셔서 감사합니다.
-        </p>
-    </section>
-
-    <section>
-        <h3>일정 안내</h3>
-        <div class="calendar-container">
-            <div class="calendar-header">
-                <div class="calendar-nav-group">
-                    <button class="calendar-nav-btn" onclick="changeMonth(-1)">&#9664;</button>
-                    <div class="calendar-title" id="calendar-title" onclick="toggleDatePicker()">2026. 01</div>
-                    <button class="calendar-nav-btn" onclick="changeMonth(1)">&#9654;</button>
-
-                    <div class="date-picker" id="date-picker">
-                        <div class="picker-header">
-                            <span>직접 선택</span>
-                            <span class="picker-close" onclick="closeDatePicker()">&times;</span>
-                        </div>
-                        <div class="picker-body">
-                            <div class="picker-col" id="picker-years"></div>
-                            <div class="picker-col" id="picker-months"></div>
+    <main class="home-shell">
+        <section class="home-hero hero motion-panel" data-motion>
+            <div class="home-hero__media" aria-hidden="true">
+                <img src="images/소개사진.jpg" alt="">
+                <div class="home-hero__shade"></div>
+            </div>
+            <div class="home-hero__content">
+                <div class="home-hero__copy">
+                    <p class="home-eyebrow">Korea University Sports Statistics</p>
+                    <h2 class="home-hero__title--en"><span>WE ARE</span><span>PAINS</span></h2>
+                    <p>고려대학교 스포츠 통계 동아리 PAINS입니다.</p>
+                    <div class="home-hero__actions">
+                        <a class="home-cta home-cta--primary" href="#home-strategy" onclick="scrollToSection('home-strategy'); return false;">살펴보기</a>
+                        <a class="home-cta home-cta--secondary" href="#home-calendar" onclick="scrollToHomeCalendar(); return false;">일정 보기</a>
+                    </div>
+                    <div class="home-hero__timeline" aria-label="PAINS 연표">
+                        <div class="home-timeline__track">
+                            <div class="home-timeline__item home-timeline__item--top">
+                                <span class="home-timeline__content">
+                                    <strong>2020</strong>
+                                    <span>PAINS 설립</span>
+                                </span>
+                            </div>
+                            <div class="home-timeline__item home-timeline__item--bottom">
+                                <span class="home-timeline__content">
+                                    <strong>2021</strong>
+                                    <span>PAINS 1기 시작</span>
+                                </span>
+                            </div>
+                            <div class="home-timeline__item home-timeline__item--top">
+                                <span class="home-timeline__content">
+                                    <strong>2023</strong>
+                                    <span>고려대학교 동아리 활성화 프로젝트 수상</span>
+                                </span>
+                            </div>
+                            <div class="home-timeline__item home-timeline__item--bottom">
+                                <span class="home-timeline__content">
+                                    <strong>2025</strong>
+                                    <span>연세대학교 스포츠분석학회 YSAL과 교류 시작</span>
+                                </span>
+                            </div>
+                            <div class="home-timeline__item home-timeline__item--top">
+                                <span class="home-timeline__content">
+                                    <strong>2026</strong>
+                                    <span>11기 활동 진행 중</span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <button class="btn-today-reset" onclick="goToToday()">오늘</button>
-            </div>
-
-            <div class="calendar-body" id="calendar-body">
-                <div class="weekday-row">
-                    <div class="weekday sun">일</div>
-                    <div class="weekday">월</div>
-                    <div class="weekday">화</div>
-                    <div class="weekday">수</div>
-                    <div class="weekday">목</div>
-                    <div class="weekday">금</div>
-                    <div class="weekday sat">토</div>
+                <div class="home-hero__logo" aria-hidden="true">
+                    <img src="images/logo_transparent.png" alt="">
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section>
-        <h3>Our Activities</h3>
-        <div class="activities">
-            <div class="card">
-                <h4>📚 정기 스터디</h4>
-                <p>지원자들을 대상으로 통계 분석과 관련된 심도 있는 스터디와 강의를 진행합니다.</p>
+        <section class="home-strategy motion-panel" id="home-strategy" data-motion>
+            <div class="home-strategy__inner">
+                <div class="home-strategy__copy">
+                    <p class="home-eyebrow">PAINS Operating System</p>
+                    <h3>Who We Are</h3>
+                    <p>PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.</p>
+                </div>
+                <div class="home-axis-grid">
+                    <a class="home-axis home-axis--about" href="#home-about" onclick="scrollToSection('home-about'); return false;">
+                        <img src="images/소개사진.jpg" alt="PAINS 소개">
+                        <span class="home-axis__body">
+                            <strong>About PAINS</strong>
+                        </span>
+                    </a>
+                    <a class="home-axis home-axis--projects" href="#home-projects" onclick="scrollToSection('home-projects'); return false;">
+                        <img src="images/activity_edited_1.png" alt="PAINS 프로젝트">
+                        <span class="home-axis__body">
+                            <strong>Projects</strong>
+                        </span>
+                    </a>
+                    <a class="home-axis home-axis--community" href="#home-community" onclick="scrollToSection('home-community'); return false;">
+                        <img src="images/activity03.png" alt="PAINS 커뮤니티">
+                        <span class="home-axis__body">
+                            <strong>Community</strong>
+                        </span>
+                    </a>
+                </div>
             </div>
-            <div class="card">
-                <h4>🤝 프로젝트</h4>
-                <p>배운 내용과 관심 있는 주제를 바탕으로 학기 중, 방학 중에 한 번씩 정기 팀 프로젝트를 진행하며 포트폴리오를 만들고 실전 경험을 쌓습니다.</p>
+        </section>
+
+        <section class="home-feature-cloud">
+            <div class="home-feature-cloud__rail">
+                <p class="home-eyebrow">Who We Are</p>
+                <h3><span class="home-title-line">스포츠를 더 깊게</span><span class="home-title-line">이해하는 곳.</span></h3>
+                <nav class="home-story-nav" aria-label="메인 스토리 이동">
+                    <a href="#home-about" onclick="scrollToSection('home-about'); return false;">About PAINS</a>
+                    <a href="#home-projects" onclick="scrollToSection('home-projects'); return false;">Projects</a>
+                    <a href="#home-community" onclick="scrollToSection('home-community'); return false;">Community</a>
+                </nav>
             </div>
-            <div class="card">
-                <h4>🎉 친목 활동</h4>
-                <p>선후배 및 부원 간 교류 활동, MT, 스포츠 경기 단체 관람 등 다양한 친목 활동을 진행하고 있습니다.</p>
+
+            <div class="home-feature-stack">
+                <article class="home-feature-card home-feature-card--about motion-panel" id="home-about" data-motion>
+                    <div class="home-feature-card__copy">
+                        <p class="home-eyebrow">About PAINS</p>
+                        <h3><span class="home-title-line">데이터로 스포츠를</span><span class="home-title-line">다시 씁니다.</span></h3>
+                        <p>익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석하며, 기록 속에 숨은 맥락과 의미를 함께 발견합니다.</p>
+                        <div class="home-billboard__actions">
+                            <a class="home-cta home-cta--primary" href="about">PAINS 소개 보기</a>
+                        </div>
+                    </div>
+                    <div class="home-feature-card__media home-feature-card__media--wide">
+                        <img src="images/소개사진.jpg" alt="PAINS 단체사진">
+                    </div>
+                </article>
+
+                <article class="home-feature-card home-feature-card--projects motion-panel motion-from-left" id="home-projects" data-motion>
+                    <div class="home-feature-card__copy">
+                        <p class="home-eyebrow">Projects</p>
+                        <h3 class="home-project-title"><span class="home-title-line">흥미에서 출발해</span><span class="home-title-line">결과를 만들어냅니다.</span></h3>
+                        <p>야구, 축구, 농구, 배구, F1, e-sports까지 다양한 종목을 바탕으로 팀 프로젝트를 수행하고 포트폴리오로 남깁니다.</p>
+                        <div class="home-billboard__actions">
+                            <a class="home-cta home-cta--primary" href="activity">프로젝트 보기</a>
+                            <a class="home-cta home-cta--secondary" href="study">스터디 보기</a>
+                        </div>
+                    </div>
+                    <div class="home-feature-card__media">
+                        <img src="images/activity_edited_1.png" alt="PAINS 프로젝트 활동">
+                    </div>
+                </article>
+
+                <article class="home-feature-card home-feature-card--community motion-panel" id="home-community" data-motion>
+                    <div class="home-feature-card__copy">
+                        <p class="home-eyebrow">Community</p>
+                        <h3><span class="home-title-line">같이 보고,</span><span class="home-title-line">같이 즐기고,</span><span class="home-title-line">같이 성장합니다.</span></h3>
+                        <p>스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 자연스럽게 교류합니다.</p>
+                    </div>
+                    <div class="home-mosaic">
+                        <div class="home-mosaic__item">
+                            <img src="images/단체사진.png" alt="PAINS 활동 사진">
+                        </div>
+                        <div class="home-mosaic__item home-mosaic__item--small">
+                            <img src="images/activity03.png" alt="PAINS 체육 활동">
+                        </div>
+                    </div>
+                </article>
             </div>
-        </div>
-        <p style="margin-top: 30px; text-align: center;">
-            더 자세한 활동은 <a href="#" onclick="alert('지원 기간이 아닙니다.'); return false;" class="inline-link"><strong>11기 지원하기 페이지</strong></a>와 <a href="https://www.instagram.com/ku_pains" target="_blank" class="inline-link"><strong>PAINS 공식 인스타그램 계정</strong></a>을 참고해주세요!
-        </p>
-    </section>
+        </section>
+
+        <section class="home-section home-section--calendar motion-panel" id="home-calendar" data-motion>
+            <div class="home-section__inner">
+                <div class="home-section__heading">
+                    <h3>일정 안내</h3>
+                    <p>PAINS의 정기 활동, 비정기 활동, 리크루팅 일정을 한눈에 확인할 수 있습니다.</p>
+                </div>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <div class="calendar-nav-group">
+                            <button class="calendar-nav-btn" onclick="changeMonth(-1)">&#9664;</button>
+                            <div class="calendar-title" id="calendar-title" onclick="toggleDatePicker()">2026. 01</div>
+                            <button class="calendar-nav-btn" onclick="changeMonth(1)">&#9654;</button>
+
+                            <div class="date-picker" id="date-picker">
+                                <div class="picker-header">
+                                    <span>직접 선택</span>
+                                    <span class="picker-close" onclick="closeDatePicker()">&times;</span>
+                                </div>
+                                <div class="picker-body">
+                                    <div class="picker-col" id="picker-years"></div>
+                                    <div class="picker-col" id="picker-months"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-today-reset" onclick="goToToday()">오늘</button>
+                    </div>
+
+                    <div class="calendar-body" id="calendar-body">
+                        <div class="weekday-row">
+                            <div class="weekday sun">일</div>
+                            <div class="weekday">월</div>
+                            <div class="weekday">화</div>
+                            <div class="weekday">수</div>
+                            <div class="weekday">목</div>
+                            <div class="weekday">금</div>
+                            <div class="weekday sat">토</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer></footer>
 
@@ -639,16 +3082,165 @@
     <script>
         document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
     </script>
-
     <script>
+        document.documentElement.classList.add('home-snap-page');
         loadSidebar('home');
+        document.body.classList.add('home-page');
+
+        function initHomeMotion() {
+            const targets = document.querySelectorAll('[data-motion]');
+            if (!targets.length) return;
+
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                targets.forEach(target => {
+                    target.style.setProperty('--phase', '1');
+                    target.style.setProperty('--motion-opacity', '1');
+                    target.style.setProperty('--motion-y', '0px');
+                    target.style.setProperty('--motion-x', '0px');
+                    target.style.setProperty('--motion-scale', '1');
+                    target.style.setProperty('--mask-start', '0%');
+                    target.style.setProperty('--mask-end', '100%');
+                });
+                return;
+            }
+
+            let ticking = false;
+
+            const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+            const updateMotion = () => {
+                const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+                const viewportCenter = viewportHeight / 2;
+
+                targets.forEach(target => {
+                    const rect = target.getBoundingClientRect();
+                    const targetCenter = rect.top + rect.height / 2;
+                    const distance = Math.abs(viewportCenter - targetCenter);
+                    const range = Math.max(viewportHeight * 0.72, rect.height * 0.48);
+                    const phase = clamp(1 - distance / range, 0, 1);
+                    const eased = 1 - Math.pow(1 - phase, 3);
+                    const maskEdge = (1 - eased) * 10;
+                    const y = (1 - eased) * 38;
+                    const x = target.dataset.motionSide === 'left' || target.classList.contains('motion-from-left')
+                        ? (1 - eased) * -68
+                        : 0;
+                    const scale = 0.976 + eased * 0.024;
+                    const opacity = 0.72 + eased * 0.28;
+
+                    target.style.setProperty('--phase', eased.toFixed(3));
+                    target.style.setProperty('--motion-opacity', opacity.toFixed(3));
+                    target.style.setProperty('--motion-y', `${y.toFixed(1)}px`);
+                    target.style.setProperty('--motion-x', `${x.toFixed(1)}px`);
+                    target.style.setProperty('--motion-scale', scale.toFixed(4));
+                    target.style.setProperty('--mask-start', `${maskEdge.toFixed(1)}%`);
+                    target.style.setProperty('--mask-end', `${(100 - maskEdge).toFixed(1)}%`);
+                });
+
+                ticking = false;
+            };
+
+            const requestUpdate = () => {
+                if (ticking) return;
+                ticking = true;
+                window.requestAnimationFrame(updateMotion);
+            };
+
+            updateMotion();
+            window.addEventListener('scroll', requestUpdate, { passive: true });
+            window.addEventListener('resize', requestUpdate);
+            window.addEventListener('hashchange', requestUpdate);
+            window.setTimeout(updateMotion, 140);
+        }
+
+        function initHomeSnapScroll() {
+            if (window.__painsHomeSnapInit) return;
+            window.__painsHomeSnapInit = true;
+
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            let snapTimer = null;
+
+            const getTargets = () => Array.from(document.querySelectorAll(
+                '#home-about, #home-projects, #home-community, #home-calendar'
+            )).filter(target => target.offsetParent !== null);
+
+            const getHeaderOffset = () => {
+                const value = getComputedStyle(document.documentElement).getPropertyValue('--pains-header-height');
+                return parseFloat(value) || 0;
+            };
+
+            const getTop = (target) => Math.max(0, window.scrollY + target.getBoundingClientRect().top - getHeaderOffset());
+
+            window.addEventListener('wheel', (event) => {
+                if (window.innerWidth < 981 || reducedMotion.matches || event.ctrlKey || Math.abs(event.deltaY) < 28) return;
+                if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+                if (document.body.classList.contains('menu-open')) return;
+
+                const eventTarget = event.target instanceof Element ? event.target : document.documentElement;
+                if (eventTarget.closest('.sidebar, .overlay, .event-modal, .date-picker, .picker-col')) return;
+
+                const targets = getTargets();
+                if (targets.length < 2) return;
+
+                const currentY = window.scrollY;
+                const positions = targets.map(target => ({ target, top: getTop(target) }));
+                const direction = event.deltaY > 0 ? 1 : -1;
+                const threshold = 34;
+                const featureCloud = document.querySelector('.home-feature-cloud');
+                const snapStart = featureCloud ? getTop(featureCloud) : positions[0].top;
+
+                if (direction > 0 && currentY < snapStart - 80) return;
+
+                const next = direction > 0
+                    ? positions.find(item => item.top > currentY + threshold)
+                    : [...positions].reverse().find(item => item.top < currentY - threshold);
+
+                if (!next) return;
+
+                event.preventDefault();
+                if (snapTimer) return;
+
+                window.scrollTo({
+                    top: next.top,
+                    behavior: 'smooth'
+                });
+
+                snapTimer = window.setTimeout(() => {
+                    snapTimer = null;
+                }, 760);
+            }, { passive: false });
+        }
+
+        function scrollToSection(sectionId, animate = true) {
+            const target = document.getElementById(sectionId);
+            if (!target) return;
+
+            target.scrollIntoView({
+                behavior: animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'auto',
+                block: 'start'
+            });
+        }
+
+        function scrollToHomeCalendar(animate = true) {
+            scrollToSection('home-calendar', animate);
+        }
 
         document.addEventListener("DOMContentLoaded", function() {
+            initHomeMotion();
+            initHomeSnapScroll();
+
             const popup = document.getElementById('img-popup');
             const hideDate = localStorage.getItem('pains_popup_hide_date');
             const today = new Date().toDateString();
-            if (hideDate !== today) {
+            if (popup && hideDate !== today) {
                 popup.style.display = "flex";
+            }
+        });
+
+        window.addEventListener('load', function() {
+            if (window.location.hash === '#home-calendar') {
+                window.setTimeout(function() {
+                    scrollToHomeCalendar(false);
+                }, 80);
             }
         });
 
