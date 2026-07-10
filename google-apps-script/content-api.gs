@@ -33,9 +33,17 @@ var TAB = {
 };
 
 function doGet() {
-  var content = buildContent();
+  var cache = CacheService.getScriptCache();
+  var cached = cache.get('pains-site-content-v1');
+  var json = cached;
+
+  if (!json) {
+    json = JSON.stringify(buildContent());
+    cache.put('pains-site-content-v1', json, 15);
+  }
+
   return ContentService
-    .createTextOutput(JSON.stringify(content))
+    .createTextOutput(json)
     .setMimeType(ContentService.MimeType.JSON);
 }
 

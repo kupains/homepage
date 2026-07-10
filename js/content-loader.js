@@ -3,7 +3,8 @@
 
   const REMOTE_CONTENT_URL = 'https://script.google.com/macros/s/AKfycbypl1Z5iLKPPBGwpE8xv2TyCbgl5fmGBhYi1Zn16aU8tG2zvDGtIyALBAhQZ8Jpz5fJyQ/exec';
   const FALLBACK_CONTENT_URL = 'data/site-content.json';
-  const ASSET_WAIT_LIMIT_MS = 1600;
+  const CONTENT_CACHE_KEY = 'pains-site-content-v1';
+  const ASSET_WAIT_LIMIT_MS = 300;
 
   const page = () => location.pathname.split('/').pop().replace(/\.html$/, '') || 'index';
   const isVisible = (item) => item && item.visible !== false;
@@ -213,13 +214,34 @@
     return Array.isArray(items) ? items.filter(isVisible).sort(byOrder) : [];
   }
 
+  function readContentCache() {
+    try {
+      return JSON.parse(localStorage.getItem(CONTENT_CACHE_KEY) || 'null');
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function writeContentCache(content) {
+    try {
+      localStorage.setItem(CONTENT_CACHE_KEY, JSON.stringify(content));
+    } catch (_) {
+      // Storage can be unavailable in private browsing; live content still works.
+    }
+  }
+
   async function loadContent() {
     if (window.__painsContentPromise) return window.__painsContentPromise;
 
-    window.__painsContentPromise = fetch(`${REMOTE_CONTENT_URL}?v=${Date.now()}`, { cache: 'no-store' })
+    const cachedContent = readContentCache();
+    const refreshPromise = fetch(`${REMOTE_CONTENT_URL}?v=${Date.now()}`, { cache: 'no-store' })
       .then((res) => {
         if (!res.ok) throw new Error(`Remote content fetch failed: ${res.status}`);
         return res.json();
+      })
+      .then((content) => {
+        writeContentCache(content);
+        return content;
       })
       .catch(() => fetch(`${FALLBACK_CONTENT_URL}?v=${Date.now()}`, { cache: 'no-store' })
         .then((res) => {
@@ -230,6 +252,9 @@
         console.warn('[PAINS] 콘텐츠 데이터를 불러오지 못했습니다. HTML fallback을 유지합니다.', error);
         return null;
       });
+
+    window.__painsContentRefreshPromise = refreshPromise;
+    window.__painsContentPromise = cachedContent ? Promise.resolve(cachedContent) : refreshPromise;
 
     return window.__painsContentPromise;
   }
@@ -815,6 +840,12 @@
     } finally {
       revealContent();
     }
+
+    window.__painsContentRefreshPromise.then((freshContent) => {
+      if (freshContent && freshContent !== window.__painsContentLatest) {
+        applyContent(freshContent);
+      }
+    });
   }
 
   const initialContentPromise = loadContent();
