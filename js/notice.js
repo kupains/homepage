@@ -175,7 +175,10 @@
       aTitle.className = 'project-title';
       aTitle.href = previewUrl; aTitle.target = '_blank'; aTitle.rel = 'noopener';
       if (n.important) {
-        aTitle.innerHTML = `<span class="badge-important">📌</span>${title}`;
+        const badge = document.createElement('span');
+        badge.className = 'badge-important';
+        badge.textContent = '📌';
+        aTitle.append(badge, document.createTextNode(title));
       } else {
         aTitle.textContent = title;
       }

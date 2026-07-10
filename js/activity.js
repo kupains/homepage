@@ -4,6 +4,7 @@
 
   const API_URL = window.PAINS_CONTENT_API_URL || 'https://script.google.com/macros/s/AKfycbwuNda5HuzwNhp7ecL0BTMt4eCgE8z9y1F8_kDR-ZaEp72mYngLp0DQ4ibWcKDEZyg/exec';
   const VIEWER_PAGE = 'pdf-viewer.html';
+  const EXCLUDED_FILES = new Set(['03V_07.pdf', '02V_07.pdf']);
 
   const $ = (id) => document.getElementById(id);
 
@@ -285,7 +286,8 @@
       pdfProxyUrl   = json.pdfProxyUrl || (releaseConfig && releaseConfig.proxy) || '';
 
       allProjects = (json.projects || [])
-        .filter(p => p && typeof p === 'object' && hasFile(p));
+        .filter(p => p && typeof p === 'object' && hasFile(p))
+        .filter(p => !EXCLUDED_FILES.has(norm(p.file)));
 
       buildFilters(allProjects);
       attachEvents();
