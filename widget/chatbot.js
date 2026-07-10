@@ -3,7 +3,7 @@
 
   const currentScript = document.currentScript;
   const endpoint = currentScript?.dataset.endpoint || window.PAINS_CONTENT_API_URL ||
-    'https://script.google.com/macros/s/AKfycbwuNda5HuzwNhp7ecL0BTMt4eCgE8z9y1F8_kDR-ZaEp72mYngLp0DQ4ibWcKDEZyg/exec';
+    'https://script.google.com/macros/s/AKfycbypl1Z5iLKPPBGwpE8xv2TyCbgl5fmGBhYi1Zn16aU8tG2zvDGtIyALBAhQZ8Jpz5fJyQ/exec';
   const actions = [
     ['attendanceRate', '출석률'],
     ['absenceUsage', '결석계 사용'],

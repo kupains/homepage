@@ -1,14 +1,14 @@
 # PAINS Google Apps Script backend
 
-홈페이지는 GitHub Pages에서 정적으로 배포하고, 콘텐츠와 챗봇 API는 하나의 Google Apps Script 웹 앱에서 제공합니다.
+홈페이지는 GitHub Pages에서 정적으로 배포하고, 콘텐츠와 챗봇 API는 Google Apps Script 웹 앱에서 제공합니다.
 
 ## 구성
 
-- 기존 `content-api.gs`: `GET` 요청으로 홈페이지 콘텐츠, 프로젝트, 공지 목록 제공
+- 기존 콘텐츠 배포: `GET` 요청으로 홈페이지 콘텐츠, 프로젝트, 공지 목록 제공
 - `chatbot-api.gs`: `POST` 요청으로 출석률, 결석계, 회원 정보, 출석 계획, 일정 조회 제공
 - Google Sheet: `Members`, `Requests`, `Schedule` 및 기존 CMS 탭
 
-`chatbot-api.gs`는 기존 `content-api.gs`와 **같은 Apps Script 프로젝트**에 추가해야 합니다. 두 파일은 Apps Script에서 전역 함수와 `SHEET_ID`, `rows()`를 공유합니다.
+`chatbot-api.gs`는 `SHEET_ID`, `rows()`를 제공하는 Apps Script 프로젝트에 추가합니다. 운영 프로젝트·공지 데이터는 기존 169/7 항목을 반환하는 콘텐츠 배포 URL을 계속 사용합니다.
 
 ## 배포
 
@@ -17,9 +17,9 @@
 3. Apps Script 프로젝트 설정에서 V8 런타임을 사용합니다.
 4. **배포 → 배포 관리 → 수정 → 새 버전**을 선택합니다.
 5. 실행 사용자는 소유자, 액세스 권한은 웹사이트 이용자가 접근 가능한 범위로 설정합니다.
-6. 기존 배포를 새 버전으로 갱신합니다. 기존 `/exec` URL은 그대로 유지됩니다.
+6. 새 웹앱 버전을 배포하고 생성된 `/exec` URL을 `widget/chatbot.js`에 설정합니다.
 
-새 배포를 따로 만들었다면 `widget/chatbot.js`, `js/activity.js`, `js/notice.js`의 기본 Apps Script URL을 새 `/exec` URL로 변경합니다.
+프로젝트·공지 데이터가 샘플이 아닌 운영 169/7 항목을 반환하는지 확인하기 전에는 `js/activity.js`, `js/notice.js`의 기존 콘텐츠 URL을 변경하지 않습니다.
 
 ## 요청 형식
 
