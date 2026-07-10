@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAINS - 활동 및 결석 현황</title>
+    <style>
+        /* (기존 CSS 스타일 그대로 유지) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'ATOZ4', sans-serif; background-color: #f3f5f8; }
+        h1, h2, h3, .number { font-family: 'ATOZ5', sans-serif; }
+        input, select, button { font-family: 'ATOZ4', sans-serif; }
+
+        section {
+            max-width: 800px !important;
+            width: calc(100% - 48px) !important;
+            margin: 0 auto 28px auto !important;
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 40px;
+        }
+
+        @media (max-width: 768px) {
+            section {
+                width: calc(100% - 32px) !important;
+                padding: 20px !important;
+            }
+        }
+
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #555; }
+        .input-group input, .input-group select {
+            width: 100%; padding: 12px; font-size: 1rem; outline: none;
+        }
+
+        .btn-check, .btn-submit {
+            width: 100%; padding: 12px; color: white; border: none; font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: background 0.3s, transform 0.2s; margin-top: 10px;
+        }
+        .btn-check { background-color: #444; }
+        .btn-submit { background-color: #ab3333; }
+
+        .btn-check:hover { background-color: #222; transform: translateY(-1px); }
+        .btn-submit:hover { background-color: #8f2a2a; transform: translateY(-1px); }
+
+        #result-area {
+            display: none;
+            margin-top: 25px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px dashed #ddd;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .badge-container { display: flex; justify-content: center; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
+
+        .count-badge {
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 15px 20px; border-radius: 12px; background-color: #333; color: white; flex: 1; min-width: 120px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08); transition: all 0.3s ease;
+        }
+        .count-badge .label-text { font-size: 0.85rem; color: #ccc; margin-bottom: 5px; }
+        .count-badge .value-wrap { display: flex; align-items: baseline; gap: 4px; }
+        .count-badge .number { font-family: 'ATOZ5', sans-serif; font-size: 1.8rem; font-weight: bold; line-height: 1; color: #fff; }
+        .count-badge .text-status { font-size: 1.3rem; font-weight: bold; line-height: 1; color: #fff; margin-top: 4px; }
+        .count-badge .unit { font-size: 0.9rem; font-weight: normal; }
+
+        .rule-box {
+            background-color: #fff5f5; border-left: 5px solid #ab3333;
+            border-radius: 8px; padding: 18px; margin-top: 20px; text-align: left; font-size: 0.95rem; color: #555; line-height: 1.6;
+            word-break: keep-all;
+        }
+        .rule-box strong { color: #ab3333; font-weight: bold; }
+
+        .attendance-box {
+            background: #f7f7f8;
+            border-radius: 20px;
+            padding: 22px 22px 18px 22px;
+            margin-top: 22px;
+            text-align: left;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+            border: 1px solid #ececec;
+        }
+
+        .attendance-box-title {
+            color: #ab3333;
+            font-size: 1.05rem;
+            font-weight: bold;
+            margin-bottom: 14px;
+            word-break: keep-all;
+        }
+
+        .attendance-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .attendance-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .attendance-table td {
+            padding: 11px 10px;
+            border-bottom: 1px solid #bfbfbf;
+            vertical-align: middle;
+            font-size: 0.98rem;
+        }
+
+        .attendance-table .activity-name {
+            width: 72%;
+            color: #111;
+            font-weight: bold;
+            word-break: keep-all;
+        }
+
+        .attendance-table .activity-status {
+            width: 28%;
+            text-align: center;
+            font-weight: bold;
+            border-left: 1px solid #bfbfbf;
+            word-break: keep-all;
+        }
+
+        .status-blue { color: #2f7fbf; }
+        .status-green { color: #5d9f47; }
+        .status-red { color: #c64242; }
+        .status-yellow { color: #b88a1f; }
+        .status-default { color: #444; }
+
+        .status-hoverable {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .badge-container { flex-direction: column; }
+            .count-badge { min-width: 100%; }
+
+            .attendance-box {
+                padding: 18px 14px 14px 14px;
+            }
+
+            .attendance-table td {
+                padding: 10px 8px;
+                font-size: 0.92rem;
+            }
+
+            .attendance-table .activity-name {
+                width: 65%;
+            }
+
+            .attendance-table .activity-status {
+                width: 35%;
+            }
+        }
+
+        .event-list { margin-bottom: 15px; border-radius: 8px; padding: 10px; max-height: 220px; overflow-y: auto; background-color: #f9fafb; border: 1px solid #eee; }
+        .event-item { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid #eee; cursor: pointer; transition: background 0.2s; border-radius: 6px; }
+        .event-item:last-child { border-bottom: none; }
+        .event-item:hover { background-color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .event-item input { margin-right: 12px; width: 18px; height: 18px; accent-color: #ab3333; }
+        .event-info { font-size: 0.95rem; }
+        .event-date { font-weight: bold; color: #ab3333; margin-right: 5px; }
+        .no-event { text-align: center; color: #888; padding: 30px 20px; font-size: 0.95rem; }
+
+        .status-modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.22); opacity: 0; pointer-events: none; transition: opacity 0.18s ease; z-index: 9998;
+        }
+
+        .status-modal-overlay.show { opacity: 1; pointer-events: auto; }
+
+        .status-modal {
+            position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0.96); width: min(420px, calc(100% - 40px));
+            background: #fff; border-radius: 18px; box-shadow: 0 18px 40px rgba(0,0,0,0.20); padding: 20px 18px; z-index: 9999;
+            opacity: 0; pointer-events: none; transition: opacity 0.18s ease, transform 0.18s ease; text-align: left;
+        }
+
+        .status-modal.show { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+        .status-modal-title { font-size: 1rem; font-weight: bold; margin-bottom: 8px; }
+        .status-modal-desc { font-size: 0.94rem; color: #555; line-height: 1.6; word-break: keep-all; }
+        .status-modal-close { margin-top: 14px; display: inline-block; padding: 8px 14px; border: none; border-radius: 10px; background: #444; color: #fff; font-size: 0.9rem; cursor: pointer; }
+    </style>
+
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script defer src="js/content-loader.js?v=20260528"></script>
+</head>
+<body>
+
+    <header></header>
+    <div class="sidebar" id="sidebar"></div>
+    <div class="overlay" id="overlay"></div>
+
+    <section>
+        <h2>회원 정보 조회</h2>
+        <p style="text-align: center; color:#666; font-size:0.95rem; margin-bottom:25px; word-break: keep-all;">
+            학번과 이름을 입력하여 회원 정보를 확인하세요.
+        </p>
+
+        <div class="input-group">
+            <label>학번</label>
+            <input type="text" id="check-id" placeholder="예: 2024123456">
+        </div>
+        <div class="input-group">
+            <label>이름</label>
+            <input type="text" id="check-name" placeholder="예: 홍길동">
+        </div>
+
+        <button class="btn-check" onclick="checkUsedCount()" id="btn-check-submit">조회하기</button>
+
+        <div id="result-area">
+            <p class="result-msg"><span id="user-name-display" style="font-weight:bold; color:#ab3333; font-size: 1.2rem;"></span>님의 정보 및 출석 현황</p>
+
+            <div class="badge-container">
+                <div class="count-badge" id="status-badge" style="background-color: #f5f5f5; box-shadow: none;">
+                    <span class="label-text" id="status-label" style="color: #666;">회원 자격</span>
+                    <div class="value-wrap">
+                        <span id="member-status" class="text-status" style="color: #333;">-</span>
+                    </div>
+                </div>
+                <div class="count-badge">
+                    <span class="label-text">사용한 결석계</span>
+                    <div class="value-wrap">
+                        <span id="used-count" class="number">0</span>
+                        <span class="unit">회</span>
+                    </div>
+                </div>
+                <div class="count-badge" id="attendance-badge" style="background-color: #ab3333; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
+                    <span class="label-text" style="color: #f5f5f5;">현재 출석률</span>
+                    <div class="value-wrap">
+                        <span id="attendance-rate" class="number">0</span>
+                        <span class="unit">%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="attendance-box">
+                <div class="attendance-box-title">[정기 활동 출석 현황 안내]</div>
+                <table class="attendance-table">
+                    <tbody id="regular-attendance-body">
+                        <tr>
+                            <td class="activity-name">-</td>
+                            <td class="activity-status status-default">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="attendance-box">
+                <div class="attendance-box-title">[비정기 활동 출석 현황 안내]</div>
+                <table class="attendance-table">
+                    <tbody id="irregular-attendance-body">
+                        <tr>
+                            <td class="activity-name">-</td>
+                            <td class="activity-status status-default">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="rule-box" style="background-color: #f8f9fa; border-color: #e9ecef; border-left-color: #333;">
+                <strong>[출석률 계산 안내]</strong><br>
+                현재 출석률은 다음 수식을 바탕으로 계산됩니다.
+                <div style="text-align: center; margin: 15px 0; max-width: 100%;">
+                    $$\text{출석률}(\%)=\left(\frac{\text{정기활동 출석인정 수}+\lfloor 0.5 \times \text{비정기활동 출석 수}\rfloor}{\text{이번 기수의 정기활동 수}}\right)\times 100$$
+                </div>
+            </div>
+
+            <div class="rule-box">
+                <strong>[운영회칙 안내]</strong><br>
+                준회원 및 정회원은 <strong>한 기수에 결석계를 3번째 사용하는 시점부터 1회당 5,000원의 결석비를 납부</strong>하여야 합니다.
+                <div class="rule-sub-text">
+                    ※ 제출한 결석계는 일정 기간 이후 반영됩니다. 활동 후 2일 이상 경과에도 결석계 반영이 되어 있지 않을 경우 운영진에게 문의바랍니다.<br>
+                    ※ 결석계 유형을 변경하거나, 결석계 취소를 원하실 경우 운영진에게 문의바랍니다.<br>
+                    ※ 지각, 조퇴가 아닌 결석의 경우 결석계를 제출하였더라도 출석률에는 출석으로 반영되지 않습니다.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>결석계 제출</h2>
+        <p style="text-align: left; color:#666; font-size:0.95rem; margin-bottom:25px; word-break: keep-all; margin-top: 6px">
+            <strong>3주 내 예정된 정기활동</strong>에 대해서만 제출 가능합니다.<br>
+            21일 전부터 활동 전날까지만 제출이 가능하며, 당일에는 제출이 불가합니다.
+        </p>
+
+        <div class="input-group">
+            <label>학번</label>
+            <input type="text" id="submit-id" placeholder="예: 2024123456">
+        </div>
+        <div class="input-group">
+            <label>이름</label>
+            <input type="text" id="submit-name" placeholder="예: 홍길동">
+        </div>
+
+        <div class="input-group">
+            <label>활동 선택</label>
+            <div id="event-list-container" class="event-list">
+                <div class="no-event">불러오는 중...</div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>결석계 종류</label>
+            <select id="submit-type">
+                <option value="결석">결석</option>
+                <option value="지각">지각</option>
+                <option value="조퇴">조퇴</option>
+                <option value="지각 & 조퇴">지각 & 조퇴</option>
+            </select>
+            <div style="font-size: 0.85rem; color: #666; margin-top: 12px; line-height: 1.6; padding: 12px; background: #f9fafb; border-radius: 8px; border: 1px solid #eee;">
+                ▶ <strong>지각:</strong> 명시된 시작 시각 10분 이후 참여<br>
+                ▶ <strong>조퇴:</strong> 명시된 종료 시각 10분 이전 퇴실<br>
+                ▶ <strong>지각 & 조퇴:</strong> 지각과 조퇴를 모두 해야하는 경우<br>
+                <span style="color: #ab3333; font-weight: bold; display: block; margin-top: 6px;">※ 단, 최소 전체 활동 시간의 50% 이상 활동하지 못하면 일부 참여했더라도 인정 결석으로 처리됩니다.</span>
+                <span style="font-weight: bold; display: block;">※ 일반적인 정기활동 시간은 시작 시각으로부터 2시간입니다(즉, 이때 전체 시간의 50%는 1시간입니다). 단, 상황에 따라 변동될 수 있고, 그 경우 공지방에서 그 내용을 확인하실 수 있습니다.</span>
+                <span style="font-weight: bold; display: block;">※ 결석계를 제출하셨더라도 출석 또는 참여하실 경우 출석처리되며, 결석계는 사용되지 않으므로 따로 취소 요청은 하지 않으셔도 됩니다.</span>
+            </div>
+        </div>
+
+        <button class="btn-submit" onclick="submitAbsence()" id="btn-submit-form">제출하기</button>
+    </section>
+
+    <footer></footer>
+
+    <div id="status-modal-overlay" class="status-modal-overlay"></div>
+    <div id="status-modal" class="status-modal" role="dialog" aria-modal="true" aria-labelledby="status-modal-title">
+        <div id="status-modal-title" class="status-modal-title">출석 상태 안내</div>
+        <div id="status-modal-desc" class="status-modal-desc">상태 설명</div>
+        <button id="status-modal-close" class="status-modal-close" type="button">닫기</button>
+    </div>
+
+    <script>
+        document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
+    </script>
+
+    <script>
+        // 전역 변수로 선언하여 모듈 스크립트에서도 쓸 수 있도록 합니다.
+        window.SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxL7shd9op70ZSSuEYe3Iod6wSoRfQ_UKLs7DU1TdOAWoFr1Xr-d8ZDzBBQ_Iq1kEivPg/exec";
+        const SCHEDULE_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBnuUvyE2CDV-hG26xCVdnt88JhQgtusdEndJwTzaI62TXPdWTNldVvua9RLkXj1s34qiM0CEcNvbr/pub?gid=305458048&single=true&output=csv";
+
+        loadSidebar('attendance');
+
+        const STATUS_DESCRIPTIONS = {
+            "출석": "활동에 정상적으로 참여하여 출석으로 처리된 상태입니다.",
+            "인정 결석": "사유가 인정되어 결석으로 기록되었지만, 운영 기준에 따라 인정 처리된 상태입니다.",
+            "인정 지각": "사유가 인정되어 지각으로 기록되었지만, 운영 기준에 따라 인정 처리된 상태입니다.",
+            "인정 조퇴": "사유가 인정되어 조퇴로 기록되었지만, 운영 기준에 따라 인정 처리된 상태입니다.",
+            "사전 통지 결석": "활동 전에 미리 알린 결석으로 접수된 상태입니다.",
+            "사전 통지 지각": "활동 전에 미리 알린 지각으로 접수된 상태입니다.",
+            "사전 통지 조퇴": "활동 전에 미리 알린 조퇴로 접수된 상태입니다.",
+            "무단 결석": "사전 안내 없이 활동에 참여하지 않아 무단 결석으로 처리된 상태입니다.",
+            "무단 지각": "사전 안내 없이 늦게 참여하여 무단 지각으로 처리된 상태입니다.",
+            "무단 조퇴": "사전 안내 없이 중도 퇴실하여 무단 조퇴로 처리된 상태입니다.",
+            "결석": "비정기 활동에 참여하지 않은 상태입니다."
+        };
+
+        function getAttendanceStatusMeta(rawStatus, isIrregular = false) {
+            const status = String(rawStatus || "").trim();
+            if (!status) return { text: "-", className: "status-default", hoverable: false };
+            if (status === "출석") return { text: status, className: "status-blue", hoverable: true };
+            if (isIrregular && status === "결석") return { text: status, className: "status-red", hoverable: true };
+
+            if (["사전 통지 결석", "사전 통지 지각", "사전 통지 조퇴"].includes(status)) {
+                return { text: status, className: "status-green", hoverable: true };
+            }
+            if (["무단 지각", "무단 조퇴", "무단 결석"].includes(status)) {
+                return { text: status, className: "status-red", hoverable: true };
+            }
+            if (["인정 지각", "인정 결석", "인정 조퇴"].includes(status)) {
+                return { text: status, className: "status-yellow", hoverable: true };
+            }
+            return { text: "-", className: "status-default", hoverable: false };
+        }
+
+        function renderAttendanceTable(containerId, items, isIrregular = false) {
+            const tbody = document.getElementById(containerId);
+            if (!Array.isArray(items) || items.length === 0) {
+                tbody.innerHTML = `<tr><td class="activity-name">-</td><td class="activity-status status-default">-</td></tr>`;
+                return;
+            }
+
+            let html = "";
+            items.forEach(item => {
+                const title = String(item.title || "").trim() || "-";
+                const meta = getAttendanceStatusMeta(item.status, isIrregular);
+                let statusHtml = escapeHtml(meta.text);
+
+                if (meta.hoverable && meta.text !== "-") {
+                    statusHtml = `<span class="status-hoverable" data-status="${escapeHtml(meta.text)}">${escapeHtml(meta.text)}</span>`;
+                }
+
+                html += `
+                    <tr>
+                        <td class="activity-name">${escapeHtml(title)}</td>
+                        <td class="activity-status ${meta.className}">${statusHtml}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+            bindStatusModalEvents();
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        function showStatusModal(statusText) {
+            const overlay = document.getElementById("status-modal-overlay");
+            const modal = document.getElementById("status-modal");
+            document.getElementById("status-modal-title").textContent = statusText;
+            document.getElementById("status-modal-desc").textContent = STATUS_DESCRIPTIONS[statusText] || "출석 상태에 대한 설명입니다.";
+            overlay.classList.add("show");
+            modal.classList.add("show");
+        }
+
+        function hideStatusModal() {
+            document.getElementById("status-modal-overlay").classList.remove("show");
+            document.getElementById("status-modal").classList.remove("show");
+        }
+
+        function bindStatusModalEvents() {
+            document.querySelectorAll(".status-hoverable").forEach(el => {
+                el.onclick = (e) => {
+                    e.stopPropagation();
+                    showStatusModal(el.getAttribute("data-status"));
+                };
+            });
+        }
+
+        document.getElementById("status-modal-overlay").addEventListener("click", hideStatusModal);
+        document.getElementById("status-modal-close").addEventListener("click", hideStatusModal);
+        document.getElementById("status-modal").addEventListener("click", e => e.stopPropagation());
+        document.addEventListener("keydown", e => { if (e.key === "Escape") hideStatusModal(); });
+
+        async function checkUsedCount() {
+            document.getElementById('check-id').blur();
+            document.getElementById('check-name').blur();
+
+            const id = document.getElementById('check-id').value.trim();
+            const name = document.getElementById('check-name').value.trim();
+            if (!id || !name) { alert("학번과 이름을 입력해주세요."); return; }
+
+            const btn = document.getElementById('btn-check-submit');
+            const resultArea = document.getElementById('result-area');
+
+            btn.disabled = true;
+            btn.innerText = "조회 중...";
+
+            try {
+                const response = await fetch(`${window.SCRIPT_URL}?type=attendance&id=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}`);
+                const data = await response.json();
+
+                if (data.result === "success") {
+                    document.getElementById('user-name-display').innerText = name;
+                    document.getElementById('member-status').innerText = data.memberStatus;
+                    document.getElementById('used-count').innerText = data.usedCount;
+
+                    let rawRate = String(data.attendanceRate).replace('%', '').trim();
+                    let rateNum = parseFloat(rawRate);
+                    if (isNaN(rateNum)) rateNum = 0;
+                    if (rateNum < 0) rateNum = 0;
+                    if (rateNum > 100) rateNum = 100;
+
+                    document.getElementById('attendance-rate').innerText = rawRate;
+
+                    const attendanceBadge = document.getElementById('attendance-badge');
+                    attendanceBadge.style.background = `linear-gradient(to right, #ab3333 ${rateNum}%, #dca5a5 ${rateNum}%)`;
+
+                    const statusName = String(data.memberStatus).replace(/\s/g, '');
+                    const statusBadge = document.getElementById('status-badge');
+                    const statusText = document.getElementById('member-status');
+                    const statusLabel = document.getElementById('status-label');
+
+                    let bgColor = "#f5f5f5", textColor = "#333", hasCustomColor = false;
+
+                    if (statusName.includes('준회원')) { bgColor = '#c4eed0'; textColor = '#0a6442'; hasCustomColor = true; }
+                    else if (statusName.includes('정회원')) { bgColor = '#d3e3fd'; textColor = '#0c579b'; hasCustomColor = true; }
+                    else if (statusName.includes('활동OB')) { bgColor = '#eaddff'; textColor = '#52217c'; hasCustomColor = true; }
+
+                    if (hasCustomColor) {
+                        statusBadge.style.backgroundColor = bgColor;
+                        statusBadge.style.border = "none";
+                        statusText.style.color = textColor;
+                        statusLabel.style.color = textColor;
+                    } else {
+                        statusBadge.style.backgroundColor = "#f5f5f5";
+                        statusBadge.style.border = "1px solid #ddd";
+                        statusText.style.color = "#333";
+                        statusLabel.style.color = "#666";
+                    }
+
+                    renderAttendanceTable("regular-attendance-body", data.regularAttendance || [], false);
+                    renderAttendanceTable("irregular-attendance-body", data.irregularAttendance || [], true);
+
+                    resultArea.style.display = "block";
+
+                    if (window.MathJax && window.MathJax.typesetPromise) {
+                        MathJax.typesetPromise();
+                    }
+                } else {
+                    alert("일치하는 부원 정보가 없습니다.");
+                    resultArea.style.display = "none";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("조회 중 오류가 발생했습니다.");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "조회하기";
+            }
+        }
+
+        async function loadUpcomingEvents() {
+            const container = document.getElementById('event-list-container');
+            try {
+                const response = await fetch(SCHEDULE_CSV_URL);
+                const data = await response.text();
+                const rows = data.split("\n").map(row => row.trim()).filter(row => row.length > 0);
+
+                const today = new Date();
+                today.setHours(0,0,0,0);
+
+                let availableEvents = [];
+
+                for(let i = 1; i < rows.length; i++) {
+                    const cols = rows[i].split(",");
+                    if (cols.length < 7) continue;
+
+                    const eventName = cols[0].trim();
+                    const dateStr = cols[1].trim();
+                    const type = cols[6].trim();
+
+                    const [y, m, d] = dateStr.split('-').map(Number);
+                    const eventDate = new Date(y, m - 1, d);
+                    eventDate.setHours(0,0,0,0);
+
+                    const diffTime = eventDate.getTime() - today.getTime();
+                    const diffDays = Math.round(diffTime / (1000 * 3600 * 24));
+
+                    if (type.includes("정기") && !type.includes("비정기") && diffDays >= 1 && diffDays <= 21) {
+                        availableEvents.push({ date: eventDate, dateStr: dateStr, name: eventName });
+                    }
+                }
+
+                availableEvents.sort((a, b) => a.date - b.date);
+
+                if (availableEvents.length === 0) {
+                    container.innerHTML = '<div class="no-event">현재 제출 가능한 정기활동이 없습니다.<br>(활동 21일 전부터 전날까지만 결석계 제출이 가능합니다)</div>';
+                } else {
+                    let html = "";
+                    availableEvents.forEach(evt => {
+                        const valueStr = `${evt.name} (${evt.dateStr})`;
+                        html += `
+                            <label class="event-item">
+                                <input type="radio" name="selected_event" value="${escapeHtml(valueStr)}">
+                                <span class="event-info">
+                                    <span class="event-date">${escapeHtml(evt.dateStr)}</span> ${escapeHtml(evt.name)}
+                                </span>
+                            </label>
+                        `;
+                    });
+                    container.innerHTML = html;
+                }
+
+            } catch (error) {
+                console.error("Schedule Load Error:", error);
+                container.innerHTML = '<div class="no-event">일정을 불러오지 못했습니다.</div>';
+            }
+        }
+
+        loadUpcomingEvents();
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
+        // doc과 setDoc 함수가 추가되었습니다.
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD_NFkxSRQ9hkxuSdiwtqpBhhP0mN5jUTg",
+            authDomain: "attendance-6ee39.firebaseapp.com",
+            projectId: "attendance-6ee39",
+            storageBucket: "attendance-6ee39.firebasestorage.app",
+            messagingSenderId: "604064062511",
+            appId: "1:604064062511:web:80fade1c35157b688efada",
+            measurementId: "G-7J2BLPRPNN"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
+        // window.submitAbsence 함수 재정의 (GAS 검증 + Firebase 커스텀 ID 저장 + GAS 이중 저장)
+        window.submitAbsence = async function() {
+            const id = document.getElementById('submit-id').value.trim();
+            const name = document.getElementById('submit-name').value.trim();
+            const selected = document.querySelector('input[name="selected_event"]:checked');
+            const absenceType = document.getElementById('submit-type').value;
+
+            if (!id || !name) { alert("학번과 이름을 입력해주세요."); return; }
+            if (!selected) { alert("결석계를 제출할 활동을 선택해주세요."); return; }
+
+            const btn = document.getElementById('btn-submit-form');
+            const originalBtnText = btn.innerText;
+
+            const eventName = selected.value;
+            const dateMatch = eventName.match(/\((\d{4}-\d{2}-\d{2})\)$/);
+            const dateStr = dateMatch ? dateMatch[1] : "";
+
+            btn.disabled = true;
+            btn.innerText = "정보 확인 중...";
+
+            try {
+                // 1. [유효성 & 중복 검사] 구글 시트(GAS)를 통한 검증
+                const encodedEventName = encodeURIComponent(eventName);
+                const checkResponse = await fetch(`${window.SCRIPT_URL}?type=attendance&id=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}&eventName=${encodedEventName}`);
+                const checkData = await checkResponse.json();
+
+                if (checkData.result === 'duplicate') {
+                    alert("이미 해당 활동에 대한 결석계를 제출하셨습니다.\n결석계 취소나 변경을 원하실 경우, 운영진에게 문의해주세요.");
+                    btn.disabled = false;
+                    btn.innerText = originalBtnText;
+                    return;
+                }
+
+                if (checkData.result === 'fail' || checkData.result === 'invalid_member') {
+                    alert("일치하는 부원 정보가 없습니다.\n학번과 이름을 다시 확인해주세요.");
+                    btn.disabled = false;
+                    btn.innerText = originalBtnText;
+                    return;
+                }
+
+                // 2. 제출 확인 알림창
+                if (!confirm(`[${eventName}] 활동에 대해\n[${absenceType}] 결석계를 제출하시겠습니까?`)) {
+                    btn.disabled = false;
+                    btn.innerText = originalBtnText;
+                    return;
+                }
+
+                btn.innerText = "데이터 저장 중...";
+
+                // ==========================================
+                // 3. [저장 1] Firebase Firestore에 데이터 저장
+                // ==========================================
+                // 요구사항 반영: 학번_일정날짜 조합으로 커스텀 문서 ID 생성
+
+                const pureEventName = eventName.replace(/\//g, ' ');
+
+                const customDocumentId = `${id}_${pureEventName}`;
+
+                const firebaseSubmitData = {
+                    studentId: id,
+                    name: name,
+                    eventName: eventName,
+                    date: dateStr,
+                    absenceType: absenceType,
+                    timestamp: new Date()
+                };
+
+                // setDoc을 사용하여 문서 이름 직접 지정
+                await setDoc(doc(db, "attendance", customDocumentId), firebaseSubmitData);
+
+                // ==========================================
+                // 4. [저장 2] Google Sheet(GAS)에 기존 방식 이중 저장
+                // ==========================================
+                await fetch(window.SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        token: "PAINS_2026_CUSTOM_KEY",
+                        id: id,
+                        name: name,
+                        eventName: eventName,
+                        date: dateStr,
+                        absenceType: absenceType
+                    })
+                });
+
+                // 최종 완료 알림 및 입력 폼 초기화
+                alert("결석계가 성공적으로 제출 및 이중 저장되었습니다.");
+                selected.checked = false;
+                document.getElementById('submit-type').value = "결석";
+
+                // 원하신다면 제출 후 학번과 이름을 비울 수도 있습니다.
+                // document.getElementById('submit-id').value = "";
+                // document.getElementById('submit-name').value = "";
+
+            } catch (err) {
+                console.error("데이터 처리 중 오류 발생:", err);
+                alert("제출 중 서버 연결 오류가 발생했습니다. 다시 시도해주세요.");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = originalBtnText;
+            }
+        }
+    </script>
+    <script src="widget/chatbot.js"></script>
+</body>
+</html>

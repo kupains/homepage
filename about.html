@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAINS - PAINS 소개</title>
+    <style>
+        @font-face { font-family: 'KBO_Dia'; src: url('fonts/KBO_medium.woff') format('woff'); font-weight: normal; font-style: normal; }
+        @font-face { font-family: 'SCDream'; src: url('fonts/SCDream5.otf'); font-weight: normal; font-style: normal; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'SCDream', sans-serif; line-height: 1.6; background-color: #f9f9f9; }
+        h1, h2, h3 { font-family: 'KBO_Dia', sans-serif; }
+
+        .container {
+            width: min(1100px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 2rem 0 3rem;
+        }
+
+        .about-hero {
+            position: relative;
+            min-height: 520px;
+            display: grid;
+            align-items: end;
+            overflow: hidden;
+            border-radius: 28px;
+            background: #4f0718;
+            color: #fff;
+            box-shadow: 0 24px 70px rgba(67, 0, 18, 0.18);
+        }
+
+        .about-hero__media {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .about-hero__media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: saturate(0.78) contrast(0.95) brightness(0.82);
+        }
+
+        .about-hero__shade {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(79, 7, 24, 0.94), rgba(116, 13, 42, 0.72) 46%, rgba(79, 7, 24, 0.2)),
+                linear-gradient(180deg, rgba(79, 7, 24, 0.08), rgba(79, 7, 24, 0.82));
+        }
+
+        .about-hero__body {
+            position: relative;
+            z-index: 1;
+            width: min(760px, calc(100% - 48px));
+            padding: 52px;
+            word-break: keep-all;
+        }
+
+        .section-kicker {
+            display: inline-block;
+            margin-bottom: 14px;
+            color: rgba(255, 232, 238, 0.78);
+            font-size: 0.84rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .about-hero h2,
+        .about-banner h3 {
+            margin: 0;
+            padding: 0;
+            border: 0 !important;
+            color: inherit !important;
+            letter-spacing: 0;
+        }
+
+        body.pains-theme .about-hero h2,
+        body.pains-theme .about-banner h3 {
+            color: inherit !important;
+            border-bottom: 0 !important;
+        }
+
+        .about-hero h2 {
+            font-size: clamp(3.6rem, 8vw, 7rem);
+            line-height: 0.94;
+        }
+
+        .about-hero p {
+            max-width: 660px;
+            margin-top: 24px;
+            color: rgba(255, 236, 241, 0.82);
+            font-size: 1.08rem;
+            line-height: 1.78;
+        }
+
+        .about-banner-stack {
+            display: grid;
+            gap: 20px;
+            margin-top: 22px;
+        }
+
+        .about-banner {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+            gap: 34px;
+            align-items: center;
+            min-height: 420px;
+            padding: 44px;
+            overflow: hidden;
+            border-radius: 26px;
+            background:
+                linear-gradient(135deg, rgba(255, 246, 248, 0.96), rgba(255, 255, 255, 0.9));
+            border: 1px solid rgba(153, 0, 0, 0.1);
+            box-shadow: 0 18px 48px rgba(16, 24, 40, 0.08);
+            word-break: keep-all;
+        }
+
+        .about-banner--dark {
+            background:
+                radial-gradient(circle at 88% 20%, rgba(255, 180, 197, 0.16), transparent 34%),
+                linear-gradient(135deg, #4f0718, #7c102e 58%, #990000);
+            color: #fff;
+            border-color: rgba(255, 232, 238, 0.18);
+        }
+
+        .about-banner__copy h3 {
+            font-size: clamp(2.4rem, 5vw, 4.8rem);
+            line-height: 1.02;
+        }
+
+        .about-banner__copy p {
+            margin-top: 22px;
+            color: #3d4654;
+            font-size: 1rem;
+            line-height: 1.82;
+        }
+
+        .about-banner--dark .about-banner__copy p {
+            color: rgba(255, 236, 241, 0.82);
+        }
+
+        .about-banner--dark .section-kicker {
+            color: rgba(255, 232, 238, 0.78);
+        }
+
+        .about-banner__media {
+            width: 100%;
+            overflow: hidden;
+            border: 1px solid rgba(153, 0, 0, 0.12);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .about-banner__media img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .mobile-only {
+            display: none !important;
+        }
+
+        @media (max-width: 760px) {
+            .container {
+                width: min(100% - 24px, 640px);
+            }
+
+            .about-hero {
+                min-height: 560px;
+                border-radius: 22px;
+            }
+
+            .about-hero__body {
+                width: 100%;
+                padding: 30px 24px;
+            }
+
+            .about-hero h2 {
+                font-size: 3.7rem;
+            }
+
+            .about-banner,
+            .about-banner--dark {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 28px 22px;
+                border-radius: 22px;
+            }
+
+            .about-banner__copy h3 {
+                font-size: 2.7rem;
+            }
+
+            .desktop-only {
+                display: none !important;
+            }
+
+            .mobile-only {
+                display: block !important;
+            }
+
+            .about-banner--dark .about-banner__media {
+                display: none;
+            }
+
+            .president-logo-media {
+                padding: 0;
+                overflow: visible;
+                border: 0 !important;
+                border-radius: 0;
+                background: transparent;
+                box-shadow: none;
+            }
+
+            .president-logo-media img {
+                max-width: min(260px, 72vw);
+                margin: 0 auto;
+                border: 0 !important;
+                box-shadow: none !important;
+            }
+
+            .about-banner--president {
+                border: 0 !important;
+            }
+        }
+    </style>
+    <script defer src="js/content-loader.js?v=20260528"></script>
+</head>
+<body>
+
+    <header></header>
+    <div class="sidebar" id="sidebar"></div>
+    <div class="overlay" id="overlay"></div>
+
+    <main class="container">
+        <section class="about-hero">
+            <div class="about-hero__media" aria-hidden="true">
+                <img src="images/소개사진.jpg" alt="">
+                <div class="about-hero__shade"></div>
+            </div>
+            <div class="about-hero__body">
+                <span class="section-kicker">About PAINS</span>
+                <h2>PAINS 소개</h2>
+                <p>
+                    PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.
+                </p>
+            </div>
+        </section>
+
+        <section class="about-banner-stack">
+            <article class="about-banner about-banner--dark">
+                <div class="about-banner__copy">
+                    <span class="section-kicker">Who We Are</span>
+                    <h3><span class="desktop-only">스포츠를 데이터로 탐구합니다.</span><span class="mobile-only">WE ARE PAINS</span></h3>
+                    <p>
+                        2020년 설립되어 2026학년도 1학기에 11기로 활동하는 PAINS는 야구, 축구, 농구, 배구, F1, e-sports 등 다양한 종목에 대한 흥미와 열정을 바탕으로 매 학기 프로젝트를 수행합니다. 탐구 프로젝트뿐만 아니라 스포츠 경기 단체 관람, 연사초청, MT, 체육대회 등 다양한 친목 활동을 통해 서로 다른 관심 종목을 가진 부원들이 교류하고 있습니다.
+                    </p>
+                </div>
+                <div class="about-banner__media">
+                    <img src="images/소개사진.jpg" alt="PAINS 단체사진">
+                </div>
+            </article>
+
+            <article class="about-banner about-banner--president">
+                <div class="about-banner__copy">
+                    <span class="section-kicker" style="color:#990000;">President Message</span>
+                    <h3>회장 인사말</h3>
+                    <p>
+                        안녕하십니까, 고려대학교 스포츠 통계분석 동아리 PAINS의 11기 회장 전영재입니다. PAINS는 스포츠를 사랑하는 사람들이 모여, 익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석해 보고자 만들어진 동아리입니다. 단순히 승패와 득실을 넘어 기록 속에 숨은 맥락과 의미를 발견하고 데이터를 통해 스포츠를 더 깊이 이해하는 경험을 함께 나누고 있습니다.
+                    </p>
+                    <p>
+                        각기 다른 배경을 가진 부원들이 모여 뜨거운 열정으로 스포츠에 대한 궁금증을 해소하는 경험을 함께 하는 동시에 통계뿐만이 아닌 AI와 데이터 과학 분야를 공부하며 부원 모두가 함께 성장하는 환경을 갖추고 있습니다. 매순간 달라지고 발전하는 PAINS의 활동에 많은 관심을 가져주시고 함께 해주셔서 감사합니다.
+                    </p>
+                </div>
+                <div class="about-banner__media president-logo-media">
+                    <img class="desktop-only" src="images/activity_edited_1.png" alt="PAINS 활동 사진">
+                    <img class="mobile-only" src="images/PAINS_logo.png" alt="PAINS CI 로고">
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <footer></footer>
+
+    <script>
+        document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
+    </script>
+    <script>
+        if (typeof loadSidebar === "function") {
+            loadSidebar('about');
+        }
+    </script>
+    <script src="widget/chatbot.js"></script>
+</body>
+</html>

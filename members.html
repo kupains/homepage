@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAINS - 부원 소개</title>
+    <style>
+        /* ============================ */
+        /* [1] 폰트 및 기본 스타일        */
+        /* ============================ */
+        @font-face { font-family: 'KBO_Dia'; src: url('fonts/KBO_medium.woff') format('woff'); font-weight: normal; font-style: normal; }
+        @font-face { font-family: 'SCDream'; src: url('fonts/SCDream5.otf'); font-weight: normal; font-style: normal; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'SCDream', sans-serif; line-height: 1.6; }
+        h1, h2 { font-family: 'KBO_Dia', sans-serif; }
+
+        /* ============================ */
+        /* [2] 섹션 타이틀 스타일         */
+        /* ============================ */
+        section { max-width: 1200px; margin: 0 auto; }
+        h2 { font-size: 2rem; margin-bottom: 40px; text-align: center;}
+
+        /* ============================ */
+        /* [3] 조직도 전용 스타일         */
+        /* ============================ */
+        .org-chart-wrapper { overflow-x: auto; padding: 20px 0; text-align: center; -webkit-overflow-scrolling: touch; }
+        .tree-container { display: inline-block; position: relative; padding-top: 20px; min-width: 700px; }
+
+        .org-card {
+            background: white; border: 2px solid #ab3333; border-radius: 12px; padding: 15px; text-align: center; width: 160px; position: relative; z-index: 2; margin: 0 auto;
+            /* 기본 그림자(box-shadow)는 menu.js에서 동적 주입 (.org-card) */
+        }
+
+        .org-img { width: 80px; height: 80px; background-color: #eee; border-radius: 50%; margin: 0 auto 10px; background-size: cover; background-position: center; transition: background-image 0.3s ease-in-out; }
+        .org-role { color: #ab3333; font-weight: bold; font-size: 0.9rem; margin-bottom: 4px; }
+        .org-name { font-size: 1.1rem; font-weight: bold; margin-bottom: 4px; }
+        .org-major { font-size: 0.8rem; color: #666; word-break: keep-all; }
+
+        /* 조직도 선 및 배치 연결 */
+        .level-1, .level-2, .level-3 { display: flex; justify-content: center; position: relative; }
+        .level-1 { margin-bottom: 50px; }
+        .level-2 { margin-bottom: 50px; }
+        .level-3 { gap: 40px; }
+        .line { position: absolute; background-color: #ccc; z-index: 1; }
+        .line-v-1 { width: 2px; height: 50px; top: 100%; left: 50%; transform: translateX(-50%); }
+        .vice-president-wrapper { position: relative; display: flex; justify-content: center; }
+        .line-v-2-short { width: 2px; height: 25px; top: 100%; left: 50%; transform: translateX(-50%); }
+        .line-h-long { height: 2px; width: 400px; top: calc(100% + 25px); left: 50%; transform: translateX(-50%); }
+        .line-v-3-branches { width: 2px; height: 25px; top: calc(100% + 25px); }
+        .branch-left { left: calc(50% - 200px); }
+        .branch-center { left: 50%; transform: translateX(-50%); }
+        .branch-right { right: calc(50% - 200px); }
+        .general-affairs-wrapper { position: absolute; left: calc(50% + 140px); top: 0; }
+        .card-staff { border-color: #7f8c8d; }
+        .card-staff .org-role { color: #7f8c8d; }
+
+        @media (max-width: 600px) { section { padding: 2rem 0; } }
+    </style>
+    <script defer src="js/content-loader.js?v=20260528"></script>
+</head>
+<body>
+
+    <header></header>
+    <div class="sidebar" id="sidebar"></div>
+    <div class="overlay" id="overlay"></div>
+
+    <section>
+        <h2>11기 운영진 조직도</h2>
+        <div class="org-chart-wrapper">
+            <div class="tree-container">
+                <div class="level-1">
+                    <div style="position: relative;">
+                        <div class="org-card" data-role="회장v2">
+                            <div class="org-img"></div>
+                            <div class="org-role">회장</div>
+                            <div class="org-name">전영재</div>
+                            <div class="org-major">언어학과 24</div>
+                        </div>
+                        <div class="line line-v-1"></div>
+                    </div>
+                    <div class="general-affairs-wrapper">
+                        <div class="org-card card-staff" data-role="총무">
+                            <div class="org-img"></div>
+                            <div class="org-role">총무</div>
+                            <div class="org-name">손영현</div>
+                            <div class="org-major">통계학과 23</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="level-2">
+                    <div class="vice-president-wrapper">
+                        <div class="org-card" data-role="부회장">
+                            <div class="org-img"></div>
+                            <div class="org-role">부회장</div>
+                            <div class="org-name">하승민</div>
+                            <div class="org-major">데이터과학과 23</div>
+                        </div>
+                        <div class="line line-v-2-short"></div>
+                        <div class="line line-h-long"></div>
+                        <div class="line line-v-3-branches branch-left"></div>
+                        <div class="line line-v-3-branches branch-center"></div>
+                        <div class="line line-v-3-branches branch-right"></div>
+                    </div>
+                </div>
+                <div class="level-3">
+                    <div class="org-card" data-role="기획부장v2">
+                        <div class="org-img"></div>
+                        <div class="org-role">기획부장</div>
+                        <div class="org-name">나영우</div>
+                        <div class="org-major">보건환경융합과학부 25</div>
+                    </div>
+                    <div class="org-card" data-role="홍보부장v2">
+                        <div class="org-img"></div>
+                        <div class="org-role">홍보부장</div>
+                        <div class="org-name">김가현</div>
+                        <div class="org-major">미디어학부 24</div>
+                    </div>
+                    <div class="org-card" data-role="교육부장">
+                        <div class="org-img"></div>
+                        <div class="org-role">교육부장</div>
+                        <div class="org-name">이지섭</div>
+                        <div class="org-major">통계학과 24</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer></footer>
+
+    <script>
+        document.write('<script src="menu.js?v=' + new Date().getTime() + '"><\/script>');
+    </script>
+    <script>
+        loadSidebar('members');
+        // 부원 명단 이미지 로컬 설정
+        document.addEventListener("DOMContentLoaded", function() {
+            const cards = document.querySelectorAll('.org-card');
+            cards.forEach(card => {
+                const role = card.getAttribute('data-role');
+                const imgDiv = card.querySelector('.org-img');
+                if (role && imgDiv) {
+                    imgDiv.style.backgroundImage = `url("${encodeURI('images/' + role + '.png')}")`;
+                }
+            });
+        });
+    </script>
+    <script src="widget/chatbot.js"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "10-2025-semester-kbo-intro",
+    "title": "(예시) KBO 타자 성적 예측 모델",
+    "year": 2025,
+    "generation": 10,
+    "period": "semester",
+    "sport": "야구",
+    "tags": ["KBO", "회귀", "예측"],
+    "summary": "10기 2학기 프로젝트 예시",
+    "pdfUrl": "pdfs/example.pdf",
+    "fileName": "10기_KBO_타자성적_예측.pdf"
+  },
+  {
+    "id": "9-2024-vacation-epl",
+    "title": "(예시) EPL 팀 전술 지표 분석",
+    "year": 2024,
+    "generation": 9,
+    "period": "vacation",
+    "sport": "축구",
+    "tags": ["EPL", "전술", "xG"],
+    "summary": "9기 여름방학 프로젝트 예시",
+    "pdfUrl": "pdfs/example.pdf",
+    "fileName": "9기_EPL_전술지표_분석.pdf"
+  },
+  {
+    "id": "8-2023-semester-kbl",
+    "title": "(예시) KBL 승률 요인 탐색",
+    "year": 2023,
+    "generation": 8,
+    "period": "semester",
+    "sport": "농구",
+    "tags": ["KBL", "승률"],
+    "summary": "8기 학기 프로젝트 예시",
+    "pdfUrl": "pdfs/example.pdf",
+    "fileName": "8기_KBL_승률요인_탐색.pdf"
+  }
+]
