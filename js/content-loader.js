@@ -327,9 +327,9 @@
 
   function renderHomeStoryCards(cards) {
     const roots = {
-      about: document.querySelector('.home-feature-card--about'),
-      projects: document.querySelector('.home-feature-card--projects'),
-      community: document.querySelector('.home-feature-card--community')
+      about: document.querySelector('.home-feature-card--about, .story-panel--about'),
+      projects: document.querySelector('.home-feature-card--projects, .story-panel--projects'),
+      community: document.querySelector('.home-feature-card--community, .community')
     };
 
     visibleItems(cards).forEach((card) => {
@@ -337,13 +337,13 @@
       if (!root) return;
 
       text('.home-eyebrow', card.eyebrow, root);
-      lines('h3', card.titleLines, root);
-      text('.home-feature-card__copy > p:not(.home-eyebrow)', card.description, root);
+      lines('h3, h2', card.titleLines, root);
+      text('.home-feature-card__copy > p:not(.home-eyebrow), .story-panel__copy > p:not(.home-eyebrow), .community__header > p:last-child', card.description, root);
 
-      if (card.image) image('.home-feature-card__media img', card.image, card.alt, root);
+      if (card.image) image('.home-feature-card__media img, .story-panel__media img', card.image, card.alt, root);
 
       if (Array.isArray(card.images)) {
-        const imgs = root.querySelectorAll('.home-mosaic img');
+        const imgs = root.querySelectorAll('.home-mosaic img, .community__gallery img');
         card.images.forEach((item, index) => {
           const img = imgs[index];
           if (!img) return;
