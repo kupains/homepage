@@ -21,11 +21,11 @@
   "pages": {},
   "home": {
     "hero": {
-      "eyebrow": "Korea University · Sports Analytics",
-      "titleLines": ["SPORTS", "IN DATA."],
-      "description": "우리는 스포츠의 모든 장면을 데이터로 기록하고, 분석하고, 다시 해석합니다.",
-      "primaryCta": "Explore PAINS",
-      "secondaryCta": "View Archive",
+      "eyebrow": "",
+      "titleLines": ["", ""],
+      "description": "",
+      "primaryCta": "",
+      "secondaryCta": "",
       "image": "images/pains-data-stadium.png"
     },
     "timeline": [

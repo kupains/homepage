@@ -522,12 +522,12 @@ function readmeRows() {
 function copyRows() {
   return [
     ['path', 'value', 'memo'],
-    ['home.hero.eyebrow', 'Korea University · Sports Analytics', '메인 첫 화면 작은 문구'],
-    ['home.hero.titleLines.0', 'SPORTS', '메인 큰 제목 1줄'],
-    ['home.hero.titleLines.1', 'IN DATA.', '메인 큰 제목 2줄'],
-    ['home.hero.description', '우리는 스포츠의 모든 장면을 데이터로 기록하고, 분석하고, 다시 해석합니다.', '메인 소개 문구'],
-    ['home.hero.primaryCta', 'Explore PAINS', '메인 버튼 1'],
-    ['home.hero.secondaryCta', 'View Archive', '메인 버튼 2'],
+    ['home.hero.eyebrow', '', '현재 디자인에서는 숨김'],
+    ['home.hero.titleLines.0', '', '현재 디자인에서는 숨김'],
+    ['home.hero.titleLines.1', '', '현재 디자인에서는 숨김'],
+    ['home.hero.description', '', '현재 디자인에서는 숨김'],
+    ['home.hero.primaryCta', '', '현재 디자인에서는 숨김'],
+    ['home.hero.secondaryCta', '', '현재 디자인에서는 숨김'],
     ['home.hero.image', 'images/pains-data-stadium.png', '사이트 이미지 경로 또는 Drive URL'],
     ['home.strategy.eyebrow', 'PAINS Data Archive · Since 2020', '정체성 섹션 작은 문구'],
     ['home.strategy.title', 'WE TURN SPORTS INTO KNOWLEDGE.', '정체성 섹션 큰 제목'],
