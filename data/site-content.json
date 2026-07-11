@@ -21,12 +21,12 @@
   "pages": {},
   "home": {
     "hero": {
-      "eyebrow": "Korea University Sports Statistics",
-      "titleLines": ["WE ARE", "PAINS"],
-      "description": "고려대학교 스포츠 통계 동아리 PAINS입니다.",
-      "primaryCta": "살펴보기",
-      "secondaryCta": "일정 보기",
-      "image": "images/소개사진.jpg"
+      "eyebrow": "Korea University · Sports Analytics",
+      "titleLines": ["SPORTS", "IN DATA."],
+      "description": "우리는 스포츠의 모든 장면을 데이터로 기록하고, 분석하고, 다시 해석합니다.",
+      "primaryCta": "Explore PAINS",
+      "secondaryCta": "View Archive",
+      "image": "images/pains-data-stadium.png"
     },
     "timeline": [
       { "year": "2020", "title": "PAINS 설립", "position": "top", "visible": true, "order": 1 },

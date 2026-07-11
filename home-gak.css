@@ -1,0 +1,44 @@
+:root { --gak-black:#080808; --gak-paper:#f0eee8; --gak-muted:#a6a49e; --gak-red:#8b0029; }
+html { background:var(--gak-black); }
+body.pains-theme.home-page { background:var(--gak-black)!important; color:var(--gak-paper); }
+body.pains-theme.home-page .home-shell { background:var(--gak-black)!important; overflow:clip; }
+body.pains-theme.home-page .home-shell .home-hero { min-height:100svh!important; height:auto!important; background:#050505!important; border:0!important; border-radius:0!important; }
+body.pains-theme.home-page .home-hero__media { inset:0!important; width:100%!important; height:100%!important; border:0!important; border-radius:0!important; }
+body.pains-theme.home-page .home-hero__media img { width:100%!important; height:100%!important; object-fit:cover!important; object-position:center!important; filter:saturate(.72) contrast(1.08); }
+body.pains-theme.home-page .home-hero__shade { background:linear-gradient(90deg,rgba(0,0,0,.88) 0%,rgba(0,0,0,.42) 48%,rgba(0,0,0,.1) 76%),linear-gradient(0deg,rgba(0,0,0,.68),transparent 45%)!important; }
+body.pains-theme.home-page .home-hero__content { width:min(100% - 64px,1500px)!important; min-height:100svh!important; margin:auto!important; padding:clamp(118px,16vh,190px) 0 64px!important; align-items:flex-end!important; }
+body.pains-theme.home-page .home-hero__copy { width:100%!important; max-width:none!important; margin:0!important; }
+body.pains-theme.home-page .home-eyebrow { color:var(--gak-paper)!important; font:600 11px/1.3 Arial,sans-serif!important; letter-spacing:.18em!important; text-transform:uppercase; }
+body.pains-theme.home-page .home-hero__title--en { margin:18px 0 28px!important; color:var(--gak-paper)!important; font-family:Arial,Helvetica,sans-serif!important; font-size:clamp(4.4rem,12vw,12rem)!important; font-weight:800!important; line-height:.78!important; letter-spacing:-.075em!important; text-transform:uppercase; }
+body.pains-theme.home-page .home-hero__title--en span { display:block; }
+body.pains-theme.home-page .home-hero__copy>p:not(.home-eyebrow) { max-width:590px!important; color:#d1cfc9!important; font-size:clamp(1rem,1.5vw,1.25rem)!important; line-height:1.7!important; }
+body.pains-theme.home-page .home-hero__actions { margin-top:30px!important; gap:8px!important; }
+body.pains-theme.home-page .home-cta { min-height:50px!important; padding:0 24px!important; border:1px solid rgba(240,238,232,.48)!important; border-radius:0!important; box-shadow:none!important; font:700 12px/48px Arial,sans-serif!important; letter-spacing:.08em!important; }
+body.pains-theme.home-page .home-cta--primary { background:var(--gak-paper)!important; color:#080808!important; }
+body.pains-theme.home-page .home-cta--secondary { background:transparent!important; color:var(--gak-paper)!important; }
+body.pains-theme.home-page .home-hero__logo { display:none!important; }
+body.pains-theme.home-page .home-hero__timeline { border-top:1px solid rgba(240,238,232,.28)!important; margin-top:clamp(54px,10vh,110px)!important; }
+body.pains-theme.home-page .home-strategy { background:var(--gak-paper)!important; color:#101010!important; padding:clamp(90px,13vw,190px) 0!important; }
+body.pains-theme.home-page .home-strategy__inner { width:min(100% - 64px,1500px)!important; margin:auto!important; }
+body.pains-theme.home-page .home-strategy__copy { max-width:1100px!important; }
+body.pains-theme.home-page .home-strategy .home-eyebrow { color:var(--gak-red)!important; }
+body.pains-theme.home-page .home-strategy h3 { color:#0b0b0b!important; font:800 clamp(3.4rem,8vw,8.8rem)/.86 Arial,sans-serif!important; letter-spacing:-.065em!important; text-transform:uppercase; }
+body.pains-theme.home-page .home-strategy__copy>p:last-of-type { max-width:650px; margin:38px 0 0 auto!important; color:#383735!important; font-size:clamp(1.05rem,1.5vw,1.35rem)!important; line-height:1.75!important; }
+.home-data-strip { display:grid; grid-template-columns:repeat(3,1fr); margin-top:clamp(70px,10vw,140px); border-top:1px solid #aaa7a0; border-bottom:1px solid #aaa7a0; }
+.home-data-strip>div { padding:32px 20px 28px 0; border-right:1px solid #aaa7a0; }
+.home-data-strip>div:last-child { border:0; padding-left:20px; }
+.home-data-strip>div:nth-child(2) { padding-left:20px; }
+.home-data-strip strong,.home-data-strip span { display:block; }
+.home-data-strip strong { font:800 clamp(2.7rem,6vw,6rem)/1 Arial,sans-serif; letter-spacing:-.06em; }
+.home-data-strip span { margin-top:8px; color:#686661; font:700 10px/1 Arial,sans-serif; letter-spacing:.15em; }
+body.pains-theme.home-page .home-axis-grid { display:none!important; }
+body.pains-theme.home-page .home-feature-cloud { background:#0a0a0a!important; }
+body.pains-theme.home-page .home-feature-cloud__rail { background:#0a0a0a!important; color:var(--gak-paper)!important; }
+body.pains-theme.home-page .home-feature-card { min-height:100svh!important; border:0!important; border-radius:0!important; box-shadow:none!important; background:#0a0a0a!important; }
+body.pains-theme.home-page .home-feature-card__media img,.home-mosaic img { border-radius:0!important; filter:saturate(.78) contrast(1.04); }
+body.pains-theme.home-page .home-feature-card__copy h3 { color:var(--gak-paper)!important; font-family:Arial,Helvetica,sans-serif!important; font-size:clamp(3rem,7vw,7.5rem)!important; line-height:.9!important; letter-spacing:-.06em!important; }
+body.pains-theme.home-page .home-feature-card__copy>p:not(.home-eyebrow) { color:var(--gak-muted)!important; line-height:1.75!important; }
+body.pains-theme.home-page .home-section--calendar { background:var(--gak-paper)!important; color:#111!important; padding:clamp(80px,10vw,150px) 0!important; }
+body.pains-theme.home-page .home-section--calendar .home-section__heading h3 { color:#111!important; font:800 clamp(3rem,7vw,7rem)/.9 Arial,sans-serif!important; letter-spacing:-.06em!important; }
+body.pains-theme.home-page .calendar-container { border:1px solid #bbb8b0!important; border-radius:0!important; box-shadow:none!important; }
+@media(max-width:760px){body.pains-theme.home-page .home-hero__content,body.pains-theme.home-page .home-strategy__inner{width:calc(100% - 36px)!important}.home-data-strip{grid-template-columns:1fr}.home-data-strip>div{border-right:0;border-bottom:1px solid #aaa7a0;padding:22px 0!important}.home-data-strip>div:last-child{border-bottom:0}body.pains-theme.home-page .home-hero__timeline{display:none!important}}
