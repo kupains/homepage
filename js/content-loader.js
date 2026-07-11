@@ -336,6 +336,32 @@
       const root = roots[card.id];
       if (!root) return;
 
+      const boundRoot = document.querySelector(`[data-home-card="${card.id}"]`);
+      if (boundRoot) {
+        text('[data-field="eyebrow"]', card.eyebrow, boundRoot);
+        const title = boundRoot.querySelector('[data-field="title"]');
+        if (title && Array.isArray(card.titleLines) && card.titleLines.length) {
+          title.textContent = card.titleLines.join('\n');
+          title.style.whiteSpace = 'pre-line';
+        }
+        text('[data-field="description"]', card.description, boundRoot);
+        if (card.image) image('[data-field="image"]', card.image, card.alt, boundRoot);
+        if (Array.isArray(card.images)) {
+          card.images.forEach((item, index) => {
+            const img = boundRoot.querySelector(index === 0 ? '[data-field="image"]' : '[data-field="image2"]');
+            if (!img || !item?.src) return;
+            img.src = trackAsset(item.src);
+            if (item.alt !== undefined) img.alt = item.alt;
+          });
+        }
+        const primary = boundRoot.querySelector('[data-field="primary-cta"]');
+        if (primary && card.primaryCta) {
+          primary.firstChild.textContent = `${card.primaryCta.label || ''} `;
+          primary.href = card.primaryCta.href || '#';
+        }
+        return;
+      }
+
       text('.home-eyebrow', card.eyebrow, root);
       lines('h3, h2', card.titleLines, root);
       text('.home-feature-card__copy > p:not(.home-eyebrow), .story-panel__copy > p:not(.home-eyebrow), .community__header > p:last-child', card.description, root);

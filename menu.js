@@ -1,7 +1,7 @@
 /* menu.js - v4.3 (너비 제어권 HTML로 위임, Sticky Footer, 글로벌 폰트 관리, 사이드바 스크롤 개선) */
 
 const PAINS_LAYOUT = {
-    brandText: 'Providing Academic INsights for Sports.',
+    brandText: 'PAINS',
     homeHref: 'index',
     footerText: '&copy; 2026 PAINS. All rights reserved.',
     socials: [
@@ -232,7 +232,7 @@ function initGlobalStyles() {
         /* ========================================== */
 
         /* 📖 사이트 전체 본문 기본 폰트 적용 (ATOZ4) */
-        body.pains-theme {
+        body.pains-theme:not(.home-page) {
             font-family: 'ATOZ4', sans-serif !important;
             background:
                 radial-gradient(circle at top left, rgba(171, 51, 51, 0.07), transparent 28%),
@@ -247,11 +247,11 @@ function initGlobalStyles() {
         }
 
         /* 🎯 제목(h1, h2, h3) 등에 제목 폰트 적용 (ATOZ5) */
-        body.pains-theme h1,
-        body.pains-theme h2,
-        body.pains-theme h3,
-        body.pains-theme .society-name, 
-        body.pains-theme .title {      
+        body.pains-theme:not(.home-page) h1,
+        body.pains-theme:not(.home-page) h2,
+        body.pains-theme:not(.home-page) h3,
+        body.pains-theme:not(.home-page) .society-name,
+        body.pains-theme:not(.home-page) .title {
             font-family: 'ATOZ5', sans-serif !important;
         }
 
@@ -270,7 +270,7 @@ function initGlobalStyles() {
         /* 3. 컴포넌트 세부 디자인 (너비 제외, 테마만) */
         /* ========================================== */
 
-        body.pains-theme section {
+        body.pains-theme:not(.home-page) section {
             background: #ffffff;
             border: 1px solid rgba(216, 222, 232, 0.85);
             border-radius: 28px;
@@ -278,7 +278,7 @@ function initGlobalStyles() {
             box-shadow: var(--pains-shadow);
         }
 
-        body.pains-theme .hero {
+        body.pains-theme:not(.home-page) .hero {
             background: linear-gradient(135deg, var(--pains-accent-strong), var(--pains-accent)) !important;
             border-radius: 30px;
             box-shadow: 0 24px 60px rgba(127, 22, 33, 0.28);
@@ -549,16 +549,16 @@ function initGlobalStyles() {
             box-shadow: var(--pains-shadow);
         }
 
-        body.pains-theme h2,
-        body.pains-theme h3 {
+        body.pains-theme:not(.home-page) h2,
+        body.pains-theme:not(.home-page) h3 {
             color: #111827 !important;
             border-bottom-color: rgba(216, 222, 232, 0.95) !important;
         }
 
-        body.pains-theme strong,
-        body.pains-theme .calendar-title,
-        body.pains-theme .calendar-nav-btn:hover,
-        body.pains-theme .inline-link:hover {
+        body.pains-theme:not(.home-page) strong,
+        body.pains-theme:not(.home-page) .calendar-title,
+        body.pains-theme:not(.home-page) .calendar-nav-btn:hover,
+        body.pains-theme:not(.home-page) .inline-link:hover {
             color: var(--pains-accent) !important;
         }
 
@@ -604,7 +604,7 @@ function initGlobalStyles() {
                 --pains-sidebar-width: min(88vw, 320px);
             }
 
-            body.pains-theme {
+            body.pains-theme:not(.home-page) {
                 padding-top: calc(var(--pains-header-height) + 14px) !important;
             }
 
@@ -613,9 +613,9 @@ function initGlobalStyles() {
                 padding: 0 16px !important;
             }
 
-            body.pains-theme section,
-            body.pains-theme .hero,
-            body.pains-theme .container {
+            body.pains-theme:not(.home-page) section,
+            body.pains-theme:not(.home-page) .hero,
+            body.pains-theme:not(.home-page) .container {
                 border-radius: 22px;
                 padding: 20px !important; 
             }

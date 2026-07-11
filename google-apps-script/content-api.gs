@@ -286,7 +286,9 @@ function buildContent() {
   });
   content.pdfProxyUrl = content.settings.pdfProxyUrl || content.pdfProxyUrl || PDF_PROXY_URL;
 
-  content.home.timeline = rows(TAB.homeTimeline).map(function (row) {
+  content.home.timeline = rows(TAB.homeTimeline).filter(function (row) {
+    return row.year || row.title;
+  }).map(function (row) {
     return {
       year: row.year,
       title: row.title,
@@ -296,7 +298,9 @@ function buildContent() {
     };
   });
 
-  content.home.strategy.axes = rows(TAB.homeAxes).map(function (row) {
+  content.home.strategy.axes = rows(TAB.homeAxes).filter(function (row) {
+    return row.id || row.title;
+  }).map(function (row) {
     return {
       id: row.id,
       title: row.title,
@@ -308,7 +312,9 @@ function buildContent() {
     };
   });
 
-  content.home.story.nav = rows(TAB.homeStoryNav).map(function (row) {
+  content.home.story.nav = rows(TAB.homeStoryNav).filter(function (row) {
+    return row.label || row.href;
+  }).map(function (row) {
     return {
       label: row.label,
       href: row.href,
@@ -318,7 +324,9 @@ function buildContent() {
     };
   });
 
-  content.home.story.cards = rows(TAB.homeStoryCards).map(function (row) {
+  content.home.story.cards = rows(TAB.homeStoryCards).filter(function (row) {
+    return row.id || row.titleLines || row.title || row.description;
+  }).map(function (row) {
     return {
       id: row.id,
       eyebrow: row.eyebrow,
@@ -336,7 +344,9 @@ function buildContent() {
     };
   });
 
-  content.organization.members = rows(TAB.organization).map(function (row) {
+  content.organization.members = rows(TAB.organization).filter(function (row) {
+    return row.id || row.name || row.role;
+  }).map(function (row) {
     return {
       id: row.id,
       role: row.role,
@@ -349,7 +359,9 @@ function buildContent() {
     };
   });
 
-  content.societies.items = rows(TAB.societies).map(function (row) {
+  content.societies.items = rows(TAB.societies).filter(function (row) {
+    return row.name;
+  }).map(function (row) {
     return {
       name: row.name,
       leader: row.leader,
@@ -360,7 +372,9 @@ function buildContent() {
     };
   });
 
-  content.events.items = rows(TAB.events).map(function (row) {
+  content.events.items = rows(TAB.events).filter(function (row) {
+    return row.title || row.href;
+  }).map(function (row) {
     return {
       title: row.title,
       href: row.href,

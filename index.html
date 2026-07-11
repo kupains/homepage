@@ -7,8 +7,7 @@
   <title>PAINS — Korea University Sports Analytics</title>
   <link rel="icon" href="images/PAINS_logo.png">
   <link rel="preload" as="image" href="images/pains-data-stadium.png">
-  <link rel="stylesheet" href="home-gak.css?v=20260712">
-  <link rel="stylesheet" href="home-polish.css?v=20260712">
+  <link rel="stylesheet" href="home.css?v=20260712-2">
   <script defer src="js/content-loader.js?v=20260712"></script>
 </head>
 <body class="pains-theme home-page">
@@ -22,9 +21,9 @@
         <img src="images/pains-data-stadium.png" alt="">
       </div>
       <div class="home-hero__content">
-        <div class="hero-brand" aria-label="PAINS">
+        <h1 class="hero-brand" aria-label="PAINS">
           <span>P</span><span>A</span><span>I</span><span>N</span><span>S</span>
-        </div>
+        </h1>
         <div class="hero-meta">
           <span>KOREA UNIVERSITY</span>
           <span>SPORTS ANALYTICS COLLECTIVE</span>
@@ -48,37 +47,37 @@
       </div>
     </section>
 
-    <section class="story-panel story-panel--about reveal" id="home-about">
-      <div class="story-panel__media"><img src="images/소개사진.jpg" alt="PAINS 단체사진"></div>
+    <section class="story-panel story-panel--about reveal" id="home-about" data-home-card="about">
+      <div class="story-panel__media"><img data-field="image" src="images/소개사진.jpg" alt="PAINS 단체사진"></div>
       <div class="story-panel__shade"></div>
       <div class="story-panel__copy">
-        <p class="home-eyebrow">02 / ABOUT PAINS</p>
-        <h2>데이터로 스포츠를<br>다시 씁니다.</h2>
-        <p>익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석합니다.</p>
-        <a class="text-link" href="about">ABOUT PAINS <span>↗</span></a>
+        <p class="home-eyebrow" data-field="eyebrow">02 / ABOUT PAINS</p>
+        <h2 data-field="title">데이터로 스포츠를 다시 씁니다.</h2>
+        <p data-field="description">익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석합니다.</p>
+        <a class="text-link" data-field="primary-cta" href="about">ABOUT PAINS <span>↗</span></a>
       </div>
     </section>
 
-    <section class="story-panel story-panel--projects reveal" id="home-projects">
-      <div class="story-panel__media"><img src="images/activity_edited_1.png" alt="PAINS 프로젝트 활동"></div>
+    <section class="story-panel story-panel--projects reveal" id="home-projects" data-home-card="projects">
+      <div class="story-panel__media"><img data-field="image" src="images/activity_edited_1.png" alt="PAINS 프로젝트 활동"></div>
       <div class="story-panel__shade"></div>
       <div class="story-panel__copy">
-        <p class="home-eyebrow">03 / PROJECTS</p>
-        <h2 class="home-project-title">질문에서 출발해<br>결과를 만듭니다.</h2>
-        <p>야구, 축구, 농구, 배구, F1, e-sports까지. 분석의 결과를 포트폴리오로 남깁니다.</p>
-        <a class="text-link" href="activity">VIEW PROJECTS <span>↗</span></a>
+        <p class="home-eyebrow" data-field="eyebrow">03 / PROJECTS</p>
+        <h2 class="home-project-title" data-field="title">질문에서 출발해 결과를 만듭니다.</h2>
+        <p data-field="description">야구, 축구, 농구, 배구, F1, e-sports까지. 분석의 결과를 포트폴리오로 남깁니다.</p>
+        <a class="text-link" data-field="primary-cta" href="activity">VIEW PROJECTS <span>↗</span></a>
       </div>
     </section>
 
-    <section class="community reveal" id="home-community">
+    <section class="community reveal" id="home-community" data-home-card="community">
       <div class="community__header">
-        <p class="home-eyebrow">04 / COMMUNITY</p>
-        <h2>같이 보고,<br>같이 즐기고,<br>같이 성장합니다.</h2>
-        <p>스포츠 경기 단체 관람, 연사초청, MT와 소모임을 통해 서로 다른 관심을 연결합니다.</p>
+        <p class="home-eyebrow" data-field="eyebrow">04 / COMMUNITY</p>
+        <h2 data-field="title">같이 보고, 같이 즐기고, 같이 성장합니다.</h2>
+        <p data-field="description">스포츠 경기 단체 관람, 연사초청, MT와 소모임을 통해 서로 다른 관심을 연결합니다.</p>
       </div>
       <div class="community__gallery">
-        <figure><img src="images/단체사진.png" alt="PAINS 활동 사진"></figure>
-        <figure><img src="images/activity03.png" alt="PAINS 체육 활동"></figure>
+        <figure><img data-field="image" src="images/단체사진.png" alt="PAINS 활동 사진"></figure>
+        <figure><img data-field="image2" src="images/activity03.png" alt="PAINS 체육 활동"></figure>
       </div>
     </section>
 
@@ -94,10 +93,7 @@
   <script src="menu.js?v=20260712"></script>
   <script>
     loadSidebar('home');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); });
-    }, { threshold: .12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
   </script>
   <script src="widget/chatbot.js"></script>
 </body>
