@@ -36,15 +36,25 @@
       { "year": "2026", "title": "11기 활동 진행 중", "position": "top", "visible": true, "order": 5 }
     ],
     "strategy": {
-      "eyebrow": "PAINS Operating System",
-      "title": "Who We Are",
-      "description": "PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.",
+      "eyebrow": "PAINS Data Archive · Since 2020",
+      "title": "WE TURN SPORTS INTO KNOWLEDGE.",
+      "description": "경기에서 시작된 질문을 데이터로 검증하고, 동료와 나눈 분석을 하나의 프로젝트로 남깁니다.",
       "axes": [
         { "id": "about", "title": "About PAINS", "image": "images/소개사진.jpg", "href": "#home-about", "alt": "PAINS 소개", "visible": true, "order": 1 },
         { "id": "projects", "title": "Projects", "image": "images/activity_edited_1.png", "href": "#home-projects", "alt": "PAINS 프로젝트", "visible": true, "order": 2 },
         { "id": "community", "title": "Community", "image": "images/activity03.png", "href": "#home-community", "alt": "PAINS 커뮤니티", "visible": true, "order": 3 }
       ]
     },
+    "metrics": [
+      { "value": "167+", "label": "PROJECTS", "visible": true, "order": 1 },
+      { "value": "11TH", "label": "GENERATION", "visible": true, "order": 2 },
+      { "value": "2020", "label": "FOUNDED", "visible": true, "order": 3 }
+    ],
+    "archiveLinks": [
+      { "label": "167+ PROJECTS", "action": "EXPLORE →", "href": "activity", "visible": true, "order": 1 },
+      { "label": "NOTICE", "action": "READ →", "href": "notice", "visible": true, "order": 2 },
+      { "label": "JOIN PAINS", "action": "APPLY →", "href": "apply", "visible": true, "order": 3 }
+    ],
     "story": {
       "eyebrow": "Who We Are",
       "titleLines": ["스포츠를 더 깊게", "이해하는 곳."],

@@ -616,9 +616,27 @@
     renderTimeline(home.timeline);
 
     text('.home-strategy__copy .home-eyebrow', home.strategy?.eyebrow);
-    text('.home-strategy__copy h3', home.strategy?.title);
+    text('.home-strategy__copy h3, .home-strategy__copy h2', home.strategy?.title);
     text('.home-strategy__copy p:not(.home-eyebrow)', home.strategy?.description);
     renderHomeAxes(home.strategy?.axes);
+
+    const metrics = document.querySelectorAll('.home-data-strip > div');
+    visibleItems(home.metrics).forEach((metric, index) => {
+      const root = metrics[index];
+      if (!root) return;
+      text('strong', metric.value, root);
+      text('span', metric.label, root);
+    });
+
+    const archiveLinks = document.querySelectorAll('.archive-cta > a');
+    visibleItems(home.archiveLinks).forEach((item, index) => {
+      const link = archiveLinks[index];
+      if (!link) return;
+      const labels = link.querySelectorAll('span');
+      if (labels[0]) labels[0].textContent = item.label || '';
+      if (labels[1]) labels[1].textContent = item.action || '';
+      if (item.href) link.href = item.href;
+    });
 
     text('.home-feature-cloud__rail .home-eyebrow', home.story?.eyebrow);
     lines('.home-feature-cloud__rail h3', home.story?.titleLines);
