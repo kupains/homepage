@@ -39,7 +39,9 @@ function doGet() {
 
   if (!json) {
     json = JSON.stringify(buildContent());
-    cache.put('pains-site-content-v1', json, 15);
+    if (json.length <= 90000) {
+      cache.put('pains-site-content-v1', json, 15);
+    }
   }
 
   return ContentService

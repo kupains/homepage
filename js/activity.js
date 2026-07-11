@@ -6,7 +6,7 @@
   'use strict';
 
   // 기본값은 fallback이고, 실제 운영 URL은 Google Sheets/API에서 관리합니다.
-  const DEFAULT_API_URL = "https://script.google.com/macros/s/AKfycbwuNda5HuzwNhp7ecL0BTMt4eCgE8z9y1F8_kDR-ZaEp72mYngLp0DQ4ibWcKDEZyg/exec";
+  const DEFAULT_API_URL = "https://script.google.com/macros/s/AKfycbypl1Z5iLKPPBGwpE8xv2TyCbgl5fmGBhYi1Zn16aU8tG2zvDGtIyALBAhQZ8Jpz5fJyQ/exec";
   const DEFAULT_PDF_PROXY = "https://pdf-proxy.painsports1905.workers.dev/?url=";
   const VIEWER_PAGE = 'pdf-viewer.html';
   const EXCLUDED_FILES = new Set(['03V_07.pdf', '02V_07.pdf']);
