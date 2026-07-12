@@ -26,8 +26,25 @@
       "description": "",
       "primaryCta": "",
       "secondaryCta": "",
-      "image": "images/pains-data-stadium.png"
+      "image": "images/pains-data-stadium.png",
+      "meta": ["KOREA UNIVERSITY", "SPORTS ANALYTICS COLLECTIVE", "SEOUL · EST. 2020"]
     },
+    "scrollLabel": "SCROLL",
+    "identity": { "index": "01 / IDENTITY" },
+    "community": { "index": "04 / COMMUNITY" },
+    "archive": { "eyebrow": "PAINS ARCHIVE" },
+    "scheduleHead": {
+      "index": "05 / SCHEDULE",
+      "label": "UPCOMING",
+      "title": "다가오는 일정",
+      "description": "정기 세미나부터 소모임·행사까지, PAINS의 다음 일정을 확인하세요."
+    },
+    "schedule": [
+      { "date": "2026-03-16", "title": "11기 OT", "tag": "필수", "visible": true, "order": 1 },
+      { "date": "2026-03-22", "title": "통계 세미나 #1", "tag": "정기", "visible": true, "order": 2 },
+      { "date": "2026-04-05", "title": "연사 초청 강연", "tag": "정기", "visible": true, "order": 3 },
+      { "date": "2026-04-19", "title": "체육대회", "tag": "행사", "visible": true, "order": 4 }
+    ],
     "timeline": [
       { "year": "2020", "title": "PAINS 설립", "position": "top", "visible": true, "order": 1 },
       { "year": "2021", "title": "PAINS 1기 시작", "position": "bottom", "visible": true, "order": 2 },
@@ -72,6 +89,7 @@
           "image": "images/소개사진.jpg",
           "alt": "PAINS 단체사진",
           "primaryCta": { "label": "PAINS 소개 보기", "href": "about" },
+          "caption": { "fig": "FIG.01", "label": "PAINS COLLECTIVE" },
           "visible": true,
           "order": 1
         },
@@ -84,6 +102,7 @@
           "alt": "PAINS 프로젝트 활동",
           "primaryCta": { "label": "프로젝트 보기", "href": "activity" },
           "secondaryCta": { "label": "스터디 보기", "href": "study" },
+          "caption": { "fig": "FIG.02", "label": "PROJECT ARCHIVE" },
           "visible": true,
           "order": 2
         },
@@ -96,6 +115,8 @@
             { "src": "images/단체사진.png", "alt": "PAINS 활동 사진" },
             { "src": "images/activity03.png", "alt": "PAINS 체육 활동" }
           ],
+          "caption": { "fig": "FIG.03", "label": "GATHERING" },
+          "caption2": { "fig": "FIG.04", "label": "FIELD DAY" },
           "visible": true,
           "order": 3
         }

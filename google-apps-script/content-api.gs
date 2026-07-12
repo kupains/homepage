@@ -14,12 +14,11 @@ var SHEET_ID = '1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo';
 var PDF_PROXY_URL = 'https://pdf-proxy.painsports1905.workers.dev/?url=';
 
 var TAB = {
+  readme: 'README',
   copy: 'copy',
   settings: 'settings',
-  homeTimeline: 'home_timeline',
-  homeAxes: 'home_axes',
-  homeStoryNav: 'home_story_nav',
   homeStoryCards: 'home_story_cards',
+  homeSchedule: 'home_schedule',
   organization: 'organization',
   societies: 'societies',
   events: 'events',
@@ -28,9 +27,11 @@ var TAB = {
   recruitmentTimeline: 'recruitment_timeline',
   resultPage: 'result_page',
   projects: 'projects',
-  notices: 'notices',
-  readme: 'README'
+  notices: 'notices'
 };
+
+// 예전 홈 디자인에서 쓰던 탭 — setupPainsCms 실행 시 자동 삭제합니다.
+var DEPRECATED_TABS = ['home_timeline', 'home_axes', 'home_story_nav'];
 
 function doGet() {
   var cache = CacheService.getScriptCache();
@@ -59,9 +60,9 @@ function baseContent() {
     settings: {},
     home: {
       hero: {},
-      timeline: [],
       strategy: { axes: [] },
       story: { nav: [], cards: [] },
+      schedule: [],
       calendar: {}
     },
     about: {
@@ -286,44 +287,6 @@ function buildContent() {
   });
   content.pdfProxyUrl = content.settings.pdfProxyUrl || content.pdfProxyUrl || PDF_PROXY_URL;
 
-  content.home.timeline = rows(TAB.homeTimeline).filter(function (row) {
-    return row.year || row.title;
-  }).map(function (row) {
-    return {
-      year: row.year,
-      title: row.title,
-      position: row.position || 'top',
-      visible: bool(row.visible),
-      order: num(row.order, 999)
-    };
-  });
-
-  content.home.strategy.axes = rows(TAB.homeAxes).filter(function (row) {
-    return row.id || row.title;
-  }).map(function (row) {
-    return {
-      id: row.id,
-      title: row.title,
-      image: row.image,
-      href: row.href,
-      alt: row.alt,
-      visible: bool(row.visible),
-      order: num(row.order, 999)
-    };
-  });
-
-  content.home.story.nav = rows(TAB.homeStoryNav).filter(function (row) {
-    return row.label || row.href;
-  }).map(function (row) {
-    return {
-      label: row.label,
-      href: row.href,
-      targetId: row.targetId || row.target_id,
-      visible: bool(row.visible),
-      order: num(row.order, 999)
-    };
-  });
-
   content.home.story.cards = rows(TAB.homeStoryCards).filter(function (row) {
     return row.id || row.titleLines || row.title || row.description;
   }).map(function (row) {
@@ -337,10 +300,28 @@ function buildContent() {
       images: row.imagesMode === 'mosaic' || row.images_mode === 'mosaic' || row.id === 'community'
         ? imageItems(row)
         : undefined,
+      caption: (row.captionFig || row.captionLabel)
+        ? { fig: row.captionFig, label: row.captionLabel } : undefined,
+      caption2: (row.captionFig2 || row.captionLabel2)
+        ? { fig: row.captionFig2, label: row.captionLabel2 } : undefined,
       primaryCta: row.primaryLabel ? { label: row.primaryLabel, href: row.primaryHref || '#' } : undefined,
       secondaryCta: row.secondaryLabel ? { label: row.secondaryLabel, href: row.secondaryHref || '#' } : undefined,
       visible: bool(row.visible),
       order: num(row.order, 999)
+    };
+  });
+
+  content.home.schedule = rows(TAB.homeSchedule).filter(function (row) {
+    return row.date || row.title;
+  }).map(function (row, index) {
+    return {
+      date: row.date,
+      title: row.title,
+      tag: row.tag,
+      dateLabel: row.dateLabel,
+      weekday: row.weekday,
+      visible: bool(row.visible),
+      order: num(row.order, index + 1)
     };
   });
 
@@ -484,10 +465,8 @@ function setupPainsCms() {
   writeTab(TAB.readme, readmeRows());
   writeTab(TAB.copy, copyRows());
   writeTab(TAB.settings, settingsRows());
-  writeTab(TAB.homeTimeline, homeTimelineRows());
-  writeTab(TAB.homeAxes, homeAxesRows());
-  writeTab(TAB.homeStoryNav, homeStoryNavRows());
   writeTab(TAB.homeStoryCards, homeStoryCardRows());
+  writeTab(TAB.homeSchedule, homeScheduleRows());
   writeTab(TAB.organization, organizationRows());
   writeTab(TAB.societies, societyRows());
   writeTab(TAB.events, eventRows());
@@ -498,8 +477,102 @@ function setupPainsCms() {
   writeTab(TAB.projects, projectRows());
   writeTab(TAB.notices, noticeRows());
 
+  removeDeprecatedTabs(ss);
+
   SpreadsheetApp.flush();
   return 'PAINS_SITE_CMS setup complete';
+}
+
+// 홈페이지 관리와 무관한 예전 탭만 정리합니다.
+// (MEMBER/REQUEST/SCHEDULE 등 운영 탭은 목록에 없으므로 절대 삭제되지 않습니다.)
+function removeDeprecatedTabs(ss) {
+  DEPRECATED_TABS.forEach(function (name) {
+    var sheet = ss.getSheetByName(name);
+    if (sheet) ss.deleteSheet(sheet);
+  });
+}
+
+/*
+ * ⭐️ 권장: 기존 데이터를 지우지 않고 홈 CMS만 안전하게 최신 구조로 올립니다.
+ *   - 예전 홈 탭(home_timeline/home_axes/home_story_nav) 삭제
+ *   - home_schedule 탭 생성(없을 때만)
+ *   - home_story_cards 에 캡션 열 보강(기존 내용 유지)
+ *   - copy 탭에 새로 생긴 [홈] 항목만 추가(기존 문구는 그대로)
+ *   - organization/societies/recruitment 등 다른 탭은 건드리지 않음
+ * 처음부터 전체를 시드값으로 새로 깔려면 setupPainsCms() 를 쓰세요(주의: 덮어씀).
+ */
+function upgradeHomeCms() {
+  var ss = spreadsheet();
+  var log = [];
+
+  DEPRECATED_TABS.forEach(function (name) {
+    var sh = ss.getSheetByName(name);
+    if (sh) { ss.deleteSheet(sh); log.push('삭제: ' + name); }
+  });
+
+  if (!ss.getSheetByName(TAB.homeSchedule)) {
+    writeTab(TAB.homeSchedule, homeScheduleRows());
+    log.push('생성: ' + TAB.homeSchedule);
+  }
+
+  var cardsSheet = ss.getSheetByName(TAB.homeStoryCards);
+  if (!cardsSheet) {
+    writeTab(TAB.homeStoryCards, homeStoryCardRows());
+    log.push('생성: ' + TAB.homeStoryCards);
+  } else {
+    var addedCols = ensureColumns(cardsSheet, ['captionFig', 'captionLabel', 'captionFig2', 'captionLabel2']);
+    log.push('보강: ' + TAB.homeStoryCards + ' 캡션 열 ' + addedCols + '개');
+  }
+
+  var copySheet = ss.getSheetByName(TAB.copy);
+  if (!copySheet) {
+    writeTab(TAB.copy, copyRows());
+    log.push('생성: ' + TAB.copy);
+  } else {
+    var addedRows = appendMissingKeyedRows(copySheet, copyRows(), 0);
+    log.push('copy 신규 항목 추가: ' + addedRows + '개');
+  }
+
+  writeTab(TAB.readme, readmeRows());
+  log.push('갱신: ' + TAB.readme);
+
+  SpreadsheetApp.flush();
+  return 'PAINS 홈 CMS 업그레이드 완료\n' + log.join('\n');
+}
+
+// 헤더 행에 없는 열 이름만 맨 뒤에 추가합니다(데이터 유지). 추가한 개수 반환.
+function ensureColumns(sheet, colNames) {
+  var lastCol = sheet.getLastColumn();
+  var headers = sheet.getRange(1, 1, 1, lastCol).getDisplayValues()[0]
+    .map(function (v) { return String(v || '').trim(); });
+  var added = 0;
+  colNames.forEach(function (name) {
+    if (headers.indexOf(name) === -1) {
+      lastCol += 1;
+      sheet.getRange(1, lastCol).setValue(name)
+        .setFontWeight('bold').setBackground('#111827').setFontColor('#ffffff');
+      headers.push(name);
+      added += 1;
+    }
+  });
+  return added;
+}
+
+// seedRows(0=헤더) 중 keyIndex 열 값이 시트에 아직 없는 행만 아래에 덧붙입니다. 추가한 개수 반환.
+function appendMissingKeyedRows(sheet, seedRows, keyIndex) {
+  var header = seedRows[0];
+  var dataRows = seedRows.slice(1);
+  var lastRow = sheet.getLastRow();
+  var existing = lastRow > 1
+    ? sheet.getRange(2, keyIndex + 1, lastRow - 1, 1).getDisplayValues()
+        .map(function (r) { return String(r[0] || '').trim(); })
+    : [];
+  var toAdd = dataRows.filter(function (row) {
+    return existing.indexOf(String(row[keyIndex] || '').trim()) === -1;
+  });
+  if (!toAdd.length) return 0;
+  sheet.getRange(lastRow + 1, 1, toAdd.length, header.length).setValues(toAdd);
+  return toAdd.length;
 }
 
 function writeTab(name, values) {
@@ -523,38 +596,57 @@ function writeTab(name, values) {
 function readmeRows() {
   return [
     ['항목', '내용'],
-    ['시트 이름', 'PAINS_SITE_CMS'],
-    ['일상 수정', 'copy, home_timeline, organization, societies, events 등 필요한 탭의 value/image/order/visible만 수정합니다.'],
-    ['사진 관리', 'Google Drive에 사진 업로드 > 링크가 있는 모든 사용자 보기 가능 > 공유 링크를 image 셀에 붙입니다.'],
+    ['시트 이름', 'Homepage Editor (이 시트가 사이트 전체 콘텐츠 원본)'],
+    ['홈 화면 문구', 'copy 탭에서 memo가 [홈] 으로 시작하는 행의 value를 수정 → 첫 화면 라벨·정체성·지표·스케줄 제목·하단 링크까지 모두 반영됩니다.'],
+    ['홈 소개/프로젝트/커뮤니티', 'home_story_cards 탭에서 제목(titleLines)·설명(description)·사진(image, image2)·사진 캡션(captionFig/captionLabel)을 수정합니다.'],
+    ['홈 스케줄', 'home_schedule 탭에 date(YYYY-MM-DD)·title·tag를 추가하면 홈 "다가오는 일정"에 날짜순으로 표시됩니다. 지난 일정은 자동으로 숨겨집니다.'],
+    ['사진 관리', 'Google Drive에 업로드 > "링크가 있는 모든 사용자 보기" > 공유 링크를 image 셀에 붙입니다.'],
     ['줄바꿈', 'titleLines는 | 로 줄을 나눕니다. 일반 설명문은 셀 안에서 줄바꿈해도 됩니다.'],
     ['숨기기', 'visible 값을 FALSE로 바꾸면 사이트에서 숨깁니다. 다시 TRUE로 바꾸면 보입니다.'],
+    ['운영용 탭', 'MEMBER / REQUEST / SCHEDULE 등 출석·결석계·운영 탭은 CMS와 무관하며 setupPainsCms 실행 시에도 삭제·수정되지 않습니다.'],
     ['연결', '확장 프로그램 > Apps Script에 content-api.gs 전체를 붙이고 setupPainsCms 실행 후 Web app으로 배포합니다.'],
-    ['GitHub Pages', '배포된 Web app URL을 js/content-loader.js에 넣으면 이 시트가 사이트 콘텐츠 원본이 됩니다.']
+    ['GitHub Pages', '배포된 Web app URL을 js/content-loader.js의 REMOTE_CONTENT_URL에 넣으면 이 시트가 사이트 콘텐츠 원본이 됩니다.']
   ];
 }
 
 function copyRows() {
   return [
     ['path', 'value', 'memo'],
-    ['home.hero.image', 'images/pains-data-stadium.png', '첫 화면 배경 사진: Google Drive 공유 링크 입력'],
-    ['home.strategy.eyebrow', 'PAINS Data Archive · Since 2020', '정체성 섹션 작은 문구'],
-    ['home.strategy.title', 'WE TURN SPORTS INTO KNOWLEDGE.', '정체성 섹션 큰 제목'],
-    ['home.strategy.description', '경기에서 시작된 질문을 데이터로 검증하고, 동료와 나눈 분석을 하나의 프로젝트로 남깁니다.', '정체성 섹션 설명'],
-    ['home.metrics.0.value', '167+', '핵심 지표 1 숫자'],
-    ['home.metrics.0.label', 'PROJECTS', '핵심 지표 1 이름'],
-    ['home.metrics.1.value', '11TH', '핵심 지표 2 숫자'],
-    ['home.metrics.1.label', 'GENERATION', '핵심 지표 2 이름'],
-    ['home.metrics.2.value', '2020', '핵심 지표 3 숫자'],
-    ['home.metrics.2.label', 'FOUNDED', '핵심 지표 3 이름'],
-    ['home.archiveLinks.0.label', '167+ PROJECTS', '하단 링크 1 제목'],
-    ['home.archiveLinks.0.action', 'EXPLORE →', '하단 링크 1 우측 문구'],
-    ['home.archiveLinks.0.href', 'activity', '하단 링크 1 주소'],
-    ['home.archiveLinks.1.label', 'NOTICE', '하단 링크 2 제목'],
-    ['home.archiveLinks.1.action', 'READ →', '하단 링크 2 우측 문구'],
-    ['home.archiveLinks.1.href', 'notice', '하단 링크 2 주소'],
-    ['home.archiveLinks.2.label', 'JOIN PAINS', '하단 링크 3 제목'],
-    ['home.archiveLinks.2.action', 'APPLY →', '하단 링크 3 우측 문구'],
-    ['home.archiveLinks.2.href', 'apply', '하단 링크 3 주소'],
+
+    ['home.hero.image', 'images/pains-data-stadium.png', '[홈] 첫 화면 배경 사진 (Google Drive 공유 링크 가능)'],
+    ['home.hero.meta.0', 'KOREA UNIVERSITY', '[홈] 첫 화면 하단 라벨 1'],
+    ['home.hero.meta.1', 'SPORTS ANALYTICS COLLECTIVE', '[홈] 첫 화면 하단 라벨 2'],
+    ['home.hero.meta.2', 'SEOUL · EST. 2020', '[홈] 첫 화면 하단 라벨 3'],
+    ['home.scrollLabel', 'SCROLL', '[홈] 첫 화면 우측 하단 스크롤 안내 문구'],
+
+    ['home.identity.index', '01 / IDENTITY', '[홈] 01 정체성 섹션 인덱스 라벨'],
+    ['home.strategy.eyebrow', 'PAINS Data Archive · Since 2020', '[홈] 01 정체성 작은 문구'],
+    ['home.strategy.title', 'WE TURN SPORTS INTO KNOWLEDGE.', '[홈] 01 정체성 큰 제목'],
+    ['home.strategy.description', '경기에서 시작된 질문을 데이터로 검증하고, 동료와 나눈 분석을 하나의 프로젝트로 남깁니다.', '[홈] 01 정체성 설명'],
+    ['home.metrics.0.value', '167+', '[홈] 핵심 지표 1 숫자'],
+    ['home.metrics.0.label', 'PROJECTS', '[홈] 핵심 지표 1 이름'],
+    ['home.metrics.1.value', '11TH', '[홈] 핵심 지표 2 숫자'],
+    ['home.metrics.1.label', 'GENERATION', '[홈] 핵심 지표 2 이름'],
+    ['home.metrics.2.value', '2020', '[홈] 핵심 지표 3 숫자'],
+    ['home.metrics.2.label', 'FOUNDED', '[홈] 핵심 지표 3 이름'],
+
+    ['home.community.index', '04 / COMMUNITY', '[홈] 04 커뮤니티 섹션 인덱스 라벨'],
+
+    ['home.scheduleHead.index', '05 / SCHEDULE', '[홈] 05 스케줄 섹션 인덱스 라벨'],
+    ['home.scheduleHead.label', 'UPCOMING', '[홈] 05 스케줄 작은 라벨'],
+    ['home.scheduleHead.title', '다가오는 일정', '[홈] 05 스케줄 제목'],
+    ['home.scheduleHead.description', '정기 세미나부터 소모임·행사까지, PAINS의 다음 일정을 확인하세요.', '[홈] 05 스케줄 설명 (일정 항목은 home_schedule 탭에서 관리)'],
+
+    ['home.archive.eyebrow', 'PAINS ARCHIVE', '[홈] 06 하단 아카이브 작은 문구'],
+    ['home.archiveLinks.0.label', '167+ PROJECTS', '[홈] 하단 링크 1 제목'],
+    ['home.archiveLinks.0.action', 'EXPLORE →', '[홈] 하단 링크 1 우측 문구'],
+    ['home.archiveLinks.0.href', 'activity', '[홈] 하단 링크 1 주소'],
+    ['home.archiveLinks.1.label', 'NOTICE', '[홈] 하단 링크 2 제목'],
+    ['home.archiveLinks.1.action', 'READ →', '[홈] 하단 링크 2 우측 문구'],
+    ['home.archiveLinks.1.href', 'notice', '[홈] 하단 링크 2 주소'],
+    ['home.archiveLinks.2.label', 'JOIN PAINS', '[홈] 하단 링크 3 제목'],
+    ['home.archiveLinks.2.action', 'APPLY →', '[홈] 하단 링크 3 우측 문구'],
+    ['home.archiveLinks.2.href', 'apply', '[홈] 하단 링크 3 주소'],
     ['about.hero.eyebrow', 'About PAINS', '소개 페이지 상단 작은 문구'],
     ['about.hero.title', 'PAINS 소개', '소개 페이지 제목'],
     ['about.hero.description', 'PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.', '소개 페이지 설명'],
@@ -618,41 +710,22 @@ function noticeRows() {
   ];
 }
 
-function homeTimelineRows() {
-  return [
-    ['year', 'title', 'position', 'visible', 'order'],
-    ['2020', 'PAINS 설립', 'top', 'TRUE', '1'],
-    ['2021', 'PAINS 1기 시작', 'bottom', 'TRUE', '2'],
-    ['2023', '고려대학교 동아리 활성화 프로젝트 수상', 'top', 'TRUE', '3'],
-    ['2025', '연세대학교 스포츠분석학회 YSAL과 교류 시작', 'bottom', 'TRUE', '4'],
-    ['2026', '11기 활동 진행 중', 'top', 'TRUE', '5']
-  ];
-}
-
-function homeAxesRows() {
-  return [
-    ['id', 'title', 'image', 'href', 'alt', 'visible', 'order'],
-    ['about', 'About PAINS', 'images/소개사진.jpg', '#home-about', 'PAINS 소개', 'TRUE', '1'],
-    ['projects', 'Projects', 'images/activity_edited_1.png', '#home-projects', 'PAINS 프로젝트', 'TRUE', '2'],
-    ['community', 'Community', 'images/activity03.png', '#home-community', 'PAINS 커뮤니티', 'TRUE', '3']
-  ];
-}
-
-function homeStoryNavRows() {
-  return [
-    ['label', 'href', 'targetId', 'visible', 'order'],
-    ['About PAINS', '#home-about', 'home-about', 'TRUE', '1'],
-    ['Projects', '#home-projects', 'home-projects', 'TRUE', '2'],
-    ['Community', '#home-community', 'home-community', 'TRUE', '3']
-  ];
-}
-
 function homeStoryCardRows() {
   return [
-    ['id', 'eyebrow', 'titleLines', 'description', 'image', 'alt', 'image2', 'alt2', 'imagesMode', 'primaryLabel', 'primaryHref', 'secondaryLabel', 'secondaryHref', 'visible', 'order'],
-    ['about', 'About PAINS', '데이터로 스포츠를|다시 씁니다.', '익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석하며, 기록 속에 숨은 맥락과 의미를 함께 발견합니다.', 'images/소개사진.jpg', 'PAINS 단체사진', '', '', '', 'PAINS 소개 보기', 'about', '', '', 'TRUE', '1'],
-    ['projects', 'Projects', '흥미에서 출발해|결과를 만들어냅니다.', '야구, 축구, 농구, 배구, F1, e-sports까지 다양한 종목을 바탕으로 팀 프로젝트를 수행하고 포트폴리오로 남깁니다.', 'images/activity_edited_1.png', 'PAINS 프로젝트 활동', '', '', '', '프로젝트 보기', 'activity', '스터디 보기', 'study', 'TRUE', '2'],
-    ['community', 'Community', '같이 보고,|같이 즐기고,|같이 성장합니다.', '스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 자연스럽게 교류합니다.', 'images/단체사진.png', 'PAINS 활동 사진', 'images/activity03.png', 'PAINS 체육 활동', 'mosaic', '', '', '', '', 'TRUE', '3']
+    ['id', 'eyebrow', 'titleLines', 'description', 'image', 'alt', 'image2', 'alt2', 'captionFig', 'captionLabel', 'captionFig2', 'captionLabel2', 'imagesMode', 'primaryLabel', 'primaryHref', 'secondaryLabel', 'secondaryHref', 'visible', 'order'],
+    ['about', 'About PAINS', '데이터로 스포츠를|다시 씁니다.', '익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석하며, 기록 속에 숨은 맥락과 의미를 함께 발견합니다.', 'images/소개사진.jpg', 'PAINS 단체사진', '', '', 'FIG.01', 'PAINS COLLECTIVE', '', '', '', 'PAINS 소개 보기', 'about', '', '', 'TRUE', '1'],
+    ['projects', 'Projects', '흥미에서 출발해|결과를 만들어냅니다.', '야구, 축구, 농구, 배구, F1, e-sports까지 다양한 종목을 바탕으로 팀 프로젝트를 수행하고 포트폴리오로 남깁니다.', 'images/activity_edited_1.png', 'PAINS 프로젝트 활동', '', '', 'FIG.02', 'PROJECT ARCHIVE', '', '', '', '프로젝트 보기', 'activity', '스터디 보기', 'study', 'TRUE', '2'],
+    ['community', 'Community', '같이 보고,|같이 즐기고,|같이 성장합니다.', '스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 자연스럽게 교류합니다.', 'images/단체사진.png', 'PAINS 활동 사진', 'images/activity03.png', 'PAINS 체육 활동', 'FIG.03', 'GATHERING', 'FIG.04', 'FIELD DAY', 'mosaic', '', '', '', '', 'TRUE', '3']
+  ];
+}
+
+function homeScheduleRows() {
+  return [
+    ['date', 'title', 'tag', 'dateLabel', 'weekday', 'visible', 'order'],
+    ['2026-03-16', '11기 OT', '필수', '', '', 'TRUE', '1'],
+    ['2026-03-22', '통계 세미나 #1', '정기', '', '', 'TRUE', '2'],
+    ['2026-04-05', '연사 초청 강연', '정기', '', '', 'TRUE', '3'],
+    ['2026-04-19', '체육대회', '행사', '', '', 'TRUE', '4']
   ];
 }
 

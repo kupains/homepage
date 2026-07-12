@@ -359,6 +359,10 @@
           primary.firstChild.textContent = `${card.primaryCta.label || ''} `;
           primary.href = card.primaryCta.href || '#';
         }
+
+        const figcaptions = boundRoot.querySelectorAll('figcaption');
+        setCaption(figcaptions[0], card.caption);
+        setCaption(figcaptions[1], card.caption2);
         return;
       }
 
@@ -627,6 +631,85 @@
     renderResultGate(content);
   }
 
+  function setCaption(figcaption, caption) {
+    if (!figcaption || !caption) return;
+    const spans = figcaption.querySelectorAll('span');
+    if (spans[0] && caption.fig !== undefined && caption.fig !== '') spans[0].textContent = caption.fig;
+    if (spans[1] && caption.label !== undefined && caption.label !== '') spans[1].textContent = caption.label;
+  }
+
+  const SCHEDULE_WEEKDAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+
+  function kstDateParts(date) {
+    const shifted = new Date(date.getTime() + 9 * 3600 * 1000);
+    return {
+      month: shifted.getUTCMonth() + 1,
+      day: shifted.getUTCDate(),
+      weekday: SCHEDULE_WEEKDAYS[shifted.getUTCDay()]
+    };
+  }
+
+  function startOfTodayKst() {
+    const nowKstIso = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+    return parseKstDate(nowKstIso, 'start');
+  }
+
+  function renderHomeSchedule(items, limit) {
+    const list = document.getElementById('js-home-schedule');
+    if (!list) return;
+
+    const visible = visibleItems(items);
+    if (!visible.length) return; // keep the static fallback markup
+
+    const withDates = visible.map((item) => ({ item, date: parseKstDate(item.date, 'start') }));
+    const today = startOfTodayKst();
+    let upcoming = withDates.filter((entry) => !entry.date || (today && entry.date.getTime() >= today.getTime()));
+    if (!upcoming.length) upcoming = withDates;
+
+    upcoming.sort((a, b) => {
+      if (a.date && b.date) return a.date.getTime() - b.date.getTime();
+      if (a.date) return -1;
+      if (b.date) return 1;
+      return 0;
+    });
+
+    const max = Number(limit) > 0 ? Number(limit) : 5;
+    list.replaceChildren();
+
+    upcoming.slice(0, max).forEach(({ item, date }) => {
+      const parts = date ? kstDateParts(date) : null;
+      const dateLabel = item.dateLabel
+        || (parts ? `${String(parts.month).padStart(2, '0')}.${String(parts.day).padStart(2, '0')}` : (item.date || '—'));
+      const weekday = item.weekday || (parts ? parts.weekday : '');
+
+      const li = document.createElement('li');
+      li.className = 'schedule__item';
+
+      const dateEl = document.createElement('span');
+      dateEl.className = 'schedule__date';
+      const dayStrong = document.createElement('b');
+      dayStrong.textContent = dateLabel;
+      const weekdayEl = document.createElement('i');
+      weekdayEl.textContent = weekday;
+      dateEl.append(dayStrong, weekdayEl);
+
+      const titleEl = document.createElement('span');
+      titleEl.className = 'schedule__title';
+      titleEl.textContent = item.title || '';
+
+      li.append(dateEl, titleEl);
+
+      if (item.tag) {
+        const tagEl = document.createElement('span');
+        tagEl.className = 'schedule__tag';
+        tagEl.textContent = item.tag;
+        li.appendChild(tagEl);
+      }
+
+      list.appendChild(li);
+    });
+  }
+
   function renderHome(content) {
     const home = content?.home;
     if (!home) return;
@@ -668,6 +751,25 @@
     lines('.home-feature-cloud__rail h3', home.story?.titleLines);
     renderHomeStoryNav(home.story?.nav);
     renderHomeStoryCards(home.story?.cards);
+
+    // Hero meta + scroll label
+    textAll('.hero-meta span', home.hero?.meta);
+    const scrollMark = document.querySelector('.scroll-mark');
+    if (scrollMark && scrollMark.firstChild && home.scrollLabel) {
+      scrollMark.firstChild.textContent = `${home.scrollLabel} `;
+    }
+
+    // Section index labels + archive eyebrow
+    text('#manifesto .section-index', home.identity?.index);
+    text('#home-community .section-index', home.community?.index);
+    text('.archive-cta > .home-eyebrow', home.archive?.eyebrow);
+
+    // Schedule
+    text('#home-schedule .section-index', home.scheduleHead?.index);
+    text('#home-schedule [data-field="label"]', home.scheduleHead?.label);
+    text('#home-schedule [data-field="title"]', home.scheduleHead?.title);
+    text('#home-schedule [data-field="description"]', home.scheduleHead?.description);
+    renderHomeSchedule(home.schedule, content?.settings?.homeScheduleLimit);
 
     text('.home-section--calendar .home-section__heading h3', home.calendar?.title);
     text('.home-section--calendar .home-section__heading p', home.calendar?.description);
