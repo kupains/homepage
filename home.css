@@ -1,4 +1,5 @@
 @font-face{font-family:KBO;src:url('fonts/KBO_medium.woff') format('woff');font-display:swap}
+@font-face{font-family:'PAINS Sans';src:url('fonts/SCDream5.otf') format('opentype');font-weight:100 900;font-style:normal;font-display:swap}
 
 /* ============================================================
    PAINS — Home
@@ -7,8 +8,8 @@
    modules (never full-bleed under text).
    ============================================================ */
 :root{
-  --black:#0a0a0a;
-  --panel:#0f0f11;
+  --black:#070b12;
+  --panel:#0b1220;
   --paper:#f2f1ec;
   --ink:#141410;
   --line:rgba(242,241,236,.16);      /* hairline on dark */
@@ -16,14 +17,16 @@
   --muted:rgba(242,241,236,.56);     /* muted text on dark */
   --muted-ink:#615d54;               /* muted text on light */
   --page:min(1240px,calc(100% - clamp(40px,8vw,128px)));
+  --sans:'PAINS Sans',Pretendard,'Noto Sans KR','Apple SD Gothic Neo',Arial,sans-serif;
   --mono:ui-monospace,'SF Mono','Cascadia Code','Roboto Mono',Menlo,Consolas,monospace;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;background:var(--black)}
-body.pains-theme.home-page{margin:0;overflow-x:hidden;background:var(--black);color:var(--paper);font-family:Pretendard,'Noto Sans KR',Arial,sans-serif;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+body.pains-theme.home-page{margin:0;overflow-x:hidden;background:var(--black);color:var(--paper);font-family:var(--sans);text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 body.pains-theme.home-page main{display:block;width:100%;overflow:hidden}
 body.pains-theme.home-page img{display:block;max-width:100%}
 body.pains-theme.home-page a:focus-visible{outline:2px solid var(--paper);outline-offset:4px}
+.manifesto,.module,.community,.schedule{scroll-margin-top:70px}
 .mono{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
 .home-eyebrow{margin:0;font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:inherit}
 
@@ -58,6 +61,9 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 .frame{position:relative;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--line);background:#161616}
 .frame img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05) brightness(.97);transition:filter .6s ease,transform 1s ease}
 .figure:hover .frame img{filter:grayscale(.12) contrast(1.03);transform:scale(1.035)}
+.figure--blue .frame{background:#061426}
+.figure--blue .frame img{filter:saturate(1.06) contrast(1.04) brightness(.94)}
+.figure--blue:hover .frame img{filter:saturate(1.12) contrast(1.04) brightness(.98);transform:scale(1.025)}
 .frame::before,.frame::after{content:"";position:absolute;width:13px;height:13px;z-index:2;opacity:.85;pointer-events:none}
 .frame::before{top:9px;left:9px;border-top:1px solid var(--paper);border-left:1px solid var(--paper)}
 .frame::after{bottom:9px;right:9px;border-bottom:1px solid var(--paper);border-right:1px solid var(--paper)}
@@ -84,19 +90,30 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 .module+.module{border-top:1px solid var(--line)}
 .module__inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5.5vw,92px);align-items:center;width:var(--page);margin:0 auto;padding:clamp(84px,11vw,150px) 0}
 .module--reverse .figure{order:-1}
-.module__text h2{margin:0!important;color:var(--paper)!important;font:750 clamp(34px,4.3vw,62px)/1.08 'Helvetica Neue',Arial,sans-serif!important;letter-spacing:-.03em!important;word-break:keep-all}
-.module__text>p:not(.home-eyebrow){max-width:44ch;margin:24px 0 0!important;color:var(--muted)!important;font-size:clamp(15px,1.15vw,18px)!important;line-height:1.78!important;word-break:keep-all}
+.module__text h2{margin:0!important;color:var(--paper)!important;font:750 clamp(34px,4.3vw,62px)/1.08 var(--sans)!important;letter-spacing:-.045em!important;word-break:keep-all}
+.module__text>p:not(.home-eyebrow){max-width:44ch;margin:24px 0 0!important;color:var(--muted)!important;font-size:clamp(15px,1.15vw,18px)!important;line-height:1.78!important;word-break:keep-all;white-space:pre-line}
 .module .figure .frame{aspect-ratio:5/4}
 .text-link{display:inline-flex;align-items:center;gap:16px;margin-top:34px;padding-bottom:8px;border-bottom:1px solid var(--paper);color:var(--paper);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:.02em}
 .text-link span{font-size:14px;transition:transform .3s ease}
 .text-link:hover span{transform:translate(3px,-3px)}
+
+/* Project visual concepts: intentionally person-free generated studies. */
+.project-visual{min-width:0}
+.project-visual .project-variants{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:18px;padding:1px;background:var(--line)}
+.project-variants button{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:10px;min-width:0;padding:12px 13px;border:0;background:#0b1019;color:var(--muted);font-family:var(--mono);text-align:left;cursor:pointer;transition:background-color .25s ease,color .25s ease}
+.project-variants button span{font-size:9px;letter-spacing:.12em;opacity:.7}
+.project-variants button strong{min-width:0;overflow:hidden;font-size:9px;font-weight:600;letter-spacing:.09em;text-overflow:ellipsis;white-space:nowrap}
+.project-variants button:hover,.project-variants button.is-active{background:#13243a;color:#eaf4ff}
+.project-variants button.is-active{box-shadow:inset 0 -2px #4ca4ff}
+.project-variants button:focus-visible{position:relative;z-index:1;outline:2px solid #74b9ff;outline-offset:2px}
+.project-variants__hint{margin:10px 0 0;color:rgba(242,241,236,.42);font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-align:right}
 
 /* ===== 04 — Community (light, two contained photos) ===== */
 .community{width:100%;padding:clamp(96px,11vw,160px) max(40px,calc((100vw - 1240px)/2));background:var(--paper);color:var(--ink)}
 .community .section-index{margin-bottom:clamp(46px,6vw,78px)}
 .community__head{display:grid;grid-template-columns:minmax(200px,.7fr) minmax(0,1.7fr);gap:48px;align-items:start}
 .community__head .kicker{grid-column:1}
-.community__head h2{grid-column:2;margin:0!important;color:var(--ink)!important;font:750 clamp(38px,4.6vw,70px)/1.08 'Helvetica Neue',Arial,sans-serif!important;letter-spacing:-.035em!important;word-break:keep-all;white-space:pre-line}
+.community__head h2{grid-column:2;margin:0!important;color:var(--ink)!important;font:750 clamp(38px,4.6vw,70px)/1.08 var(--sans)!important;letter-spacing:-.05em!important;word-break:keep-all;white-space:pre-line}
 .community__head>p:last-child{grid-column:2;max-width:600px;margin:26px 0 0!important;color:#403c34!important;font-size:clamp(15px,1.15vw,18px)!important;line-height:1.78!important;word-break:keep-all}
 .community__head .kicker__label{color:var(--muted-ink)}
 .community__gallery{display:grid;grid-template-columns:1.28fr .72fr;gap:24px;align-items:start;margin-top:clamp(52px,7vw,96px)}
@@ -123,7 +140,7 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 .schedule .section-index{margin-bottom:clamp(46px,6vw,78px);border-bottom-color:var(--line);color:var(--muted)}
 .schedule__head{display:grid;grid-template-columns:minmax(200px,.7fr) minmax(0,1.7fr);gap:48px;align-items:end}
 .schedule__head .kicker{grid-column:1;margin-bottom:0}
-.schedule__head h2{grid-column:2;margin:0!important;color:var(--paper)!important;font:750 clamp(34px,4.3vw,60px)/1.05 'Helvetica Neue',Arial,sans-serif!important;letter-spacing:-.03em!important;word-break:keep-all}
+.schedule__head h2{grid-column:2;margin:0!important;color:var(--paper)!important;font:750 clamp(34px,4.3vw,60px)/1.05 var(--sans)!important;letter-spacing:-.045em!important;word-break:keep-all}
 .schedule__head>p:last-child{grid-column:2;max-width:560px;margin:20px 0 0!important;color:var(--muted)!important;font-size:clamp(15px,1.1vw,17px)!important;line-height:1.7!important;word-break:keep-all}
 .schedule__list{list-style:none;margin:clamp(46px,6vw,80px) 0 0;padding:0}
 .schedule__item{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:clamp(18px,4vw,56px);padding:25px 4px;border-top:1px solid var(--line);transition:background-color .3s ease,padding-left .3s ease}
@@ -134,6 +151,8 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 .schedule__date i{font-family:var(--mono);font-style:normal;font-size:11px;letter-spacing:.14em;color:var(--muted)}
 .schedule__title{font-size:clamp(16px,1.5vw,21px);font-weight:600;letter-spacing:-.01em;word-break:keep-all}
 .schedule__tag{justify-self:end;padding:6px 13px;border:1px solid var(--line);border-radius:999px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);white-space:nowrap}
+.schedule__item--placeholder{color:rgba(242,241,236,.48)}
+.schedule__item--placeholder .schedule__date b{font-family:var(--mono);font-size:18px;font-weight:500}
 
 .reveal{opacity:1!important;transform:none!important}
 
@@ -142,6 +161,7 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
   .module__inner{grid-template-columns:1fr;gap:34px;padding:clamp(70px,14vw,110px) 0}
   .module--reverse .figure{order:0}
   .module .figure .frame{aspect-ratio:4/3}
+  .project-visual .project-variants{margin-top:14px}
   .community__gallery{grid-template-columns:1fr;gap:18px}
   .community__gallery .figure:last-child .frame{aspect-ratio:4/3}
 }
@@ -171,5 +191,8 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
   .schedule__date{min-width:66px;flex-direction:column;align-items:flex-start;gap:2px}
   .schedule__date b{font-size:21px}
   .schedule__tag{padding:5px 10px}
+  .project-variants button{display:flex;justify-content:center;padding:11px 8px}
+  .project-variants button strong{display:none}
+  .project-variants__hint{text-align:left}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.scroll-mark span{animation:none}.frame img,.text-link span,.archive-cta>a>span:first-child{transition:none}}

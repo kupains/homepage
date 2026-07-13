@@ -7,8 +7,8 @@
   <title>PAINS — Korea University Sports Analytics</title>
   <link rel="icon" href="images/PAINS_logo.png">
   <link rel="preload" as="image" href="images/pains-data-stadium.png">
-  <link rel="stylesheet" href="home.css?v=20260712-4">
-  <script defer src="js/content-loader.js?v=20260712b"></script>
+  <link rel="stylesheet" href="home.css?v=20260713-blue1">
+  <script defer src="js/content-loader.js?v=20260713-blue1"></script>
 </head>
 <body class="pains-theme home-page">
   <header></header>
@@ -19,7 +19,7 @@
     <!-- HERO -->
     <section class="home-hero" id="top">
       <div class="home-hero__media" aria-hidden="true">
-        <img src="images/pains-data-stadium.png" alt="">
+        <img src="images/pains-data-stadium.png" alt="" fetchpriority="high" decoding="async">
       </div>
       <div class="home-hero__content">
         <h1 class="hero-brand" aria-label="PAINS">
@@ -39,8 +39,8 @@
       <div class="section-index">01 / IDENTITY</div>
       <div class="manifesto__copy home-strategy__copy">
         <p class="home-eyebrow">PAINS Data Archive · Since 2020</p>
-        <h2>WE TURN<br>SPORTS INTO<br>KNOWLEDGE.</h2>
-        <p>경기에서 시작된 질문을 데이터로 검증하고, 동료와 나눈 분석을 하나의 프로젝트로 남깁니다.</p>
+        <h2>WE TURN SPORTS INTO INSIGHT</h2>
+        <p>스포츠에서 질문을 찾아내, 새로운 의미를 발견합니다.</p>
       </div>
       <div class="home-data-strip">
         <div><strong>167+</strong><span>PROJECTS</span></div>
@@ -62,9 +62,9 @@
           <p data-field="description">익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석합니다.</p>
           <a class="text-link" data-field="primary-cta" href="about">ABOUT PAINS <span>↗</span></a>
         </div>
-        <figure class="figure">
-          <div class="frame"><img data-field="image" src="images/소개사진.jpg" alt="PAINS 단체사진"></div>
-          <figcaption><span>FIG.01</span><span>PAINS COLLECTIVE</span></figcaption>
+        <figure class="figure figure--blue">
+          <div class="frame"><img data-field="image" src="images/pains-sports-analytics-blue.png" alt="경기장을 내려다보는 분석실 모니터에 스포츠 위치와 추세 데이터가 표시된 장면" loading="lazy" decoding="async"></div>
+          <figcaption><span>FIG.01</span><span>SPORTS DATA LAB</span></figcaption>
         </figure>
       </div>
     </section>
@@ -79,12 +79,25 @@
             <span class="kicker__label" data-field="eyebrow">PROJECTS</span>
           </div>
           <h2 data-field="title">질문에서 출발해 결과를 만듭니다.</h2>
-          <p data-field="description">야구, 축구, 농구, 배구, F1, e-sports까지. 분석의 결과를 포트폴리오로 남깁니다.</p>
+          <p data-field="description">야구, 축구, 농구, F1, e-sports 등 모든 스포츠에서.
+연구를 진행하고 부원과 공유합니다.</p>
           <a class="text-link" data-field="primary-cta" href="activity">VIEW PROJECTS <span>↗</span></a>
         </div>
-        <figure class="figure">
-          <div class="frame"><img data-field="image" src="images/activity_edited_1.png" alt="PAINS 프로젝트 활동"></div>
-          <figcaption><span>FIG.02</span><span>PROJECT ARCHIVE</span></figcaption>
+        <figure class="figure figure--blue project-visual" data-project-visual>
+          <div class="frame"><img data-project-image src="images/project-field-model.png" alt="인물 없이 경기장 위에 패스 네트워크와 슛 궤적, 레이싱 라인이 투영된 프로젝트 이미지" loading="lazy" decoding="async"></div>
+          <figcaption><span>FIG.02</span><span data-project-caption>01 · FIELD MODEL</span></figcaption>
+          <div class="project-variants" role="group" aria-label="프로젝트 이미지 시안 선택">
+            <button type="button" class="is-active" aria-pressed="true" data-project-src="images/project-field-model.png" data-project-alt="인물 없이 경기장 위에 패스 네트워크와 슛 궤적, 레이싱 라인이 투영된 프로젝트 이미지" data-project-label="01 · FIELD MODEL">
+              <span>01</span><strong>FIELD MODEL</strong>
+            </button>
+            <button type="button" aria-pressed="false" data-project-src="images/project-research-desk.png" data-project-alt="인물 없이 스포츠 분석 차트와 연구 자료가 펼쳐진 프로젝트 데스크 이미지" data-project-label="02 · RESEARCH DESK">
+              <span>02</span><strong>RESEARCH DESK</strong>
+            </button>
+            <button type="button" aria-pressed="false" data-project-src="images/project-data-atlas.png" data-project-alt="인물 없이 종목별 분석 결과가 모듈형 패널로 전시된 데이터 아카이브 이미지" data-project-label="03 · DATA ATLAS">
+              <span>03</span><strong>DATA ATLAS</strong>
+            </button>
+          </div>
+          <p class="project-variants__hint">SELECT A VISUAL CONCEPT · 인물 없는 3개 시안</p>
         </figure>
       </div>
     </section>
@@ -98,16 +111,18 @@
           <span class="kicker__line"></span>
           <span class="kicker__label" data-field="eyebrow">COMMUNITY</span>
         </div>
-        <h2 data-field="title">같이 보고, 같이 즐기고, 같이 성장합니다.</h2>
-        <p data-field="description">스포츠 경기 단체 관람, 연사초청, MT와 소모임을 통해 서로 다른 관심을 연결합니다.</p>
+        <h2 data-field="title">같이 보고,
+같이 즐기고,
+같이 성장합니다.</h2>
+        <p data-field="description">스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 하나가 되어 교류합니다.</p>
       </div>
       <div class="community__gallery">
         <figure class="figure">
-          <div class="frame"><img data-field="image" src="images/단체사진.png" alt="PAINS 활동 사진"></div>
+          <div class="frame"><img data-field="image" src="images/단체사진.png" alt="PAINS 활동 사진" loading="lazy" decoding="async"></div>
           <figcaption><span>FIG.03</span><span>GATHERING</span></figcaption>
         </figure>
         <figure class="figure">
-          <div class="frame"><img data-field="image2" src="images/activity03.png" alt="PAINS 체육 활동"></div>
+          <div class="frame"><img data-field="image2" src="images/activity03.png" alt="PAINS 체육 활동" loading="lazy" decoding="async"></div>
           <figcaption><span>FIG.04</span><span>FIELD DAY</span></figcaption>
         </figure>
       </div>
@@ -127,24 +142,20 @@
       </div>
       <ul class="schedule__list" id="js-home-schedule">
         <li class="schedule__item">
-          <span class="schedule__date"><b>03.16</b><i>MON</i></span>
-          <span class="schedule__title">11기 OT</span>
-          <span class="schedule__tag">필수</span>
+          <span class="schedule__date"><b>—</b><i></i></span>
+          <span class="schedule__title">TBD</span>
         </li>
         <li class="schedule__item">
-          <span class="schedule__date"><b>03.22</b><i>SAT</i></span>
-          <span class="schedule__title">통계 세미나 #1</span>
-          <span class="schedule__tag">정기</span>
+          <span class="schedule__date"><b>—</b><i></i></span>
+          <span class="schedule__title">TBD</span>
         </li>
         <li class="schedule__item">
-          <span class="schedule__date"><b>04.05</b><i>SAT</i></span>
-          <span class="schedule__title">연사 초청 강연</span>
-          <span class="schedule__tag">정기</span>
+          <span class="schedule__date"><b>—</b><i></i></span>
+          <span class="schedule__title">TBD</span>
         </li>
         <li class="schedule__item">
-          <span class="schedule__date"><b>04.19</b><i>SAT</i></span>
-          <span class="schedule__title">체육대회</span>
-          <span class="schedule__tag">행사</span>
+          <span class="schedule__date"><b>—</b><i></i></span>
+          <span class="schedule__title">TBD</span>
         </li>
       </ul>
     </section>
@@ -160,6 +171,7 @@
 
   <footer></footer>
   <script src="menu.js?v=20260712"></script>
+  <script src="js/home.js?v=20260713"></script>
   <script>
     loadSidebar('home');
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));

@@ -135,7 +135,11 @@ https://drive.google.com/file/d/FILE_ID/view?usp=sharing
 | home.hero.description | 고려대학교 스포츠 통계 동아리 PAINS입니다. |
 | about.hero.title | PAINS 소개 |
 | about.presidentMessage.paragraphs.0 | 첫 번째 인사말 문단 |
-| about.presidentMessage.mobileImage | Google Drive 이미지 URL |
+| about.hero.image | Google Drive 이미지 URL |
+| organization.generation | 11기 |
+| organization.titleTemplate | {generation} 운영진 조직도 |
+
+운영진 기수가 바뀌면 `organization.generation` 값만 `12기`처럼 수정합니다. 제목 문장 자체를 바꾸려면 `organization.titleTemplate`을 수정하고, 기수가 들어갈 자리에는 `{generation}`을 남겨둡니다. 예전 데이터의 `organization.title`도 계속 지원하며, 모든 관리값을 불러오지 못하면 `members.html`의 기본 제목이 표시됩니다.
 
 `settings`
 
@@ -196,11 +200,30 @@ https://drive.google.com/file/d/FILE_ID/view?usp=sharing
 
 `home_story_cards`
 
-`titleLines`는 줄마다 `|`로 나눕니다.
+`titleLines`는 줄마다 `|`로 나눕니다. 커뮤니티의 두 사진은 `image`와 `image2`를 각각 바꾸며, 두 값은 독립적으로 반영됩니다.
 
-| id | eyebrow | titleLines | description | image | alt | primaryLabel | primaryHref | secondaryLabel | secondaryHref | visible | order |
+| id | eyebrow | titleLines | description | image | alt | image2 | alt2 | captionFig | captionLabel | visible | order |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| projects | Projects | 흥미에서 출발해\|결과를 만들어냅니다. | 설명 | Drive URL | PAINS 프로젝트 | 프로젝트 보기 | activity | 스터디 보기 | study | TRUE | 2 |
+| community | Community | 같이 보고,\|같이 즐기고,\|같이 성장합니다. | 설명 | 첫 사진 URL | 첫 사진 설명 | 두 번째 사진 URL | 두 번째 사진 설명 | FIG.03 | GATHERING | TRUE | 3 |
+
+홈 프로젝트의 `FIELD MODEL`, `RESEARCH DESK`, `DATA ATLAS` 버튼은 이번 개편에서 제공한 인물 없는 로컬 이미지 시안 전환 기능입니다. 기본 시안은 `FIELD MODEL`이며, 파일은 `images/project-*.png`에 있습니다.
+
+`home_schedule`
+
+홈의 **다가오는 일정**은 오늘(한국시간) 이후 일정 가운데 날짜가 빠른 4개를 표시합니다. 지난 일정은 자동으로 제외되고, 표시할 일정이 4개보다 적으면 남은 칸에는 가장 일반적인 미정 표기인 `TBD`가 들어갑니다.
+
+| date | title | tag | dateLabel | weekday | visible | order |
+| --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-05 | 정기 세미나 #1 | 정기 |  |  | TRUE | 1 |
+| 2026-09-12 | 신입 부원 OT | 필수 행사 |  |  | TRUE | 2 |
+
+- `date`: `YYYY-MM-DD` 형식의 행사일입니다. 오늘 일정도 포함됩니다.
+- `title`: 가운데에 표시되는 행사명입니다.
+- `tag`: 오른쪽 배지 문구입니다. `필수`, `정기`, `행사`, `필수 행사`처럼 원하는 표현을 직접 입력합니다.
+- `dateLabel`, `weekday`: 날짜와 요일 표기를 직접 지정할 때만 사용하며, 비워두면 `MM.DD`와 영문 요일이 자동 생성됩니다.
+- `visible`: `FALSE`이면 노출하지 않습니다. 같은 날짜의 순서는 `order`로 정할 수 있습니다.
+
+로컬에서 Google Sheets에 접근할 수 없을 때는 `data/site-content.json`의 `home.schedule` 배열에 같은 필드를 입력하면 됩니다. 이 JSON이 원격 요청 실패 시의 안전한 fallback으로 사용됩니다.
 
 `organization`
 

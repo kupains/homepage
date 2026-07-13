@@ -54,11 +54,11 @@
     ],
     "strategy": {
       "eyebrow": "PAINS Data Archive · Since 2020",
-      "title": "WE TURN SPORTS INTO KNOWLEDGE.",
-      "description": "경기에서 시작된 질문을 데이터로 검증하고, 동료와 나눈 분석을 하나의 프로젝트로 남깁니다.",
+      "title": "WE TURN SPORTS INTO INSIGHT",
+      "description": "스포츠에서 질문을 찾아내, 새로운 의미를 발견합니다.",
       "axes": [
-        { "id": "about", "title": "About PAINS", "image": "images/소개사진.jpg", "href": "#home-about", "alt": "PAINS 소개", "visible": true, "order": 1 },
-        { "id": "projects", "title": "Projects", "image": "images/activity_edited_1.png", "href": "#home-projects", "alt": "PAINS 프로젝트", "visible": true, "order": 2 },
+        { "id": "about", "title": "About PAINS", "image": "images/pains-sports-analytics-blue.png", "href": "#home-about", "alt": "스포츠 데이터 분석", "visible": true, "order": 1 },
+        { "id": "projects", "title": "Projects", "image": "images/project-field-model.png", "href": "#home-projects", "alt": "PAINS 프로젝트", "visible": true, "order": 2 },
         { "id": "community", "title": "Community", "image": "images/activity03.png", "href": "#home-community", "alt": "PAINS 커뮤니티", "visible": true, "order": 3 }
       ]
     },
@@ -86,23 +86,23 @@
           "eyebrow": "About PAINS",
           "titleLines": ["데이터로 스포츠를", "다시 씁니다."],
           "description": "익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석하며, 기록 속에 숨은 맥락과 의미를 함께 발견합니다.",
-          "image": "images/소개사진.jpg",
-          "alt": "PAINS 단체사진",
+          "image": "images/pains-sports-analytics-blue.png",
+          "alt": "경기장을 내려다보는 분석실 모니터에 스포츠 위치와 추세 데이터가 표시된 장면",
           "primaryCta": { "label": "PAINS 소개 보기", "href": "about" },
-          "caption": { "fig": "FIG.01", "label": "PAINS COLLECTIVE" },
+          "caption": { "fig": "FIG.01", "label": "SPORTS DATA LAB" },
           "visible": true,
           "order": 1
         },
         {
           "id": "projects",
           "eyebrow": "Projects",
-          "titleLines": ["흥미에서 출발해", "결과를 만들어냅니다."],
-          "description": "야구, 축구, 농구, 배구, F1, e-sports까지 다양한 종목을 바탕으로 팀 프로젝트를 수행하고 포트폴리오로 남깁니다.",
-          "image": "images/activity_edited_1.png",
-          "alt": "PAINS 프로젝트 활동",
+          "titleLines": ["질문에서 출발해", "결과를 만듭니다."],
+          "description": "야구, 축구, 농구, F1, e-sports 등 모든 스포츠에서.\n연구를 진행하고 부원과 공유합니다.",
+          "image": "images/project-field-model.png",
+          "alt": "인물 없이 경기장 위에 패스 네트워크와 슛 궤적, 레이싱 라인이 투영된 프로젝트 이미지",
           "primaryCta": { "label": "프로젝트 보기", "href": "activity" },
           "secondaryCta": { "label": "스터디 보기", "href": "study" },
-          "caption": { "fig": "FIG.02", "label": "PROJECT ARCHIVE" },
+          "caption": { "fig": "FIG.02", "label": "01 · FIELD MODEL" },
           "visible": true,
           "order": 2
         },
@@ -110,7 +110,7 @@
           "id": "community",
           "eyebrow": "Community",
           "titleLines": ["같이 보고,", "같이 즐기고,", "같이 성장합니다."],
-          "description": "스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 자연스럽게 교류합니다.",
+          "description": "스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 하나가 되어 교류합니다.",
           "images": [
             { "src": "images/단체사진.png", "alt": "PAINS 활동 사진" },
             { "src": "images/activity03.png", "alt": "PAINS 체육 활동" }
@@ -131,16 +131,16 @@
     "hero": {
       "eyebrow": "About PAINS",
       "title": "PAINS 소개",
-      "description": "PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.",
-      "image": "images/소개사진.jpg"
+      "description": "PAINS는 스포츠에서 질문을 찾아 데이터로 검증하고, 분석의 과정과 발견을 부원들과 공유하는 고려대학교 스포츠 통계분석 동아리입니다.",
+      "image": "images/pains-sports-analytics-blue.png"
     },
     "whoWeAre": {
       "eyebrow": "Who We Are",
       "desktopTitle": "스포츠를 데이터로 탐구합니다.",
-      "mobileTitle": "WE ARE PAINS",
-      "description": "2020년 설립되어 2026학년도 1학기에 11기로 활동하는 PAINS는 야구, 축구, 농구, 배구, F1, e-sports 등 다양한 종목에 대한 흥미와 열정을 바탕으로 매 학기 프로젝트를 수행합니다. 탐구 프로젝트뿐만 아니라 스포츠 경기 단체 관람, 연사초청, MT, 체육대회 등 다양한 친목 활동을 통해 서로 다른 관심 종목을 가진 부원들이 교류하고 있습니다.",
-      "image": "images/소개사진.jpg",
-      "alt": "PAINS 단체사진"
+      "mobileTitle": "스포츠를 데이터로 탐구합니다.",
+      "description": "야구, 축구, 농구, F1, e-sports 등 종목의 경계를 두지 않고 경기 기록과 맥락을 탐구합니다. 각자의 관심에서 시작한 연구는 세미나와 팀 프로젝트를 거쳐 모두가 나누는 지식이 됩니다.",
+      "image": "images/pains-sports-analytics-blue.png",
+      "alt": "스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실"
     },
     "presidentMessage": {
       "eyebrow": "President Message",
@@ -156,7 +156,8 @@
     }
   },
   "organization": {
-    "title": "11기 운영진 조직도",
+    "generation": "11기",
+    "titleTemplate": "{generation} 운영진 조직도",
     "members": [
       { "id": "president", "role": "회장", "name": "전영재", "major": "언어학과 24", "image": "images/회장v2.png" },
       { "id": "treasurer", "role": "총무", "name": "손영현", "major": "통계학과 23", "image": "images/총무.png", "staff": true },

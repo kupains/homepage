@@ -70,7 +70,7 @@ function baseContent() {
       whoWeAre: {},
       presidentMessage: { paragraphs: [] }
     },
-    organization: { members: [] },
+    organization: { generation: '', titleTemplate: '', members: [] },
     societies: { items: [] },
     events: { items: [] },
     pdfProxyUrl: PDF_PROXY_URL,
@@ -312,13 +312,13 @@ function buildContent() {
   });
 
   content.home.schedule = rows(TAB.homeSchedule).filter(function (row) {
-    return row.date || row.title;
+    return row.date || row.title || row.eventName || row.event_name;
   }).map(function (row, index) {
     return {
       date: row.date,
-      title: row.title,
-      tag: row.tag,
-      dateLabel: row.dateLabel,
+      title: row.title || row.eventName || row.event_name,
+      tag: row.tag || row.category || row.badge,
+      dateLabel: row.dateLabel || row.date_label,
       weekday: row.weekday,
       visible: bool(row.visible),
       order: num(row.order, index + 1)
@@ -599,7 +599,7 @@ function readmeRows() {
     ['시트 이름', 'Homepage Editor (이 시트가 사이트 전체 콘텐츠 원본)'],
     ['홈 화면 문구', 'copy 탭에서 memo가 [홈] 으로 시작하는 행의 value를 수정 → 첫 화면 라벨·정체성·지표·스케줄 제목·하단 링크까지 모두 반영됩니다.'],
     ['홈 소개/프로젝트/커뮤니티', 'home_story_cards 탭에서 제목(titleLines)·설명(description)·사진(image, image2)·사진 캡션(captionFig/captionLabel)을 수정합니다.'],
-    ['홈 스케줄', 'home_schedule 탭에 date(YYYY-MM-DD)·title·tag를 추가하면 홈 "다가오는 일정"에 날짜순으로 표시됩니다. 지난 일정은 자동으로 숨겨집니다.'],
+    ['홈 스케줄', 'home_schedule 탭에서 date(YYYY-MM-DD)·title(행사명)·tag(필수/정기/행사 배지)를 관리합니다. 오늘 이후 일정 4개가 날짜순으로 표시되며, 부족한 칸은 TBD로 표시됩니다.'],
     ['사진 관리', 'Google Drive에 업로드 > "링크가 있는 모든 사용자 보기" > 공유 링크를 image 셀에 붙입니다.'],
     ['줄바꿈', 'titleLines는 | 로 줄을 나눕니다. 일반 설명문은 셀 안에서 줄바꿈해도 됩니다.'],
     ['숨기기', 'visible 값을 FALSE로 바꾸면 사이트에서 숨깁니다. 다시 TRUE로 바꾸면 보입니다.'],
@@ -621,8 +621,8 @@ function copyRows() {
 
     ['home.identity.index', '01 / IDENTITY', '[홈] 01 정체성 섹션 인덱스 라벨'],
     ['home.strategy.eyebrow', 'PAINS Data Archive · Since 2020', '[홈] 01 정체성 작은 문구'],
-    ['home.strategy.title', 'WE TURN SPORTS INTO KNOWLEDGE.', '[홈] 01 정체성 큰 제목'],
-    ['home.strategy.description', '경기에서 시작된 질문을 데이터로 검증하고, 동료와 나눈 분석을 하나의 프로젝트로 남깁니다.', '[홈] 01 정체성 설명'],
+    ['home.strategy.title', 'WE TURN SPORTS INTO INSIGHT', '[홈] 01 정체성 큰 제목'],
+    ['home.strategy.description', '스포츠에서 질문을 찾아내, 새로운 의미를 발견합니다.', '[홈] 01 정체성 설명'],
     ['home.metrics.0.value', '167+', '[홈] 핵심 지표 1 숫자'],
     ['home.metrics.0.label', 'PROJECTS', '[홈] 핵심 지표 1 이름'],
     ['home.metrics.1.value', '11TH', '[홈] 핵심 지표 2 숫자'],
@@ -649,23 +649,24 @@ function copyRows() {
     ['home.archiveLinks.2.href', 'apply', '[홈] 하단 링크 3 주소'],
     ['about.hero.eyebrow', 'About PAINS', '소개 페이지 상단 작은 문구'],
     ['about.hero.title', 'PAINS 소개', '소개 페이지 제목'],
-    ['about.hero.description', 'PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.', '소개 페이지 설명'],
-    ['about.hero.image', 'images/소개사진.jpg', '소개 페이지 상단 이미지'],
+    ['about.hero.description', 'PAINS는 스포츠에서 질문을 찾아 데이터로 검증하고, 분석의 과정과 발견을 부원들과 공유하는 고려대학교 스포츠 통계분석 동아리입니다.', '소개 페이지 설명'],
+    ['about.hero.image', 'images/pains-sports-analytics-blue.png', '소개 페이지 상단 이미지'],
     ['about.whoWeAre.eyebrow', 'Who We Are', '소개 페이지 배너 작은 문구'],
     ['about.whoWeAre.desktopTitle', '스포츠를 데이터로 탐구합니다.', 'PC 소개 배너 제목'],
-    ['about.whoWeAre.mobileTitle', 'WE ARE PAINS', '모바일 소개 배너 제목'],
-    ['about.whoWeAre.description', '2020년 설립되어 2026학년도 1학기에 11기로 활동하는 PAINS는 야구, 축구, 농구, 배구, F1, e-sports 등 다양한 종목에 대한 흥미와 열정을 바탕으로 매 학기 프로젝트를 수행합니다. 탐구 프로젝트뿐만 아니라 스포츠 경기 단체 관람, 연사초청, MT, 체육대회 등 다양한 친목 활동을 통해 서로 다른 관심 종목을 가진 부원들이 교류하고 있습니다.', '소개 배너 설명'],
-    ['about.whoWeAre.image', 'images/소개사진.jpg', 'PC용 소개 배너 이미지'],
-    ['about.whoWeAre.alt', 'PAINS 단체사진', '이미지 대체 텍스트'],
+    ['about.whoWeAre.mobileTitle', '스포츠를 데이터로 탐구합니다.', '모바일 소개 배너 제목'],
+    ['about.whoWeAre.description', '야구, 축구, 농구, F1, e-sports 등 종목의 경계를 두지 않고 경기 기록과 맥락을 탐구합니다. 각자의 관심에서 시작한 연구는 세미나와 팀 프로젝트를 거쳐 모두가 나누는 지식이 됩니다.', '소개 배너 설명'],
+    ['about.whoWeAre.image', 'images/pains-sports-analytics-blue.png', '소개에 사용하는 단일 이미지'],
+    ['about.whoWeAre.alt', '스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실', '이미지 대체 텍스트'],
     ['about.presidentMessage.eyebrow', 'President Message', '회장 인사말 작은 문구'],
     ['about.presidentMessage.title', '회장 인사말', '회장 인사말 제목'],
     ['about.presidentMessage.paragraphs.0', '안녕하십니까, 고려대학교 스포츠 통계분석 동아리 PAINS의 11기 회장 전영재입니다. PAINS는 스포츠를 사랑하는 사람들이 모여, 익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석해 보고자 만들어진 동아리입니다. 단순히 승패와 득실을 넘어 기록 속에 숨은 맥락과 의미를 발견하고 데이터를 통해 스포츠를 더 깊이 이해하는 경험을 함께 나누고 있습니다.', '회장 인사말 1문단'],
     ['about.presidentMessage.paragraphs.1', '각기 다른 배경을 가진 부원들이 모여 뜨거운 열정으로 스포츠에 대한 궁금증을 해소하는 경험을 함께 하는 동시에 통계뿐만이 아닌 AI와 데이터 과학 분야를 공부하며 부원 모두가 함께 성장하는 환경을 갖추고 있습니다. 매순간 달라지고 발전하는 PAINS의 활동에 많은 관심을 가져주시고 함께 해주셔서 감사합니다.', '회장 인사말 2문단'],
-    ['about.presidentMessage.desktopImage', 'images/activity_edited_1.png', 'PC 회장 인사말 이미지'],
-    ['about.presidentMessage.mobileImage', 'images/PAINS_logo.png', '모바일 회장 인사말 이미지'],
-    ['about.presidentMessage.desktopAlt', 'PAINS 활동 사진', 'PC 이미지 대체 텍스트'],
-    ['about.presidentMessage.mobileAlt', 'PAINS CI 로고', '모바일 이미지 대체 텍스트'],
-    ['organization.title', '11기 운영진 조직도', '조직도 제목'],
+    ['about.presidentMessage.desktopImage', 'images/pains-sports-analytics-blue.png', '필요 시 재사용하는 소개 단일 이미지'],
+    ['about.presidentMessage.mobileImage', 'images/pains-sports-analytics-blue.png', '필요 시 재사용하는 소개 단일 이미지'],
+    ['about.presidentMessage.desktopAlt', '스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실', 'PC 이미지 대체 텍스트'],
+    ['about.presidentMessage.mobileAlt', '스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실', '모바일 이미지 대체 텍스트'],
+    ['organization.generation', '11기', '조직도 기수. 기수 변경 시 이 값만 수정'],
+    ['organization.titleTemplate', '{generation} 운영진 조직도', '조직도 제목 형식. {generation} 자리에 위 기수가 자동 입력됨'],
     ['societies.title', 'PAINS 소모임 안내', '소모임 페이지 제목'],
     ['societies.description', 'PAINS에서는 다양한 소모임을 통해 비슷한 관심사를 가진 부원들 간의 친목을 장려하고 있습니다.\n아래 현재 개설된 소모임을 확인해보세요!\n자세한 내용은 PAINS 공지방과 잡담방을 확인해주시기 바랍니다.', '소모임 설명'],
     ['events.title', '이벤트 안내', '이벤트 페이지 제목'],
@@ -713,9 +714,9 @@ function noticeRows() {
 function homeStoryCardRows() {
   return [
     ['id', 'eyebrow', 'titleLines', 'description', 'image', 'alt', 'image2', 'alt2', 'captionFig', 'captionLabel', 'captionFig2', 'captionLabel2', 'imagesMode', 'primaryLabel', 'primaryHref', 'secondaryLabel', 'secondaryHref', 'visible', 'order'],
-    ['about', 'About PAINS', '데이터로 스포츠를|다시 씁니다.', '익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석하며, 기록 속에 숨은 맥락과 의미를 함께 발견합니다.', 'images/소개사진.jpg', 'PAINS 단체사진', '', '', 'FIG.01', 'PAINS COLLECTIVE', '', '', '', 'PAINS 소개 보기', 'about', '', '', 'TRUE', '1'],
-    ['projects', 'Projects', '흥미에서 출발해|결과를 만들어냅니다.', '야구, 축구, 농구, 배구, F1, e-sports까지 다양한 종목을 바탕으로 팀 프로젝트를 수행하고 포트폴리오로 남깁니다.', 'images/activity_edited_1.png', 'PAINS 프로젝트 활동', '', '', 'FIG.02', 'PROJECT ARCHIVE', '', '', '', '프로젝트 보기', 'activity', '스터디 보기', 'study', 'TRUE', '2'],
-    ['community', 'Community', '같이 보고,|같이 즐기고,|같이 성장합니다.', '스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 자연스럽게 교류합니다.', 'images/단체사진.png', 'PAINS 활동 사진', 'images/activity03.png', 'PAINS 체육 활동', 'FIG.03', 'GATHERING', 'FIG.04', 'FIELD DAY', 'mosaic', '', '', '', '', 'TRUE', '3']
+    ['about', 'About PAINS', '데이터로 스포츠를|다시 씁니다.', '익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석하며, 기록 속에 숨은 맥락과 의미를 함께 발견합니다.', 'images/pains-sports-analytics-blue.png', '스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실', '', '', 'FIG.01', 'SPORTS DATA LAB', '', '', '', 'PAINS 소개 보기', 'about', '', '', 'TRUE', '1'],
+    ['projects', 'Projects', '질문에서 출발해|결과를 만듭니다.', '야구, 축구, 농구, F1, e-sports 등 모든 스포츠에서.\n연구를 진행하고 부원과 공유합니다.', 'images/project-field-model.png', '인물 없이 경기장 위에 스포츠 데이터가 투영된 프로젝트 이미지', '', '', 'FIG.02', '01 · FIELD MODEL', '', '', '', '프로젝트 보기', 'activity', '스터디 보기', 'study', 'TRUE', '2'],
+    ['community', 'Community', '같이 보고,|같이 즐기고,|같이 성장합니다.', '스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 하나가 되어 교류합니다.', 'images/단체사진.png', 'PAINS 활동 사진', 'images/activity03.png', 'PAINS 체육 활동', 'FIG.03', 'GATHERING', 'FIG.04', 'FIELD DAY', 'mosaic', '', '', '', '', 'TRUE', '3']
   ];
 }
 

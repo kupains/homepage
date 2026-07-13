@@ -13,6 +13,7 @@ const tabs = {
   homeAxes: 'home_axes',
   homeStoryNav: 'home_story_nav',
   homeStoryCards: 'home_story_cards',
+  homeSchedule: 'home_schedule',
   organization: 'organization',
   societies: 'societies',
   events: 'events',
@@ -195,18 +196,47 @@ async function main() {
 
   const storyCards = await fetchTab(tabs.homeStoryCards);
   if (storyCards.length) {
-    content.home.story.cards = storyCards.map((row) => ({
-      id: row.id,
-      eyebrow: row.eyebrow,
-      titleLines: splitLines(row.titleLines || row.title_lines || row.title),
-      description: row.description,
-      image: row.image,
-      alt: row.alt,
-      primaryCta: row.primaryLabel ? { label: row.primaryLabel, href: row.primaryHref || '#' } : undefined,
-      secondaryCta: row.secondaryLabel ? { label: row.secondaryLabel, href: row.secondaryHref || '#' } : undefined,
-      visible: bool(row.visible),
-      order: number(row.order, 999)
-    }));
+    content.home.story.cards = storyCards.map((row) => {
+      const image2 = row.image2 || row.image_2;
+      const useMosaic = row.id === 'community'
+        || row.imagesMode === 'mosaic'
+        || row.images_mode === 'mosaic';
+      return {
+        id: row.id,
+        eyebrow: row.eyebrow,
+        titleLines: splitLines(row.titleLines || row.title_lines || row.title),
+        description: row.description,
+        image: row.image,
+        alt: row.alt,
+        images: useMosaic ? [
+          row.image ? { src: row.image, alt: row.alt } : null,
+          image2 ? { src: image2, alt: row.alt2 || row.alt_2 } : null
+        ].filter(Boolean) : undefined,
+        caption: (row.captionFig || row.captionLabel)
+          ? { fig: row.captionFig, label: row.captionLabel } : undefined,
+        caption2: (row.captionFig2 || row.captionLabel2)
+          ? { fig: row.captionFig2, label: row.captionLabel2 } : undefined,
+        primaryCta: row.primaryLabel ? { label: row.primaryLabel, href: row.primaryHref || '#' } : undefined,
+        secondaryCta: row.secondaryLabel ? { label: row.secondaryLabel, href: row.secondaryHref || '#' } : undefined,
+        visible: bool(row.visible),
+        order: number(row.order, 999)
+      };
+    });
+  }
+
+  const schedule = await fetchTab(tabs.homeSchedule);
+  if (schedule.length) {
+    content.home.schedule = schedule
+      .filter((row) => row.date || row.title || row.eventName || row.event_name)
+      .map((row, index) => ({
+        date: row.date,
+        title: row.title || row.eventName || row.event_name,
+        tag: row.tag || row.category || row.badge,
+        dateLabel: row.dateLabel || row.date_label,
+        weekday: row.weekday,
+        visible: bool(row.visible),
+        order: number(row.order, index + 1)
+      }));
   }
 
   const organization = await fetchTab(tabs.organization);

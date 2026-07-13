@@ -3,7 +3,7 @@
 
   const REMOTE_CONTENT_URL = 'https://script.google.com/macros/s/AKfycbypl1Z5iLKPPBGwpE8xv2TyCbgl5fmGBhYi1Zn16aU8tG2zvDGtIyALBAhQZ8Jpz5fJyQ/exec';
   const FALLBACK_CONTENT_URL = 'data/site-content.json';
-  const CONTENT_CACHE_KEY = 'pains-site-content-v1';
+  const CONTENT_CACHE_KEY = 'pains-site-content-v2';
   const ASSET_WAIT_LIMIT_MS = 300;
 
   const page = () => location.pathname.split('/').pop().replace(/\.html$/, '') || 'index';
@@ -214,6 +214,85 @@
     return Array.isArray(items) ? items.filter(isVisible).sort(byOrder) : [];
   }
 
+  function replaceLegacyValue(target, key, legacyValue, nextValue) {
+    if (target && target[key] === legacyValue) target[key] = nextValue;
+  }
+
+  // The live Sheet can lag behind a deployed design update. Migrate only exact
+  // former seed values so intentional editor changes always remain authoritative.
+  function migrateLegacyContent(content) {
+    if (!content || typeof content !== 'object') return content;
+
+    const home = content.home || {};
+    const strategy = home.strategy || {};
+    replaceLegacyValue(strategy, 'title', 'WE TURN SPORTS INTO KNOWLEDGE.', 'WE TURN SPORTS INTO INSIGHT');
+    replaceLegacyValue(
+      strategy,
+      'description',
+      '경기에서 시작된 질문을 데이터로 검증하고, 동료와 나눈 분석을 하나의 프로젝트로 남깁니다.',
+      '스포츠에서 질문을 찾아내, 새로운 의미를 발견합니다.'
+    );
+
+    const cards = Array.isArray(home.story?.cards) ? home.story.cards : [];
+    cards.forEach((card) => {
+      if (card.id === 'about') {
+        replaceLegacyValue(card, 'image', 'images/소개사진.jpg', 'images/pains-sports-analytics-blue.png');
+        replaceLegacyValue(card, 'alt', 'PAINS 단체사진', '스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실');
+        if (card.caption?.label === 'PAINS COLLECTIVE') card.caption.label = 'SPORTS DATA LAB';
+      }
+
+      if (card.id === 'projects') {
+        const oldTitle = Array.isArray(card.titleLines) && card.titleLines.join('|') === '흥미에서 출발해|결과를 만들어냅니다.';
+        if (oldTitle) card.titleLines = ['질문에서 출발해', '결과를 만듭니다.'];
+        replaceLegacyValue(
+          card,
+          'description',
+          '야구, 축구, 농구, 배구, F1, e-sports까지 다양한 종목을 바탕으로 팀 프로젝트를 수행하고 포트폴리오로 남깁니다.',
+          '야구, 축구, 농구, F1, e-sports 등 모든 스포츠에서.\n연구를 진행하고 부원과 공유합니다.'
+        );
+        replaceLegacyValue(card, 'image', 'images/activity_edited_1.png', 'images/project-field-model.png');
+      }
+
+      if (card.id === 'community') {
+        replaceLegacyValue(
+          card,
+          'description',
+          '스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 자연스럽게 교류합니다.',
+          '스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 하나가 되어 교류합니다.'
+        );
+      }
+    });
+
+    const about = content.about || {};
+    replaceLegacyValue(
+      about.hero,
+      'description',
+      'PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.',
+      'PAINS는 스포츠에서 질문을 찾아 데이터로 검증하고, 분석의 과정과 발견을 부원들과 공유하는 고려대학교 스포츠 통계분석 동아리입니다.'
+    );
+    replaceLegacyValue(about.hero, 'image', 'images/소개사진.jpg', 'images/pains-sports-analytics-blue.png');
+    replaceLegacyValue(about.whoWeAre, 'mobileTitle', 'WE ARE PAINS', '스포츠를 데이터로 탐구합니다.');
+    replaceLegacyValue(
+      about.whoWeAre,
+      'description',
+      '2020년 설립되어 2026학년도 1학기에 11기로 활동하는 PAINS는 야구, 축구, 농구, 배구, F1, e-sports 등 다양한 종목에 대한 흥미와 열정을 바탕으로 매 학기 프로젝트를 수행합니다. 탐구 프로젝트뿐만 아니라 스포츠 경기 단체 관람, 연사초청, MT, 체육대회 등 다양한 친목 활동을 통해 서로 다른 관심 종목을 가진 부원들이 교류하고 있습니다.',
+      '야구, 축구, 농구, F1, e-sports 등 종목의 경계를 두지 않고 경기 기록과 맥락을 탐구합니다. 각자의 관심에서 시작한 연구는 세미나와 팀 프로젝트를 거쳐 모두가 나누는 지식이 됩니다.'
+    );
+    replaceLegacyValue(about.whoWeAre, 'image', 'images/소개사진.jpg', 'images/pains-sports-analytics-blue.png');
+    replaceLegacyValue(about.whoWeAre, 'alt', 'PAINS 단체사진', '스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실');
+
+    const organization = content.organization || {};
+    if (!organization.generation && typeof organization.title === 'string') {
+      const generationMatch = organization.title.match(/^(\d+기)\s+운영진 조직도$/);
+      if (generationMatch) {
+        organization.generation = generationMatch[1];
+        organization.titleTemplate = '{generation} 운영진 조직도';
+      }
+    }
+
+    return content;
+  }
+
   function readContentCache() {
     try {
       return JSON.parse(localStorage.getItem(CONTENT_CACHE_KEY) || 'null');
@@ -333,10 +412,10 @@
     };
 
     visibleItems(cards).forEach((card) => {
-      const root = roots[card.id];
+      const boundRoot = document.querySelector(`[data-home-card="${card.id}"]`);
+      const root = boundRoot || roots[card.id];
       if (!root) return;
 
-      const boundRoot = document.querySelector(`[data-home-card="${card.id}"]`);
       if (boundRoot) {
         text('[data-field="eyebrow"]', card.eyebrow, boundRoot);
         const title = boundRoot.querySelector('[data-field="title"]');
@@ -639,6 +718,8 @@
   }
 
   const SCHEDULE_WEEKDAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  const SCHEDULE_ITEM_COUNT = 4;
+  const SCHEDULE_PLACEHOLDER_LABEL = 'TBD';
 
   function kstDateParts(date) {
     const shifted = new Date(date.getTime() + 9 * 3600 * 1000);
@@ -654,17 +735,14 @@
     return parseKstDate(nowKstIso, 'start');
   }
 
-  function renderHomeSchedule(items, limit) {
+  function renderHomeSchedule(items) {
     const list = document.getElementById('js-home-schedule');
     if (!list) return;
 
     const visible = visibleItems(items);
-    if (!visible.length) return; // keep the static fallback markup
-
     const withDates = visible.map((item) => ({ item, date: parseKstDate(item.date, 'start') }));
     const today = startOfTodayKst();
-    let upcoming = withDates.filter((entry) => !entry.date || (today && entry.date.getTime() >= today.getTime()));
-    if (!upcoming.length) upcoming = withDates;
+    const upcoming = withDates.filter((entry) => !entry.date || !today || entry.date.getTime() >= today.getTime());
 
     upcoming.sort((a, b) => {
       if (a.date && b.date) return a.date.getTime() - b.date.getTime();
@@ -673,17 +751,29 @@
       return 0;
     });
 
-    const max = Number(limit) > 0 ? Number(limit) : 5;
+    const entries = upcoming.slice(0, SCHEDULE_ITEM_COUNT);
+    while (entries.length < SCHEDULE_ITEM_COUNT) {
+      entries.push({
+        item: {
+          dateLabel: '—',
+          title: SCHEDULE_PLACEHOLDER_LABEL,
+          placeholder: true
+        },
+        date: null
+      });
+    }
+
     list.replaceChildren();
 
-    upcoming.slice(0, max).forEach(({ item, date }) => {
+    entries.forEach(({ item, date }) => {
       const parts = date ? kstDateParts(date) : null;
       const dateLabel = item.dateLabel
-        || (parts ? `${String(parts.month).padStart(2, '0')}.${String(parts.day).padStart(2, '0')}` : (item.date || '—'));
+        || (parts ? `${String(parts.month).padStart(2, '0')}.${String(parts.day).padStart(2, '0')}` : (item.date || SCHEDULE_PLACEHOLDER_LABEL));
       const weekday = item.weekday || (parts ? parts.weekday : '');
 
       const li = document.createElement('li');
       li.className = 'schedule__item';
+      if (item.placeholder) li.classList.add('schedule__item--placeholder');
 
       const dateEl = document.createElement('span');
       dateEl.className = 'schedule__date';
@@ -769,7 +859,7 @@
     text('#home-schedule [data-field="label"]', home.scheduleHead?.label);
     text('#home-schedule [data-field="title"]', home.scheduleHead?.title);
     text('#home-schedule [data-field="description"]', home.scheduleHead?.description);
-    renderHomeSchedule(home.schedule, content?.settings?.homeScheduleLimit);
+    renderHomeSchedule(home.schedule);
 
     text('.home-section--calendar .home-section__heading h3', home.calendar?.title);
     text('.home-section--calendar .home-section__heading p', home.calendar?.description);
@@ -814,7 +904,18 @@
     const org = content?.organization;
     if (!org) return;
 
-    text('section h2', org.title);
+    const heading = document.querySelector('[data-organization-title]')
+      || document.querySelector('section h2');
+    const generation = firstValue(org.generation, content?.recruitment?.generation, '');
+    const headingTemplate = firstValue(
+      org.titleTemplate,
+      org.title,
+      generation ? '{generation} 운영진 조직도' : '',
+      heading?.textContent
+    );
+    const resolvedHeading = template(headingTemplate, { generation }).trim();
+    if (heading && resolvedHeading) heading.textContent = resolvedHeading;
+
     const cards = document.querySelectorAll('.org-card');
     visibleItems(org.members).forEach((member, index) => {
       const card = cards[index];
@@ -825,6 +926,10 @@
       text('.org-name', member.name, card);
       text('.org-major', member.major, card);
       const img = card.querySelector('.org-img');
+      if (img) {
+        const profileLabel = [member.role, member.name, '프로필 사진'].filter(Boolean).join(' ');
+        if (profileLabel) img.setAttribute('aria-label', profileLabel);
+      }
       backgroundImage(img, member.image);
     });
   }
@@ -955,6 +1060,7 @@
   }
 
   function applyContent(content) {
+    migrateLegacyContent(content);
     renderAccessGates(content);
 
     const current = page();

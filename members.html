@@ -57,7 +57,7 @@
 
         @media (max-width: 600px) { section { padding: 2rem 0; } }
     </style>
-    <script defer src="js/content-loader.js?v=20260528"></script>
+    <script defer src="js/content-loader.js?v=20260713-blue1"></script>
 </head>
 <body>
 
@@ -65,14 +65,14 @@
     <div class="sidebar" id="sidebar"></div>
     <div class="overlay" id="overlay"></div>
 
-    <section>
-        <h2>11기 운영진 조직도</h2>
-        <div class="org-chart-wrapper">
-            <div class="tree-container">
+    <section aria-labelledby="organization-title">
+        <h2 id="organization-title" data-organization-title>11기 운영진 조직도</h2>
+        <div class="org-chart-wrapper" role="region" aria-labelledby="organization-title" tabindex="0">
+            <div class="tree-container" role="list" aria-label="PAINS 운영진">
                 <div class="level-1">
                     <div style="position: relative;">
-                        <div class="org-card" data-role="회장v2">
-                            <div class="org-img"></div>
+                        <div class="org-card" data-role="회장v2" role="listitem">
+                            <div class="org-img" role="img" aria-label="회장 전영재 프로필 사진"></div>
                             <div class="org-role">회장</div>
                             <div class="org-name">전영재</div>
                             <div class="org-major">언어학과 24</div>
@@ -80,8 +80,8 @@
                         <div class="line line-v-1"></div>
                     </div>
                     <div class="general-affairs-wrapper">
-                        <div class="org-card card-staff" data-role="총무">
-                            <div class="org-img"></div>
+                        <div class="org-card card-staff" data-role="총무" role="listitem">
+                            <div class="org-img" role="img" aria-label="총무 손영현 프로필 사진"></div>
                             <div class="org-role">총무</div>
                             <div class="org-name">손영현</div>
                             <div class="org-major">통계학과 23</div>
@@ -90,8 +90,8 @@
                 </div>
                 <div class="level-2">
                     <div class="vice-president-wrapper">
-                        <div class="org-card" data-role="부회장">
-                            <div class="org-img"></div>
+                        <div class="org-card" data-role="부회장" role="listitem">
+                            <div class="org-img" role="img" aria-label="부회장 하승민 프로필 사진"></div>
                             <div class="org-role">부회장</div>
                             <div class="org-name">하승민</div>
                             <div class="org-major">데이터과학과 23</div>
@@ -104,20 +104,20 @@
                     </div>
                 </div>
                 <div class="level-3">
-                    <div class="org-card" data-role="기획부장v2">
-                        <div class="org-img"></div>
+                    <div class="org-card" data-role="기획부장v2" role="listitem">
+                        <div class="org-img" role="img" aria-label="기획부장 나영우 프로필 사진"></div>
                         <div class="org-role">기획부장</div>
                         <div class="org-name">나영우</div>
                         <div class="org-major">보건환경융합과학부 25</div>
                     </div>
-                    <div class="org-card" data-role="홍보부장v2">
-                        <div class="org-img"></div>
+                    <div class="org-card" data-role="홍보부장v2" role="listitem">
+                        <div class="org-img" role="img" aria-label="홍보부장 김가현 프로필 사진"></div>
                         <div class="org-role">홍보부장</div>
                         <div class="org-name">김가현</div>
                         <div class="org-major">미디어학부 24</div>
                     </div>
-                    <div class="org-card" data-role="교육부장">
-                        <div class="org-img"></div>
+                    <div class="org-card" data-role="교육부장" role="listitem">
+                        <div class="org-img" role="img" aria-label="교육부장 이지섭 프로필 사진"></div>
                         <div class="org-role">교육부장</div>
                         <div class="org-name">이지섭</div>
                         <div class="org-major">통계학과 24</div>
