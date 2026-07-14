@@ -21,7 +21,7 @@
   --mono:ui-monospace,'SF Mono','Cascadia Code','Roboto Mono',Menlo,Consolas,monospace;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;background:var(--black)}
+html{background:var(--black)}
 body.pains-theme.home-page{margin:0;overflow-x:hidden;background:var(--black);color:var(--paper);font-family:var(--sans);text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 body.pains-theme.home-page main{display:block;width:100%;overflow:hidden}
 body.pains-theme.home-page img{display:block;max-width:100%}
@@ -106,7 +106,6 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 .project-variants button:hover,.project-variants button.is-active{background:#13243a;color:#eaf4ff}
 .project-variants button.is-active{box-shadow:inset 0 -2px #4ca4ff}
 .project-variants button:focus-visible{position:relative;z-index:1;outline:2px solid #74b9ff;outline-offset:2px}
-.project-variants__hint{margin:10px 0 0;color:rgba(242,241,236,.42);font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-align:right}
 
 /* ===== 04 — Community (light, two contained photos) ===== */
 .community{width:100%;padding:clamp(96px,11vw,160px) max(40px,calc((100vw - 1240px)/2));background:var(--paper);color:var(--ink)}
@@ -119,9 +118,8 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 .community__gallery{display:grid;grid-template-columns:1.28fr .72fr;gap:24px;align-items:start;margin-top:clamp(52px,7vw,96px)}
 .community .frame{border-color:var(--line-ink);background:#e4e2da}
 .community .frame::before,.community .frame::after{border-color:rgba(20,20,15,.7)}
-.community .frame img{filter:grayscale(1) contrast(1.04)}
-.community__gallery .figure:first-child .frame{aspect-ratio:4/3}
-.community__gallery .figure:last-child .frame{aspect-ratio:3/4}
+.community .frame img{object-fit:contain;filter:grayscale(1) contrast(1.04)}
+.community__gallery .figure:first-child .frame,.community__gallery .figure:last-child .frame{aspect-ratio:4/3}
 .community .figure figcaption{color:var(--muted-ink)}
 
 /* ===== 05 — Archive index (dark link list) ===== */
@@ -193,6 +191,5 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
   .schedule__tag{padding:5px 10px}
   .project-variants button{display:flex;justify-content:center;padding:11px 8px}
   .project-variants button strong{display:none}
-  .project-variants__hint{text-align:left}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.scroll-mark span{animation:none}.frame img,.text-link span,.archive-cta>a>span:first-child{transition:none}}

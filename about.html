@@ -211,6 +211,7 @@
     }
 
     .about-hero h2 {
+      white-space: pre-line;
       margin-top: 22px;
       font-size: clamp(52px, 6.6vw, 94px);
       font-weight: 800;
@@ -237,7 +238,7 @@
 
     .about-visual__frame {
       position: relative;
-      aspect-ratio: 5 / 4;
+      aspect-ratio: 16 / 9;
       overflow: hidden;
       background: #030912;
       border: 1px solid var(--about-line);
@@ -270,10 +271,10 @@
     .about-visual__frame img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center;
       filter: saturate(0.9) contrast(1.03) brightness(0.95);
-      transform: scale(1.002);
+      transform: none;
     }
 
     .about-visual__frame .about-visual__tone {
@@ -496,11 +497,11 @@
       }
 
       .about-visual__frame {
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 16 / 9;
       }
 
       .about-visual__frame img {
-        object-position: 58% center;
+        object-position: center;
       }
 
       .about-visual figcaption {
@@ -552,7 +553,7 @@
       }
     }
   </style>
-  <script defer src="js/content-loader.js?v=20260713-blue1"></script>
+  <script defer src="js/content-loader.js?v=20260714-content1"></script>
 </head>
 <body class="about-page">
   <a class="skip-link" href="#main-content">본문으로 바로가기</a>
@@ -566,21 +567,22 @@
       <div class="about-section__inner">
         <div class="about-section-index" aria-hidden="true">
           <span>01 / About</span>
-          <span>Korea University · Sports Analytics Collective</span>
+          <span data-about-collective>Korea University · Sports Data Analysis Circle</span>
         </div>
 
         <div class="about-hero__grid">
           <div class="about-hero__body">
             <span class="section-kicker">About PAINS</span>
-            <h2 id="about-title">PAINS 소개</h2>
+            <h2 id="about-title">We Are
+PAINS</h2>
             <p class="about-hero__lead">
-              PAINS는 스포츠를 사랑하는 사람들이 모여 데이터로 질문을 검증하고, 분석의 과정과 발견을 함께 나누는 고려대학교 스포츠 통계분석 동아리입니다.
+              PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.
             </p>
           </div>
 
           <figure class="about-visual">
             <div class="about-visual__frame">
-              <img src="images/pains-sports-analytics-blue.png" alt="경기장을 내려다보는 분석실 모니터에 경기 위치와 추세 데이터가 표시된 장면">
+              <img src="images/소개사진.jpg" alt="PAINS 부원 단체사진">
               <span class="about-visual__tone" aria-hidden="true"></span>
             </div>
             <figcaption>
@@ -600,38 +602,13 @@
               <span class="mobile-only">스포츠를 데이터로 탐구합니다.</span>
             </h3>
             <p>
-              2020년 설립된 PAINS는 야구, 축구, 농구, 배구, F1, e-sports 등 다양한 종목에 대한 흥미와 열정을 바탕으로 매 학기 프로젝트를 수행합니다. 기록 속에 숨은 맥락을 발견하고 그 과정을 부원들과 공유하며, 스포츠를 더 깊이 이해하는 새로운 관점을 함께 만들어 갑니다.
+              야구, 축구, 농구, 배구, F1, e-sports등 다양한 종목에 대한 흥미와 열정을 지닌 부원들이 매 학기 열정적으로 프로젝트를 수행하고 있으며, 탐구 프로젝트뿐만 아니라 스포츠 경기 단체 관람, 연사초청, MT, 체육대회 등 다양한 친목활동을 개최하여 서로 다른 관심 종목을 가진 부원들 간의 교류도 활발하게 진행하고 있습니다.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="about-banner about-banner--president" aria-labelledby="president-title">
-      <div class="about-section__inner">
-        <div class="about-section-index" aria-hidden="true">
-          <span>02 / Message</span>
-          <span>From the President of PAINS</span>
-        </div>
-
-        <div class="about-message__grid">
-          <div class="about-message__heading">
-            <span class="section-kicker">President Message</span>
-            <h3 id="president-title">회장 인사말</h3>
-          </div>
-
-          <div class="about-banner__copy">
-            <p>
-              안녕하십니까, 고려대학교 스포츠 통계분석 동아리 PAINS의 11기 회장 전영재입니다. PAINS는 스포츠를 사랑하는 사람들이 모여 익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석해 보고자 만들어진 동아리입니다. 단순히 승패와 득실을 넘어 기록 속에 숨은 맥락과 의미를 발견하고, 데이터를 통해 스포츠를 더 깊이 이해하는 경험을 함께 나누고 있습니다.
-            </p>
-            <p>
-              각기 다른 배경을 가진 부원들이 스포츠에 대한 궁금증을 함께 풀어가는 동시에 통계, AI, 데이터 과학을 공부하며 모두가 성장하는 환경을 만들어 가고 있습니다. 매 순간 달라지고 발전하는 PAINS의 활동에 많은 관심을 가져주시고 함께해 주셔서 감사합니다.
-            </p>
-            <div class="about-message__closing">Read · Question · Discover</div>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer></footer>

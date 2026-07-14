@@ -226,6 +226,7 @@
     const home = content.home || {};
     const strategy = home.strategy || {};
     replaceLegacyValue(strategy, 'title', 'WE TURN SPORTS INTO KNOWLEDGE.', 'WE TURN SPORTS INTO INSIGHT');
+    replaceLegacyValue(strategy, 'eyebrow', 'PAINS Data Archive · Since 2020', 'Providing Academic INsights for Sport');
     replaceLegacyValue(
       strategy,
       'description',
@@ -251,9 +252,18 @@
           '야구, 축구, 농구, F1, e-sports 등 모든 스포츠에서.\n연구를 진행하고 부원과 공유합니다.'
         );
         replaceLegacyValue(card, 'image', 'images/activity_edited_1.png', 'images/project-field-model.png');
+        replaceLegacyValue(
+          card,
+          'description',
+          '야구, 축구, 농구, F1, e-sports 등 모든 스포츠에서.\n연구를 진행하고 부원과 공유합니다.',
+          '야구, 축구, 농구, F1, e-sports 등 모든 스포츠에서.\n연구를 진행하고 부원들과 공유합니다.'
+        );
       }
 
       if (card.id === 'community') {
+        if (Array.isArray(card.titleLines) && card.titleLines.join('|') === '같이 보고,|같이 즐기고,|같이 성장합니다.') {
+          card.titleLines = ['함께 보고,', '함께 즐기고,', '함께 성장합니다.'];
+        }
         replaceLegacyValue(
           card,
           'description',
@@ -267,19 +277,24 @@
     replaceLegacyValue(
       about.hero,
       'description',
-      'PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.',
-      'PAINS는 스포츠에서 질문을 찾아 데이터로 검증하고, 분석의 과정과 발견을 부원들과 공유하는 고려대학교 스포츠 통계분석 동아리입니다.'
+      'PAINS는 스포츠에서 질문을 찾아 데이터로 검증하고, 분석의 과정과 발견을 부원들과 공유하는 고려대학교 스포츠 통계분석 동아리입니다.',
+      'PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.'
     );
-    replaceLegacyValue(about.hero, 'image', 'images/소개사진.jpg', 'images/pains-sports-analytics-blue.png');
+    replaceLegacyValue(about.hero, 'title', 'PAINS 소개', 'We Are\nPAINS');
+    replaceLegacyValue(about.hero, 'image', 'images/pains-sports-analytics-blue.png', 'images/소개사진.jpg');
     replaceLegacyValue(about.whoWeAre, 'mobileTitle', 'WE ARE PAINS', '스포츠를 데이터로 탐구합니다.');
     replaceLegacyValue(
       about.whoWeAre,
       'description',
-      '2020년 설립되어 2026학년도 1학기에 11기로 활동하는 PAINS는 야구, 축구, 농구, 배구, F1, e-sports 등 다양한 종목에 대한 흥미와 열정을 바탕으로 매 학기 프로젝트를 수행합니다. 탐구 프로젝트뿐만 아니라 스포츠 경기 단체 관람, 연사초청, MT, 체육대회 등 다양한 친목 활동을 통해 서로 다른 관심 종목을 가진 부원들이 교류하고 있습니다.',
-      '야구, 축구, 농구, F1, e-sports 등 종목의 경계를 두지 않고 경기 기록과 맥락을 탐구합니다. 각자의 관심에서 시작한 연구는 세미나와 팀 프로젝트를 거쳐 모두가 나누는 지식이 됩니다.'
+      '야구, 축구, 농구, F1, e-sports 등 종목의 경계를 두지 않고 경기 기록과 맥락을 탐구합니다. 각자의 관심에서 시작한 연구는 세미나와 팀 프로젝트를 거쳐 모두가 나누는 지식이 됩니다.',
+      '야구, 축구, 농구, 배구, F1, e-sports등 다양한 종목에 대한 흥미와 열정을 지닌 부원들이 매 학기 열정적으로 프로젝트를 수행하고 있으며, 탐구 프로젝트뿐만 아니라 스포츠 경기 단체 관람, 연사초청, MT, 체육대회 등 다양한 친목활동을 개최하여 서로 다른 관심 종목을 가진 부원들 간의 교류도 활발하게 진행하고 있습니다.'
     );
-    replaceLegacyValue(about.whoWeAre, 'image', 'images/소개사진.jpg', 'images/pains-sports-analytics-blue.png');
-    replaceLegacyValue(about.whoWeAre, 'alt', 'PAINS 단체사진', '스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실');
+    replaceLegacyValue(about.whoWeAre, 'image', 'images/pains-sports-analytics-blue.png', 'images/소개사진.jpg');
+    replaceLegacyValue(about.whoWeAre, 'alt', '스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실', 'PAINS 부원 단체사진');
+
+    if (Array.isArray(home.hero?.meta) && home.hero.meta[1] === 'SPORTS ANALYTICS COLLECTIVE') {
+      home.hero.meta[1] = 'SPORTS STATISTICS';
+    }
 
     const organization = content.organization || {};
     if (!organization.generation && typeof organization.title === 'string') {
@@ -842,11 +857,27 @@
     renderHomeStoryNav(home.story?.nav);
     renderHomeStoryCards(home.story?.cards);
 
+    const projectButtons = document.querySelectorAll('.project-variants button');
+    visibleItems(home.projectVariants).forEach((variant, index) => {
+      const button = projectButtons[index];
+      if (!button) return;
+      button.hidden = false;
+      button.dataset.projectSrc = variant.image || '';
+      button.dataset.projectAlt = variant.alt || '';
+      button.dataset.projectLabel = variant.label || '';
+      text('span', String(index + 1).padStart(2, '0'), button);
+      text('strong', variant.label, button);
+    });
+    Array.from(projectButtons).slice(visibleItems(home.projectVariants).length).forEach((button) => {
+      button.hidden = true;
+    });
+
     // Hero meta + scroll label
     textAll('.hero-meta span', home.hero?.meta);
     const scrollMark = document.querySelector('.scroll-mark');
-    if (scrollMark && scrollMark.firstChild && home.scrollLabel) {
-      scrollMark.firstChild.textContent = `${home.scrollLabel} `;
+    if (scrollMark) {
+      scrollMark.hidden = home.scrollVisible === false || !home.scrollLabel;
+      if (scrollMark.firstChild && home.scrollLabel) scrollMark.firstChild.textContent = `${home.scrollLabel} `;
     }
 
     // Section index labels + archive eyebrow
@@ -873,6 +904,8 @@
     text('.about-hero h2', about.hero?.title);
     text('.about-hero p', about.hero?.description);
     image('.about-hero__media img', about.hero?.image, '');
+    image('.about-visual img', about.hero?.image, about.hero?.alt || 'PAINS 부원 단체사진');
+    text('[data-about-collective]', about.meta?.collective);
 
     const who = document.querySelector('.about-banner--dark');
     if (who) {
@@ -885,6 +918,7 @@
 
     const president = document.querySelector('.about-banner--president');
     if (president) {
+      president.hidden = !boolValue(about.presidentMessage?.visible, true);
       text('.section-kicker', about.presidentMessage?.eyebrow, president);
       text('h3', about.presidentMessage?.title, president);
       const copy = president.querySelector('.about-banner__copy');

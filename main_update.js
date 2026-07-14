@@ -1,7 +1,7 @@
 /* menu.js - v4.3 (너비 제어권 HTML로 위임, Sticky Footer, 글로벌 폰트 관리, 사이드바 스크롤 개선) */
 
 const PAINS_LAYOUT = {
-    brandText: 'Providing Academic INsights for Sports.',
+    brandText: 'Providing Academic INsights for Sport',
     homeHref: 'index',
     footerText: '&copy; 2026 PAINS. All rights reserved.',
     socials: [
