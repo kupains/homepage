@@ -119,7 +119,8 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 .community .frame{border-color:var(--line-ink);background:#e4e2da}
 .community .frame::before,.community .frame::after{border-color:rgba(20,20,15,.7)}
 .community .frame img{object-fit:contain;filter:grayscale(1) contrast(1.04)}
-.community__gallery .figure:first-child .frame,.community__gallery .figure:last-child .frame{aspect-ratio:4/3}
+.community__gallery .figure:first-child .frame{aspect-ratio:761/517}
+.community__gallery .figure:last-child .frame{aspect-ratio:1079/889}
 .community .figure figcaption{color:var(--muted-ink)}
 
 /* ===== 05 — Archive index (dark link list) ===== */
@@ -161,7 +162,8 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
   .module .figure .frame{aspect-ratio:4/3}
   .project-visual .project-variants{margin-top:14px}
   .community__gallery{grid-template-columns:1fr;gap:18px}
-  .community__gallery .figure:last-child .frame{aspect-ratio:4/3}
+  .community__gallery .figure:first-child .frame{aspect-ratio:761/517}
+  .community__gallery .figure:last-child .frame{aspect-ratio:1079/889}
 }
 @media(max-width:760px){
   :root{--page:calc(100% - 36px)}

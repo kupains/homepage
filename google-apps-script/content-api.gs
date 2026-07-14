@@ -660,7 +660,7 @@ function copyRows() {
     ['about.whoWeAre.description', '야구, 축구, 농구, 배구, F1, e-sports등 다양한 종목에 대한 흥미와 열정을 지닌 부원들이 매 학기 열정적으로 프로젝트를 수행하고 있으며, 탐구 프로젝트뿐만 아니라 스포츠 경기 단체 관람, 연사초청, MT, 체육대회 등 다양한 친목활동을 개최하여 서로 다른 관심 종목을 가진 부원들 간의 교류도 활발하게 진행하고 있습니다.', '소개 배너 설명'],
     ['about.whoWeAre.image', 'images/소개사진.jpg', '소개에 사용하는 단일 이미지'],
     ['about.whoWeAre.alt', 'PAINS 부원 단체사진', '이미지 대체 텍스트'],
-    ['about.presidentMessage.visible', 'FALSE', '회장 인사말 표시 여부'],
+    ['about.presidentMessage.visible', 'TRUE', '회장 인사말 표시 여부'],
 
     ['home.projectVariants.0.label', 'PROJECT', '[홈] 프로젝트 이미지 항목 1 이름'],
     ['home.projectVariants.0.image', 'images/project-field-model.png', '[홈] 프로젝트 이미지 항목 1 사진'],

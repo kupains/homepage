@@ -148,7 +148,7 @@
     },
     "meta": { "collective": "Korea University · Sports Data Analysis Circle" },
     "presidentMessage": {
-      "visible": false,
+      "visible": true,
       "eyebrow": "President Message",
       "title": "회장 인사말",
       "paragraphs": [
