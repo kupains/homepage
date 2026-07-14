@@ -7,7 +7,7 @@
   const ASSET_WAIT_LIMIT_MS = 300;
 
   const page = () => location.pathname.split('/').pop().replace(/\.html$/, '') || 'index';
-  const isVisible = (item) => item && item.visible !== false;
+  const isVisible = (item) => item && boolValue(item.visible, true);
   const byOrder = (a, b) => Number(a.order ?? 999) - Number(b.order ?? 999);
   const pendingAssetLoads = [];
 
@@ -858,7 +858,10 @@
     renderHomeStoryCards(home.story?.cards);
 
     const projectButtons = document.querySelectorAll('.project-variants button');
-    visibleItems(home.projectVariants).forEach((variant, index) => {
+    const projectVariants = visibleItems(home.projectVariants);
+    const projectVariantsRoot = document.querySelector('.project-variants');
+    if (projectVariantsRoot) projectVariantsRoot.hidden = projectVariants.length === 0;
+    projectVariants.forEach((variant, index) => {
       const button = projectButtons[index];
       if (!button) return;
       button.hidden = false;
@@ -868,7 +871,7 @@
       text('span', String(index + 1).padStart(2, '0'), button);
       text('strong', variant.label, button);
     });
-    Array.from(projectButtons).slice(visibleItems(home.projectVariants).length).forEach((button) => {
+    Array.from(projectButtons).slice(projectVariants.length).forEach((button) => {
       button.hidden = true;
     });
 

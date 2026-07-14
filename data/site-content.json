@@ -122,9 +122,9 @@
       ]
     },
     "projectVariants": [
-      { "label": "PROJECT", "image": "images/project-field-model.png", "alt": "PAINS 프로젝트", "visible": true, "order": 1 },
-      { "label": "SEMINAR", "image": "images/activity2.png", "alt": "PAINS 세미나", "visible": true, "order": 2 },
-      { "label": "COLUMN", "image": "images/NOTICE_ACTIVITIES.png", "alt": "PAINS 칼럼", "visible": true, "order": 3 }
+      { "label": "PROJECT", "image": "images/project-field-model.png", "alt": "PAINS 프로젝트", "visible": false, "order": 1 },
+      { "label": "SEMINAR", "image": "images/activity2.png", "alt": "PAINS 세미나", "visible": false, "order": 2 },
+      { "label": "COLUMN", "image": "images/NOTICE_ACTIVITIES.png", "alt": "PAINS 칼럼", "visible": false, "order": 3 }
     ],
     "calendar": {
       "title": "일정 안내",
