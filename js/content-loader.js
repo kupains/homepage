@@ -1317,14 +1317,21 @@
     });
 
     if (page() === 'apply') {
+      const liveRecruitmentPromise = loadLiveRecruitmentFromSheet();
+      const applyLiveRecruitment = (recruitment) => {
+        const current = window.__painsContentLatest || {};
+        applyContent({
+          ...current,
+          recruitment: { ...(current.recruitment || {}), ...recruitment }
+        });
+      };
+
+      liveRecruitmentPromise.then(applyLiveRecruitment).catch(() => {
+        // 공개 시트를 읽지 못하면 기존 API/JSON 콘텐츠를 그대로 유지합니다.
+      });
+
       refreshRenderPromise.finally(() => {
-        loadLiveRecruitmentFromSheet().then((recruitment) => {
-          const current = window.__painsContentLatest || {};
-          applyContent({
-            ...current,
-            recruitment: { ...(current.recruitment || {}), ...recruitment }
-          });
-        }).catch(() => {
+        liveRecruitmentPromise.then(applyLiveRecruitment).catch(() => {
           // 공개 시트를 읽지 못하면 기존 API/JSON 콘텐츠를 그대로 유지합니다.
         });
       });
