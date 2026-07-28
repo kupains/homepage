@@ -214,98 +214,17 @@
     return Array.isArray(items) ? items.filter(isVisible).sort(byOrder) : [];
   }
 
-  function replaceLegacyValue(target, key, legacyValue, nextValue) {
-    if (target && target[key] === legacyValue) target[key] = nextValue;
-  }
+  // 조직도 제목은 organization.generation + titleTemplate 조합으로 만듭니다.
+  // 아직 옛 형식(organization.title = "11기 운영진 조직도")만 있는 시트를 위한 보정입니다.
+  function fillOrganizationGeneration(content) {
+    const organization = content?.organization;
+    if (!organization || organization.generation) return;
+    if (typeof organization.title !== 'string') return;
 
-  // The live Sheet can lag behind a deployed design update. Migrate only exact
-  // former seed values so intentional editor changes always remain authoritative.
-  function migrateLegacyContent(content) {
-    if (!content || typeof content !== 'object') return content;
-
-    const home = content.home || {};
-    const strategy = home.strategy || {};
-    replaceLegacyValue(strategy, 'title', 'WE TURN SPORTS INTO KNOWLEDGE.', 'WE TURN SPORTS INTO INSIGHT');
-    replaceLegacyValue(strategy, 'eyebrow', 'PAINS Data Archive · Since 2020', 'Providing Academic INsights for Sport');
-    replaceLegacyValue(
-      strategy,
-      'description',
-      '경기에서 시작된 질문을 데이터로 검증하고, 동료와 나눈 분석을 하나의 프로젝트로 남깁니다.',
-      '스포츠에서 질문을 찾아내, 새로운 의미를 발견합니다.'
-    );
-
-    const cards = Array.isArray(home.story?.cards) ? home.story.cards : [];
-    cards.forEach((card) => {
-      if (card.id === 'about') {
-        replaceLegacyValue(card, 'image', 'images/소개사진.jpg', 'images/pains-sports-analytics-blue.png');
-        replaceLegacyValue(card, 'alt', 'PAINS 단체사진', '스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실');
-        if (card.caption?.label === 'PAINS COLLECTIVE') card.caption.label = 'SPORTS DATA LAB';
-      }
-
-      if (card.id === 'projects') {
-        const oldTitle = Array.isArray(card.titleLines) && card.titleLines.join('|') === '흥미에서 출발해|결과를 만들어냅니다.';
-        if (oldTitle) card.titleLines = ['질문에서 출발해', '결과를 만듭니다.'];
-        replaceLegacyValue(
-          card,
-          'description',
-          '야구, 축구, 농구, 배구, F1, e-sports까지 다양한 종목을 바탕으로 팀 프로젝트를 수행하고 포트폴리오로 남깁니다.',
-          '야구, 축구, 농구, F1, e-sports 등 모든 스포츠에서.\n연구를 진행하고 부원과 공유합니다.'
-        );
-        replaceLegacyValue(card, 'image', 'images/activity_edited_1.png', 'images/project-field-model.png');
-        replaceLegacyValue(
-          card,
-          'description',
-          '야구, 축구, 농구, F1, e-sports 등 모든 스포츠에서.\n연구를 진행하고 부원과 공유합니다.',
-          '야구, 축구, 농구, F1, e-sports 등 모든 스포츠에서.\n연구를 진행하고 부원들과 공유합니다.'
-        );
-      }
-
-      if (card.id === 'community') {
-        if (Array.isArray(card.titleLines) && card.titleLines.join('|') === '같이 보고,|같이 즐기고,|같이 성장합니다.') {
-          card.titleLines = ['함께 보고,', '함께 즐기고,', '함께 성장합니다.'];
-        }
-        replaceLegacyValue(
-          card,
-          'description',
-          '스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 자연스럽게 교류합니다.',
-          '스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 하나가 되어 교류합니다.'
-        );
-      }
-    });
-
-    const about = content.about || {};
-    replaceLegacyValue(
-      about.hero,
-      'description',
-      'PAINS는 스포츠에서 질문을 찾아 데이터로 검증하고, 분석의 과정과 발견을 부원들과 공유하는 고려대학교 스포츠 통계분석 동아리입니다.',
-      'PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.'
-    );
-    replaceLegacyValue(about.hero, 'title', 'PAINS 소개', 'We Are\nPAINS');
-    replaceLegacyValue(about.hero, 'image', 'images/pains-sports-analytics-blue.png', 'images/소개사진.jpg');
-    replaceLegacyValue(about.whoWeAre, 'mobileTitle', 'WE ARE PAINS', '스포츠를 데이터로 탐구합니다.');
-    replaceLegacyValue(
-      about.whoWeAre,
-      'description',
-      '야구, 축구, 농구, F1, e-sports 등 종목의 경계를 두지 않고 경기 기록과 맥락을 탐구합니다. 각자의 관심에서 시작한 연구는 세미나와 팀 프로젝트를 거쳐 모두가 나누는 지식이 됩니다.',
-      '야구, 축구, 농구, 배구, F1, e-sports등 다양한 종목에 대한 흥미와 열정을 지닌 부원들이 매 학기 열정적으로 프로젝트를 수행하고 있으며, 탐구 프로젝트뿐만 아니라 스포츠 경기 단체 관람, 연사초청, MT, 체육대회 등 다양한 친목활동을 개최하여 서로 다른 관심 종목을 가진 부원들 간의 교류도 활발하게 진행하고 있습니다.'
-    );
-    replaceLegacyValue(about.whoWeAre, 'image', 'images/pains-sports-analytics-blue.png', 'images/소개사진.jpg');
-    replaceLegacyValue(about.whoWeAre, 'alt', '스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실', 'PAINS 부원 단체사진');
-
-    if (Array.isArray(home.hero?.meta) && home.hero.meta[1] === 'SPORTS ANALYTICS COLLECTIVE') {
-      home.hero.meta[1] = 'SPORTS STATISTICS';
-    }
-
-    const organization = content.organization || {};
-    if (!organization.generation && typeof organization.title === 'string') {
-      const generationMatch = organization.title.match(/^(\d+기)\s+운영진 조직도$/);
-      if (generationMatch) {
-        organization.generation = generationMatch[1];
-        organization.titleTemplate = '{generation} 운영진 조직도';
-      }
-    }
-
-    return content;
+    const match = organization.title.match(/^(\d+기)\s+운영진 조직도$/);
+    if (!match) return;
+    organization.generation = match[1];
+    organization.titleTemplate = '{generation} 운영진 조직도';
   }
 
   function readContentCache() {
@@ -491,91 +410,177 @@
   function renderApplyTimeline(r) {
     const container = document.getElementById('js-apply-timeline') || document.querySelector('#sec-recruit .timeline');
     if (!container) return;
-
-    const headerCols = document.querySelectorAll('.timeline-header .header-col');
-    if (r.track1Label && headerCols[0]) headerCols[0].textContent = r.track1Label;
-    if (r.track2Label && headerCols[1]) headerCols[1].textContent = r.track2Label;
-
-    const track1Short = r.track1ShortLabel || (r.track1Label || '1차 모집').replace(/\s*\(.*\)/, '');
-    const track2Short = r.track2ShortLabel || r.track2Label || '2차 모집';
-
     if (!Array.isArray(r.timeline) || !r.timeline.length) return;
 
     container.replaceChildren();
-    r.timeline.forEach((item) => {
+    visibleItems(r.timeline).forEach((item) => {
       const li = document.createElement('div');
       li.className = 'timeline-item';
 
-      if (item.type === 'single') {
-        const content = document.createElement('div');
-        content.className = 'timeline-content';
-        if (item.highlight) content.style.cssText = 'background-color:#ab3333;color:white;';
+      const content = document.createElement('div');
+      content.className = 'timeline-content';
+      if (item.highlight) content.style.cssText = 'background-color:#ab3333;color:white;';
 
-        const dateSpan = document.createElement('span');
-        dateSpan.className = 'timeline-date';
-        if (item.highlight) dateSpan.style.color = '#ffffff';
-        dateSpan.textContent = item.date || '';
+      const dateSpan = document.createElement('span');
+      dateSpan.className = 'timeline-date';
+      if (item.highlight) dateSpan.style.color = '#ffffff';
+      dateSpan.textContent = item.date || item.track2Date || item.track1Date || '';
 
-        const titleSpan = document.createElement('span');
-        titleSpan.className = 'timeline-title';
-        titleSpan.textContent = item.step || '';
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'timeline-title';
+      titleSpan.textContent = item.step || item.track2Step || item.track1Step || '';
 
-        content.append(dateSpan, titleSpan);
+      content.append(dateSpan, titleSpan);
 
-        if (item.note) {
-          const p = document.createElement('p');
-          p.style.fontSize = '0.9rem';
-          const strong = document.createElement('strong');
-          if (item.highlight) strong.style.color = '#ffffff';
-          strong.textContent = item.note;
-          p.appendChild(strong);
-          content.appendChild(p);
-        }
-
-        li.appendChild(content);
-      } else {
-        const content = document.createElement('div');
-        content.className = 'timeline-content';
-        const wrapper = document.createElement('div');
-        wrapper.className = 'track-wrapper';
-
-        [
-          { label: track1Short, date: item.track1Date, step: item.track1Step || item.step, note: item.track1Note },
-          { label: track2Short, date: item.track2Date, step: item.track2Step || item.step, note: item.track2Note }
-        ].forEach((track) => {
-          const col = document.createElement('div');
-          col.className = 'track-col';
-
-          const labelSpan = document.createElement('span');
-          labelSpan.className = 'track-label';
-          labelSpan.textContent = track.label;
-
-          const dateSpan = document.createElement('span');
-          dateSpan.className = 'timeline-date';
-          dateSpan.textContent = track.date || '';
-
-          const titleSpan = document.createElement('span');
-          titleSpan.className = 'timeline-title';
-          titleSpan.textContent = track.step || '';
-
-          col.append(labelSpan, dateSpan, titleSpan);
-
-          if (track.note) {
-            const p = document.createElement('p');
-            p.style.cssText = 'font-size:0.9rem;color:#666;';
-            p.textContent = track.note;
-            col.appendChild(p);
-          }
-
-          wrapper.appendChild(col);
-        });
-
-        content.appendChild(wrapper);
-        li.appendChild(content);
+      const note = item.note || item.track2Note || item.track1Note || '';
+      if (note) {
+        const p = document.createElement('p');
+        p.style.cssText = `font-size:0.9rem;${item.highlight ? '' : 'color:#666;'}`;
+        p.textContent = note;
+        content.appendChild(p);
       }
 
+      li.appendChild(content);
       container.appendChild(li);
     });
+  }
+
+  function renderApplyCards(r) {
+    const activities = document.getElementById('js-apply-activities');
+    if (activities && Array.isArray(r.activities)) {
+      activities.replaceChildren();
+      visibleItems(r.activities).forEach((item) => {
+        const card = document.createElement('div');
+        card.className = 'activity-card';
+        const media = document.createElement('div');
+        media.className = 'activity-img-wrapper';
+        const img = document.createElement('img');
+        img.src = trackAsset(item.image || '');
+        img.alt = item.alt || item.title || '';
+        media.appendChild(img);
+        const body = document.createElement('div');
+        body.className = 'activity-text';
+        const title = document.createElement('h4');
+        title.textContent = item.title || '';
+        const description = document.createElement('p');
+        description.textContent = item.description || '';
+        body.append(title, description);
+        card.append(media, body);
+        activities.appendChild(card);
+      });
+    }
+
+    const departments = document.getElementById('js-apply-departments');
+    if (departments && Array.isArray(r.departments)) {
+      departments.replaceChildren();
+      visibleItems(r.departments).forEach((item) => {
+        const card = document.createElement('div');
+        card.className = 'dept-card';
+        const title = document.createElement('h4');
+        title.textContent = item.title || '';
+        const description = document.createElement('p');
+        description.textContent = item.description || '';
+        card.append(title, description);
+        departments.appendChild(card);
+      });
+    }
+  }
+
+  function renderApplyList(id, items) {
+    const list = document.getElementById(id);
+    if (!list || !Array.isArray(items)) return;
+    list.replaceChildren();
+    visibleItems(items).forEach((item) => {
+      const li = document.createElement('li');
+      li.textContent = item.text || '';
+      list.appendChild(li);
+    });
+  }
+
+  const applyCharts = {};
+  function replaceApplyChart(key, canvasId, config) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas || typeof window.Chart !== 'function') return;
+    if (applyCharts[key]) applyCharts[key].destroy();
+    applyCharts[key] = new window.Chart(canvas.getContext('2d'), config);
+  }
+
+  function renderApplyCharts(r) {
+    const stats = r.stats || {};
+    const gender = visibleItems(stats.gender?.length ? stats.gender : [
+      { label: '여자', value: 20, color: '#FF6B81', order: 1 },
+      { label: '남자', value: 80, color: '#4D96FF', order: 2 }
+    ]);
+    const major = visibleItems(stats.major?.length ? stats.major : [
+      ['데이터과학과', 6, '#FF6B6B'], ['통계학과', 6, '#FF9F43'],
+      ['중어중문학과', 4, '#FDCB6E'], ['경제학과', 3, '#20BF6B'],
+      ['언어학과', 2, '#0FB9B1'], ['컴퓨터학과', 2, '#2D98DA'],
+      ['경영학과', 2, '#3867D6'], ['행정학과', 2, '#8854D0'],
+      ['화학과', 2, '#A55EEA'], ['사회학과', 2, '#F06292'],
+      ['국제학부', 2, '#4B6584'], ['기타', 12, '#9980FA']
+    ].map(([label, value, color], index) => ({ label, value, color, order: index + 1 })));
+    const admission = visibleItems(stats.admissionYear?.length ? stats.admissionYear : [
+      ['19', 1], ['20', 2], ['21', 3], ['22', 4], ['23', 4], ['24', 17], ['25', 14]
+    ].map(([label, value], index) => ({ label, value, color: '#ab3333', order: index + 1 })));
+
+    if (gender.length) {
+      replaceApplyChart('gender', 'skillsChart', {
+        type: 'bar',
+        data: {
+          labels: ['성별 분포'],
+          datasets: gender.map((item) => ({
+            label: item.label,
+            data: [Number(item.value) || 0],
+            backgroundColor: item.color || '#ab3333',
+            barThickness: 40
+          }))
+        },
+        options: {
+          indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+          scales: { x: { stacked: true, display: false }, y: { stacked: true, display: false } },
+          plugins: { legend: { position: 'bottom' } }
+        }
+      });
+    }
+
+    if (major.length) {
+      replaceApplyChart('major', 'majorChart', {
+        type: 'doughnut',
+        data: {
+          labels: major.map((item) => item.label),
+          datasets: [{
+            data: major.map((item) => Number(item.value) || 0),
+            backgroundColor: major.map((item) => item.color || '#ab3333'),
+            borderWidth: 2,
+            borderColor: '#ffffff',
+            hoverOffset: 10
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, layout: { padding: 10 },
+          plugins: { legend: { position: window.innerWidth < 600 ? 'bottom' : 'right', labels: { color: '#333', boxWidth: 12, font: { size: 11 } } } }
+        }
+      });
+    }
+
+    if (admission.length) {
+      replaceApplyChart('admission', 'idChart', {
+        type: 'bar',
+        data: {
+          labels: admission.map((item) => item.label),
+          datasets: [{
+            label: r.admissionCountLabel || '인원(명)',
+            data: admission.map((item) => Number(item.value) || 0),
+            backgroundColor: admission.map((item) => item.color || '#ab3333'),
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+        }
+      });
+    }
   }
 
   function renderApply(content) {
@@ -587,7 +592,7 @@
     if (r.pageTitle) document.title = r.pageTitle;
     text('.hero-apply h2', r.heroTitle);
     text('.hero-apply p', r.heroDescription);
-    if (r.generation) text('.wing-box h3', `${r.generation} 신입부원 모집`);
+    text('.wing-box h3', r.sidebarTitle || (r.generation ? `${r.generation} 신입부원 모집` : undefined));
     text('.banner-text', r.bannerText);
     text('.banner-btn', r.bannerButtonLabel);
 
@@ -617,19 +622,33 @@
     const introSection = document.querySelector('#sec-intro');
     if (introSection && r.introTitle) text('h3', r.introTitle, introSection);
     if (introSection && r.introDescription) text('p', r.introDescription, introSection);
+    text('#js-apply-gender-chart-title', r.genderChartTitle);
+    text('#js-apply-major-chart-title', r.majorChartTitle);
+    text('#js-apply-admission-chart-title', r.admissionYearChartTitle);
+    text('#js-apply-activities-title', r.activitiesTitle);
+    text('#js-apply-activities-description', r.activitiesDescription);
+    text('#js-apply-departments-title', r.departmentsTitle);
+    text('#js-apply-departments-description', r.departmentsDescription);
+    text('#js-apply-recruit-title', r.recruitTitle);
 
     const activitySection = document.querySelector('#sec-activity');
-    if (activitySection && r.eligibilityTitle) text('h3', r.eligibilityTitle, activitySection);
+    text('#js-apply-eligibility-title', r.eligibilityTitle);
+    text('#js-apply-regular-title', r.regularScheduleTitle);
+    text('#js-apply-irregular-title', r.irregularScheduleTitle);
 
     const feeSection = document.querySelector('#sec-fee');
     if (feeSection && r.feeAmount) {
-      const feeAmountEl = feeSection.querySelector('p');
+      const feeAmountEl = document.getElementById('js-apply-fee-amount');
       if (feeAmountEl) feeAmountEl.textContent = r.feeAmount;
     }
     if (feeSection && r.feeTitle) text('h3', r.feeTitle, feeSection);
-    if (feeSection && r.feeDescriptionHtml) {
-      const feeDesc = feeSection.querySelector('p:nth-of-type(2)');
-      if (feeDesc) feeDesc.innerHTML = r.feeDescriptionHtml;
+    text('#js-apply-fee-description-text', r.feeDescription);
+    text('#js-apply-fee-link-prefix', r.feeLinkPrefix);
+    text('#js-apply-fee-link-suffix', r.feeLinkSuffix);
+    const feeLink = document.getElementById('js-apply-fee-link');
+    if (feeLink) {
+      if (r.feeLinkLabel) feeLink.textContent = r.feeLinkLabel;
+      if (r.feeLinkHref) feeLink.href = r.feeLinkHref;
     }
 
     const contactSection = document.querySelector('#sec-contact');
@@ -641,6 +660,14 @@
     if (phone && r.contactPhone) phone.textContent = r.contactPhone;
     const email = document.getElementById('js-apply-email');
     if (email && r.contactEmail) email.textContent = r.contactEmail;
+    text('#js-apply-email-label', r.contactEmailLabel);
+    const instagramLabel = document.getElementById('js-apply-instagram-label');
+    const instagramHandle = document.getElementById('js-apply-instagram-handle');
+    [instagramLabel, instagramHandle].forEach((link) => {
+      if (link && r.instagramUrl) link.href = r.instagramUrl;
+    });
+    if (instagramLabel && r.instagramLabel) instagramLabel.textContent = r.instagramLabel;
+    if (instagramHandle && r.instagramHandle) instagramHandle.textContent = r.instagramHandle;
 
     const ctaEl = document.querySelector('.apply-cta');
     if (ctaEl) {
@@ -656,6 +683,11 @@
       }
     }
 
+    renderApplyCards(r);
+    renderApplyList('js-apply-eligibility', r.lists?.eligibility);
+    renderApplyList('js-apply-regular-schedule', r.lists?.regularSchedule);
+    renderApplyList('js-apply-irregular-schedule', r.lists?.irregularSchedule);
+    renderApplyCharts(r);
     if (r.timeline) renderApplyTimeline(r);
   }
 
@@ -745,19 +777,26 @@
     };
   }
 
-  function startOfTodayKst() {
-    const nowKstIso = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
-    return parseKstDate(nowKstIso, 'start');
+  function scheduleBoundary(item, type) {
+    const date = type === 'end' ? (item.endDate || item.date) : item.date;
+    const time = type === 'end' ? item.endTime : item.startTime;
+    if (!date) return null;
+    return parseKstDate(time ? `${date} ${time}` : date, type);
   }
 
   function renderHomeSchedule(items) {
     const list = document.getElementById('js-home-schedule');
     if (!list) return;
 
+    const now = new Date();
     const visible = visibleItems(items);
-    const withDates = visible.map((item) => ({ item, date: parseKstDate(item.date, 'start') }));
-    const today = startOfTodayKst();
-    const upcoming = withDates.filter((entry) => !entry.date || !today || entry.date.getTime() >= today.getTime());
+    const withDates = visible.map((item) => ({
+      item,
+      date: scheduleBoundary(item, 'start'),
+      end: scheduleBoundary(item, 'end')
+    }));
+    // 종료 시각이 있으면 행사 종료까지, 없으면 해당 날짜 23:59까지 노출합니다.
+    const upcoming = withDates.filter((entry) => !entry.end || entry.end.getTime() >= now.getTime());
 
     upcoming.sort((a, b) => {
       if (a.date && b.date) return a.date.getTime() - b.date.getTime();
@@ -1097,7 +1136,7 @@
   }
 
   function applyContent(content) {
-    migrateLegacyContent(content);
+    fillOrganizationGeneration(content);
     renderAccessGates(content);
 
     const current = page();

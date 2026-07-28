@@ -97,8 +97,11 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 .text-link span{font-size:14px;transition:transform .3s ease}
 .text-link:hover span{transform:translate(3px,-3px)}
 
-/* Project visual concepts: intentionally person-free generated studies. */
+/* Project visual variants: project artwork, seminar photo, and column artwork. */
 .project-visual{min-width:0}
+.module .figure.project-visual.is-column{align-self:start}
+.module .figure.project-visual.is-column .frame{aspect-ratio:auto}
+.project-visual.is-column .frame img{height:auto;object-fit:contain}
 .project-visual .project-variants{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:18px;padding:1px;background:var(--line)}
 .project-variants button{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:10px;min-width:0;padding:12px 13px;border:0;background:#0b1019;color:var(--muted);font-family:var(--mono);text-align:left;cursor:pointer;transition:background-color .25s ease,color .25s ease}
 .project-variants button span{font-size:9px;letter-spacing:.12em;opacity:.7}
@@ -118,7 +121,8 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 .community__gallery{display:grid;grid-template-columns:1.28fr .72fr;gap:24px;align-items:start;margin-top:clamp(52px,7vw,96px)}
 .community .frame{border-color:var(--line-ink);background:#e4e2da}
 .community .frame::before,.community .frame::after{border-color:rgba(20,20,15,.7)}
-.community .frame img{object-fit:contain;filter:grayscale(1) contrast(1.04)}
+.community .frame img{object-fit:contain;filter:none}
+.community .figure:hover .frame img{filter:none}
 .community__gallery .figure:first-child .frame{aspect-ratio:761/517}
 .community__gallery .figure:last-child .frame{aspect-ratio:1079/889}
 .community .figure figcaption{color:var(--muted-ink)}

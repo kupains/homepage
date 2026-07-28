@@ -1,13 +1,25 @@
 /*
  * PAINS Google Sheets CMS API
  *
- * Use this when you want every content edit to happen in Google Sheets/Drive.
- * 1. Open the Google Sheet.
- * 2. Extensions > Apps Script.
- * 3. Paste this file.
- * 4. Deploy > New deployment > Web app.
- * 5. Set access to "Anyone" or "Anyone with the link".
- * 6. Put the deployed URL into js/content-loader.js for GitHub Pages.
+ * 이 시트가 painsports 홈페이지 전체 콘텐츠의 원본입니다.
+ *
+ * [처음 연결할 때]
+ * 1. 시트 열기 > 확장 프로그램 > Apps Script
+ * 2. 이 파일 전체를 붙여넣기
+ * 3. setupPainsCms() 실행  (주의: 모든 CMS 탭을 시드값으로 덮어씀)
+ * 4. 배포 > 새 배포 > 웹 앱 > 액세스 "모든 사용자"
+ * 5. 배포된 URL을 js/content-loader.js 의 REMOTE_CONTENT_URL 에 넣기
+ *
+ * [이미 쓰고 있는 시트를 최신 구조로 올릴 때]  ← 보통 이 경우
+ * 1. 이 파일 전체를 붙여넣기
+ * 2. upgradeSheetV2() 실행   (기존에 입력한 값은 보존됩니다)
+ * 3. migrateProjectsOrder() 실행  (프로젝트 순서를 역순 방식으로 1회 전환)
+ * 4. 배포 > 배포 관리 > 편집 > 버전 "새 버전" > 배포
+ *    ★ 이 4번을 빠뜨리면 코드를 붙여넣어도 사이트에는 아무것도 반영되지 않습니다.
+ *      (URL은 그대로 유지되므로 content-loader.js는 고칠 필요 없습니다)
+ *
+ * Schedule 탭은 홈페이지의 유일한 일정 원본으로 사용합니다.
+ * Members / Requests / Applies 등 출석·운영 탭은 홈페이지에서 참조하지 않습니다.
  */
 
 var SHEET_ID = '1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo';
@@ -17,21 +29,65 @@ var TAB = {
   readme: 'README',
   copy: 'copy',
   settings: 'settings',
+  homeMedia: '홈_사진',
   homeStoryCards: 'home_story_cards',
-  homeSchedule: 'home_schedule',
+  homeProjectImages: 'home_project_images',
+  schedule: 'Schedule',
   organization: 'organization',
   societies: 'societies',
   events: 'events',
   pageContent: 'page_content',
   recruitment: 'recruitment',
   recruitmentTimeline: 'recruitment_timeline',
+  recruitmentActivities: 'recruitment_activities',
+  recruitmentDepartments: 'recruitment_departments',
+  recruitmentLists: 'recruitment_lists',
+  recruitmentStats: 'recruitment_stats',
   resultPage: 'result_page',
   projects: 'projects',
   notices: 'notices'
 };
 
-// 예전 홈 디자인에서 쓰던 탭 — setupPainsCms 실행 시 자동 삭제합니다.
-var DEPRECATED_TABS = ['home_timeline', 'home_axes', 'home_story_nav'];
+// 지금 홈페이지에서 쓰지 않는 탭 — setupPainsCms / upgradeSheetV2 실행 시 자동 삭제합니다.
+// page_content 는 renderGenericPage() 기능 자체는 코드에 남아있으므로,
+// 나중에 필요하면 page/selector/type/value/visible/order 헤더로 탭만 다시 만들면 됩니다.
+var DEPRECATED_TABS = ['home_timeline', 'home_axes', 'home_story_nav', 'page_content', 'home_schedule'];
+
+// 시트에 남아있는 옛 문구를 현재 사이트 문구로 승격시킵니다.
+// upgradeSheetV2() 가 copy 탭을 다시 쓸 때, 값이 아래 "옛값"과 정확히 일치할 때만 바꿉니다.
+// (직접 새로 쓰신 문구는 절대 건드리지 않습니다.)
+var LEGACY_COPY_VALUES = [
+  {
+    path: 'home.strategy.title',
+    from: 'WE TURN SPORTS INTO KNOWLEDGE.',
+    to: 'WE TURN SPORTS INTO INSIGHT'
+  },
+  {
+    path: 'home.strategy.eyebrow',
+    from: 'PAINS Data Archive · Since 2020',
+    to: 'Providing Academic INsights for Sport'
+  },
+  {
+    path: 'home.strategy.description',
+    from: '경기에서 시작된 질문을 데이터로 검증하고, 동료와 나눈 분석을 하나의 프로젝트로 남깁니다.',
+    to: '스포츠에서 질문을 찾아내, 새로운 의미를 발견합니다.'
+  },
+  {
+    path: 'home.hero.meta.1',
+    from: 'SPORTS ANALYTICS COLLECTIVE',
+    to: 'SPORTS STATISTICS'
+  },
+  {
+    path: 'about.hero.title',
+    from: 'PAINS 소개',
+    to: 'We Are\nPAINS'
+  },
+  {
+    path: 'about.whoWeAre.mobileTitle',
+    from: 'WE ARE PAINS',
+    to: '스포츠를 데이터로 탐구합니다.'
+  }
+];
 
 function doGet() {
   var cache = CacheService.getScriptCache();
@@ -76,7 +132,13 @@ function baseContent() {
     pdfProxyUrl: PDF_PROXY_URL,
     study: {},
     pages: {},
-    recruitment: { timeline: [] },
+    recruitment: {
+      timeline: [],
+      activities: [],
+      departments: [],
+      lists: { eligibility: [], regularSchedule: [], irregularSchedule: [] },
+      stats: { gender: [], major: [], admissionYear: [] }
+    },
     resultPage: {}
   };
 }
@@ -164,9 +226,47 @@ function bool(value, fallback) {
   return ['false', '0', 'no', 'n', 'hidden'].indexOf(v) === -1;
 }
 
+// 빈 칸은 fallback 으로 넘깁니다.
+// (Number('') 은 0 이라 그냥 쓰면 "비워두면 기본값" 규칙이 깨집니다.)
 function num(value, fallback) {
-  var n = Number(value);
+  var raw = String(value === null || value === undefined ? '' : value).trim();
+  if (!raw) return fallback;
+  var n = Number(raw);
   return isFinite(n) ? n : fallback;
+}
+
+// 날짜 셀을 어떤 형식으로 입력하든 yyyy-MM-dd (한국 시간) 로 통일해서 내보냅니다.
+// "2026-03-16" / "2026. 3. 16" / 날짜 서식 셀 / Date 객체 모두 받습니다.
+// 해석할 수 없으면 입력값을 그대로 돌려주므로 기존 데이터가 깨지지 않습니다.
+function toIsoDate(value) {
+  var raw = String(value === null || value === undefined ? '' : value).trim();
+  if (!raw) return '';
+  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) return raw;
+
+  var ymd = raw.match(/^(\d{4})\s*[.\-\/년]\s*(\d{1,2})\s*[.\-\/월]\s*(\d{1,2})/);
+  if (ymd) {
+    return ymd[1] + '-' + ('0' + ymd[2]).slice(-2) + '-' + ('0' + ymd[3]).slice(-2);
+  }
+
+  var parsed = new Date(raw);
+  if (!isNaN(parsed.getTime())) {
+    return Utilities.formatDate(parsed, 'Asia/Seoul', 'yyyy-MM-dd');
+  }
+
+  return raw;
+}
+
+function normalizeTime(value) {
+  var raw = String(value === null || value === undefined ? '' : value).trim();
+  var match = raw.match(/^(\d{1,2}):(\d{2})/);
+  if (!match) return '';
+  return ('0' + match[1]).slice(-2) + ':' + match[2];
+}
+
+// "11기" / "11" / "11th" 에서 앞의 숫자만 뽑습니다. 없으면 0.
+function generationNumber(value) {
+  var match = String(value || '').match(/\d+/);
+  return match ? Number(match[0]) : 0;
 }
 
 function splitLines(value) {
@@ -176,11 +276,11 @@ function splitLines(value) {
     .filter(Boolean);
 }
 
+// 커뮤니티 카드는 사진 2장을 나란히 씁니다(홈 04 섹션의 .community__gallery).
 function imageItems(row) {
   return [
     { src: row.image, alt: row.alt },
-    { src: row.image2 || row.secondaryImage, alt: row.alt2 || row.secondaryAlt },
-    { src: row.image3, alt: row.alt3 }
+    { src: row.image2 || row.secondaryImage, alt: row.alt2 || row.secondaryAlt }
   ].filter(function (item) { return item.src; });
 }
 
@@ -212,7 +312,10 @@ function archiveProjects(projectRows) {
     .filter(function (project) {
       return project.title || project.driveUrl || project.driveId || project.pdfUrl || project.file;
     })
-    .sort(function (a, b) { return a.order - b.order; })
+    // 역순 정렬: order 가 큰 것이 사이트 맨 위.
+    // order 열을 비워두면 위 map 의 index + 1 (= 행 위치)이 들어가므로,
+    // projects 탭 맨 아래에 행을 추가하기만 하면 사이트 최상단에 뜹니다.
+    .sort(function (a, b) { return b.order - a.order; })
     .map(function (project) {
       delete project.visible;
       delete project.order;
@@ -224,7 +327,7 @@ function archiveNotices(noticeRows) {
   return noticeRows.map(function (row, index) {
     return {
       title: firstField(row, ['title', 'noticeTitle', 'notice_title', 'name']),
-      date: firstField(row, ['date', 'publishedAt', 'published_at']),
+      date: toIsoDate(firstField(row, ['date', 'publishedAt', 'published_at'])),
       generation: firstField(row, ['generation', 'gen']),
       department: firstField(row, ['department', 'dept', 'team']),
       driveUrl: firstField(row, ['driveUrl', 'driveURL', 'drive_url', 'driveLink', 'drive_link', 'googleDriveUrl', 'google_drive_url']),
@@ -287,6 +390,8 @@ function buildContent() {
   });
   content.pdfProxyUrl = content.settings.pdfProxyUrl || content.pdfProxyUrl || PDF_PROXY_URL;
 
+  // 홈 02 ABOUT / 03 PROJECTS / 04 COMMUNITY 카드.
+  // community 카드만 사진 2장(모자이크)을 씁니다.
   content.home.story.cards = rows(TAB.homeStoryCards).filter(function (row) {
     return row.id || row.titleLines || row.title || row.description;
   }).map(function (row) {
@@ -297,32 +402,68 @@ function buildContent() {
       description: row.description,
       image: row.image,
       alt: row.alt,
-      images: row.imagesMode === 'mosaic' || row.images_mode === 'mosaic' || row.id === 'community'
-        ? imageItems(row)
-        : undefined,
+      images: row.id === 'community' ? imageItems(row) : undefined,
       caption: (row.captionFig || row.captionLabel)
         ? { fig: row.captionFig, label: row.captionLabel } : undefined,
-      caption2: (row.captionFig2 || row.captionLabel2)
-        ? { fig: row.captionFig2, label: row.captionLabel2 } : undefined,
       primaryCta: row.primaryLabel ? { label: row.primaryLabel, href: row.primaryHref || '#' } : undefined,
-      secondaryCta: row.secondaryLabel ? { label: row.secondaryLabel, href: row.secondaryHref || '#' } : undefined,
       visible: bool(row.visible),
       order: num(row.order, 999)
     };
   });
 
-  content.home.schedule = rows(TAB.homeSchedule).filter(function (row) {
-    return row.date || row.title || row.eventName || row.event_name;
+  // 홈 03 PROJECTS 사진 아래 시안 선택 버튼. visible 이 전부 FALSE 면 버튼 묶음이 통째로 숨습니다.
+  content.home.projectVariants = rows(TAB.homeProjectImages).filter(function (row) {
+    return row.label || row.image;
   }).map(function (row, index) {
     return {
-      date: row.date,
-      title: row.title || row.eventName || row.event_name,
-      tag: row.tag || row.category || row.badge,
-      dateLabel: row.dateLabel || row.date_label,
-      weekday: row.weekday,
+      label: row.label,
+      image: row.image,
+      alt: row.alt,
       visible: bool(row.visible),
       order: num(row.order, index + 1)
     };
+  });
+
+  // Schedule이 홈페이지 일정의 유일한 원본입니다.
+  // 기존 운영 시트의 A:G 열을 그대로 읽으므로 별도 복사/동기화가 필요 없습니다.
+  content.home.schedule = rows(TAB.schedule).filter(function (row) {
+    return firstField(row, ['a', 'title', '일정명', 'eventName', 'event_name'])
+      && firstField(row, ['B (start date)', 'startDate', 'start_date', '시작일', 'date']);
+  }).map(function (row, index) {
+    var date = firstField(row, ['B (start date)', 'startDate', 'start_date', '시작일', 'date']);
+    var startTime = firstField(row, ['C (start time)', 'startTime', 'start_time', '시작시간', 'time']);
+    var endDate = firstField(row, ['D (finish date)', 'endDate', 'end_date', '종료일']) || date;
+    var endTime = firstField(row, ['E (finish time)', 'endTime', 'end_time', '종료시간']);
+    return {
+      date: toIsoDate(date),
+      startTime: normalizeTime(startTime),
+      endDate: toIsoDate(endDate),
+      endTime: normalizeTime(endTime),
+      title: firstField(row, ['a', 'title', '일정명', 'eventName', 'event_name']),
+      tag: firstField(row, ['G (type)', 'type', '유형', 'tag', 'category', 'badge']),
+      location: firstField(row, ['F (location)', 'location', '장소']),
+      visible: bool(firstField(row, ['H (homepage)', 'homepage', '홈 공개', 'visible']), true),
+      order: num(row.order, index + 1)
+    };
+  });
+
+  // 홈 사진은 이 한 탭에서 URL만 교체하면 됩니다.
+  rows(TAB.homeMedia).forEach(function (row) {
+    var key = firstField(row, ['key', '키']);
+    var imageUrl = firstField(row, ['imageUrl', 'image', '사진 URL', '사진주소']);
+    var alt = firstField(row, ['alt', '사진 설명']);
+    if (!key || !imageUrl) return;
+
+    if (key === 'hero') content.home.hero.image = imageUrl;
+    if (key === 'about') setStoryImage_(content, 'about', imageUrl, alt, 0);
+    if (key === 'projects') {
+      setStoryImage_(content, 'projects', imageUrl, alt, 0);
+      setProjectVariantImage_(content, 'PROJECT', imageUrl, alt);
+    }
+    if (key === 'seminar') setProjectVariantImage_(content, 'SEMINAR', imageUrl, alt);
+    if (key === 'column') setProjectVariantImage_(content, 'COLUMN', imageUrl, alt);
+    if (key === 'community1') setStoryImage_(content, 'community', imageUrl, alt, 0);
+    if (key === 'community2') setStoryImage_(content, 'community', imageUrl, alt, 1);
   });
 
   content.organization.members = rows(TAB.organization).filter(function (row) {
@@ -433,19 +574,76 @@ function buildContent() {
     content.recruitment.timeline = recruitTimeline.map(function (row) {
       return {
         step: row.step,
-        type: row.type || 'dual',
-        track1Step: row.track1Step || '',
-        track2Step: row.track2Step || '',
-        track1Date: row.track1Date || '',
-        track1Note: row.track1Note || '',
-        track2Date: row.track2Date || '',
-        track2Note: row.track2Note || '',
         date: row.date || '',
         note: row.note || '',
         highlight: bool(row.highlight, false),
+        visible: bool(row.visible),
         order: num(row.order, 999)
       };
     }).sort(function (a, b) { return a.order - b.order; });
+  }
+
+  var recruitActivities = rows(TAB.recruitmentActivities);
+  if (recruitActivities.length) {
+    content.recruitment.activities = recruitActivities.map(function (row) {
+      return {
+        id: row.id || '',
+        title: row.title || '',
+        description: row.description || '',
+        image: row.image || '',
+        alt: row.alt || '',
+        visible: bool(row.visible),
+        order: num(row.order, 999)
+      };
+    }).sort(function (a, b) { return a.order - b.order; });
+  }
+
+  var recruitDepartments = rows(TAB.recruitmentDepartments);
+  if (recruitDepartments.length) {
+    content.recruitment.departments = recruitDepartments.map(function (row) {
+      return {
+        title: row.title || '',
+        description: row.description || '',
+        visible: bool(row.visible),
+        order: num(row.order, 999)
+      };
+    }).sort(function (a, b) { return a.order - b.order; });
+  }
+
+  var recruitLists = rows(TAB.recruitmentLists);
+  if (recruitLists.length) {
+    content.recruitment.lists = { eligibility: [], regularSchedule: [], irregularSchedule: [] };
+    recruitLists.forEach(function (row) {
+      var group = row.group || '';
+      if (!content.recruitment.lists[group]) content.recruitment.lists[group] = [];
+      content.recruitment.lists[group].push({
+        text: row.text || '',
+        visible: bool(row.visible),
+        order: num(row.order, 999)
+      });
+    });
+    Object.keys(content.recruitment.lists).forEach(function (group) {
+      content.recruitment.lists[group].sort(function (a, b) { return a.order - b.order; });
+    });
+  }
+
+  var recruitStats = rows(TAB.recruitmentStats);
+  if (recruitStats.length) {
+    content.recruitment.stats = { gender: [], major: [], admissionYear: [] };
+    recruitStats.forEach(function (row) {
+      var group = row.group || '';
+      if (!content.recruitment.stats[group]) content.recruitment.stats[group] = [];
+      content.recruitment.stats[group].push({
+        label: row.label || '',
+        value: num(row.value, 0),
+        color: row.color || '',
+        visible: bool(row.visible),
+        order: num(row.order, 999)
+      });
+    });
+    Object.keys(content.recruitment.stats).forEach(function (group) {
+      content.recruitment.stats[group].sort(function (a, b) { return a.order - b.order; });
+    });
   }
 
   var resultData = keyRows(TAB.resultPage);
@@ -463,16 +661,20 @@ function setupPainsCms() {
   var ss = spreadsheet();
 
   writeTab(TAB.readme, readmeRows());
-  writeTab(TAB.copy, copyRows());
+  writeCopyTab_(copyRows());
   writeTab(TAB.settings, settingsRows());
+  writeTab(TAB.homeMedia, homeMediaRows());
   writeTab(TAB.homeStoryCards, homeStoryCardRows());
-  writeTab(TAB.homeSchedule, homeScheduleRows());
+  writeTab(TAB.homeProjectImages, homeProjectImageRows());
   writeTab(TAB.organization, organizationRows());
   writeTab(TAB.societies, societyRows());
   writeTab(TAB.events, eventRows());
-  writeTab(TAB.pageContent, pageContentRows());
   writeTab(TAB.recruitment, recruitmentRows());
   writeTab(TAB.recruitmentTimeline, recruitmentTimelineRows());
+  writeTab(TAB.recruitmentActivities, recruitmentActivityRows());
+  writeTab(TAB.recruitmentDepartments, recruitmentDepartmentRows());
+  writeTab(TAB.recruitmentLists, recruitmentListRows());
+  writeTab(TAB.recruitmentStats, recruitmentStatRows());
   writeTab(TAB.resultPage, resultPageRows());
   writeTab(TAB.projects, projectRows());
   writeTab(TAB.notices, noticeRows());
@@ -483,8 +685,8 @@ function setupPainsCms() {
   return 'PAINS_SITE_CMS setup complete';
 }
 
-// 홈페이지 관리와 무관한 예전 탭만 정리합니다.
-// (MEMBER/REQUEST/SCHEDULE 등 운영 탭은 목록에 없으므로 절대 삭제되지 않습니다.)
+// 홈페이지에서 더 이상 쓰지 않는 중복 탭만 정리합니다.
+// Schedule은 홈페이지의 일정 원본이므로 절대 삭제하지 않습니다.
 function removeDeprecatedTabs(ss) {
   DEPRECATED_TABS.forEach(function (name) {
     var sheet = ss.getSheetByName(name);
@@ -493,51 +695,245 @@ function removeDeprecatedTabs(ss) {
 }
 
 /*
- * ⭐️ 권장: 기존 데이터를 지우지 않고 홈 CMS만 안전하게 최신 구조로 올립니다.
- *   - 예전 홈 탭(home_timeline/home_axes/home_story_nav) 삭제
- *   - home_schedule 탭 생성(없을 때만)
- *   - home_story_cards 에 캡션 열 보강(기존 내용 유지)
- *   - copy 탭에 새로 생긴 [홈] 항목만 추가(기존 문구는 그대로)
- *   - organization/societies/recruitment 등 다른 탭은 건드리지 않음
+ * ⭐️ 이미 쓰고 있는 시트를 최신 구조로 올립니다. 입력해둔 값은 보존됩니다.
+ *
+ *   - copy 탭을 4열(섹션 / path / value / 어디에 보이나)로 재구성하고
+ *     행 순서를 실제 사이트 스크롤 순서와 맞춥니다.
+ *   - 홈페이지 어디에도 표시되지 않는 항목을 정리합니다.
+ *   - 옛 문구가 그대로 남아있으면 현재 사이트 문구로 승격합니다.
+ *   - home_project_images 탭을 만들고, home_story_cards 의 안 쓰는 열을 정리합니다.
+ *   - 안 쓰는 탭(home_timeline / home_axes / home_story_nav / page_content)을 삭제합니다.
+ *   - organization / societies / Schedule / projects / notices / recruitment 등
+ *     실제 데이터 탭은 건드리지 않습니다.
+ *
+ * 실행 전 상태는 _backup_* 탭으로 자동 저장되므로 언제든 되돌릴 수 있습니다.
  * 처음부터 전체를 시드값으로 새로 깔려면 setupPainsCms() 를 쓰세요(주의: 덮어씀).
  */
-function upgradeHomeCms() {
+function upgradeSheetV2() {
   var ss = spreadsheet();
-  var log = [];
+  var stamp = Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyyMMdd-HHmm');
+  var log = ['── PAINS 시트 개편 결과 ──'];
+
+  log = log.concat(rebuildCopyTab_(ss, stamp));
+  log = log.concat(tidyStoryCards_(ss));
+  log = log.concat(ensureProjectImagesTab_(ss));
+  if (!ss.getSheetByName(TAB.homeMedia)) {
+    writeTab(TAB.homeMedia, homeMediaRows());
+    log.push('홈_사진 탭 생성 완료');
+  }
 
   DEPRECATED_TABS.forEach(function (name) {
     var sh = ss.getSheetByName(name);
-    if (sh) { ss.deleteSheet(sh); log.push('삭제: ' + name); }
+    if (sh) {
+      backupTab_(ss, name, stamp);
+      ss.deleteSheet(sh);
+      log.push('탭 삭제: ' + name + ' (백업됨)');
+    }
   });
 
-  if (!ss.getSheetByName(TAB.homeSchedule)) {
-    writeTab(TAB.homeSchedule, homeScheduleRows());
-    log.push('생성: ' + TAB.homeSchedule);
-  }
-
-  var cardsSheet = ss.getSheetByName(TAB.homeStoryCards);
-  if (!cardsSheet) {
-    writeTab(TAB.homeStoryCards, homeStoryCardRows());
-    log.push('생성: ' + TAB.homeStoryCards);
-  } else {
-    var addedCols = ensureColumns(cardsSheet, ['captionFig', 'captionLabel', 'captionFig2', 'captionLabel2']);
-    log.push('보강: ' + TAB.homeStoryCards + ' 캡션 열 ' + addedCols + '개');
-  }
-
-  var copySheet = ss.getSheetByName(TAB.copy);
-  if (!copySheet) {
-    writeTab(TAB.copy, copyRows());
-    log.push('생성: ' + TAB.copy);
-  } else {
-    var addedRows = appendMissingKeyedRows(copySheet, copyRows(), 0);
-    log.push('copy 신규 항목 추가: ' + addedRows + '개');
-  }
-
   writeTab(TAB.readme, readmeRows());
-  log.push('갱신: ' + TAB.readme);
+  log.push('README 갱신 완료');
+
+  log.push('');
+  log.push('다음 단계: migrateProjectsOrder() 실행 → 배포 > 배포 관리 > 편집 > 새 버전 > 배포');
 
   SpreadsheetApp.flush();
-  return 'PAINS 홈 CMS 업그레이드 완료\n' + log.join('\n');
+  return log.join('\n');
+}
+
+/*
+ * 프로젝트 순서를 "맨 아래 추가 → 사이트 맨 위 노출" 방식으로 1회 전환합니다.
+ *
+ *   전: 최신 프로젝트가 시트 맨 위  (새 프로젝트를 넣으려면 맨 위에 행 삽입)
+ *   후: 오래된 프로젝트가 시트 맨 위 (새 프로젝트는 맨 아래에 그냥 추가)
+ *
+ * order 열은 비워둡니다. 비어 있으면 행 위치가 곧 순번이 되고,
+ * 사이트는 이것을 역순으로 뒤집어 보여주므로 맨 아래 행이 최상단에 뜹니다.
+ *
+ * 두 번 실행해도 안전합니다. 첫 행과 마지막 행의 기수를 비교해
+ * 이미 전환된 상태면 아무것도 하지 않습니다.
+ * 기수가 전부 같아서 판단이 안 되는 경우에만 migrateProjectsOrder(true) 로 강제 실행하세요.
+ */
+function migrateProjectsOrder(force) {
+  var ss = spreadsheet();
+  var sheet = ss.getSheetByName(TAB.projects);
+  if (!sheet) return 'projects 탭이 없습니다.';
+
+  var lastRow = sheet.getLastRow();
+  var lastCol = sheet.getLastColumn();
+  if (lastRow < 3) return 'projects 탭에 뒤집을 데이터가 없습니다.';
+
+  var headers = sheet.getRange(1, 1, 1, lastCol).getDisplayValues()[0]
+    .map(function (v) { return String(v || '').trim(); });
+  var genIdx = headerIndex_(headers, ['generation', 'gen']);
+  var orderIdx = headerIndex_(headers, ['order', 'sort']);
+
+  var data = sheet.getRange(2, 1, lastRow - 1, lastCol).getValues()
+    .filter(function (row) {
+      return row.some(function (cell) { return String(cell === null ? '' : cell).trim() !== ''; });
+    });
+  if (data.length < 2) return 'projects 탭에 뒤집을 데이터가 없습니다.';
+
+  if (!force && genIdx !== -1) {
+    var firstGen = generationNumber(data[0][genIdx]);
+    var lastGen = generationNumber(data[data.length - 1][genIdx]);
+    if (firstGen && lastGen && firstGen <= lastGen) {
+      return '이미 전환된 상태입니다(맨 위 ' + firstGen + '기 → 맨 아래 ' + lastGen + '기).\n'
+        + '아무것도 바꾸지 않았습니다. 강제로 다시 뒤집으려면 migrateProjectsOrder(true).';
+    }
+  }
+
+  backupTab_(ss, TAB.projects, Utilities.formatDate(new Date(), 'Asia/Seoul', 'yyyyMMdd-HHmm'));
+
+  data.reverse();
+  if (orderIdx !== -1) {
+    data.forEach(function (row) { row[orderIdx] = ''; });
+  }
+
+  sheet.getRange(2, 1, lastRow - 1, lastCol).clearContent();
+  sheet.getRange(2, 1, data.length, lastCol).setValues(data);
+  SpreadsheetApp.flush();
+
+  var topLabel = genIdx === -1 ? '' : ' (맨 위 ' + generationNumber(data[0][genIdx]) + '기 → 맨 아래 '
+    + generationNumber(data[data.length - 1][genIdx]) + '기)';
+
+  return '프로젝트 ' + data.length + '건 순서 전환 완료' + topLabel + '\n'
+    + 'order 열을 비웠습니다. 이제 맨 아래에 행을 추가하면 사이트 최상단에 표시됩니다.\n'
+    + '★ 배포 > 배포 관리 > 편집 > 새 버전 > 배포 를 해야 사이트에 반영됩니다.';
+}
+
+// ── upgradeSheetV2 내부 도우미 ──────────────────────────────────────────────
+
+// 헤더 이름 후보 중 먼저 발견되는 열 번호(0-based). 없으면 -1.
+function headerIndex_(headers, names) {
+  for (var i = 0; i < names.length; i += 1) {
+    var idx = headers.indexOf(names[i]);
+    if (idx !== -1) return idx;
+  }
+  return -1;
+}
+
+// 탭을 _backup_<이름>_<시각> 으로 복제해 둡니다.
+function backupTab_(ss, name, stamp) {
+  var sheet = ss.getSheetByName(name);
+  if (!sheet) return '';
+  var backupName = '_backup_' + name + '_' + stamp;
+  try {
+    if (ss.getSheetByName(backupName)) ss.deleteSheet(ss.getSheetByName(backupName));
+    sheet.copyTo(ss).setName(backupName);
+    return backupName;
+  } catch (e) {
+    return '';
+  }
+}
+
+// copy 탭을 새 4열 구조로 다시 씁니다. 기존 value 는 path 기준으로 이어받습니다.
+function rebuildCopyTab_(ss, stamp) {
+  var log = [];
+  var seed = copyRows();
+  var sheet = ss.getSheetByName(TAB.copy);
+
+  if (!sheet) {
+    writeCopyTab_(seed);
+    log.push('copy 탭 생성 (' + (seed.length - 1) + '개 항목)');
+    return log;
+  }
+
+  var lastRow = sheet.getLastRow();
+  var lastCol = sheet.getLastColumn();
+  var existing = {};
+
+  if (lastRow > 1) {
+    var values = sheet.getRange(1, 1, lastRow, lastCol).getDisplayValues();
+    var headers = values[0].map(function (v) { return String(v || '').trim(); });
+    var pathIdx = headerIndex_(headers, ['path']);
+    var valueIdx = headerIndex_(headers, ['value']);
+
+    // 헤더가 없는 옛 시트는 1열=path, 2열=value 로 간주합니다.
+    if (pathIdx === -1) { pathIdx = 0; valueIdx = 1; }
+    if (valueIdx === -1) valueIdx = pathIdx + 1;
+
+    values.slice(1).forEach(function (row) {
+      var path = String(row[pathIdx] || '').trim();
+      if (!path || path === 'path') return;
+      existing[path] = String(row[valueIdx] === undefined ? '' : row[valueIdx]);
+    });
+  }
+
+  // 옛 문구 → 현재 사이트 문구 승격
+  var promoted = [];
+  LEGACY_COPY_VALUES.forEach(function (rule) {
+    if (existing[rule.path] === rule.from) {
+      existing[rule.path] = rule.to;
+      promoted.push(rule.path);
+    }
+  });
+
+  // 시드 순서대로 새 표를 만들되, 값은 기존 것을 우선합니다.
+  var kept = 0;
+  var next = seed.map(function (row, index) {
+    if (index === 0) return row.slice();
+    var path = row[1];
+    var value = Object.prototype.hasOwnProperty.call(existing, path) ? existing[path] : row[2];
+    if (Object.prototype.hasOwnProperty.call(existing, path)) kept += 1;
+    return [row[0], path, value, row[3]];
+  });
+
+  var seedPaths = {};
+  seed.slice(1).forEach(function (row) { seedPaths[row[1]] = true; });
+  var dropped = Object.keys(existing).filter(function (path) { return !seedPaths[path]; });
+
+  var backupName = backupTab_(ss, TAB.copy, stamp);
+  writeCopyTab_(next);
+
+  log.push('copy 탭 재구성: ' + (next.length - 1) + '개 항목 (기존 값 ' + kept + '개 그대로 유지)');
+  if (backupName) log.push('  백업: ' + backupName);
+  if (promoted.length) {
+    log.push('  옛 문구를 현재 사이트 문구로 승격 (' + promoted.length + '개):');
+    promoted.forEach(function (path) { log.push('    · ' + path); });
+  }
+  if (dropped.length) {
+    log.push('  삭제됨 — 홈페이지 어디에도 표시되지 않던 항목 (' + dropped.length + '개):');
+    dropped.forEach(function (path) { log.push('    · ' + path); });
+  }
+  return log;
+}
+
+// home_story_cards 에서 지금 홈 마크업이 쓰지 않는 열을 제거합니다.
+function tidyStoryCards_(ss) {
+  var sheet = ss.getSheetByName(TAB.homeStoryCards);
+  if (!sheet) {
+    writeTab(TAB.homeStoryCards, homeStoryCardRows());
+    return ['home_story_cards 탭 생성'];
+  }
+
+  var unused = ['image3', 'alt3', 'captionFig2', 'captionLabel2', 'secondaryLabel', 'secondaryHref', 'imagesMode', 'images_mode'];
+  var removed = [];
+
+  // 뒤에서부터 지워야 열 번호가 밀리지 않습니다.
+  for (var col = sheet.getLastColumn(); col >= 1; col -= 1) {
+    var header = String(sheet.getRange(1, col).getDisplayValue() || '').trim();
+    if (unused.indexOf(header) !== -1) {
+      sheet.deleteColumn(col);
+      removed.push(header);
+    }
+  }
+
+  var added = ensureColumns(sheet, ['captionFig', 'captionLabel']);
+  var log = [];
+  log.push('home_story_cards 정리: 안 쓰는 열 ' + removed.length + '개 삭제'
+    + (removed.length ? ' (' + removed.reverse().join(', ') + ')' : ''));
+  if (added) log.push('  캡션 열 ' + added + '개 보강');
+  return log;
+}
+
+// copy 탭에 흩어져 있던 home.projectVariants.* 15행을 대체하는 전용 탭.
+function ensureProjectImagesTab_(ss) {
+  if (ss.getSheetByName(TAB.homeProjectImages)) {
+    return ['home_project_images 탭 이미 있음 — 건드리지 않음'];
+  }
+  writeTab(TAB.homeProjectImages, homeProjectImageRows());
+  return ['home_project_images 탭 생성 (홈 03 PROJECTS 사진 시안 3개)'];
 }
 
 // 헤더 행에 없는 열 이름만 맨 뒤에 추가합니다(데이터 유지). 추가한 개수 반환.
@@ -558,21 +954,43 @@ function ensureColumns(sheet, colNames) {
   return added;
 }
 
-// seedRows(0=헤더) 중 keyIndex 열 값이 시트에 아직 없는 행만 아래에 덧붙입니다. 추가한 개수 반환.
-function appendMissingKeyedRows(sheet, seedRows, keyIndex) {
-  var header = seedRows[0];
-  var dataRows = seedRows.slice(1);
-  var lastRow = sheet.getLastRow();
-  var existing = lastRow > 1
-    ? sheet.getRange(2, keyIndex + 1, lastRow - 1, 1).getDisplayValues()
-        .map(function (r) { return String(r[0] || '').trim(); })
-    : [];
-  var toAdd = dataRows.filter(function (row) {
-    return existing.indexOf(String(row[keyIndex] || '').trim()) === -1;
+// copy 탭 전용 쓰기: 섹션별로 배경색을 번갈아 칠하고 1행에 필터를 겁니다.
+// 어느 섹션을 고치는 중인지 눈으로 바로 구분되게 하는 것이 목적입니다.
+function writeCopyTab_(values) {
+  writeTab(TAB.copy, values);
+
+  var sheet = spreadsheet().getSheetByName(TAB.copy);
+  if (!sheet || values.length < 2) return;
+
+  var shades = ['#ffffff', '#f3f4f6'];
+  var shadeIndex = 0;
+  var previousSection = null;
+
+  values.slice(1).forEach(function (row, index) {
+    var section = String(row[0] || '');
+    if (previousSection !== null && section !== previousSection) {
+      shadeIndex = (shadeIndex + 1) % shades.length;
+    }
+    previousSection = section;
+    sheet.getRange(index + 2, 1, 1, values[0].length).setBackground(shades[shadeIndex]);
   });
-  if (!toAdd.length) return 0;
-  sheet.getRange(lastRow + 1, 1, toAdd.length, header.length).setValues(toAdd);
-  return toAdd.length;
+
+  // 섹션·설명 열은 참고용이라 흐리게, path 는 고정폭으로.
+  sheet.getRange(2, 1, values.length - 1, 1).setFontColor('#6b7280').setFontWeight('bold');
+  sheet.getRange(2, 2, values.length - 1, 1).setFontFamily('Roboto Mono').setFontColor('#6b7280');
+  sheet.getRange(2, 4, values.length - 1, 1).setFontColor('#9ca3af');
+
+  sheet.setColumnWidth(1, 150);
+  sheet.setColumnWidth(2, 230);
+  sheet.setColumnWidth(3, 460);
+  sheet.setColumnWidth(4, 300);
+
+  try {
+    if (sheet.getFilter()) sheet.getFilter().remove();
+    sheet.getRange(1, 1, values.length, values[0].length).createFilter();
+  } catch (e) {
+    // 필터는 있으면 좋은 정도라 실패해도 넘어갑니다.
+  }
 }
 
 function writeTab(name, values) {
@@ -595,105 +1013,121 @@ function writeTab(name, values) {
 
 function readmeRows() {
   return [
-    ['항목', '내용'],
-    ['시트 이름', 'Homepage Editor (이 시트가 사이트 전체 콘텐츠 원본)'],
-    ['홈 화면 문구', 'copy 탭에서 memo가 [홈] 으로 시작하는 행의 value를 수정 → 첫 화면 라벨·정체성·지표·스케줄 제목·하단 링크까지 모두 반영됩니다.'],
-    ['홈 소개/프로젝트/커뮤니티', 'home_story_cards 탭에서 제목(titleLines)·설명(description)·사진(image, image2)·사진 캡션(captionFig/captionLabel)을 수정합니다.'],
-    ['홈 스케줄', 'home_schedule 탭에서 date(YYYY-MM-DD)·title(행사명)·tag(필수/정기/행사 배지)를 관리합니다. 오늘 이후 일정 4개가 날짜순으로 표시되며, 부족한 칸은 TBD로 표시됩니다.'],
-    ['사진 관리', 'Google Drive에 업로드 > "링크가 있는 모든 사용자 보기" > 공유 링크를 image 셀에 붙입니다.'],
-    ['줄바꿈', 'titleLines는 | 로 줄을 나눕니다. 일반 설명문은 셀 안에서 줄바꿈해도 됩니다.'],
-    ['숨기기', 'visible 값을 FALSE로 바꾸면 사이트에서 숨깁니다. 다시 TRUE로 바꾸면 보입니다.'],
-    ['운영용 탭', 'MEMBER / REQUEST / SCHEDULE 등 출석·결석계·운영 탭은 CMS와 무관하며 setupPainsCms 실행 시에도 삭제·수정되지 않습니다.'],
-    ['연결', '확장 프로그램 > Apps Script에 content-api.gs 전체를 붙이고 setupPainsCms 실행 후 Web app으로 배포합니다.'],
-    ['GitHub Pages', '배포된 Web app URL을 js/content-loader.js의 REMOTE_CONTENT_URL에 넣으면 이 시트가 사이트 콘텐츠 원본이 됩니다.']
+    ['무엇을 고치고 싶은지', '어느 탭 / 어느 열', '메모'],
+
+    ['── 홈 화면 ──', '', ''],
+    ['첫 화면 배경 사진, 로고 아래 라벨', 'copy 탭 · 섹션 "홈 · 첫 화면"', ''],
+    ['01 정체성 제목·설명·숫자 지표', 'copy 탭 · 섹션 "홈 01 정체성"', ''],
+    ['02 ABOUT / 03 PROJECTS / 04 COMMUNITY 카드', 'home_story_cards 탭', '제목(titleLines)·설명·사진(image, community만 image2)·캡션(captionFig/captionLabel)'],
+    ['03 PROJECTS 사진 시안 버튼', 'home_project_images 탭', 'visible 이 전부 FALSE 면 버튼이 통째로 숨습니다(현재 상태)'],
+    ['05 다가오는 일정 목록', 'Schedule 탭', '운영 일정과 자동 연동됩니다. 현재 시각에 이미 끝난 일정은 제외하고 다음 4개를 표시합니다'],
+    ['05 섹션 제목·설명', 'copy 탭 · 섹션 "홈 05 일정"', ''],
+    ['맨 아래 링크 3개', 'copy 탭 · 섹션 "홈 06 아카이브"', ''],
+
+    ['── 다른 페이지 ──', '', ''],
+    ['소개 페이지 글·사진', 'copy 탭 · 섹션 "소개 · …"', ''],
+    ['운영진 조직도', 'organization 탭', '기수 제목은 copy 탭의 organization.generation 하나만 고치면 됩니다'],
+    ['소모임 목록', 'societies 탭', ''],
+    ['이벤트 목록', 'events 탭', ''],
+    ['프로젝트 아카이브', 'projects 탭', '★ 오래된 것이 위, 최신이 아래. 새 프로젝트는 맨 아래에 추가 (order 는 비워둘 것)'],
+    ['공지사항', 'notices 탭', '날짜는 아무 형식으로 넣어도 됩니다. important=TRUE 면 상단 고정'],
+    ['모집 페이지 기본 문구', 'recruitment 탭', '상단·소개·회비·문의·지원 버튼 문구'],
+    ['모집 단일 일정', 'recruitment_timeline 탭', '1차/2차 구분 없이 한 파이프라인'],
+    ['모집 활동 사진', 'recruitment_activities 탭', '제목·설명·사진 주소·대체 문구'],
+    ['모집 부서 소개', 'recruitment_departments 탭', '부서명·설명'],
+    ['지원 자격·활동 일정', 'recruitment_lists 탭', 'group 값은 eligibility / regularSchedule / irregularSchedule'],
+    ['부원 분포 그래프', 'recruitment_stats 탭', 'group 값은 gender / major / admissionYear. 값과 색상 수정 가능'],
+    ['합격 조회 페이지 문구', 'result_page 탭', ''],
+    ['지원·결과 조회 기간 열고 닫기', 'settings 탭', 'applyEnabled / resultEnabled 를 TRUE·FALSE·AUTO 로'],
+
+    ['── 공통 규칙 ──', '', ''],
+    ['홈 사진 넣는 법', '홈_사진 탭 · imageUrl 열', 'Drive에 올리고 "링크가 있는 모든 사용자" 로 공유 → 링크를 붙여넣기'],
+    ['줄바꿈', '', 'titleLines 는 | 로 줄을 나눕니다. 그 외 설명문은 셀 안에서 그냥 줄바꿈(Alt+Enter)'],
+    ['숨기기', '', 'visible 을 FALSE 로 바꾸면 사이트에서 사라집니다. TRUE 로 되돌리면 다시 보입니다'],
+    ['순서 바꾸기', '', 'order 숫자를 고칩니다. projects 탭만 반대로(큰 숫자가 위) 정렬됩니다'],
+
+    ['── 반영 방법 ──', '', ''],
+    ['시트만 고쳤을 때', '', '따로 할 일 없습니다. 15초 뒤 사이트에 반영됩니다'],
+    ['content-api.gs 를 고쳤을 때', '', '★ 배포 > 배포 관리 > 편집 > 버전 "새 버전" > 배포 를 해야 반영됩니다'],
+
+    ['── 주의 ──', '', ''],
+    ['운영 데이터 탭', 'Members / Requests / Schedule / Applies', 'Schedule만 홈페이지 일정과 자동 연동되며, 나머지는 홈페이지에서 참조하지 않습니다'],
+    ['_backup_ 으로 시작하는 탭', '', '업그레이드 직전 상태의 자동 백업입니다. 확인 후 지우셔도 됩니다']
   ];
 }
 
+/*
+ * copy 탭 = 홈 + 소개 페이지의 "글자와 사진" 전부.
+ * 행 순서는 실제 사이트를 스크롤하는 순서와 같습니다.
+ * 여기에 없는 항목은 홈페이지 어디에도 표시되지 않으므로 일부러 넣지 않았습니다.
+ */
 function copyRows() {
   return [
-    ['path', 'value', 'memo'],
+    ['섹션', 'path', 'value', '어디에 보이나'],
 
-    ['home.hero.image', 'images/pains-data-stadium.png', '[홈] 첫 화면 배경 사진 (Google Drive 공유 링크 가능)'],
-    ['home.hero.meta.0', 'KOREA UNIVERSITY', '[홈] 첫 화면 하단 라벨 1'],
-    ['home.hero.meta.1', 'SPORTS STATISTICS', '[홈] 첫 화면 하단 라벨 2'],
-    ['home.hero.meta.2', 'SEOUL · EST. 2020', '[홈] 첫 화면 하단 라벨 3'],
-    ['home.scrollLabel', '', '[홈] 첫 화면 우측 하단 스크롤 안내 문구'],
-    ['home.scrollVisible', 'FALSE', '[홈] 첫 화면 우측 하단 스크롤 안내 표시 여부'],
+    ['홈 · 첫 화면', 'home.hero.image', 'images/pains-data-stadium.png', '첫 화면을 가득 채우는 배경 사진 (Drive 공유 링크도 됨)'],
+    ['홈 · 첫 화면', 'home.hero.meta.0', 'KOREA UNIVERSITY', 'PAINS 로고 아래 라벨 — 왼쪽'],
+    ['홈 · 첫 화면', 'home.hero.meta.1', 'SPORTS STATISTICS', 'PAINS 로고 아래 라벨 — 가운데'],
+    ['홈 · 첫 화면', 'home.hero.meta.2', 'SEOUL · EST. 2020', 'PAINS 로고 아래 라벨 — 오른쪽'],
 
-    ['home.identity.index', '01 / IDENTITY', '[홈] 01 정체성 섹션 인덱스 라벨'],
-    ['home.strategy.eyebrow', 'Providing Academic INsights for Sport', '[홈] 01 정체성 작은 문구'],
-    ['home.strategy.title', 'WE TURN SPORTS INTO INSIGHT', '[홈] 01 정체성 큰 제목'],
-    ['home.strategy.description', '스포츠에서 질문을 찾아내, 새로운 의미를 발견합니다.', '[홈] 01 정체성 설명'],
-    ['home.metrics.0.value', '167+', '[홈] 핵심 지표 1 숫자'],
-    ['home.metrics.0.label', 'PROJECTS', '[홈] 핵심 지표 1 이름'],
-    ['home.metrics.1.value', '11TH', '[홈] 핵심 지표 2 숫자'],
-    ['home.metrics.1.label', 'GENERATION', '[홈] 핵심 지표 2 이름'],
-    ['home.metrics.2.value', '2020', '[홈] 핵심 지표 3 숫자'],
-    ['home.metrics.2.label', 'FOUNDED', '[홈] 핵심 지표 3 이름'],
+    ['홈 01 정체성', 'home.identity.index', '01 / IDENTITY', '섹션 왼쪽 위 번호 라벨'],
+    ['홈 01 정체성', 'home.strategy.eyebrow', 'Providing Academic INsights for Sport', '큰 제목 위 작은 영문 문구'],
+    ['홈 01 정체성', 'home.strategy.title', 'WE TURN SPORTS INTO INSIGHT', '가운데 큰 제목'],
+    ['홈 01 정체성', 'home.strategy.description', '스포츠에서 질문을 찾아내, 새로운 의미를 발견합니다.', '큰 제목 아래 한 줄 설명'],
+    ['홈 01 정체성', 'home.metrics.0.value', '167+', '숫자 지표 1 — 숫자'],
+    ['홈 01 정체성', 'home.metrics.0.label', 'PROJECTS', '숫자 지표 1 — 이름'],
+    ['홈 01 정체성', 'home.metrics.1.value', '11TH', '숫자 지표 2 — 숫자'],
+    ['홈 01 정체성', 'home.metrics.1.label', 'GENERATION', '숫자 지표 2 — 이름'],
+    ['홈 01 정체성', 'home.metrics.2.value', '2020', '숫자 지표 3 — 숫자'],
+    ['홈 01 정체성', 'home.metrics.2.label', 'FOUNDED', '숫자 지표 3 — 이름'],
 
-    ['home.community.index', '04 / COMMUNITY', '[홈] 04 커뮤니티 섹션 인덱스 라벨'],
+    ['홈 04 커뮤니티', 'home.community.index', '04 / COMMUNITY', '섹션 왼쪽 위 번호 라벨 (제목·사진은 home_story_cards 탭)'],
 
-    ['home.scheduleHead.index', '05 / SCHEDULE', '[홈] 05 스케줄 섹션 인덱스 라벨'],
-    ['home.scheduleHead.label', 'UPCOMING', '[홈] 05 스케줄 작은 라벨'],
-    ['home.scheduleHead.title', '다가오는 일정', '[홈] 05 스케줄 제목'],
-    ['home.scheduleHead.description', '정기 세미나부터 소모임·행사까지, PAINS의 다음 일정을 확인하세요.', '[홈] 05 스케줄 설명 (일정 항목은 home_schedule 탭에서 관리)'],
+    ['홈 05 일정', 'home.scheduleHead.index', '05 / SCHEDULE', '섹션 왼쪽 위 번호 라벨'],
+    ['홈 05 일정', 'home.scheduleHead.label', 'UPCOMING', '제목 위 작은 라벨'],
+    ['홈 05 일정', 'home.scheduleHead.title', '다가오는 일정', '섹션 제목'],
+    ['홈 05 일정', 'home.scheduleHead.description', '정기 세미나부터 소모임·행사까지, PAINS의 다음 일정을 확인하세요.', '섹션 설명 (일정 목록은 Schedule 탭과 자동 연동)'],
 
-    ['home.archive.eyebrow', 'PAINS ARCHIVE', '[홈] 06 하단 아카이브 작은 문구'],
-    ['home.archiveLinks.0.label', '167+ PROJECTS', '[홈] 하단 링크 1 제목'],
-    ['home.archiveLinks.0.action', 'EXPLORE →', '[홈] 하단 링크 1 우측 문구'],
-    ['home.archiveLinks.0.href', 'activity', '[홈] 하단 링크 1 주소'],
-    ['home.archiveLinks.1.label', 'NOTICE', '[홈] 하단 링크 2 제목'],
-    ['home.archiveLinks.1.action', 'READ →', '[홈] 하단 링크 2 우측 문구'],
-    ['home.archiveLinks.1.href', 'notice', '[홈] 하단 링크 2 주소'],
-    ['home.archiveLinks.2.label', 'JOIN PAINS', '[홈] 하단 링크 3 제목'],
-    ['home.archiveLinks.2.action', 'APPLY →', '[홈] 하단 링크 3 우측 문구'],
-    ['home.archiveLinks.2.href', 'apply', '[홈] 하단 링크 3 주소'],
-    ['about.hero.eyebrow', 'About PAINS', '소개 페이지 상단 작은 문구'],
-    ['about.hero.title', 'We Are\nPAINS', '소개 페이지 제목'],
-    ['about.hero.description', 'PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.', '소개 페이지 설명'],
-    ['about.hero.image', 'images/소개사진.jpg', '소개 페이지 상단 이미지'],
-    ['about.hero.alt', 'PAINS 부원 단체사진', '소개 페이지 상단 이미지 대체 텍스트'],
-    ['about.meta.collective', 'Korea University · Sports Data Analysis Circle', '소개 페이지 상단 영문 분류'],
-    ['about.whoWeAre.eyebrow', 'Who We Are', '소개 페이지 배너 작은 문구'],
-    ['about.whoWeAre.desktopTitle', '스포츠를 데이터로 탐구합니다.', 'PC 소개 배너 제목'],
-    ['about.whoWeAre.mobileTitle', '스포츠를 데이터로 탐구합니다.', '모바일 소개 배너 제목'],
-    ['about.whoWeAre.description', '야구, 축구, 농구, 배구, F1, e-sports등 다양한 종목에 대한 흥미와 열정을 지닌 부원들이 매 학기 열정적으로 프로젝트를 수행하고 있으며, 탐구 프로젝트뿐만 아니라 스포츠 경기 단체 관람, 연사초청, MT, 체육대회 등 다양한 친목활동을 개최하여 서로 다른 관심 종목을 가진 부원들 간의 교류도 활발하게 진행하고 있습니다.', '소개 배너 설명'],
-    ['about.whoWeAre.image', 'images/소개사진.jpg', '소개에 사용하는 단일 이미지'],
-    ['about.whoWeAre.alt', 'PAINS 부원 단체사진', '이미지 대체 텍스트'],
-    ['about.presidentMessage.visible', 'TRUE', '회장 인사말 표시 여부'],
+    ['홈 06 아카이브', 'home.archive.eyebrow', 'PAINS ARCHIVE', '맨 아래 링크 묶음 위 작은 문구'],
+    ['홈 06 아카이브', 'home.archiveLinks.0.label', '167+ PROJECTS', '맨 아래 링크 1 — 왼쪽 글자'],
+    ['홈 06 아카이브', 'home.archiveLinks.0.action', 'EXPLORE →', '맨 아래 링크 1 — 오른쪽 글자'],
+    ['홈 06 아카이브', 'home.archiveLinks.0.href', 'activity', '맨 아래 링크 1 — 눌렀을 때 갈 페이지'],
+    ['홈 06 아카이브', 'home.archiveLinks.1.label', 'NOTICE', '맨 아래 링크 2 — 왼쪽 글자'],
+    ['홈 06 아카이브', 'home.archiveLinks.1.action', 'READ →', '맨 아래 링크 2 — 오른쪽 글자'],
+    ['홈 06 아카이브', 'home.archiveLinks.1.href', 'notice', '맨 아래 링크 2 — 눌렀을 때 갈 페이지'],
+    ['홈 06 아카이브', 'home.archiveLinks.2.label', 'JOIN PAINS', '맨 아래 링크 3 — 왼쪽 글자'],
+    ['홈 06 아카이브', 'home.archiveLinks.2.action', 'APPLY →', '맨 아래 링크 3 — 오른쪽 글자'],
+    ['홈 06 아카이브', 'home.archiveLinks.2.href', 'apply', '맨 아래 링크 3 — 눌렀을 때 갈 페이지'],
 
-    ['home.projectVariants.0.label', 'PROJECT', '[홈] 프로젝트 이미지 항목 1 이름'],
-    ['home.projectVariants.0.image', 'images/project-field-model.png', '[홈] 프로젝트 이미지 항목 1 사진'],
-    ['home.projectVariants.0.alt', 'PAINS 프로젝트', '[홈] 프로젝트 이미지 항목 1 대체 텍스트'],
-    ['home.projectVariants.0.visible', 'FALSE', '[홈] 프로젝트 이미지 항목 1 표시 여부'],
-    ['home.projectVariants.0.order', '1', '[홈] 프로젝트 이미지 항목 1 순서'],
-    ['home.projectVariants.1.label', 'SEMINAR', '[홈] 프로젝트 이미지 항목 2 이름'],
-    ['home.projectVariants.1.image', 'images/activity2.png', '[홈] 프로젝트 이미지 항목 2 사진'],
-    ['home.projectVariants.1.alt', 'PAINS 세미나', '[홈] 프로젝트 이미지 항목 2 대체 텍스트'],
-    ['home.projectVariants.1.visible', 'FALSE', '[홈] 프로젝트 이미지 항목 2 표시 여부'],
-    ['home.projectVariants.1.order', '2', '[홈] 프로젝트 이미지 항목 2 순서'],
-    ['home.projectVariants.2.label', 'COLUMN', '[홈] 프로젝트 이미지 항목 3 이름'],
-    ['home.projectVariants.2.image', 'images/NOTICE_ACTIVITIES.png', '[홈] 프로젝트 이미지 항목 3 사진'],
-    ['home.projectVariants.2.alt', 'PAINS 칼럼', '[홈] 프로젝트 이미지 항목 3 대체 텍스트'],
-    ['home.projectVariants.2.visible', 'FALSE', '[홈] 프로젝트 이미지 항목 3 표시 여부'],
-    ['home.projectVariants.2.order', '3', '[홈] 프로젝트 이미지 항목 3 순서'],
-    ['about.presidentMessage.eyebrow', 'President Message', '회장 인사말 작은 문구'],
-    ['about.presidentMessage.title', '회장 인사말', '회장 인사말 제목'],
-    ['about.presidentMessage.paragraphs.0', '안녕하십니까, 고려대학교 스포츠 통계분석 동아리 PAINS의 11기 회장 전영재입니다. PAINS는 스포츠를 사랑하는 사람들이 모여, 익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석해 보고자 만들어진 동아리입니다. 단순히 승패와 득실을 넘어 기록 속에 숨은 맥락과 의미를 발견하고 데이터를 통해 스포츠를 더 깊이 이해하는 경험을 함께 나누고 있습니다.', '회장 인사말 1문단'],
-    ['about.presidentMessage.paragraphs.1', '각기 다른 배경을 가진 부원들이 모여 뜨거운 열정으로 스포츠에 대한 궁금증을 해소하는 경험을 함께 하는 동시에 통계뿐만이 아닌 AI와 데이터 과학 분야를 공부하며 부원 모두가 함께 성장하는 환경을 갖추고 있습니다. 매순간 달라지고 발전하는 PAINS의 활동에 많은 관심을 가져주시고 함께 해주셔서 감사합니다.', '회장 인사말 2문단'],
-    ['about.presidentMessage.desktopImage', 'images/pains-sports-analytics-blue.png', '필요 시 재사용하는 소개 단일 이미지'],
-    ['about.presidentMessage.mobileImage', 'images/pains-sports-analytics-blue.png', '필요 시 재사용하는 소개 단일 이미지'],
-    ['about.presidentMessage.desktopAlt', '스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실', 'PC 이미지 대체 텍스트'],
-    ['about.presidentMessage.mobileAlt', '스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실', '모바일 이미지 대체 텍스트'],
-    ['organization.generation', '11기', '조직도 기수. 기수 변경 시 이 값만 수정'],
-    ['organization.titleTemplate', '{generation} 운영진 조직도', '조직도 제목 형식. {generation} 자리에 위 기수가 자동 입력됨'],
-    ['societies.title', 'PAINS 소모임 안내', '소모임 페이지 제목'],
-    ['societies.description', 'PAINS에서는 다양한 소모임을 통해 비슷한 관심사를 가진 부원들 간의 친목을 장려하고 있습니다.\n아래 현재 개설된 소모임을 확인해보세요!\n자세한 내용은 PAINS 공지방과 잡담방을 확인해주시기 바랍니다.', '소모임 설명'],
-    ['events.title', '이벤트 안내', '이벤트 페이지 제목'],
-    ['events.description', 'PAINS에서 진행하는 다양한 이벤트에 참여해보세요!', '이벤트 설명'],
-    ['study.title', 'PAINS 11기 스포츠데이터분석 스터디 계획 안내', '스터디 제목'],
-    ['study.goal', '다양한 데이터 분석 방법에 대해 학습하고, 실습을 통해 분석 과정을 이해하며 최종적으로 간단한 프로젝트를 진행하며 동아리 활동에 유용한 기본적인 데이터 분석 능력을 기릅니다.', '스터디 목표'],
-    ['study.timePlace', '평일 오후 7~9시 (변동 가능), 교내 스터디룸 (월·화·수 3개 분반 개설 예정)', '스터디 시간 및 장소']
+    ['소개 · 상단', 'about.meta.collective', 'Korea University · Sports Data Analysis Circle', '페이지 맨 위 영문 한 줄'],
+    ['소개 · 상단', 'about.hero.eyebrow', 'About PAINS', '제목 위 작은 문구'],
+    ['소개 · 상단', 'about.hero.title', 'We Are\nPAINS', '페이지 제목 (셀 안에서 줄바꿈하면 그대로 반영)'],
+    ['소개 · 상단', 'about.hero.description', 'PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.', '제목 아래 설명'],
+    ['소개 · 상단', 'about.hero.image', 'images/소개사진.jpg', '오른쪽 사진'],
+    ['소개 · 상단', 'about.hero.alt', 'PAINS 부원 단체사진', '오른쪽 사진 설명 (화면에는 안 보이고 검색·접근성용)'],
+
+    ['소개 · Who We Are', 'about.whoWeAre.eyebrow', 'Who We Are', '검은 배너 왼쪽 작은 문구'],
+    ['소개 · Who We Are', 'about.whoWeAre.desktopTitle', '스포츠를 데이터로 탐구합니다.', '검은 배너 제목 — PC 화면'],
+    ['소개 · Who We Are', 'about.whoWeAre.mobileTitle', '스포츠를 데이터로 탐구합니다.', '검은 배너 제목 — 휴대폰 화면'],
+    ['소개 · Who We Are', 'about.whoWeAre.description', '야구, 축구, 농구, 배구, F1, e-sports등 다양한 종목에 대한 흥미와 열정을 지닌 부원들이 매 학기 열정적으로 프로젝트를 수행하고 있으며, 탐구 프로젝트뿐만 아니라 스포츠 경기 단체 관람, 연사초청, MT, 체육대회 등 다양한 친목활동을 개최하여 서로 다른 관심 종목을 가진 부원들 간의 교류도 활발하게 진행하고 있습니다.', '검은 배너 본문'],
+
+    ['소개 · 회장 인사말', 'about.presidentMessage.visible', 'TRUE', 'FALSE로 바꾸면 회장 인사말 섹션 전체가 숨겨집니다'],
+    ['소개 · 회장 인사말', 'about.presidentMessage.title', '회장 인사말', '섹션 제목'],
+    ['소개 · 회장 인사말', 'about.presidentMessage.paragraphs.0', '안녕하십니까, 고려대학교 스포츠 통계분석 동아리 PAINS의 11기 회장 전영재입니다. PAINS는 스포츠를 사랑하는 사람들이 모여, 익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석해 보고자 만들어진 동아리입니다. 단순히 승패와 득실을 넘어 기록 속에 숨은 맥락과 의미를 발견하고 데이터를 통해 스포츠를 더 깊이 이해하는 경험을 함께 나누고 있습니다.', '첫 번째 문단'],
+    ['소개 · 회장 인사말', 'about.presidentMessage.paragraphs.1', '각기 다른 배경을 가진 부원들이 모여 뜨거운 열정으로 스포츠에 대한 궁금증을 해소하는 경험을 함께 하는 동시에 통계뿐만이 아닌 AI와 데이터 과학 분야를 공부하며 부원 모두가 함께 성장하는 환경을 갖추고 있습니다. 매순간 달라지고 발전하는 PAINS의 활동에 많은 관심을 가져주시고 함께 해주셔서 감사합니다.', '두 번째 문단'],
+
+    ['조직도', 'organization.generation', '11기', '기수. 기수가 바뀌면 이 값 하나만 고치면 제목이 따라 바뀝니다'],
+    ['조직도', 'organization.titleTemplate', '{generation} 운영진 조직도', '조직도 제목 형식. {generation} 자리에 위 기수가 들어갑니다'],
+
+    ['소모임', 'societies.title', 'PAINS 소모임 안내', '소모임 페이지 제목'],
+    ['소모임', 'societies.description', 'PAINS에서는 다양한 소모임을 통해 비슷한 관심사를 가진 부원들 간의 친목을 장려하고 있습니다.\n아래 현재 개설된 소모임을 확인해보세요!\n자세한 내용은 PAINS 공지방과 잡담방을 확인해주시기 바랍니다.', '제목 아래 설명 (소모임 목록은 societies 탭)'],
+
+    ['이벤트', 'events.title', '이벤트 안내', '이벤트 페이지 제목'],
+    ['이벤트', 'events.description', 'PAINS에서 진행하는 다양한 이벤트에 참여해보세요!', '제목 아래 설명 (이벤트 목록은 events 탭)'],
+
+    ['스터디', 'study.title', 'PAINS 11기 스포츠데이터분석 스터디 계획 안내', '스터디 페이지 제목'],
+    ['스터디', 'study.goal', '다양한 데이터 분석 방법에 대해 학습하고, 실습을 통해 분석 과정을 이해하며 최종적으로 간단한 프로젝트를 진행하며 동아리 활동에 유용한 기본적인 데이터 분석 능력을 기릅니다.', '"스터디 목표" 항목 본문'],
+    ['스터디', 'study.timePlace', '평일 오후 7~9시 (변동 가능), 교내 스터디룸 (월·화·수 3개 분반 개설 예정)', '"시간 및 장소" 항목 본문']
   ];
 }
 
@@ -717,10 +1151,15 @@ function settingsRows() {
   ];
 }
 
+/*
+ * 프로젝트 아카이브. ★ 오래된 것이 위, 최신이 아래입니다.
+ * 새 프로젝트는 맨 아래에 행을 추가하기만 하면 사이트 최상단에 뜹니다(order 는 비워두세요).
+ * order 에 숫자를 넣으면 그 값이 큰 순서대로 정렬됩니다.
+ */
 function projectRows() {
   return [
     ['title', 'year', 'generation', 'period', 'sport', 'driveUrl', 'driveId', 'fileName', 'visible', 'order'],
-    ['Sample Project', '2026', '10기', '방학 중 프로젝트', '야구', 'https://drive.google.com/file/d/FILE_ID/view?usp=sharing', '', 'sample.pdf', 'TRUE', '1']
+    ['Sample Project', '2026', '10기', '방학 중 프로젝트', '야구', 'https://drive.google.com/file/d/FILE_ID/view?usp=sharing', '', 'sample.pdf', 'TRUE', '']
   ];
 }
 
@@ -731,23 +1170,78 @@ function noticeRows() {
   ];
 }
 
+/*
+ * 홈 02 ABOUT / 03 PROJECTS / 04 COMMUNITY 카드.
+ *   titleLines : | 로 줄을 나눕니다.
+ *   image2     : community 행에서만 씁니다(사진 2장을 나란히 배치).
+ *   captionFig / captionLabel : 사진 아래 작은 캡션. community 는 캡션이 없습니다.
+ */
 function homeStoryCardRows() {
   return [
-    ['id', 'eyebrow', 'titleLines', 'description', 'image', 'alt', 'image2', 'alt2', 'captionFig', 'captionLabel', 'captionFig2', 'captionLabel2', 'imagesMode', 'primaryLabel', 'primaryHref', 'secondaryLabel', 'secondaryHref', 'visible', 'order'],
-    ['about', 'About PAINS', '데이터로 스포츠를|다시 씁니다.', '익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석하며, 기록 속에 숨은 맥락과 의미를 함께 발견합니다.', 'images/pains-sports-analytics-blue.png', '스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실', '', '', 'FIG.01', 'SPORTS DATA LAB', '', '', '', 'PAINS 소개 보기', 'about', '', '', 'TRUE', '1'],
-    ['projects', 'Projects', '질문에서 출발해|결과를 만듭니다.', '야구, 축구, 농구, F1, e-sports 등 모든 스포츠에서.\n연구를 진행하고 부원들과 공유합니다.', 'images/project-field-model.png', 'PAINS 프로젝트', '', '', 'FIG.02', 'PROJECT', '', '', '', '프로젝트 보기', 'activity', '스터디 보기', 'study', 'TRUE', '2'],
-    ['community', 'Community', '함께 보고,|함께 즐기고,|함께 성장합니다.', '스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 하나가 되어 교류합니다.', 'images/단체사진.png', 'PAINS 단체 관람 활동', 'images/activity4.png', 'PAINS 친목 활동', '', '', '', '', 'mosaic', '', '', '', '', 'TRUE', '3']
+    ['id', 'eyebrow', 'titleLines', 'description', 'image', 'alt', 'image2', 'alt2', 'captionFig', 'captionLabel', 'primaryLabel', 'primaryHref', 'visible', 'order'],
+    ['about', 'ABOUT PAINS', '데이터로 스포츠를|다시 씁니다.', '익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석하며, 기록 속에 숨은 맥락과 의미를 함께 발견합니다.', 'images/pains-sports-analytics-blue.png', '스포츠 위치와 추세 데이터를 분석하는 짙은 푸른색 분석실', '', '', 'FIG.01', 'SPORTS DATA LAB', 'ABOUT PAINS', 'about', 'TRUE', '1'],
+    ['projects', 'PROJECTS', '질문에서 출발해|결과를 만듭니다.', '야구, 축구, 농구, F1, e-sports 등 모든 스포츠에서.\n연구를 진행하고 부원들과 공유합니다.', 'images/project-field-model.png', 'PAINS 프로젝트', '', '', 'FIG.02', 'PROJECT', 'VIEW PROJECTS', 'activity', 'TRUE', '2'],
+    ['community', 'COMMUNITY', '함께 보고,|함께 즐기고,|함께 성장합니다.', '스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 하나가 되어 교류합니다.', 'images/community-summer-mt-2026.jpg', 'PAINS 여름 MT 단체사진', 'images/activity4.png', 'PAINS 친목 활동', '', '', '', '', 'TRUE', '3']
   ];
 }
 
-function homeScheduleRows() {
+/*
+ * 홈 03 PROJECTS 사진 아래에 뜨는 시안 선택 버튼(01/02/03).
+ * visible 이 전부 FALSE 면 버튼 묶음이 통째로 숨습니다.
+ * 쓰고 싶으면 원하는 행의 visible 을 TRUE 로 바꾸세요.
+ */
+function homeProjectImageRows() {
   return [
-    ['date', 'title', 'tag', 'dateLabel', 'weekday', 'visible', 'order'],
-    ['2026-03-16', '11기 OT', '필수', '', '', 'TRUE', '1'],
-    ['2026-03-22', '통계 세미나 #1', '정기', '', '', 'TRUE', '2'],
-    ['2026-04-05', '연사 초청 강연', '정기', '', '', 'TRUE', '3'],
-    ['2026-04-19', '체육대회', '행사', '', '', 'TRUE', '4']
+    ['label', 'image', 'alt', 'visible', 'order'],
+    ['PROJECT', 'images/project-field-model.png', 'PAINS 프로젝트', 'TRUE', '1'],
+    ['SEMINAR', 'images/seminar-20260515.jpg', 'PAINS 세미나 현장', 'TRUE', '2'],
+    ['COLUMN', 'images/project-column.png', 'PAINS 프로젝트 칼럼', 'TRUE', '3']
   ];
+}
+
+function homeMediaRows() {
+  return [
+    ['위치', 'key', 'imageUrl', '사진 설명'],
+    ['홈 첫 화면 배경', 'hero', 'images/pains-data-stadium.png', 'PAINS 홈 첫 화면 배경'],
+    ['홈 02 ABOUT', 'about', 'images/pains-sports-analytics-blue.png', 'PAINS 소개'],
+    ['홈 03 PROJECTS', 'projects', 'images/project-field-model.png', 'PAINS 프로젝트'],
+    ['홈 03 SEMINAR', 'seminar', 'images/seminar-20260515.jpg', 'PAINS 세미나 현장'],
+    ['홈 03 COLUMN', 'column', 'images/project-column.png', 'PAINS 프로젝트 칼럼'],
+    ['홈 04 COMMUNITY 왼쪽', 'community1', 'images/community-summer-mt-2026.jpg', 'PAINS 여름 MT 단체사진'],
+    ['홈 04 COMMUNITY 오른쪽', 'community2', 'images/activity4.png', 'PAINS 친목 활동']
+  ];
+}
+
+function setStoryImage_(content, cardId, imageUrl, alt, imageIndex) {
+  var cards = content.home && content.home.story && content.home.story.cards;
+  if (!cards) return;
+  for (var i = 0; i < cards.length; i += 1) {
+    if (cards[i].id !== cardId) continue;
+    if (cardId === 'community') {
+      if (!cards[i].images) cards[i].images = [];
+      while (cards[i].images.length <= imageIndex) cards[i].images.push({ src: '', alt: '' });
+      cards[i].images[imageIndex] = { src: imageUrl, alt: alt || cards[i].images[imageIndex].alt || '' };
+      if (imageIndex === 0) {
+        cards[i].image = imageUrl;
+        if (alt) cards[i].alt = alt;
+      }
+    } else {
+      cards[i].image = imageUrl;
+      if (alt) cards[i].alt = alt;
+    }
+    return;
+  }
+}
+
+function setProjectVariantImage_(content, label, imageUrl, alt) {
+  var variants = content.home && content.home.projectVariants;
+  if (!variants) return;
+  for (var i = 0; i < variants.length; i += 1) {
+    if (String(variants[i].label || '').toUpperCase() !== label) continue;
+    variants[i].image = imageUrl;
+    if (alt) variants[i].alt = alt;
+    return;
+  }
 }
 
 function organizationRows() {
@@ -791,47 +1285,136 @@ function eventRows() {
   ];
 }
 
-function pageContentRows() {
-  return [
-    ['page', 'selector', 'type', 'value', 'visible', 'order'],
-    ['apply', 'h2', 'text', 'PAINS 11기 지원하기', 'FALSE', '1'],
-    ['ci', '.ci-logo img', 'src', 'Drive 이미지 URL', 'FALSE', '1'],
-    ['fee', '.section-card:first-child p', 'text', '회비 안내 문구', 'FALSE', '1']
-  ];
-}
-
 function recruitmentRows() {
   return [
     ['key', 'value', 'memo'],
-    ['generation', '11기', '기수 (예: 11기, 12기)'],
+    ['pageTitle', 'PAINS - 신입부원 모집', '브라우저 탭 제목'],
+    ['generation', '12기', '기수 (예: 11기, 12기)'],
+    ['sidebarTitle', '12기 신입부원 모집', '왼쪽 메뉴 상단 제목'],
     ['heroTitle', 'PAINS 신입부원 모집', '모집 페이지 상단 제목'],
-    ['heroDescription', '고려대학교 교내 유일 스포츠 통계분석 동아리 PAINS가 11기 신입부원을 모집합니다.', '상단 설명 문구'],
-    ['bannerText', '🔥 PAINS 11기 신입부원 모집 마감 임박!', '하단 배너 텍스트'],
+    ['heroDescription', '고려대학교 교내 유일 스포츠 통계분석 동아리 PAINS가 12기 신입부원을 모집합니다.', '상단 설명 문구'],
+    ['bannerText', '🔥 PAINS 12기 신입부원 모집 마감 임박!', '하단 배너 텍스트'],
+    ['bannerButtonLabel', '지금 지원하기 >', '하단 배너 버튼 문구'],
     ['bannerVisible', 'TRUE', '하단 배너 표시 여부 (TRUE/FALSE)'],
-    ['applyCtaTitle', '11기 2차 지원하기', '지원하기 버튼 섹션 제목'],
+    ['navOverviewLabel', '모집 개요', '왼쪽 메뉴 문구'],
+    ['navIntroLabel', '동아리 소개', '왼쪽 메뉴 문구'],
+    ['navRecruitLabel', '모집 일정', '왼쪽 메뉴 문구'],
+    ['navActivityLabel', '활동 일정', '왼쪽 메뉴 문구'],
+    ['navFeeLabel', '회비 안내', '왼쪽 메뉴 문구'],
+    ['navContactLabel', '문의하기', '왼쪽 메뉴 문구'],
+    ['navApplyLabel', '지원하기', '왼쪽 메뉴 문구'],
+    ['overviewTitle', '📢 모집 개요', '모집 개요 제목'],
+    ['overviewText', '스포츠 통계분석 동아리 PAINS가 2026년을 함께할 12기 신입 부원을 모집합니다!\nPAINS는 2020년에 스포츠와 통계분석에 관심이 많은 사람들이 모여 만든 동아리입니다.\nPAINS는 2024년까지 통계학과 동아리로 활동했으며, 2026년부터는 애기능동아리연합회 소속 동아리로 출범하게 됩니다. 스포츠를 사랑하고 데이터 분석에 열정이 있다면 전공에 관계없이 누구나 환영합니다.', '모집 개요 본문. 줄바꿈 가능'],
+    ['introTitle', '🎯 동아리 소개', '동아리 소개 제목'],
+    ['introDescription', '현재 PAINS는 45명의 부원들이 하나의 관심사를 깊이 나누며 활동하고 있습니다.\n성별, 학과, 학번 그 무엇도 상관없습니다. 스포츠에 대한 관심과 열정만 있으면 충분합니다.', '동아리 소개 본문. 줄바꿈 가능'],
+    ['genderChartTitle', '부원 성별 분포', '성별 그래프 제목'],
+    ['majorChartTitle', '부원 전공 분포', '전공 그래프 제목'],
+    ['admissionYearChartTitle', '학번 분포', '학번 그래프 제목'],
+    ['admissionCountLabel', '인원(명)', '학번 그래프 툴팁 단위'],
+    ['activitiesTitle', '📸 PAINS 활동 톺아보기', '활동 사진 섹션 제목'],
+    ['activitiesDescription', 'PAINS에서는 학기 중 다양한 학술 활동과 친목 활동을 진행합니다.', '활동 사진 섹션 설명'],
+    ['departmentsTitle', '🏢 부서 운영', '부서 섹션 제목'],
+    ['departmentsDescription', '모든 부원들은 아래 3개 부서 중 하나에 소속되어 활동할 수 있습니다.', '부서 섹션 설명'],
+    ['recruitTitle', '📅 모집 일정', '단일 모집 파이프라인 제목'],
+    ['eligibilityTitle', '✅ 지원 자격', '지원 자격 제목'],
+    ['regularScheduleTitle', '🗓️ 정기 활동 일정', '정기 활동 제목'],
+    ['irregularScheduleTitle', '⚡ 비정기 활동 일정', '비정기 활동 제목'],
+    ['feeTitle', '💸 회비 안내', '회비 섹션 제목'],
+    ['feeAmount', '학기 당 3만~3만 5천원 (추후 확정)', '회비 금액 안내 문구'],
+    ['feeDescription', '회비는 주로 동아리 활동 중 장소대여, 홍보자료 제작, 프로젝트 지원 등에 사용됩니다.', '회비 설명'],
+    ['feeLinkPrefix', '회비 사용 내역은', '회비 링크 앞 문구'],
+    ['feeLinkLabel', '회비 내역 조회 페이지', '회비 링크 문구'],
+    ['feeLinkHref', 'fee.html', '회비 링크 주소'],
+    ['feeLinkSuffix', '에서 부원들에게 투명하게 공개되고 있습니다.', '회비 링크 뒤 문구'],
+    ['contactTitle', '📞 문의사항', '문의 섹션 제목'],
+    ['instagramLabel', '인스타그램 DM', '인스타그램 안내 문구'],
+    ['instagramHandle', '@ku_pains', '인스타그램 계정 문구'],
+    ['instagramUrl', 'https://www.instagram.com/ku_pains', '인스타그램 주소'],
+    ['contactPhoneLabel', '회장 전영재', '연락처 이름 (예: 회장 홍길동)'],
+    ['contactPhone', '010-3952-1473', '연락처 전화번호'],
+    ['contactEmailLabel', 'PAINS 공식 이메일', '이메일 항목 제목'],
+    ['contactEmail', 'painsports1905@gmail.com', '공식 이메일'],
+    ['applyCtaTitle', '12기 지원하기', '지원하기 버튼 섹션 제목'],
     ['applyCtaSubtitle', '신입생, 재학생 모두 환영합니다!', '지원하기 섹션 부제목'],
     ['formUrl', 'https://docs.google.com/forms/d/e/1FAIpQLSerzRF12IQLupIIg6-hfn9EPHYFL3riEmm19peCYW6aciNvlw/formResponse', '구글 폼 URL (매 모집마다 교체)'],
     ['formLabel', '지원서 작성하러 가기', '지원 버튼 텍스트'],
     ['applyPeriod', '지원 기간: 2026년 02월 26일 - 2026년 03월 07일', '지원 기간 안내 문구'],
-    ['applyVisible', 'TRUE', '지원 버튼 섹션 표시 (FALSE = 모집 마감 시 버튼 숨김)'],
-    ['overviewText', '스포츠 통계분석 동아리 PAINS가 2026년을 함께할 11기 신입 부원을 모집합니다!\nPAINS는 2020년에 스포츠와 통계분석에 관심이 많은 사람들이 모여 만든 동아리입니다.\nPAINS는 2024년까지 통계학과 동아리로 활동했으며, 2026년부터는 애기능동아리연합회 소속 동아리로 출범하게 됩니다. 스포츠를 사랑하고 데이터 분석에 열정이 있다면 전공에 관계없이 누구나 환영합니다.', '모집 개요 섹션 본문'],
-    ['track1Label', '1차 모집 (신입생 지원 불가)', '타임라인 1차 모집 헤더 레이블'],
-    ['track2Label', '2차 모집', '타임라인 2차 모집 헤더 레이블'],
-    ['feeAmount', '학기 당 3만~3만 5천원 (추후 확정)', '회비 금액 안내 문구'],
-    ['contactPhoneLabel', '회장 전영재', '연락처 이름 (예: 회장 홍길동)'],
-    ['contactPhone', '010-3952-1473', '연락처 전화번호'],
-    ['contactEmail', 'painsports1905@gmail.com', '공식 이메일']
+    ['applyVisible', 'TRUE', '지원 버튼 섹션 표시 (FALSE = 모집 마감 시 버튼 숨김)']
   ];
 }
 
 function recruitmentTimelineRows() {
   return [
-    ['step', 'type', 'track1Step', 'track2Step', 'track1Date', 'track1Note', 'track2Date', 'track2Note', 'date', 'note', 'highlight', 'order'],
-    ['서류 신청 마감', 'dual', '서류 신청 마감', '서류 신청 마감', '2026. 02. 09 (월) - 2026. 02. 22 (일)', '', '2026. 02. 26 (목) - 2026. 03. 07 (토)', '', '', '', 'FALSE', '1'],
-    ['합격자 발표', 'dual', '서류 합격자 발표', '서류 합격자 발표', '2026. 02. 24 (화) 중', '홈페이지 안내', '2026. 03. 09 (월) 중', '홈페이지 안내', '', '', 'FALSE', '2'],
-    ['면접 진행', 'dual', '비대면 면접 진행', '대면 면접 진행', '2026. 02. 26 (목) - 2026. 03. 01 (일)', '기간 중 일정 협의', '2026. 03. 11 (수) - 2026. 03. 13 (금)', '기간 중 일정 협의', '', '', 'FALSE', '3'],
-    ['최종 선발 공지', 'dual', '최종 선발 공지', '최종 선발 공지', '2026. 03. 05 (목) 중', '홈페이지 안내', '2026. 03. 15 (일) 중', '홈페이지 안내', '', '', 'FALSE', '4'],
-    ['신입 기수 OT', 'single', '', '', '', '', '', '', '2026. 03. 16 (월) 19:00', '참여 필수', 'TRUE', '5']
+    ['step', 'date', 'note', 'highlight', 'visible', 'order'],
+    ['서류 신청', '2026. 02. 26 (목) - 2026. 03. 07 (토)', '', 'FALSE', 'TRUE', '1'],
+    ['서류 합격자 발표', '2026. 03. 09 (월) 중', '홈페이지 안내', 'FALSE', 'TRUE', '2'],
+    ['면접 진행', '2026. 03. 11 (수) - 2026. 03. 13 (금)', '기간 중 일정 협의', 'FALSE', 'TRUE', '3'],
+    ['최종 선발 공지', '2026. 03. 15 (일) 중', '홈페이지 안내', 'FALSE', 'TRUE', '4'],
+    ['신입 기수 OT', '2026. 03. 16 (월) 19:00', '참여 필수', 'TRUE', 'TRUE', '5']
+  ];
+}
+
+function recruitmentActivityRows() {
+  return [
+    ['id', 'title', 'description', 'image', 'alt', 'visible', 'order'],
+    ['seminar', '정기 세미나', '학기 중과 방학 중 2번씩 개최되는 정기 세미나에서는 조별 프로젝트를 공유하고 피드백을 주고받는 시간을 가집니다.', 'images/activity_edited_1.png', '정기 세미나 사진', 'TRUE', '1'],
+    ['lecture', '통계 세미나와 연사 초청 강연', '기초 통계학 강의와 연사 초청 강연 등의 활동을 통해 부원들의 통계분석 역량 향상을 도모합니다.', 'images/activity2.png', '정기 활동 사진', 'TRUE', '2'],
+    ['sports-day', 'PAINS 체육대회', '보는 것만큼 직접 하는 것도 열정적인 부원들과 함께 매 학기 체육대회를 개최합니다.', 'images/activity03.png', '체육대회 사진', 'TRUE', '3'],
+    ['community', 'MT 및 기타 행사', '학기 초와 방학 중 MT, 단체 직관 행사 등 여러 부원들과 친해질 수 있는 행사들이 개최됩니다.', 'images/activity4.png', 'MT 및 기타 행사 사진', 'TRUE', '4']
+  ];
+}
+
+function recruitmentDepartmentRows() {
+  return [
+    ['title', 'description', 'visible', 'order'],
+    ['📅 기획부', '세미나 준비, MT 등 전반적인 친목 활동 기획 및 기타 이벤트 기획', 'TRUE', '1'],
+    ['📢 홍보부', '홍보 플랫폼(SNS, 블로그) 관리, 리쿠르팅 홍보, 동아리 내 디자인 업무(포스터 등)', 'TRUE', '2'],
+    ['📘 교육부', '초심자용 강의 제작 (Python / 세이버메트릭스 강의), 동아리 자료 및 파일 관리', 'TRUE', '3']
+  ];
+}
+
+function recruitmentListRows() {
+  return [
+    ['group', 'text', 'visible', 'order'],
+    ['eligibility', '연속 또는 비연속으로 1년(2학기) 이상 활동 가능한 재/휴학 대학생 (신입생 환영) - 한 학기 활동은 개강부터 방학 중 세미나까지를 기준으로 합니다.', 'TRUE', '1'],
+    ['eligibility', '3월 16일 월요일 OT에 대면 참여가 가능한 사람', 'TRUE', '2'],
+    ['eligibility', '즐겨보는 스포츠가 있는 사람', 'TRUE', '3'],
+    ['eligibility', '스포츠를 데이터 분석의 측면에서 접근해보고 싶은 사람', 'TRUE', '4'],
+    ['regularSchedule', '일반 정기 활동: 3월 19일, 3월 27일, 5월 1일', 'TRUE', '1'],
+    ['regularSchedule', 'PAINS 체육대회: 5월 중(미정)', 'TRUE', '2'],
+    ['regularSchedule', '학기 중 세미나: 5월 14일, 5월 15일', 'TRUE', '3'],
+    ['regularSchedule', '방학 중 세미나: 8월 중(미정)', 'TRUE', '4'],
+    ['irregularSchedule', '봄 MT: 4월 3일 - 4월 4일 (예정)', 'TRUE', '1'],
+    ['irregularSchedule', '스포츠 단체 직관: 5월 중(미정)', 'TRUE', '2'],
+    ['irregularSchedule', '월드컵 단체 관람: 월드컵 기간(계획 중)', 'TRUE', '3'],
+    ['irregularSchedule', '여름 MT: 7월 중(미정)', 'TRUE', '4']
+  ];
+}
+
+function recruitmentStatRows() {
+  return [
+    ['group', 'label', 'value', 'color', 'visible', 'order'],
+    ['gender', '여자', '20', '#FF6B81', 'TRUE', '1'],
+    ['gender', '남자', '80', '#4D96FF', 'TRUE', '2'],
+    ['major', '데이터과학과', '6', '#FF6B6B', 'TRUE', '1'],
+    ['major', '통계학과', '6', '#FF9F43', 'TRUE', '2'],
+    ['major', '중어중문학과', '4', '#FDCB6E', 'TRUE', '3'],
+    ['major', '경제학과', '3', '#20BF6B', 'TRUE', '4'],
+    ['major', '언어학과', '2', '#0FB9B1', 'TRUE', '5'],
+    ['major', '컴퓨터학과', '2', '#2D98DA', 'TRUE', '6'],
+    ['major', '경영학과', '2', '#3867D6', 'TRUE', '7'],
+    ['major', '행정학과', '2', '#8854D0', 'TRUE', '8'],
+    ['major', '화학과', '2', '#A55EEA', 'TRUE', '9'],
+    ['major', '사회학과', '2', '#F06292', 'TRUE', '10'],
+    ['major', '국제학부', '2', '#4B6584', 'TRUE', '11'],
+    ['major', '기타', '12', '#9980FA', 'TRUE', '12'],
+    ['admissionYear', '19', '1', '#ab3333', 'TRUE', '1'],
+    ['admissionYear', '20', '2', '#ab3333', 'TRUE', '2'],
+    ['admissionYear', '21', '3', '#ab3333', 'TRUE', '3'],
+    ['admissionYear', '22', '4', '#ab3333', 'TRUE', '4'],
+    ['admissionYear', '23', '4', '#ab3333', 'TRUE', '5'],
+    ['admissionYear', '24', '17', '#ab3333', 'TRUE', '6'],
+    ['admissionYear', '25', '14', '#ab3333', 'TRUE', '7']
   ];
 }
 

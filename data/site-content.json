@@ -41,10 +41,8 @@
       "description": "정기 세미나부터 소모임·행사까지, PAINS의 다음 일정을 확인하세요."
     },
     "schedule": [
-      { "date": "2026-03-16", "title": "11기 OT", "tag": "필수", "visible": true, "order": 1 },
-      { "date": "2026-03-22", "title": "통계 세미나 #1", "tag": "정기", "visible": true, "order": 2 },
-      { "date": "2026-04-05", "title": "연사 초청 강연", "tag": "정기", "visible": true, "order": 3 },
-      { "date": "2026-04-19", "title": "체육대회", "tag": "행사", "visible": true, "order": 4 }
+      { "date": "2026-08-06", "startTime": "17:00", "endDate": "2026-08-06", "endTime": "20:00", "title": "11기 방학 중 세미나 1", "tag": "정기활동", "location": "고려대학교 (TBC)", "visible": true, "order": 1 },
+      { "date": "2026-08-07", "startTime": "17:00", "endDate": "2026-08-07", "endTime": "20:00", "title": "11기 방학 중 세미나 2", "tag": "정기활동", "location": "고려대학교 (TBC)", "visible": true, "order": 2 }
     ],
     "timeline": [
       { "year": "2020", "title": "PAINS 설립", "position": "top", "visible": true, "order": 1 },
@@ -113,7 +111,7 @@
           "titleLines": ["함께 보고,", "함께 즐기고,", "함께 성장합니다."],
           "description": "스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 하나가 되어 교류합니다.",
           "images": [
-            { "src": "images/단체사진.png", "alt": "PAINS 단체 관람 활동" },
+            { "src": "images/community-summer-mt-2026.jpg", "alt": "PAINS 여름 MT 단체사진" },
             { "src": "images/activity4.png", "alt": "PAINS 친목 활동" }
           ],
           "visible": true,
@@ -122,9 +120,9 @@
       ]
     },
     "projectVariants": [
-      { "label": "PROJECT", "image": "images/project-field-model.png", "alt": "PAINS 프로젝트", "visible": false, "order": 1 },
-      { "label": "SEMINAR", "image": "images/activity2.png", "alt": "PAINS 세미나", "visible": false, "order": 2 },
-      { "label": "COLUMN", "image": "images/NOTICE_ACTIVITIES.png", "alt": "PAINS 칼럼", "visible": false, "order": 3 }
+      { "label": "PROJECT", "image": "images/project-field-model.png", "alt": "PAINS 프로젝트", "visible": true, "order": 1 },
+      { "label": "SEMINAR", "image": "images/seminar-20260515.jpg", "alt": "PAINS 세미나 현장", "visible": true, "order": 2 },
+      { "label": "COLUMN", "image": "images/project-column.png", "alt": "PAINS 프로젝트 칼럼", "visible": true, "order": 3 }
     ],
     "calendar": {
       "title": "일정 안내",
@@ -208,62 +206,136 @@
     "timePlace": "평일 오후 7~9시 (변동 가능), 교내 스터디룸 (월·화·수 3개 분반 개설 예정)"
   },
   "recruitment": {
-    "generation": "11기",
+    "pageTitle": "PAINS - 신입부원 모집",
+    "generation": "12기",
+    "sidebarTitle": "12기 신입부원 모집",
     "heroTitle": "PAINS 신입부원 모집",
-    "heroDescription": "고려대학교 교내 유일 스포츠 통계분석 동아리 PAINS가 11기 신입부원을 모집합니다.",
-    "bannerText": "🔥 PAINS 11기 신입부원 모집 마감 임박!",
+    "heroDescription": "고려대학교 교내 유일 스포츠 통계분석 동아리 PAINS가 12기 신입부원을 모집합니다.",
+    "bannerText": "🔥 PAINS 12기 신입부원 모집 마감 임박!",
+    "bannerButtonLabel": "지금 지원하기 >",
     "bannerVisible": true,
-    "applyCtaTitle": "11기 2차 지원하기",
+    "navOverviewLabel": "모집 개요",
+    "navIntroLabel": "동아리 소개",
+    "navRecruitLabel": "모집 일정",
+    "navActivityLabel": "활동 일정",
+    "navFeeLabel": "회비 안내",
+    "navContactLabel": "문의하기",
+    "navApplyLabel": "지원하기",
+    "overviewTitle": "📢 모집 개요",
+    "overviewText": "스포츠 통계분석 동아리 PAINS가 2026년을 함께할 12기 신입 부원을 모집합니다!\nPAINS는 2020년에 스포츠와 통계분석에 관심이 많은 사람들이 모여 만든 동아리입니다.\nPAINS는 2024년까지 통계학과 동아리로 활동했으며, 2026년부터는 애기능동아리연합회 소속 동아리로 출범하게 됩니다. 스포츠를 사랑하고 데이터 분석에 열정이 있다면 전공에 관계없이 누구나 환영합니다.",
+    "introTitle": "🎯 동아리 소개",
+    "introDescription": "현재 PAINS는 45명의 부원들이 하나의 관심사를 깊이 나누며 활동하고 있습니다.\n성별, 학과, 학번 그 무엇도 상관없습니다. 스포츠에 대한 관심과 열정만 있으면 충분합니다.",
+    "genderChartTitle": "부원 성별 분포",
+    "majorChartTitle": "부원 전공 분포",
+    "admissionYearChartTitle": "학번 분포",
+    "admissionCountLabel": "인원(명)",
+    "activitiesTitle": "📸 PAINS 활동 톺아보기",
+    "activitiesDescription": "PAINS에서는 학기 중 다양한 학술 활동과 친목 활동을 진행합니다.",
+    "departmentsTitle": "🏢 부서 운영",
+    "departmentsDescription": "모든 부원들은 아래 3개 부서 중 하나에 소속되어 활동할 수 있습니다.",
+    "recruitTitle": "📅 모집 일정",
+    "eligibilityTitle": "✅ 지원 자격",
+    "regularScheduleTitle": "🗓️ 정기 활동 일정",
+    "irregularScheduleTitle": "⚡ 비정기 활동 일정",
+    "feeTitle": "💸 회비 안내",
+    "feeAmount": "학기 당 3만~3만 5천원 (추후 확정)",
+    "feeDescription": "회비는 주로 동아리 활동 중 장소대여, 홍보자료 제작, 프로젝트 지원 등에 사용됩니다.",
+    "feeLinkPrefix": "회비 사용 내역은",
+    "feeLinkLabel": "회비 내역 조회 페이지",
+    "feeLinkHref": "fee.html",
+    "feeLinkSuffix": "에서 부원들에게 투명하게 공개되고 있습니다.",
+    "contactTitle": "📞 문의사항",
+    "instagramLabel": "인스타그램 DM",
+    "instagramHandle": "@ku_pains",
+    "instagramUrl": "https://www.instagram.com/ku_pains",
+    "contactPhoneLabel": "회장 전영재",
+    "contactPhone": "010-3952-1473",
+    "contactEmailLabel": "PAINS 공식 이메일",
+    "contactEmail": "painsports1905@gmail.com",
+    "applyCtaTitle": "12기 지원하기",
     "applyCtaSubtitle": "신입생, 재학생 모두 환영합니다!",
     "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSerzRF12IQLupIIg6-hfn9EPHYFL3riEmm19peCYW6aciNvlw/formResponse",
     "formLabel": "지원서 작성하러 가기",
     "applyPeriod": "지원 기간: 2026년 02월 26일 - 2026년 03월 07일",
     "applyVisible": true,
-    "overviewText": "스포츠 통계분석 동아리 PAINS가 2026년을 함께할 11기 신입 부원을 모집합니다!\nPAINS는 2020년에 스포츠와 통계분석에 관심이 많은 사람들이 모여 만든 동아리입니다.\nPAINS는 2024년까지 통계학과 동아리로 활동했으며, 2026년부터는 애기능동아리연합회 소속 동아리로 출범하게 됩니다. 스포츠를 사랑하고 데이터 분석에 열정이 있다면 전공에 관계없이 누구나 환영합니다.",
-    "track1Label": "1차 모집 (신입생 지원 불가)",
-    "track2Label": "2차 모집",
-    "feeAmount": "학기 당 3만~3만 5천원 (추후 확정)",
-    "contactPhoneLabel": "회장 전영재",
-    "contactPhone": "010-3952-1473",
-    "contactEmail": "painsports1905@gmail.com",
     "timeline": [
       {
-        "step": "서류 신청 마감", "type": "dual",
-        "track1Step": "서류 신청 마감", "track2Step": "서류 신청 마감",
-        "track1Date": "2026. 02. 09 (월) - 2026. 02. 22 (일)", "track1Note": "",
-        "track2Date": "2026. 02. 26 (목) - 2026. 03. 07 (토)", "track2Note": "",
-        "date": "", "note": "", "highlight": false, "order": 1
+        "step": "서류 신청", "date": "2026. 02. 26 (목) - 2026. 03. 07 (토)", "note": "", "highlight": false, "visible": true, "order": 1
       },
       {
-        "step": "합격자 발표", "type": "dual",
-        "track1Step": "서류 합격자 발표", "track2Step": "서류 합격자 발표",
-        "track1Date": "2026. 02. 24 (화) 중", "track1Note": "홈페이지 안내",
-        "track2Date": "2026. 03. 09 (월) 중", "track2Note": "홈페이지 안내",
-        "date": "", "note": "", "highlight": false, "order": 2
+        "step": "서류 합격자 발표", "date": "2026. 03. 09 (월) 중", "note": "홈페이지 안내", "highlight": false, "visible": true, "order": 2
       },
       {
-        "step": "면접 진행", "type": "dual",
-        "track1Step": "비대면 면접 진행", "track2Step": "대면 면접 진행",
-        "track1Date": "2026. 02. 26 (목) - 2026. 03. 01 (일)", "track1Note": "기간 중 일정 협의",
-        "track2Date": "2026. 03. 11 (수) - 2026. 03. 13 (금)", "track2Note": "기간 중 일정 협의",
-        "date": "", "note": "", "highlight": false, "order": 3
+        "step": "면접 진행", "date": "2026. 03. 11 (수) - 2026. 03. 13 (금)", "note": "기간 중 일정 협의", "highlight": false, "visible": true, "order": 3
       },
       {
-        "step": "최종 선발 공지", "type": "dual",
-        "track1Step": "최종 선발 공지", "track2Step": "최종 선발 공지",
-        "track1Date": "2026. 03. 05 (목) 중", "track1Note": "홈페이지 안내",
-        "track2Date": "2026. 03. 15 (일) 중", "track2Note": "홈페이지 안내",
-        "date": "", "note": "", "highlight": false, "order": 4
+        "step": "최종 선발 공지", "date": "2026. 03. 15 (일) 중", "note": "홈페이지 안내", "highlight": false, "visible": true, "order": 4
       },
       {
-        "step": "신입 기수 OT", "type": "single",
-        "track1Step": "", "track2Step": "",
-        "track1Date": "", "track1Note": "",
-        "track2Date": "", "track2Note": "",
         "date": "2026. 03. 16 (월) 19:00", "note": "참여 필수",
-        "highlight": true, "order": 5
+        "step": "신입 기수 OT", "highlight": true, "visible": true, "order": 5
       }
-    ]
+    ],
+    "activities": [
+      {"id":"seminar","title":"정기 세미나","description":"학기 중과 방학 중 2번씩 개최되는 정기 세미나에서는 조별 프로젝트를 공유하고 피드백을 주고받는 시간을 가집니다.","image":"images/activity_edited_1.png","alt":"정기 세미나 사진","visible":true,"order":1},
+      {"id":"lecture","title":"통계 세미나와 연사 초청 강연","description":"기초 통계학 강의와 연사 초청 강연 등의 활동을 통해 부원들의 통계분석 역량 향상을 도모합니다.","image":"images/activity2.png","alt":"정기 활동 사진","visible":true,"order":2},
+      {"id":"sports-day","title":"PAINS 체육대회","description":"보는 것만큼 직접 하는 것도 열정적인 부원들과 함께 매 학기 체육대회를 개최합니다.","image":"images/activity03.png","alt":"체육대회 사진","visible":true,"order":3},
+      {"id":"community","title":"MT 및 기타 행사","description":"학기 초와 방학 중 MT, 단체 직관 행사 등 여러 부원들과 친해질 수 있는 행사들이 개최됩니다.","image":"images/activity4.png","alt":"MT 및 기타 행사 사진","visible":true,"order":4}
+    ],
+    "departments": [
+      {"title":"📅 기획부","description":"세미나 준비, MT 등 전반적인 친목 활동 기획 및 기타 이벤트 기획","visible":true,"order":1},
+      {"title":"📢 홍보부","description":"홍보 플랫폼(SNS, 블로그) 관리, 리쿠르팅 홍보, 동아리 내 디자인 업무(포스터 등)","visible":true,"order":2},
+      {"title":"📘 교육부","description":"초심자용 강의 제작 (Python / 세이버메트릭스 강의), 동아리 자료 및 파일 관리","visible":true,"order":3}
+    ],
+    "lists": {
+      "eligibility": [
+        {"text":"연속 또는 비연속으로 1년(2학기) 이상 활동 가능한 재/휴학 대학생 (신입생 환영) - 한 학기 활동은 개강부터 방학 중 세미나까지를 기준으로 합니다.","visible":true,"order":1},
+        {"text":"3월 16일 월요일 OT에 대면 참여가 가능한 사람","visible":true,"order":2},
+        {"text":"즐겨보는 스포츠가 있는 사람","visible":true,"order":3},
+        {"text":"스포츠를 데이터 분석의 측면에서 접근해보고 싶은 사람","visible":true,"order":4}
+      ],
+      "regularSchedule": [
+        {"text":"일반 정기 활동: 3월 19일, 3월 27일, 5월 1일","visible":true,"order":1},
+        {"text":"PAINS 체육대회: 5월 중(미정)","visible":true,"order":2},
+        {"text":"학기 중 세미나: 5월 14일, 5월 15일","visible":true,"order":3},
+        {"text":"방학 중 세미나: 8월 중(미정)","visible":true,"order":4}
+      ],
+      "irregularSchedule": [
+        {"text":"봄 MT: 4월 3일 - 4월 4일 (예정)","visible":true,"order":1},
+        {"text":"스포츠 단체 직관: 5월 중(미정)","visible":true,"order":2},
+        {"text":"월드컵 단체 관람: 월드컵 기간(계획 중)","visible":true,"order":3},
+        {"text":"여름 MT: 7월 중(미정)","visible":true,"order":4}
+      ]
+    },
+    "stats": {
+      "gender": [
+        {"label":"여자","value":20,"color":"#FF6B81","visible":true,"order":1},
+        {"label":"남자","value":80,"color":"#4D96FF","visible":true,"order":2}
+      ],
+      "major": [
+        {"label":"데이터과학과","value":6,"color":"#FF6B6B","visible":true,"order":1},
+        {"label":"통계학과","value":6,"color":"#FF9F43","visible":true,"order":2},
+        {"label":"중어중문학과","value":4,"color":"#FDCB6E","visible":true,"order":3},
+        {"label":"경제학과","value":3,"color":"#20BF6B","visible":true,"order":4},
+        {"label":"언어학과","value":2,"color":"#0FB9B1","visible":true,"order":5},
+        {"label":"컴퓨터학과","value":2,"color":"#2D98DA","visible":true,"order":6},
+        {"label":"경영학과","value":2,"color":"#3867D6","visible":true,"order":7},
+        {"label":"행정학과","value":2,"color":"#8854D0","visible":true,"order":8},
+        {"label":"화학과","value":2,"color":"#A55EEA","visible":true,"order":9},
+        {"label":"사회학과","value":2,"color":"#F06292","visible":true,"order":10},
+        {"label":"국제학부","value":2,"color":"#4B6584","visible":true,"order":11},
+        {"label":"기타","value":12,"color":"#9980FA","visible":true,"order":12}
+      ],
+      "admissionYear": [
+        {"label":"19","value":1,"color":"#ab3333","visible":true,"order":1},
+        {"label":"20","value":2,"color":"#ab3333","visible":true,"order":2},
+        {"label":"21","value":3,"color":"#ab3333","visible":true,"order":3},
+        {"label":"22","value":4,"color":"#ab3333","visible":true,"order":4},
+        {"label":"23","value":4,"color":"#ab3333","visible":true,"order":5},
+        {"label":"24","value":17,"color":"#ab3333","visible":true,"order":6},
+        {"label":"25","value":14,"color":"#ab3333","visible":true,"order":7}
+      ]
+    }
   },
   "resultPage": {
     "pageTitle": "PAINS - 11기 최종 합격자 안내",

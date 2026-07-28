@@ -47,7 +47,7 @@ PAINS_SITE_ASSETS
 4. `google-apps-script/content-api.gs` 전체 내용을 붙여넣고 저장합니다.
 5. Apps Script 상단 함수 선택 메뉴에서 `setupPainsCms`를 고르고 실행합니다.
 6. 권한 승인 창이 뜨면 승인합니다.
-7. 다시 Google Sheet로 돌아오면 `copy`, `home_timeline`, `organization`, `societies`, `events` 등의 탭이 자동 생성됩니다.
+7. 다시 Google Sheet로 돌아오면 `README`, `홈_사진`, `copy`, `home_story_cards`, `organization`, `societies`, `events`, `projects`, `notices` 등의 탭이 자동 생성됩니다.
 8. Apps Script에서 `배포 > 새 배포 > 웹 앱`을 선택합니다.
 9. `실행 계정`은 `나`, `액세스 권한`은 `링크가 있는 모든 사용자` 또는 `Anyone`으로 둡니다.
 10. 배포 후 나온 Web app URL을 Vercel 환경변수 `PAINS_CONTENT_API_URL`에 넣습니다.
@@ -55,6 +55,10 @@ PAINS_SITE_ASSETS
 이후부터는 Google Sheets/Drive만 수정하면 됩니다.
 
 이미 세팅된 뒤에는 `setupPainsCms`를 다시 실행하지 마세요. 다시 실행하면 현재 시트 내용이 초기 템플릿으로 덮입니다.
+
+이미 쓰고 있는 시트를 최신 구조로 올릴 때는 `upgradeSheetV2`를 실행합니다. 입력해둔 값은 그대로 두고 구조만 정리하며, 실행 직전 상태는 `_backup_*` 탭으로 자동 저장됩니다.
+
+`content-api.gs`를 고친 뒤에는 반드시 `배포 > 배포 관리 > 편집 > 버전 "새 버전" > 배포`를 해야 사이트에 반영됩니다. 코드를 붙여넣고 저장만 하면 `/exec`는 계속 예전 버전을 내보냅니다. 배포 URL은 그대로 유지되므로 `content-loader.js`는 고칠 필요가 없습니다.
 
 ## Vercel 환경변수
 
@@ -128,7 +132,9 @@ https://drive.google.com/file/d/FILE_ID/view?usp=sharing
 
 `copy`
 
-단일 문구를 바꿀 때 씁니다. `path`는 JSON 경로입니다.
+홈과 소개 페이지의 글자·사진 전부를 여기서 관리합니다. `섹션`, `path`, `value`, `어디에 보이나` 4열이며, 행 순서는 실제 사이트를 스크롤하는 순서와 같습니다. 값을 바꿀 곳은 `value` 열뿐입니다.
+
+여기에 없는 항목은 홈페이지 어디에도 표시되지 않으므로 일부러 넣지 않았습니다.
 
 | path | value |
 | --- | --- |
@@ -180,24 +186,6 @@ https://drive.google.com/file/d/FILE_ID/view?usp=sharing
 | failDescription | 불합격 안내 문구 |
 | warningMessage | OT 안내 문구 |
 
-`home_timeline`
-
-| year | title | position | visible | order |
-| --- | --- | --- | --- | --- |
-| 2020 | PAINS 설립 | top | TRUE | 1 |
-
-`home_axes`
-
-| id | title | image | href | alt | visible | order |
-| --- | --- | --- | --- | --- | --- | --- |
-| about | About PAINS | Drive 또는 images URL | #home-about | PAINS 소개 | TRUE | 1 |
-
-`home_story_nav`
-
-| label | href | targetId | visible | order |
-| --- | --- | --- | --- | --- |
-| About PAINS | #home-about | home-about | TRUE | 1 |
-
 `home_story_cards`
 
 `titleLines`는 줄마다 `|`로 나눕니다. 커뮤니티의 두 사진은 `image`와 `image2`를 각각 바꾸며, 두 값은 독립적으로 반영됩니다.
@@ -206,24 +194,43 @@ https://drive.google.com/file/d/FILE_ID/view?usp=sharing
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | community | Community | 같이 보고,\|같이 즐기고,\|같이 성장합니다. | 설명 | 첫 사진 URL | 첫 사진 설명 | 두 번째 사진 URL | 두 번째 사진 설명 | FIG.03 | GATHERING | TRUE | 3 |
 
-홈 프로젝트의 `FIELD MODEL`, `RESEARCH DESK`, `DATA ATLAS` 버튼은 이번 개편에서 제공한 인물 없는 로컬 이미지 시안 전환 기능입니다. 기본 시안은 `FIELD MODEL`이며, 파일은 `images/project-*.png`에 있습니다.
+`captionFig`/`captionLabel`은 사진 아래 작은 캡션입니다. `about`과 `projects` 카드에만 캡션 자리가 있고 `community` 카드에는 없습니다.
 
-`home_schedule`
+`home_project_images`
 
-홈의 **다가오는 일정**은 오늘(한국시간) 이후 일정 가운데 날짜가 빠른 4개를 표시합니다. 지난 일정은 자동으로 제외되고, 표시할 일정이 4개보다 적으면 남은 칸에는 가장 일반적인 미정 표기인 `TBD`가 들어갑니다.
+홈 03 PROJECTS 사진 아래에 뜨는 이미지 선택 버튼입니다. `visible`이 전부 `FALSE`면 버튼 묶음이 통째로 숨습니다.
 
-| date | title | tag | dateLabel | weekday | visible | order |
+| label | image | alt | visible | order |
+| --- | --- | --- | --- | --- |
+| PROJECT | images/project-field-model.png | PAINS 프로젝트 | TRUE | 1 |
+| SEMINAR | images/seminar-20260515.jpg | PAINS 세미나 | TRUE | 2 |
+| COLUMN | images/project-column.png | PAINS 칼럼 | TRUE | 3 |
+
+`Schedule`
+
+홈의 **다가오는 일정**은 운영용 `Schedule` 탭과 직접 연동됩니다. 별도 홈 일정 탭은 없습니다. 한국시간 현재 시각을 기준으로 이미 끝난 일정은 자동 제외하고, 다음 4개를 표시합니다. 4개보다 적으면 남은 칸은 `TBD`로 표시합니다.
+
+| A 일정명 | B 시작일 | C 시작시간 | D 종료일 | E 종료시간 | F 장소 | G 유형 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 2026-09-05 | 정기 세미나 #1 | 정기 |  |  | TRUE | 1 |
-| 2026-09-12 | 신입 부원 OT | 필수 행사 |  |  | TRUE | 2 |
+| 정기 세미나 #1 | 2026-09-05 | 19:00 | 2026-09-05 | 21:00 | 상남정경관 | 정기활동 |
 
-- `date`: `YYYY-MM-DD` 형식의 행사일입니다. 오늘 일정도 포함됩니다.
-- `title`: 가운데에 표시되는 행사명입니다.
-- `tag`: 오른쪽 배지 문구입니다. `필수`, `정기`, `행사`, `필수 행사`처럼 원하는 표현을 직접 입력합니다.
-- `dateLabel`, `weekday`: 날짜와 요일 표기를 직접 지정할 때만 사용하며, 비워두면 `MM.DD`와 영문 요일이 자동 생성됩니다.
-- `visible`: `FALSE`이면 노출하지 않습니다. 같은 날짜의 순서는 `order`로 정할 수 있습니다.
+- 종료일/종료시간이 있으면 그 시각까지 진행 중 일정으로 간주합니다.
+- 시간이 비어 있거나 `TBC`이면 해당 날짜 23:59까지 노출합니다.
+- 홈페이지 오른쪽 배지는 G열의 유형을 사용합니다.
 
-로컬에서 Google Sheets에 접근할 수 없을 때는 `data/site-content.json`의 `home.schedule` 배열에 같은 필드를 입력하면 됩니다. 이 JSON이 원격 요청 실패 시의 안전한 fallback으로 사용됩니다.
+`홈_사진`
+
+홈 사진은 이 탭 한 곳에서 관리합니다. `imageUrl` 열에 Google Drive 공유 링크나 공개 이미지 주소를 붙여넣으면 됩니다.
+
+| 위치 | key | imageUrl | 사진 설명 |
+| --- | --- | --- | --- |
+| 홈 첫 화면 배경 | hero | Drive 공유 링크 | PAINS 홈 배경 |
+| 홈 02 ABOUT | about | Drive 공유 링크 | PAINS 소개 |
+| 홈 03 PROJECTS | projects | Drive 공유 링크 | PAINS 프로젝트 |
+| 홈 03 SEMINAR | seminar | Drive 공유 링크 | PAINS 세미나 |
+| 홈 03 COLUMN | column | Drive 공유 링크 | PAINS 칼럼 |
+| 홈 04 COMMUNITY 왼쪽 | community1 | Drive 공유 링크 | 단체 활동 |
+| 홈 04 COMMUNITY 오른쪽 | community2 | Drive 공유 링크 | 친목 활동 |
 
 `organization`
 
@@ -243,39 +250,39 @@ https://drive.google.com/file/d/FILE_ID/view?usp=sharing
 | --- | --- | --- | --- | --- |
 | 나의 응원 유형은? - PBTI | PBTItest | Drive URL | TRUE | 1 |
 
-`page_content`
+`projects`
 
-위 탭들로 관리하지 않는 페이지의 문구/이미지를 범용으로 덮어쓸 때 씁니다.
+**오래된 프로젝트가 위, 최신이 아래입니다.** 새 프로젝트는 맨 아래에 행을 추가하기만 하면 사이트 최상단에 표시됩니다. `order`는 비워두세요.
 
-| page | selector | type | value | visible | order |
-| --- | --- | --- | --- | --- | --- |
-| apply | h2 | text | PAINS 11기 지원하기 | TRUE | 1 |
-| ci | .ci-logo img | src | Drive URL | TRUE | 1 |
-| fee | .section-card:first-child p | text | 회비 안내 문구 | TRUE | 1 |
+| title | year | generation | period | sport | driveUrl | fileName | visible | order |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 21시즌 후 FA대상 선수들의 연봉 예측 | 2021 | 1기 | 방학 중 프로젝트 | 야구 | Drive 공유 링크 | 01V_01.pdf | TRUE | |
+| 야구 특화 LLM: PA-LLMa | 2026 | 10기 | 방학 중 프로젝트 | 야구 | Drive 공유 링크 | 10V_10.pdf | TRUE | |
 
-`type` 값:
+`order`를 비워두면 행 위치가 곧 순번이 되고, 사이트는 이것을 역순으로 뒤집어 보여줍니다. 특정 항목을 강제로 맨 위에 올리고 싶을 때만 큰 숫자를 직접 입력합니다.
 
-- `text`: 텍스트 교체
-- `html`: HTML 교체
-- `src`: 이미지 `src` 교체
-- `href`: 링크 `href` 교체
-- `background`: 배경 이미지 교체
-- `value`: input 값 교체
+`notices`
+
+| title | date | generation | department | driveUrl | fileName | important | visible | order |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 11기 오리엔테이션 자료 | 2026-03-16 | 11기 | 운영위원회 | Drive 공유 링크 | 11thOT_20260316.pdf | FALSE | TRUE | 1 |
+
+날짜는 `2026-03-16`, `2026. 3. 16`, 날짜 서식 셀 중 무엇으로 넣어도 됩니다. 공지는 날짜 내림차순으로 자동 정렬되며, `important`가 `TRUE`인 항목이 위로 고정됩니다.
 
 ## 지금 외부 관리 가능한 영역
 
-- 메인 히어로 문구와 이미지
-- 연표
-- Who We Are 문구
-- About / Projects / Community 카드
-- 일정 소개 문구
-- 소개 페이지 문구
-- 회장 인사말과 이미지
-- 조직도
-- 소모임
-- 이벤트
-- 프로젝트 아카이브 API URL
-- 기타 페이지의 문구/이미지/링크: `page_content` 탭으로 관리
+- 홈 첫 화면 배경 사진과 라벨
+- 홈 01 정체성 문구와 숫자 지표
+- 홈 02/03/04 카드의 제목·설명·사진·캡션
+- 홈 05 다가오는 일정
+- 홈 06 하단 링크 3개
+- 소개 페이지 문구와 사진
+- 회장 인사말 (표시 여부 포함)
+- 조직도 (기수는 `organization.generation` 하나만)
+- 소모임 / 이벤트
+- 프로젝트 아카이브 / 공지사항
+- 모집 안내와 지원 일정
+- 지원·결과 조회 기간 열고 닫기
 
 ## 코드가 필요한 경우
 

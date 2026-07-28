@@ -16,6 +16,7 @@
     image.src = src;
     image.alt = button.dataset.projectAlt || '';
     if (caption) caption.textContent = button.dataset.projectLabel || '';
+    root.classList.toggle('is-column', (button.dataset.projectLabel || '').toUpperCase() === 'COLUMN');
 
     buttons.forEach((item) => {
       const selected = item === button;
