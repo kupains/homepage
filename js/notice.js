@@ -51,6 +51,13 @@
     return values.find((value) => norm(value) !== '') ?? '';
   }
 
+  function sheetDate(value) {
+    const raw = norm(value);
+    const match = raw.match(/^Date\((\d{4}),(\d{1,2}),(\d{1,2})/);
+    if (!match) return raw;
+    return `${match[1]}-${String(Number(match[2]) + 1).padStart(2, '0')}-${String(match[3]).padStart(2, '0')}`;
+  }
+
   function noticeFileName(n) {
     return norm(firstValue(n.file, n.fileName, n.filename, n.name));
   }
@@ -177,6 +184,26 @@
   }
 
   async function resolveArchiveJson() {
+    try {
+      const rows = await window.PainsContent?.loadSheetTab?.('notices', 'A:K');
+      if (Array.isArray(rows) && rows.length) {
+        return {
+          notices: rows
+            .filter((row) => {
+              const visible = norm(row.visible).toLowerCase();
+              return !['false', '0', 'no', 'n', 'hidden'].includes(visible);
+            })
+            .map((row) => ({
+              ...row,
+              date: sheetDate(row.date),
+              important: ['true', '1', 'yes', 'y'].includes(norm(row.important).toLowerCase())
+            }))
+        };
+      }
+    } catch (err) {
+      console.warn('[PAINS] 공지 시트 직접 조회에 실패해 배포 JSON을 사용합니다.', err);
+    }
+
     try {
       let res = await fetch(`/api/content.js?v=${Date.now()}`, { cache: 'no-store' });
       if (!res.ok) {

@@ -103,6 +103,25 @@
     return String(value || '').replace(/\{(\w+)\}/g, (_, key) => vars[key] ?? '');
   }
 
+  function cloneContent(value) {
+    return JSON.parse(JSON.stringify(value || {}));
+  }
+
+  function setByPath(target, path, value) {
+    const keys = String(path || '').split('.').map((key) => key.trim()).filter(Boolean);
+    if (!keys.length) return;
+    let cursor = target;
+    keys.slice(0, -1).forEach((key) => {
+      if (!cursor[key] || typeof cursor[key] !== 'object') cursor[key] = {};
+      cursor = cursor[key];
+    });
+    cursor[keys[keys.length - 1]] = value;
+  }
+
+  function splitSheetLines(value) {
+    return String(value || '').split('|').map((line) => line.trim()).filter(Boolean);
+  }
+
   function parseKstDate(value, boundary = 'start') {
     const raw = String(value || '').trim();
     if (!raw) return null;
@@ -692,7 +711,7 @@
     if (r.timeline) renderApplyTimeline(r);
   }
 
-  function loadGvizTab(sheetName) {
+  function loadGvizTab(sheetName, range = '') {
     return new Promise((resolve, reject) => {
       const callbackName = `painsGviz_${Date.now()}_${Math.random().toString(36).slice(2)}`;
       const script = document.createElement('script');
@@ -730,19 +749,217 @@
         reject(new Error(`Sheet script failed: ${sheetName}`));
       };
       const base = `https://docs.google.com/spreadsheets/d/${CONTENT_SHEET_ID}/gviz/tq`;
-      script.src = `${base}?tqx=responseHandler:${callbackName}&sheet=${encodeURIComponent(sheetName)}`;
+      const rangeParam = range ? `&range=${encodeURIComponent(range)}` : '';
+      script.src = `${base}?tqx=responseHandler:${callbackName}&headers=1&sheet=${encodeURIComponent(sheetName)}${rangeParam}`;
       document.head.appendChild(script);
+    });
+  }
+
+  async function loadLiveCoreFromSheet() {
+    const [copyRows, settingRows] = await Promise.all([
+      loadGvizTab('copy', 'A:D'),
+      loadGvizTab('settings', 'A:C')
+    ]);
+    return { copyRows, settingRows };
+  }
+
+  function applyLiveCore(data) {
+    const content = cloneContent(window.__painsContentLatest);
+    data.copyRows.forEach((row) => {
+      if (row.path) setByPath(content, row.path, row.value ?? '');
+    });
+    content.settings ||= {};
+    data.settingRows.forEach((row) => {
+      const key = row.key || row.path;
+      if (key) setByPath(content, `settings.${key}`, row.value ?? '');
+    });
+    applyContent(content);
+  }
+
+  async function loadLiveHomeFromSheet() {
+    const [storyRows, projectRows, mediaRows, schedule] = await Promise.all([
+      loadGvizTab('home_story_cards', 'A:N'),
+      loadGvizTab('home_project_images', 'A:E'),
+      loadGvizTab('홈_사진', 'A:D'),
+      loadLiveHomeScheduleFromSheet()
+    ]);
+
+    const cards = storyRows.map((row, index) => {
+      const image2 = row.image2 || row.image_2;
+      return {
+        id: row.id,
+        eyebrow: row.eyebrow,
+        titleLines: splitSheetLines(row.titleLines || row.title_lines || row.title),
+        description: row.description,
+        image: row.image,
+        alt: row.alt,
+        images: row.id === 'community' ? [
+          row.image ? { src: row.image, alt: row.alt } : null,
+          image2 ? { src: image2, alt: row.alt2 || row.alt_2 } : null
+        ].filter(Boolean) : undefined,
+        caption: (row.captionFig || row.captionLabel)
+          ? { fig: row.captionFig, label: row.captionLabel } : undefined,
+        primaryCta: row.primaryLabel
+          ? { label: row.primaryLabel, href: row.primaryHref || '#' } : undefined,
+        visible: boolValue(row.visible, true),
+        order: Number(row.order) || index + 1
+      };
+    });
+
+    const projectVariants = projectRows
+      .filter((row) => row.label || row.image)
+      .map((row, index) => ({
+        label: row.label,
+        image: row.image,
+        alt: row.alt,
+        visible: boolValue(row.visible, true),
+        order: Number(row.order) || index + 1
+      }));
+
+    return { cards, projectVariants, mediaRows, schedule };
+  }
+
+  function applyLiveHome(data) {
+    const current = window.__painsContentLatest || {};
+    const home = cloneContent(current.home);
+    home.story ||= {};
+    home.story.cards = data.cards;
+    home.projectVariants = data.projectVariants;
+    home.schedule = data.schedule;
+
+    data.mediaRows.forEach((row) => {
+      const key = row.key || row['키'];
+      const imageUrl = row.imageUrl || row.image || row['사진 URL'] || row['사진주소'];
+      const alt = row.alt || row['사진 설명'] || '';
+      if (!key || !imageUrl) return;
+      if (key === 'hero') {
+        home.hero ||= {};
+        home.hero.image = imageUrl;
+      }
+
+      const variantLabel = ({ projects: 'PROJECT', seminar: 'SEMINAR', column: 'COLUMN' })[key];
+      if (variantLabel) {
+        const variant = home.projectVariants.find((item) => String(item.label || '').toUpperCase() === variantLabel);
+        if (variant) {
+          variant.image = imageUrl;
+          if (alt) variant.alt = alt;
+        }
+      }
+
+      const card = home.story.cards.find((item) => (
+        item.id === key || (String(key).startsWith('community') && item.id === 'community')
+      ));
+      if (!card) return;
+      if (key === 'community1' || key === 'community2') {
+        const index = key === 'community2' ? 1 : 0;
+        card.images ||= [];
+        card.images[index] = { src: imageUrl, alt };
+        if (index === 0) {
+          card.image = imageUrl;
+          if (alt) card.alt = alt;
+        }
+      } else {
+        card.image = imageUrl;
+        if (alt) card.alt = alt;
+      }
+    });
+
+    applyContent({ ...current, home });
+  }
+
+  async function loadLivePageSectionFromSheet(currentPage) {
+    if (currentPage === 'members') {
+      const rows = await loadGvizTab('organization', 'A:H');
+      return {
+        key: 'organization',
+        value: {
+          members: rows.map((row, index) => ({
+            id: row.id,
+            role: row.role,
+            name: row.name,
+            major: row.major,
+            image: row.image,
+            staff: boolValue(row.staff, false),
+            visible: boolValue(row.visible, true),
+            order: Number(row.order) || index + 1
+          }))
+        }
+      };
+    }
+
+    if (currentPage === 'society') {
+      const rows = await loadGvizTab('societies', 'A:F');
+      return {
+        key: 'societies',
+        value: {
+          items: rows.map((row, index) => ({
+            name: row.name,
+            leader: row.leader,
+            description: row.description,
+            image: row.image,
+            visible: boolValue(row.visible, true),
+            order: Number(row.order) || index + 1
+          }))
+        }
+      };
+    }
+
+    if (currentPage === 'event') {
+      const rows = await loadGvizTab('events', 'A:E');
+      return {
+        key: 'events',
+        value: {
+          items: rows.map((row, index) => ({
+            title: row.title,
+            href: row.href,
+            image: row.image,
+            visible: boolValue(row.visible, true),
+            order: Number(row.order) || index + 1
+          }))
+        }
+      };
+    }
+
+    if (currentPage === 'result') {
+      const rows = await loadGvizTab('result_page', 'A:C');
+      const resultPage = {};
+      rows.forEach((row) => {
+        if (row.key) resultPage[row.key] = row.value ?? '';
+      });
+      return { key: 'resultPage', value: resultPage };
+    }
+
+    return null;
+  }
+
+  function applyLivePageSection(section) {
+    if (!section) return;
+    const current = window.__painsContentLatest || {};
+    applyContent({
+      ...current,
+      [section.key]: { ...(current[section.key] || {}), ...section.value }
+    });
+  }
+
+  function keepLiveContent(promise, applyLive, refreshPromise) {
+    promise.then(applyLive).catch(() => {
+      // 공개 시트를 읽지 못하면 기존 API/JSON 콘텐츠를 그대로 유지합니다.
+    });
+    refreshPromise.finally(() => {
+      promise.then(applyLive).catch(() => {
+        // 느린 API 뒤에도 시트 원본을 최종값으로 유지합니다.
+      });
     });
   }
 
   async function loadLiveRecruitmentFromSheet() {
     const [copyRows, timelineRows, activityRows, departmentRows, listRows, statRows] = await Promise.all([
-      loadGvizTab('recruitment'),
-      loadGvizTab('recruitment_timeline'),
-      loadGvizTab('recruitment_activities'),
-      loadGvizTab('recruitment_departments'),
-      loadGvizTab('recruitment_lists'),
-      loadGvizTab('recruitment_stats')
+      loadGvizTab('recruitment', 'A:C'),
+      loadGvizTab('recruitment_timeline', 'A:F'),
+      loadGvizTab('recruitment_activities', 'A:G'),
+      loadGvizTab('recruitment_departments', 'A:D'),
+      loadGvizTab('recruitment_lists', 'A:D'),
+      loadGvizTab('recruitment_stats', 'A:F')
     ]);
 
     const recruitment = {};
@@ -814,7 +1031,7 @@
   }
 
   async function loadLiveHomeScheduleFromSheet() {
-    const rows = await loadGvizTab('Schedule');
+    const rows = await loadGvizTab('Schedule', 'A:H');
     return rows
       .filter((row) => String(row['일정명'] || '').trim() && String(row['시작일'] || '').trim())
       .map((row, index) => ({
@@ -1316,7 +1533,10 @@
       }
     });
 
-    if (page() === 'apply') {
+    const currentPage = page();
+    keepLiveContent(loadLiveCoreFromSheet(), applyLiveCore, refreshRenderPromise);
+
+    if (currentPage === 'apply') {
       const liveRecruitmentPromise = loadLiveRecruitmentFromSheet();
       const applyLiveRecruitment = (recruitment) => {
         const current = window.__painsContentLatest || {};
@@ -1325,37 +1545,19 @@
           recruitment: { ...(current.recruitment || {}), ...recruitment }
         });
       };
-
-      liveRecruitmentPromise.then(applyLiveRecruitment).catch(() => {
-        // 공개 시트를 읽지 못하면 기존 API/JSON 콘텐츠를 그대로 유지합니다.
-      });
-
-      refreshRenderPromise.finally(() => {
-        liveRecruitmentPromise.then(applyLiveRecruitment).catch(() => {
-          // 공개 시트를 읽지 못하면 기존 API/JSON 콘텐츠를 그대로 유지합니다.
-        });
-      });
+      keepLiveContent(liveRecruitmentPromise, applyLiveRecruitment, refreshRenderPromise);
     }
 
-    if (page() === 'index') {
-      const liveSchedulePromise = loadLiveHomeScheduleFromSheet();
-      const applyLiveSchedule = (schedule) => {
-        const current = window.__painsContentLatest || {};
-        applyContent({
-          ...current,
-          home: { ...(current.home || {}), schedule }
-        });
-      };
+    if (currentPage === 'index') {
+      keepLiveContent(loadLiveHomeFromSheet(), applyLiveHome, refreshRenderPromise);
+    }
 
-      liveSchedulePromise.then(applyLiveSchedule).catch(() => {
-        // 공개 시트를 읽지 못하면 기존 API/JSON 콘텐츠를 그대로 유지합니다.
-      });
-
-      refreshRenderPromise.finally(() => {
-        liveSchedulePromise.then(applyLiveSchedule).catch(() => {
-          // 공개 시트를 읽지 못하면 기존 API/JSON 콘텐츠를 그대로 유지합니다.
-        });
-      });
+    if (['members', 'society', 'event', 'result'].includes(currentPage)) {
+      keepLiveContent(
+        loadLivePageSectionFromSheet(currentPage),
+        applyLivePageSection,
+        refreshRenderPromise
+      );
     }
   }
 
@@ -1365,7 +1567,8 @@
     apply: applyContent,
     assetUrl,
     featureGate,
-    template
+    template,
+    loadSheetTab: loadGvizTab
   };
 
   if (document.readyState === 'loading') {

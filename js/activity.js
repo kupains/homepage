@@ -185,6 +185,20 @@
 
   async function resolveArchiveJson() {
     try {
+      const rows = await window.PainsContent?.loadSheetTab?.('projects', 'A:J');
+      if (Array.isArray(rows) && rows.length) {
+        return {
+          projects: rows.filter((row) => {
+            const visible = norm(row.visible).toLowerCase();
+            return !['false', '0', 'no', 'n', 'hidden'].includes(visible);
+          })
+        };
+      }
+    } catch (err) {
+      console.warn('[PAINS] 프로젝트 시트 직접 조회에 실패해 배포 JSON을 사용합니다.', err);
+    }
+
+    try {
       let res = await fetch(`/api/content.js?v=${Date.now()}`, { cache: 'no-store' });
       if (!res.ok) {
         res = await fetch(`data/site-content.json?v=${Date.now()}`, { cache: 'no-store' });
