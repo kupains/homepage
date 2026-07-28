@@ -3,6 +3,7 @@
 
   const REMOTE_CONTENT_URL = 'https://script.google.com/macros/s/AKfycbypl1Z5iLKPPBGwpE8xv2TyCbgl5fmGBhYi1Zn16aU8tG2zvDGtIyALBAhQZ8Jpz5fJyQ/exec';
   const FALLBACK_CONTENT_URL = 'data/site-content.json';
+  const CONTENT_SHEET_ID = '1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo';
   const CONTENT_CACHE_KEY = 'pains-site-content-v2';
   const ASSET_WAIT_LIMIT_MS = 300;
 
@@ -691,6 +692,113 @@
     if (r.timeline) renderApplyTimeline(r);
   }
 
+  function loadGvizTab(sheetName) {
+    return new Promise((resolve, reject) => {
+      const callbackName = `painsGviz_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+      const script = document.createElement('script');
+      const timeout = window.setTimeout(() => {
+        delete window[callbackName];
+        script.remove();
+        reject(new Error(`Sheet timeout: ${sheetName}`));
+      }, 8000);
+
+      window[callbackName] = (response) => {
+        window.clearTimeout(timeout);
+        delete window[callbackName];
+        script.remove();
+        if (response?.status !== 'ok' || !response.table) {
+          reject(new Error(`Sheet load failed: ${sheetName}`));
+          return;
+        }
+
+        const headers = response.table.cols.map((col) => col.label || col.id);
+        const objects = response.table.rows.map((row) => {
+          const item = {};
+          headers.forEach((header, index) => {
+            const cell = row.c?.[index];
+            item[header] = cell?.v ?? '';
+          });
+          return item;
+        });
+        resolve(objects);
+      };
+
+      script.onerror = () => {
+        window.clearTimeout(timeout);
+        delete window[callbackName];
+        script.remove();
+        reject(new Error(`Sheet script failed: ${sheetName}`));
+      };
+      const base = `https://docs.google.com/spreadsheets/d/${CONTENT_SHEET_ID}/gviz/tq`;
+      script.src = `${base}?tqx=responseHandler:${callbackName}&sheet=${encodeURIComponent(sheetName)}`;
+      document.head.appendChild(script);
+    });
+  }
+
+  async function loadLiveRecruitmentFromSheet() {
+    const [copyRows, timelineRows, activityRows, departmentRows, listRows, statRows] = await Promise.all([
+      loadGvizTab('recruitment'),
+      loadGvizTab('recruitment_timeline'),
+      loadGvizTab('recruitment_activities'),
+      loadGvizTab('recruitment_departments'),
+      loadGvizTab('recruitment_lists'),
+      loadGvizTab('recruitment_stats')
+    ]);
+
+    const recruitment = {};
+    copyRows.forEach((row) => {
+      if (row.key) recruitment[row.key] = row.value;
+    });
+    recruitment.bannerVisible = boolValue(recruitment.bannerVisible, true);
+    recruitment.applyVisible = boolValue(recruitment.applyVisible, true);
+    recruitment.timeline = timelineRows.map((row, index) => ({
+      step: row.step,
+      date: row.date,
+      note: row.note,
+      highlight: boolValue(row.highlight, false),
+      visible: boolValue(row.visible, true),
+      order: Number(row.order) || index + 1
+    }));
+    recruitment.activities = activityRows.map((row, index) => ({
+      id: row.id,
+      title: row.title,
+      description: row.description,
+      image: row.image,
+      alt: row.alt,
+      visible: boolValue(row.visible, true),
+      order: Number(row.order) || index + 1
+    }));
+    recruitment.departments = departmentRows.map((row, index) => ({
+      title: row.title,
+      description: row.description,
+      visible: boolValue(row.visible, true),
+      order: Number(row.order) || index + 1
+    }));
+    recruitment.lists = { eligibility: [], regularSchedule: [], irregularSchedule: [] };
+    listRows.forEach((row, index) => {
+      if (!row.group) return;
+      recruitment.lists[row.group] ||= [];
+      recruitment.lists[row.group].push({
+        text: row.text,
+        visible: boolValue(row.visible, true),
+        order: Number(row.order) || index + 1
+      });
+    });
+    recruitment.stats = { gender: [], major: [], admissionYear: [] };
+    statRows.forEach((row, index) => {
+      if (!row.group) return;
+      recruitment.stats[row.group] ||= [];
+      recruitment.stats[row.group].push({
+        label: row.label,
+        value: Number(row.value) || 0,
+        color: row.color,
+        visible: boolValue(row.visible, true),
+        order: Number(row.order) || index + 1
+      });
+    });
+    return recruitment;
+  }
+
   function renderResultGate(content) {
     const r = content?.resultPage || {};
     const resultOpen = featureGate(content, 'result', false);
@@ -1171,11 +1279,25 @@
       revealContent();
     }
 
-    window.__painsContentRefreshPromise.then((freshContent) => {
+    const refreshRenderPromise = window.__painsContentRefreshPromise.then((freshContent) => {
       if (freshContent && freshContent !== window.__painsContentLatest) {
         applyContent(freshContent);
       }
     });
+
+    if (page() === 'apply') {
+      refreshRenderPromise.finally(() => {
+        loadLiveRecruitmentFromSheet().then((recruitment) => {
+          const current = window.__painsContentLatest || {};
+          applyContent({
+            ...current,
+            recruitment: { ...(current.recruitment || {}), ...recruitment }
+          });
+        }).catch(() => {
+          // 공개 시트를 읽지 못하면 기존 API/JSON 콘텐츠를 그대로 유지합니다.
+        });
+      });
+    }
   }
 
   const initialContentPromise = loadContent();
