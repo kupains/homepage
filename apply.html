@@ -81,13 +81,19 @@
         .hero-apply h2 { font-size: 2.5rem; margin-bottom: 15px; }
 
         /* 타임라인 */
-        .timeline { position: relative; max-width: 100%; margin: 0 auto; padding: 20px 0; }
-        .timeline::after { content: ''; position: absolute; width: 3px; background-color: #eee; top: 50px; bottom: 0; left: 20px; margin-left: -1.5px; }
-        .timeline-item { padding: 10px 20px 20px 50px; position: relative; background-color: inherit; width: 100%; }
-        .timeline-item::after { content: ''; position: absolute; width: 16px; height: 16px; right: auto; left: 20px; top: 15px; border-radius: 50%; z-index: 1; background-color: #cf8b8b; border: 3px solid white; margin-left: -8px; }
-        .timeline-content { padding: 15px; background-color: white; position: relative; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid #ab3333; }
-        .timeline-date { font-weight: bold; color: #ab3333; margin-bottom: 5px; display: block; }
-        .timeline-title { font-weight: bold; font-size: 1.1rem; }
+        .timeline { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; max-width: 100%; margin: 0 auto; padding: 38px 0 10px; }
+        .timeline::after { content: ''; position: absolute; height: 3px; background-color: #eee; top: 18px; left: 9%; right: 9%; }
+        .timeline-item { position: relative; min-width: 0; }
+        .timeline-item::after { content: ''; position: absolute; width: 16px; height: 16px; left: 50%; top: -28px; transform: translateX(-50%); border-radius: 50%; z-index: 1; background-color: #cf8b8b; border: 3px solid white; }
+        .timeline-content { height: 100%; min-height: 145px; padding: 14px 12px; background-color: white; position: relative; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 4px solid #ab3333; }
+        .timeline-date { min-height: 48px; font-size: 0.82rem; line-height: 1.45; font-weight: bold; color: #ab3333; margin-bottom: 8px; display: block; overflow-wrap: anywhere; }
+        .timeline-title { display: block; font-weight: bold; font-size: 1rem; line-height: 1.4; }
+        .timeline-content p { margin-top: 7px; margin-bottom: 0; line-height: 1.4; }
+
+        /* 회비 안내 */
+        .fee-grid { display: grid; grid-template-columns: minmax(210px, 0.8fr) minmax(0, 2.2fr); gap: 16px; align-items: stretch; }
+        .fee-amount { display: flex; align-items: center; justify-content: center; margin: 0; padding: 20px; text-align: center; background: #fff5f5; border: 1px solid #efd3d3; border-radius: 12px; }
+        .fee-description { display: flex; flex-direction: column; justify-content: center; margin: 0; padding: 18px 20px; background: #f4f4f4; border-radius: 12px; line-height: 1.7; }
 
         /* 기타 요소 (카드 디자인) */
         .dept-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; }
@@ -120,11 +126,18 @@
         .btn-apply-big { display: inline-block; background-color: #ab3333; color: white; padding: 18px 50px; border-radius: 40px; font-size: 1.4rem; font-weight: bold; text-decoration: none; transition: background 0.3s, transform 0.2s; box-shadow: 0 8px 20px rgba(171, 51, 51, 0.3); }
         .btn-apply-big:hover { background-color: #8f2a2a; transform: translateY(-3px); }
 
-        @media (max-width: 600px) {
+        @media (max-width: 720px) {
             .hero-apply h2 { font-size: 2rem; }
             .chart-container-wrapper { flex-direction: column; }
             .dept-container { flex-direction: column; }
             .activity-container { grid-template-columns: 1fr; }
+            .timeline { display: block; padding: 8px 0; }
+            .timeline::after { width: 3px; height: auto; top: 28px; bottom: 15px; left: 20px; right: auto; }
+            .timeline-item { padding: 8px 0 14px 48px; }
+            .timeline-item::after { left: 20px; top: 14px; transform: translateX(-50%); }
+            .timeline-content { min-height: 0; border-top: none; border-left: 4px solid #ab3333; }
+            .timeline-date { min-height: 0; font-size: 0.88rem; }
+            .fee-grid { grid-template-columns: 1fr; }
         }
     </style>
     <script defer src="js/content-loader.js?v=20260728-apply2"></script>
@@ -346,11 +359,13 @@
 
     <section id="sec-fee">
         <h3>💸 회비 안내</h3>
-        <p id="js-apply-fee-amount" style="font-size: 1.1rem; color: #ab3333; font-weight: bold;">학기 당 3만~3만 5천원 (추후 확정)</p>
-        <p id="js-apply-fee-description" style="font-size: 0.95rem; color: #666; background: #eee; padding: 15px; border-radius: 8px;">
-            <span id="js-apply-fee-description-text">회비는 주로 동아리 활동 중 장소대여, 홍보자료 제작, 프로젝트 지원 등에 사용됩니다.</span><br>
-            <span id="js-apply-fee-link-prefix">회비 사용 내역은</span> <a id="js-apply-fee-link" href="fee.html" style="color: #ab3333; text-decoration: underline;"><strong>회비 내역 조회 페이지</strong></a><span id="js-apply-fee-link-suffix">에서 부원들에게 투명하게 공개되고 있습니다.</span>
-        </p>
+        <div class="fee-grid">
+            <p id="js-apply-fee-amount" class="fee-amount" style="font-size: 1.1rem; color: #ab3333; font-weight: bold;">학기 당 3만~3만 5천원 (추후 확정)</p>
+            <p id="js-apply-fee-description" class="fee-description" style="font-size: 0.95rem; color: #666;">
+                <span id="js-apply-fee-description-text">회비는 주로 동아리 활동 중 장소대여, 홍보자료 제작, 프로젝트 지원 등에 사용됩니다.</span>
+                <span><span id="js-apply-fee-link-prefix">회비 사용 내역은</span> <a id="js-apply-fee-link" href="fee.html" style="color: #ab3333; text-decoration: underline;"><strong>회비 내역 조회 페이지</strong></a><span id="js-apply-fee-link-suffix">에서 부원들에게 투명하게 공개되고 있습니다.</span></span>
+            </p>
+        </div>
     </section>
 
     <section id="sec-contact">
