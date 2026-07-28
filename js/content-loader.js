@@ -799,6 +799,37 @@
     return recruitment;
   }
 
+  function gvizDatePart(value) {
+    const raw = String(value || '').trim();
+    const match = raw.match(/^Date\((\d{4}),(\d{1,2}),(\d{1,2})/);
+    if (!match) return raw;
+    return `${match[1]}-${String(Number(match[2]) + 1).padStart(2, '0')}-${String(match[3]).padStart(2, '0')}`;
+  }
+
+  function gvizTimePart(value) {
+    const raw = String(value || '').trim();
+    const match = raw.match(/^Date\(\d{4},\d{1,2},\d{1,2},(\d{1,2}),(\d{1,2})/);
+    if (!match) return raw;
+    return `${String(match[1]).padStart(2, '0')}:${String(match[2]).padStart(2, '0')}`;
+  }
+
+  async function loadLiveHomeScheduleFromSheet() {
+    const rows = await loadGvizTab('Schedule');
+    return rows
+      .filter((row) => String(row['일정명'] || '').trim() && String(row['시작일'] || '').trim())
+      .map((row, index) => ({
+        title: row['일정명'],
+        date: gvizDatePart(row['시작일']),
+        startTime: gvizTimePart(row['시작시간']),
+        endDate: gvizDatePart(row['종료일']),
+        endTime: gvizTimePart(row['종료시간']),
+        location: row['장소'],
+        tag: row['유형'],
+        visible: boolValue(row['홈 공개'], true),
+        order: index + 1
+      }));
+  }
+
   function renderResultGate(content) {
     const r = content?.resultPage || {};
     const resultOpen = featureGate(content, 'result', false);
@@ -1292,6 +1323,20 @@
           applyContent({
             ...current,
             recruitment: { ...(current.recruitment || {}), ...recruitment }
+          });
+        }).catch(() => {
+          // 공개 시트를 읽지 못하면 기존 API/JSON 콘텐츠를 그대로 유지합니다.
+        });
+      });
+    }
+
+    if (page() === 'index') {
+      refreshRenderPromise.finally(() => {
+        loadLiveHomeScheduleFromSheet().then((schedule) => {
+          const current = window.__painsContentLatest || {};
+          applyContent({
+            ...current,
+            home: { ...(current.home || {}), schedule }
           });
         }).catch(() => {
           // 공개 시트를 읽지 못하면 기존 API/JSON 콘텐츠를 그대로 유지합니다.
