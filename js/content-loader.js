@@ -1331,14 +1331,21 @@
     }
 
     if (page() === 'index') {
+      const liveSchedulePromise = loadLiveHomeScheduleFromSheet();
+      const applyLiveSchedule = (schedule) => {
+        const current = window.__painsContentLatest || {};
+        applyContent({
+          ...current,
+          home: { ...(current.home || {}), schedule }
+        });
+      };
+
+      liveSchedulePromise.then(applyLiveSchedule).catch(() => {
+        // 공개 시트를 읽지 못하면 기존 API/JSON 콘텐츠를 그대로 유지합니다.
+      });
+
       refreshRenderPromise.finally(() => {
-        loadLiveHomeScheduleFromSheet().then((schedule) => {
-          const current = window.__painsContentLatest || {};
-          applyContent({
-            ...current,
-            home: { ...(current.home || {}), schedule }
-          });
-        }).catch(() => {
+        liveSchedulePromise.then(applyLiveSchedule).catch(() => {
           // 공개 시트를 읽지 못하면 기존 API/JSON 콘텐츠를 그대로 유지합니다.
         });
       });
