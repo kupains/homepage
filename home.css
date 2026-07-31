@@ -1,5 +1,6 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 @font-face{font-family:KBO;src:url('fonts/KBO_medium.woff') format('woff');font-display:swap}
-@font-face{font-family:'PAINS Sans';src:url('fonts/SCDream5.otf') format('opentype');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:'PAINS Sans Latin';src:url('fonts/SCDream5.otf') format('opentype');font-weight:100 900;font-style:normal;font-display:swap;unicode-range:U+0000-024F}
 
 /* ============================================================
    PAINS — Home
@@ -17,8 +18,8 @@
   --muted:rgba(242,241,236,.56);     /* muted text on dark */
   --muted-ink:#615d54;               /* muted text on light */
   --page:min(1240px,calc(100% - clamp(40px,8vw,128px)));
-  --sans:'PAINS Sans',Pretendard,'Noto Sans KR','Apple SD Gothic Neo',Arial,sans-serif;
-  --mono:ui-monospace,'SF Mono','Cascadia Code','Roboto Mono',Menlo,Consolas,monospace;
+  --sans:'PAINS Sans Latin','Pretendard','Noto Sans KR','Apple SD Gothic Neo',Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono','Cascadia Code','Roboto Mono',Menlo,Consolas,'Pretendard',sans-serif;
 }
 *{box-sizing:border-box}
 html{background:var(--black)}
@@ -43,7 +44,7 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 .home-hero__media img{width:100%;height:100%;object-fit:cover;filter:saturate(.62) contrast(1.07)}
 .home-hero__content{position:relative;z-index:1;display:flex;flex-direction:column;justify-content:flex-end;width:var(--page);min-height:100svh;margin:0 auto;padding:120px 0 40px}
 .hero-brand{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;width:100%;margin:0;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,.6)}
-.hero-brand span{color:#fff;font:800 clamp(68px,12vw,188px)/.76 'Helvetica Neue',Arial,sans-serif;letter-spacing:-.08em}
+.hero-brand span{color:#fff;font:800 clamp(68px,12vw,188px)/.76 'Helvetica Neue',Arial,'Pretendard',sans-serif;letter-spacing:-.08em}
 .hero-brand span:not(:first-child){text-align:center}.hero-brand span:last-child{text-align:right}
 .hero-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-top:16px;color:rgba(255,255,255,.72);font-family:var(--mono);font-weight:500;font-size:10px;letter-spacing:.16em}
 .hero-meta span:nth-child(2){text-align:center}.hero-meta span:last-child{text-align:right}
@@ -75,14 +76,14 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 .section-index{padding-bottom:20px;border-bottom:1px solid var(--line-ink);font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.2em;color:#7a766c}
 .manifesto__copy{display:grid;grid-template-columns:minmax(200px,.7fr) minmax(0,1.7fr);gap:48px;padding-top:clamp(60px,8vw,108px)}
 .manifesto__copy .home-eyebrow{color:#4a463d}
-.manifesto__copy h2{grid-column:2;margin:0!important;color:var(--ink)!important;font:800 clamp(52px,7.4vw,112px)/.9 'Helvetica Neue',Arial,sans-serif!important;letter-spacing:-.06em!important;overflow-wrap:normal;word-break:keep-all}
+.manifesto__copy h2{grid-column:2;margin:0!important;color:var(--ink)!important;font:800 clamp(52px,7.4vw,112px)/.9 'Helvetica Neue',Arial,'Pretendard',sans-serif!important;letter-spacing:-.06em!important;overflow-wrap:normal;word-break:keep-all}
 .manifesto__copy h2 span{display:block;color:inherit!important}
 .manifesto__copy>p:last-child{grid-column:2;width:min(600px,100%);margin:30px 0 0!important;color:#403c34!important;font-size:clamp(16px,1.2vw,19px)!important;line-height:1.78!important;word-break:keep-all}
 .home-data-strip{display:grid;grid-template-columns:repeat(3,1fr);margin-top:clamp(66px,9vw,124px);border-block:1px solid var(--line-ink)}
 .home-data-strip>div{min-width:0;padding:28px 20px 24px 0;border-right:1px solid var(--line-ink)}
 .home-data-strip>div+div{padding-left:22px}.home-data-strip>div:last-child{border-right:0}
 .home-data-strip strong,.home-data-strip span{display:block}
-.home-data-strip strong{font:800 clamp(44px,5.4vw,80px)/1 'Helvetica Neue',Arial,sans-serif;letter-spacing:-.05em}
+.home-data-strip strong{font:800 clamp(44px,5.4vw,80px)/1 'Helvetica Neue',Arial,'Pretendard',sans-serif;letter-spacing:-.05em}
 .home-data-strip span{margin-top:10px;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.16em;color:#726e64}
 
 /* ===== 02 / 03 — Story modules (dark, contained photo) ===== */
@@ -133,7 +134,7 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 .archive-cta>a{display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;gap:clamp(18px,3vw,40px);padding:28px 0;border-top:1px solid var(--line);color:var(--paper);text-decoration:none}
 .archive-cta>a:last-child{border-bottom:1px solid var(--line)}
 .archive-cta>a::before{counter-increment:arch;content:"0" counter(arch);font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--muted);transition:color .3s ease}
-.archive-cta>a>span:first-child{font:800 clamp(30px,4vw,62px)/1 'Helvetica Neue',Arial,sans-serif;letter-spacing:-.04em;transition:transform .35s ease}
+.archive-cta>a>span:first-child{font:800 clamp(30px,4vw,62px)/1 'Helvetica Neue',Arial,'Pretendard',sans-serif;letter-spacing:-.04em;transition:transform .35s ease}
 .archive-cta>a>span:last-child{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.16em;color:var(--muted);transition:color .3s ease}
 .archive-cta>a:hover>span:first-child{transform:translateX(12px)}
 .archive-cta>a:hover>span:last-child,.archive-cta>a:hover::before{color:var(--paper)}
@@ -150,7 +151,7 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 .schedule__item:last-child{border-bottom:1px solid var(--line)}
 .schedule__item:hover{background:rgba(242,241,236,.03);padding-left:14px}
 .schedule__date{display:flex;align-items:baseline;gap:10px;min-width:116px}
-.schedule__date b{font:800 clamp(22px,2.4vw,32px)/1 'Helvetica Neue',Arial,sans-serif;letter-spacing:-.03em}
+.schedule__date b{font:800 clamp(22px,2.4vw,32px)/1 'Helvetica Neue',Arial,'Pretendard',sans-serif;letter-spacing:-.03em}
 .schedule__date i{font-family:var(--mono);font-style:normal;font-size:11px;letter-spacing:.14em;color:var(--muted)}
 .schedule__title{font-size:clamp(16px,1.5vw,21px);font-weight:600;letter-spacing:-.01em;word-break:keep-all}
 .schedule__tag{justify-self:end;padding:6px 13px;border:1px solid var(--line);border-radius:999px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--muted);white-space:nowrap}

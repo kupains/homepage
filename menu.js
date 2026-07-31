@@ -187,9 +187,28 @@ function initGlobalStyles() {
     const style = document.createElement('style');
     style.id = 'pains-dynamic-style';
     style.innerHTML = `
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
         /* ========================================== */
         /* 1. 글로벌 폰트 불러오기 (@font-face)       */
         /* ========================================== */
+
+        /* 영문·숫자는 기존 글꼴, 한글은 Pretendard로 분리 */
+        @font-face {
+            font-family: 'PAINS Latin Title';
+            src: url('fonts/ATOZ5.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            unicode-range: U+0000-024F;
+        }
+
+        @font-face {
+            font-family: 'PAINS Latin Body';
+            src: url('fonts/ATOZ4.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            unicode-range: U+0000-024F;
+        }
         
         /* 🎯 제목용 폰트 (ATOZ5) */
         @font-face { 
@@ -233,7 +252,7 @@ function initGlobalStyles() {
 
         /* 📖 사이트 전체 본문 기본 폰트 적용 (ATOZ4) */
         body.pains-theme:not(.home-page) {
-            font-family: 'ATOZ4', sans-serif !important;
+            font-family: 'PAINS Latin Body', 'Pretendard', sans-serif !important;
             background:
                 radial-gradient(circle at top left, rgba(171, 51, 51, 0.07), transparent 28%),
                 linear-gradient(180deg, #f8f9fb 0%, var(--pains-bg) 100%) !important;
@@ -252,7 +271,7 @@ function initGlobalStyles() {
         body.pains-theme:not(.home-page) h3,
         body.pains-theme:not(.home-page) .society-name,
         body.pains-theme:not(.home-page) .title {
-            font-family: 'ATOZ5', sans-serif !important;
+            font-family: 'PAINS Latin Title', 'Pretendard', sans-serif !important;
         }
 
         /* 📖 폼 요소(입력창, 버튼)에 본문 폰트 적용 (ATOZ4) */
@@ -260,7 +279,7 @@ function initGlobalStyles() {
         body.pains-theme select,
         body.pains-theme textarea,
         body.pains-theme button {
-            font-family: 'ATOZ4', sans-serif !important;
+            font-family: 'PAINS Latin Body', 'Pretendard', sans-serif !important;
             border-radius: 12px !important;
             border-color: rgba(216, 222, 232, 0.95) !important;
             box-shadow: none !important;

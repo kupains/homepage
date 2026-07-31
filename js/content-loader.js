@@ -526,6 +526,9 @@
   }
 
   function renderApplyCharts(r) {
+    if (window.Chart?.defaults?.font) {
+      window.Chart.defaults.font.family = '"Helvetica Neue", Arial, Pretendard, sans-serif';
+    }
     const stats = r.stats || {};
     const gender = visibleItems(stats.gender?.length ? stats.gender : [
       { label: '여자', value: 20, color: '#FF6B81', order: 1 },

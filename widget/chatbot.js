@@ -17,7 +17,7 @@
   const root = host.attachShadow({ mode: 'open' });
   root.innerHTML = `
     <style>
-      :host{font-family:Arial,"Noto Sans KR",sans-serif;color:#172033}
+      :host{font-family:Arial,"Pretendard","Noto Sans KR",sans-serif;color:#172033}
       button,input{font:inherit}.toggle{position:fixed;right:20px;bottom:20px;z-index:9998;width:58px;height:58px;display:grid;place-items:center;border:1px solid #fff;border-radius:50%;background:#111;color:#fff;font-size:21px;font-weight:900;line-height:1;letter-spacing:0;cursor:pointer;box-shadow:0 10px 30px #0004}
       .panel{position:fixed;right:20px;bottom:88px;z-index:9999;width:min(380px,calc(100vw - 28px));height:min(600px,calc(100vh - 120px));display:none;grid-template-rows:auto auto 1fr auto;background:#fff;border:1px solid #ddd;border-radius:18px;overflow:hidden;box-shadow:0 18px 50px #0004}
       .panel.open{display:grid}.head{padding:16px 18px;background:#111;color:#fff;font-weight:800;display:flex;justify-content:space-between}.close{border:0;background:transparent;color:#fff;cursor:pointer;font-size:20px}
