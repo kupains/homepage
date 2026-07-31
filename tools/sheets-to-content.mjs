@@ -21,7 +21,10 @@ const tabs = {
   recruitmentActivities: 'recruitment_activities',
   recruitmentDepartments: 'recruitment_departments',
   recruitmentLists: 'recruitment_lists',
-  recruitmentStats: 'recruitment_stats'
+  recruitmentStats: 'recruitment_stats',
+  resultPage: 'result_page',
+  projects: 'projects',
+  notices: 'notices'
 };
 
 function usage() {
@@ -136,6 +139,14 @@ function splitLines(value) {
     .split('|')
     .map((v) => v.trim())
     .filter(Boolean);
+}
+
+function firstField(row, keys) {
+  for (const key of keys) {
+    const value = String(row[key] ?? '').trim();
+    if (value) return value;
+  }
+  return '';
 }
 
 function setByPath(target, path, value) {
@@ -275,39 +286,45 @@ async function main() {
 
   const organization = await fetchTab(tabs.organization);
   if (organization.length) {
-    content.organization.members = organization.map((row) => ({
-      id: row.id,
-      role: row.role,
-      name: row.name,
-      major: row.major,
-      image: row.image,
-      staff: bool(row.staff, false),
-      visible: bool(row.visible),
-      order: number(row.order, 999)
-    }));
+    content.organization.members = organization
+      .filter((row) => row.id || row.name || row.role || row.image)
+      .map((row) => ({
+        id: row.id,
+        role: row.role,
+        name: row.name,
+        major: row.major,
+        image: row.image,
+        staff: bool(row.staff, false),
+        visible: bool(row.visible),
+        order: number(row.order, 999)
+      }));
   }
 
   const societies = await fetchTab(tabs.societies);
   if (societies.length) {
-    content.societies.items = societies.map((row) => ({
-      name: row.name,
-      leader: row.leader,
-      description: row.description,
-      image: row.image,
-      visible: bool(row.visible),
-      order: number(row.order, 999)
-    }));
+    content.societies.items = societies
+      .filter((row) => row.name || row.leader || row.description || row.image)
+      .map((row) => ({
+        name: row.name,
+        leader: row.leader,
+        description: row.description,
+        image: row.image,
+        visible: bool(row.visible),
+        order: number(row.order, 999)
+      }));
   }
 
   const events = await fetchTab(tabs.events);
   if (events.length) {
-    content.events.items = events.map((row) => ({
-      title: row.title,
-      href: row.href,
-      image: row.image,
-      visible: bool(row.visible),
-      order: number(row.order, 999)
-    }));
+    content.events.items = events
+      .filter((row) => row.title || row.href || row.image)
+      .map((row) => ({
+        title: row.title,
+        href: row.href,
+        image: row.image,
+        visible: bool(row.visible),
+        order: number(row.order, 999)
+      }));
   }
 
   const recruitment = await fetchTab(tabs.recruitment);
@@ -387,6 +404,57 @@ async function main() {
     });
   }
 
+  const resultPage = await fetchTab(tabs.resultPage);
+  if (resultPage.length) {
+    content.resultPage = {};
+    resultPage.forEach((row) => {
+      if (row.key) content.resultPage[row.key] = row.value ?? '';
+    });
+  }
+
+  const projects = await fetchTab(tabs.projects);
+  if (projects.length) {
+    content.projects = projects
+      .map((row, index) => ({
+        title: firstField(row, ['title', 'projectTitle', 'project_title', 'name']),
+        year: firstField(row, ['year']),
+        generation: firstField(row, ['generation', 'gen']),
+        period: firstField(row, ['period', 'term']),
+        sport: firstField(row, ['sport', 'category']),
+        driveUrl: firstField(row, ['driveUrl', 'driveURL', 'drive_url', 'driveLink', 'drive_link', 'googleDriveUrl', 'google_drive_url']),
+        driveId: firstField(row, ['driveId', 'driveID', 'drive_id', 'fileId', 'file_id', 'googleDriveId', 'google_drive_id']),
+        pdfUrl: firstField(row, ['pdfUrl', 'pdfURL', 'url', 'link', 'href']),
+        file: firstField(row, ['file', 'fileName', 'filename', 'name']),
+        visible: bool(firstField(row, ['visible', 'show']), true),
+        order: number(firstField(row, ['order', 'sort']), index + 1)
+      }))
+      .filter((item) => item.visible)
+      .filter((item) => item.title || item.driveUrl || item.driveId || item.pdfUrl || item.file)
+      .sort((a, b) => b.order - a.order)
+      .map(({ visible, order, ...item }) => item);
+  }
+
+  const notices = await fetchTab(tabs.notices);
+  if (notices.length) {
+    content.notices = notices
+      .map((row, index) => ({
+        title: firstField(row, ['title', 'noticeTitle', 'notice_title', 'name']),
+        date: isoDate(firstField(row, ['date', 'publishedAt', 'published_at'])),
+        generation: firstField(row, ['generation', 'gen']),
+        department: firstField(row, ['department', 'dept', 'team']),
+        driveUrl: firstField(row, ['driveUrl', 'driveURL', 'drive_url', 'driveLink', 'drive_link', 'googleDriveUrl', 'google_drive_url']),
+        driveId: firstField(row, ['driveId', 'driveID', 'drive_id', 'fileId', 'file_id', 'googleDriveId', 'google_drive_id']),
+        pdfUrl: firstField(row, ['pdfUrl', 'pdfURL', 'url', 'link', 'href']),
+        file: firstField(row, ['file', 'fileName', 'filename', 'name']),
+        important: bool(firstField(row, ['important', 'pinned', 'pin']), false),
+        visible: bool(firstField(row, ['visible', 'show']), true),
+        order: number(firstField(row, ['order', 'sort']), index + 1)
+      }))
+      .filter((item) => item.visible)
+      .filter((item) => item.title || item.driveUrl || item.driveId || item.pdfUrl || item.file)
+      .sort((a, b) => a.order - b.order)
+      .map(({ visible, order, ...item }) => item);
+  }
 
   content.meta = {
     ...(content.meta || {}),

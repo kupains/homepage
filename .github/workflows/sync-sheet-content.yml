@@ -1,0 +1,40 @@
+name: Sync Google Sheet content
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [sync-sheet-content]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-sheet-content
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Generate site content from Google Sheets
+        env:
+          PAINS_SHEET_ID: 1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo
+        run: node tools/sheets-to-content.mjs
+
+      - name: Commit generated content
+        run: |
+          if git diff --quiet -- data/site-content.json; then
+            echo "No content changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/site-content.json
+          git commit -m "Sync site content from Google Sheets"
+          git push

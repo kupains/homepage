@@ -24,6 +24,66 @@
 
 var SHEET_ID = '1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo';
 var PDF_PROXY_URL = 'https://pdf-proxy.painsports1905.workers.dev/?url=';
+var GITHUB_SYNC_ENDPOINT = 'https://api.github.com/repos/kupains/homepage/dispatches';
+
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu('홈페이지 관리')
+    .addItem('변경사항 사이트에 반영', 'publishHomepage')
+    .addSeparator()
+    .addItem('GitHub 연결 토큰 설정', 'setGithubSyncToken')
+    .addToUi();
+}
+
+function setGithubSyncToken() {
+  var ui = SpreadsheetApp.getUi();
+  var response = ui.prompt(
+    'GitHub 연결 토큰 설정',
+    'kupains/homepage 저장소의 Contents 쓰기 권한이 있는 fine-grained token을 입력하세요. 토큰은 셀에 표시되지 않고 Apps Script 속성에만 저장됩니다.',
+    ui.ButtonSet.OK_CANCEL
+  );
+  if (response.getSelectedButton() !== ui.Button.OK) return;
+  var token = response.getResponseText().trim();
+  if (!token) {
+    ui.alert('토큰이 비어 있습니다.');
+    return;
+  }
+  PropertiesService.getScriptProperties().setProperty('GITHUB_SYNC_TOKEN', token);
+  ui.alert('연결 토큰을 저장했습니다.');
+}
+
+function publishHomepage() {
+  var ui = SpreadsheetApp.getUi();
+  var token = PropertiesService.getScriptProperties().getProperty('GITHUB_SYNC_TOKEN');
+  if (!token) {
+    ui.alert('먼저 홈페이지 관리 → GitHub 연결 토큰 설정을 실행해 주세요.');
+    return;
+  }
+
+  var response = UrlFetchApp.fetch(GITHUB_SYNC_ENDPOINT, {
+    method: 'post',
+    contentType: 'application/json',
+    headers: {
+      Accept: 'application/vnd.github+json',
+      Authorization: 'Bearer ' + token,
+      'X-GitHub-Api-Version': '2022-11-28'
+    },
+    payload: JSON.stringify({
+      event_type: 'sync-sheet-content',
+      client_payload: {
+        source: 'google-sheets',
+        requested_at: new Date().toISOString()
+      }
+    }),
+    muteHttpExceptions: true
+  });
+
+  if (response.getResponseCode() === 204) {
+    ui.alert('사이트 반영을 시작했습니다. 보통 1~2분 뒤 홈페이지에 적용됩니다.');
+    return;
+  }
+  ui.alert('반영 요청 실패 (' + response.getResponseCode() + ')\n' + response.getContentText());
+}
 
 var TAB = {
   readme: 'README',

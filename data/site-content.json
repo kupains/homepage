@@ -1,8 +1,8 @@
 {
   "meta": {
     "version": "2026-05-27-01",
-    "source": "data/site-content.json",
-    "updatedAt": "2026-05-27"
+    "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
+    "updatedAt": "2026-07-31T08:54:47.715Z"
   },
   "settings": {
     "projectArchiveApiUrl": "https://script.google.com/macros/s/AKfycbwuNda5HuzwNhp7ecL0BTMt4eCgE8z9y1F8_kDR-ZaEp72mYngLp0DQ4ibWcKDEZyg/exec",
@@ -22,18 +22,31 @@
   "home": {
     "hero": {
       "eyebrow": "",
-      "titleLines": ["", ""],
+      "titleLines": [
+        "",
+        ""
+      ],
       "description": "",
       "primaryCta": "",
       "secondaryCta": "",
       "image": "images/pains-data-stadium.png",
-      "meta": ["KOREA UNIVERSITY", "SPORTS STATISTICS", "SEOUL · EST. 2020"]
+      "meta": [
+        "KOREA UNIVERSITY",
+        "SPORTS STATISTICS",
+        "SEOUL · EST. 2020"
+      ]
     },
     "scrollLabel": "",
     "scrollVisible": false,
-    "identity": { "index": "01 / IDENTITY" },
-    "community": { "index": "04 / COMMUNITY" },
-    "archive": { "eyebrow": "PAINS ARCHIVE" },
+    "identity": {
+      "index": "01 / IDENTITY"
+    },
+    "community": {
+      "index": "04 / COMMUNITY"
+    },
+    "archive": {
+      "eyebrow": "PAINS ARCHIVE"
+    },
     "scheduleHead": {
       "index": "05 / SCHEDULE",
       "label": "UPCOMING",
@@ -41,78 +54,627 @@
       "description": "정기 세미나부터 소모임·행사까지, PAINS의 다음 일정을 확인하세요."
     },
     "schedule": [
-      { "date": "2026-08-06", "startTime": "17:00", "endDate": "2026-08-06", "endTime": "20:00", "title": "11기 방학 중 세미나 1", "tag": "정기활동", "location": "고려대학교 (TBC)", "visible": true, "order": 1 },
-      { "date": "2026-08-07", "startTime": "17:00", "endDate": "2026-08-07", "endTime": "20:00", "title": "11기 방학 중 세미나 2", "tag": "정기활동", "location": "고려대학교 (TBC)", "visible": true, "order": 2 }
+      {
+        "date": "2025-09-15",
+        "startTime": "19:00",
+        "endDate": "2025-09-15",
+        "endTime": "21:00",
+        "title": "10기 1차 정기 활동",
+        "tag": "정기활동",
+        "location": "상남정경관 113",
+        "visible": true,
+        "order": 1
+      },
+      {
+        "date": "2025-09-22",
+        "startTime": "19:00",
+        "endDate": "2025-09-22",
+        "endTime": "21:00",
+        "title": "10기 2차 정기 활동",
+        "tag": "정기활동",
+        "location": "상남정경관 113",
+        "visible": true,
+        "order": 2
+      },
+      {
+        "date": "2025-11-06",
+        "startTime": "19:00",
+        "endDate": "2025-11-06",
+        "endTime": "21:00",
+        "title": "10기 학기 중 세미나 1",
+        "tag": "정기활동",
+        "location": "창의관 B113",
+        "visible": true,
+        "order": 3
+      },
+      {
+        "date": "2025-11-07",
+        "startTime": "19:00",
+        "endDate": "2025-11-07",
+        "endTime": "21:00",
+        "title": "10기 학기 중 세미나 2",
+        "tag": "정기활동",
+        "location": "창의관 B113",
+        "visible": true,
+        "order": 4
+      },
+      {
+        "date": "2025-11-22",
+        "startTime": "15:20",
+        "endDate": "2025-11-22",
+        "endTime": "18:00",
+        "title": "10기 제4회 체육대회",
+        "tag": "정기활동",
+        "location": "파이널체대입시 송파캠퍼스",
+        "visible": true,
+        "order": 5
+      },
+      {
+        "date": "2026-01-05",
+        "startTime": "18:00",
+        "endDate": "2026-01-05",
+        "endTime": "20:30",
+        "title": "PAINS X YSAL 통합 세미나",
+        "tag": "비정기활동",
+        "location": "연세대학교 제4공학관 D403",
+        "visible": true,
+        "order": 6
+      },
+      {
+        "date": "2026-02-05",
+        "startTime": "16:30",
+        "endDate": "2026-02-05",
+        "endTime": "19:00",
+        "title": "10기 방학 중 세미나 1",
+        "tag": "정기활동",
+        "location": "중앙광장 CCL",
+        "visible": true,
+        "order": 7
+      },
+      {
+        "date": "2026-02-06",
+        "startTime": "16:30",
+        "endDate": "2026-02-06",
+        "endTime": "19:00",
+        "title": "10기 방학 중 세미나 2",
+        "tag": "정기활동",
+        "location": "중앙광장 CCL",
+        "visible": true,
+        "order": 8
+      },
+      {
+        "date": "2026-02-09",
+        "startTime": "",
+        "endDate": "2026-02-22",
+        "endTime": "",
+        "title": "11기 1차 서류 모집 기간",
+        "tag": "리크루팅",
+        "location": "",
+        "visible": true,
+        "order": 9
+      },
+      {
+        "date": "2026-02-24",
+        "startTime": "13:00",
+        "endDate": "",
+        "endTime": "",
+        "title": "11기 1차 서류 합격자 발표",
+        "tag": "리크루팅",
+        "location": "",
+        "visible": true,
+        "order": 10
+      },
+      {
+        "date": "2026-02-26",
+        "startTime": "",
+        "endDate": "2026-03-01",
+        "endTime": "",
+        "title": "11기 1차 면접 기간",
+        "tag": "리크루팅",
+        "location": "",
+        "visible": true,
+        "order": 11
+      },
+      {
+        "date": "2026-02-26",
+        "startTime": "",
+        "endDate": "2026-03-07",
+        "endTime": "",
+        "title": "11기 2차 서류 모집 기간",
+        "tag": "리크루팅",
+        "location": "",
+        "visible": true,
+        "order": 12
+      },
+      {
+        "date": "2026-03-03",
+        "startTime": "",
+        "endDate": "",
+        "endTime": "",
+        "title": "개강",
+        "tag": "학사일정",
+        "location": "",
+        "visible": true,
+        "order": 13
+      },
+      {
+        "date": "2026-03-05",
+        "startTime": "13:00",
+        "endDate": "",
+        "endTime": "",
+        "title": "11기 1차 최종 합격자 발표",
+        "tag": "리크루팅",
+        "location": "",
+        "visible": true,
+        "order": 14
+      },
+      {
+        "date": "2026-03-05",
+        "startTime": "19:00",
+        "endDate": "2026-03-05",
+        "endTime": "22:00",
+        "title": "WBC 체코전 단체관람",
+        "tag": "기타",
+        "location": "오늘통닭&77맥주 고대안암점",
+        "visible": true,
+        "order": 15
+      },
+      {
+        "date": "2026-03-09",
+        "startTime": "13:00",
+        "endDate": "",
+        "endTime": "",
+        "title": "11기 2차 서류 합격자 발표",
+        "tag": "리크루팅",
+        "location": "",
+        "visible": true,
+        "order": 16
+      },
+      {
+        "date": "2026-03-11",
+        "startTime": "",
+        "endDate": "2026-03-13",
+        "endTime": "",
+        "title": "11기 2차 면접 기간",
+        "tag": "리크루팅",
+        "location": "",
+        "visible": true,
+        "order": 17
+      },
+      {
+        "date": "2026-03-15",
+        "startTime": "13:00",
+        "endDate": "",
+        "endTime": "",
+        "title": "11기 2차 최종 합격자 발표",
+        "tag": "리크루팅",
+        "location": "",
+        "visible": true,
+        "order": 18
+      },
+      {
+        "date": "2026-03-16",
+        "startTime": "19:00",
+        "endDate": "2026-03-16",
+        "endTime": "20:30",
+        "title": "PAINS 11기 OT",
+        "tag": "비정기활동",
+        "location": "상남정경관 101",
+        "visible": true,
+        "order": 19
+      },
+      {
+        "date": "2026-03-19",
+        "startTime": "19:00",
+        "endDate": "2026-03-19",
+        "endTime": "21:00",
+        "title": "11기 1차 정기 활동",
+        "tag": "정기활동",
+        "location": "신공학관 B115",
+        "visible": true,
+        "order": 20
+      },
+      {
+        "date": "2026-03-27",
+        "startTime": "19:00",
+        "endDate": "2026-03-27",
+        "endTime": "21:00",
+        "title": "11기 2차 정기 활동",
+        "tag": "정기활동",
+        "location": "상남정경관 508",
+        "visible": true,
+        "order": 21
+      },
+      {
+        "date": "2026-04-03",
+        "startTime": "",
+        "endDate": "2026-04-04",
+        "endTime": "",
+        "title": "11기 봄 MT",
+        "tag": "비정기활동",
+        "location": "경기 가평군 청평면 남이터길 52-18 샬레",
+        "visible": true,
+        "order": 22
+      },
+      {
+        "date": "2026-04-21",
+        "startTime": "",
+        "endDate": "2026-04-27",
+        "endTime": "",
+        "title": "1학기 중간고사",
+        "tag": "학사일정",
+        "location": "",
+        "visible": true,
+        "order": 23
+      },
+      {
+        "date": "2026-05-05",
+        "startTime": "",
+        "endDate": "2026-05-05",
+        "endTime": "",
+        "title": "개교기념일",
+        "tag": "학사일정",
+        "location": "",
+        "visible": true,
+        "order": 24
+      },
+      {
+        "date": "2026-05-09",
+        "startTime": "",
+        "endDate": "2026-05-09",
+        "endTime": "",
+        "title": "11기 제5회 체육대회",
+        "tag": "정기활동",
+        "location": "TBC",
+        "visible": true,
+        "order": 25
+      },
+      {
+        "date": "2026-05-14",
+        "startTime": "19:00",
+        "endDate": "2026-05-14",
+        "endTime": "22:00",
+        "title": "11기 학기 중 세미나 1",
+        "tag": "정기활동",
+        "location": "상남정경관 619",
+        "visible": true,
+        "order": 26
+      },
+      {
+        "date": "2026-05-15",
+        "startTime": "19:00",
+        "endDate": "2026-05-15",
+        "endTime": "21:00",
+        "title": "11기 학기 중 세미나 2",
+        "tag": "정기활동",
+        "location": "중앙광장 CCL",
+        "visible": true,
+        "order": 27
+      },
+      {
+        "date": "2026-05-19",
+        "startTime": "",
+        "endDate": "2026-05-21",
+        "endTime": "",
+        "title": "석탑대동제",
+        "tag": "학사일정",
+        "location": "민주광장 일대",
+        "visible": true,
+        "order": 28
+      },
+      {
+        "date": "2026-06-16",
+        "startTime": "",
+        "endDate": "2026-06-22",
+        "endTime": "",
+        "title": "1학기 기말고사",
+        "tag": "학사일정",
+        "location": "",
+        "visible": true,
+        "order": 29
+      },
+      {
+        "date": "2026-06-25",
+        "startTime": "10:00",
+        "endDate": "2026-06-25",
+        "endTime": "12:00",
+        "title": "월드컵 단체 관람 (🇿🇦 vs 🇰🇷)",
+        "tag": "비정기활동",
+        "location": "TBC",
+        "visible": true,
+        "order": 30
+      },
+      {
+        "date": "2026-03-17",
+        "startTime": "",
+        "endDate": "2026-03-17",
+        "endTime": "",
+        "title": "응원 OT",
+        "tag": "학사일정",
+        "location": "화정체육관",
+        "visible": true,
+        "order": 31
+      },
+      {
+        "date": "2026-03-20",
+        "startTime": "",
+        "endDate": "2026-03-20",
+        "endTime": "",
+        "title": "합동응원전",
+        "tag": "학사일정",
+        "location": "녹지운동장",
+        "visible": true,
+        "order": 32
+      },
+      {
+        "date": "2026-05-04",
+        "startTime": "19:00",
+        "endDate": "2026-05-04",
+        "endTime": "21:00",
+        "title": "PAINS X YSAL 대면식",
+        "tag": "비정기활동",
+        "location": "연세대학교 (TBC)",
+        "visible": true,
+        "order": 33
+      },
+      {
+        "date": "2026-07-20",
+        "startTime": "18:00",
+        "endDate": "2026-07-20",
+        "endTime": "20:00",
+        "title": "PAINS X YSAL 합동 세미나",
+        "tag": "비정기활동",
+        "location": "고려대학교 (TBC)",
+        "visible": true,
+        "order": 34
+      },
+      {
+        "date": "2026-05-22",
+        "startTime": "",
+        "endDate": "2026-05-22",
+        "endTime": "",
+        "title": "IPSELENTI",
+        "tag": "학사일정",
+        "location": "녹지운동장",
+        "visible": true,
+        "order": 35
+      },
+      {
+        "date": "2026-08-06",
+        "startTime": "17:00",
+        "endDate": "2026-08-06",
+        "endTime": "20:00",
+        "title": "11기 방학 중 세미나 1",
+        "tag": "정기활동",
+        "location": "고려대학교 (TBC)",
+        "visible": true,
+        "order": 36
+      },
+      {
+        "date": "2026-08-07",
+        "startTime": "17:00",
+        "endDate": "2026-08-07",
+        "endTime": "20:00",
+        "title": "11기 방학 중 세미나 2",
+        "tag": "정기활동",
+        "location": "고려대학교 (TBC)",
+        "visible": true,
+        "order": 37
+      },
+      {
+        "date": "2026-07-24",
+        "startTime": "",
+        "endDate": "2026-07-25",
+        "endTime": "",
+        "title": "11기 여름 MT",
+        "tag": "비정기활동",
+        "location": "TBD",
+        "visible": true,
+        "order": 38
+      }
     ],
     "timeline": [
-      { "year": "2020", "title": "PAINS 설립", "position": "top", "visible": true, "order": 1 },
-      { "year": "2021", "title": "PAINS 1기 시작", "position": "bottom", "visible": true, "order": 2 },
-      { "year": "2023", "title": "고려대학교 동아리 활성화 프로젝트 수상", "position": "top", "visible": true, "order": 3 },
-      { "year": "2025", "title": "연세대학교 스포츠분석학회 YSAL과 교류 시작", "position": "bottom", "visible": true, "order": 4 },
-      { "year": "2026", "title": "11기 활동 진행 중", "position": "top", "visible": true, "order": 5 }
+      {
+        "year": "2020",
+        "title": "PAINS 설립",
+        "position": "top",
+        "visible": true,
+        "order": 1
+      },
+      {
+        "year": "2021",
+        "title": "PAINS 1기 시작",
+        "position": "bottom",
+        "visible": true,
+        "order": 2
+      },
+      {
+        "year": "2023",
+        "title": "고려대학교 동아리 활성화 프로젝트 수상",
+        "position": "top",
+        "visible": true,
+        "order": 3
+      },
+      {
+        "year": "2025",
+        "title": "연세대학교 스포츠분석학회 YSAL과 교류 시작",
+        "position": "bottom",
+        "visible": true,
+        "order": 4
+      },
+      {
+        "year": "2026",
+        "title": "11기 활동 진행 중",
+        "position": "top",
+        "visible": true,
+        "order": 5
+      }
     ],
     "strategy": {
       "eyebrow": "Providing Academic INsights for Sport",
       "title": "WE TURN SPORTS INTO INSIGHT",
       "description": "스포츠에서 질문을 찾아내, 새로운 의미를 발견합니다.",
       "axes": [
-        { "id": "about", "title": "About PAINS", "image": "images/pains-sports-analytics-blue.png", "href": "#home-about", "alt": "스포츠 데이터 분석", "visible": true, "order": 1 },
-        { "id": "projects", "title": "Projects", "image": "images/project-field-model.png", "href": "#home-projects", "alt": "PAINS 프로젝트", "visible": true, "order": 2 },
-        { "id": "community", "title": "Community", "image": "images/activity03.png", "href": "#home-community", "alt": "PAINS 커뮤니티", "visible": true, "order": 3 }
-      ]
-    },
-    "metrics": [
-      { "value": "167+", "label": "PROJECTS", "visible": true, "order": 1 },
-      { "value": "11TH", "label": "GENERATION", "visible": true, "order": 2 },
-      { "value": "2020", "label": "FOUNDED", "visible": true, "order": 3 }
-    ],
-    "archiveLinks": [
-      { "label": "167+ PROJECTS", "action": "EXPLORE →", "href": "activity", "visible": true, "order": 1 },
-      { "label": "NOTICE", "action": "READ →", "href": "notice", "visible": true, "order": 2 },
-      { "label": "JOIN PAINS", "action": "APPLY →", "href": "apply", "visible": true, "order": 3 }
-    ],
-    "story": {
-      "eyebrow": "Who We Are",
-      "titleLines": ["스포츠를 더 깊게", "이해하는 곳."],
-      "nav": [
-        { "label": "About PAINS", "href": "#home-about", "targetId": "home-about", "visible": true, "order": 1 },
-        { "label": "Projects", "href": "#home-projects", "targetId": "home-projects", "visible": true, "order": 2 },
-        { "label": "Community", "href": "#home-community", "targetId": "home-community", "visible": true, "order": 3 }
-      ],
-      "cards": [
         {
           "id": "about",
-          "eyebrow": "About PAINS",
-          "titleLines": ["데이터로 스포츠를", "다시 씁니다."],
-          "description": "익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석하며, 기록 속에 숨은 맥락과 의미를 함께 발견합니다.",
+          "title": "About PAINS",
           "image": "images/pains-sports-analytics-blue.png",
-          "alt": "경기장을 내려다보는 분석실 모니터에 스포츠 위치와 추세 데이터가 표시된 장면",
-          "primaryCta": { "label": "PAINS 소개 보기", "href": "about" },
-          "caption": { "fig": "FIG.01", "label": "SPORTS DATA LAB" },
+          "href": "#home-about",
+          "alt": "스포츠 데이터 분석",
           "visible": true,
           "order": 1
         },
         {
           "id": "projects",
-          "eyebrow": "Projects",
-          "titleLines": ["질문에서 출발해", "결과를 만듭니다."],
-          "description": "야구, 축구, 농구, F1, e-sports 등 모든 스포츠에서.\n연구를 진행하고 부원들과 공유합니다.",
+          "title": "Projects",
           "image": "images/project-field-model.png",
+          "href": "#home-projects",
           "alt": "PAINS 프로젝트",
-          "primaryCta": { "label": "프로젝트 보기", "href": "activity" },
-          "secondaryCta": { "label": "스터디 보기", "href": "study" },
-          "caption": { "fig": "FIG.02", "label": "01 · FIELD MODEL" },
           "visible": true,
           "order": 2
         },
         {
           "id": "community",
-          "eyebrow": "Community",
-          "titleLines": ["함께 보고,", "함께 즐기고,", "함께 성장합니다."],
+          "title": "Community",
+          "image": "images/activity03.png",
+          "href": "#home-community",
+          "alt": "PAINS 커뮤니티",
+          "visible": true,
+          "order": 3
+        }
+      ]
+    },
+    "metrics": [
+      {
+        "value": "167+",
+        "label": "PROJECTS",
+        "visible": true,
+        "order": 1
+      },
+      {
+        "value": "11TH",
+        "label": "GENERATION",
+        "visible": true,
+        "order": 2
+      },
+      {
+        "value": "2020",
+        "label": "FOUNDED",
+        "visible": true,
+        "order": 3
+      }
+    ],
+    "archiveLinks": [
+      {
+        "label": "167+ PROJECTS",
+        "action": "EXPLORE →",
+        "href": "activity",
+        "visible": true,
+        "order": 1
+      },
+      {
+        "label": "NOTICE",
+        "action": "READ →",
+        "href": "notice",
+        "visible": true,
+        "order": 2
+      },
+      {
+        "label": "JOIN PAINS",
+        "action": "APPLY →",
+        "href": "apply",
+        "visible": true,
+        "order": 3
+      }
+    ],
+    "story": {
+      "eyebrow": "Who We Are",
+      "titleLines": [
+        "스포츠를 더 깊게",
+        "이해하는 곳."
+      ],
+      "nav": [
+        {
+          "label": "About PAINS",
+          "href": "#home-about",
+          "targetId": "home-about",
+          "visible": true,
+          "order": 1
+        },
+        {
+          "label": "Projects",
+          "href": "#home-projects",
+          "targetId": "home-projects",
+          "visible": true,
+          "order": 2
+        },
+        {
+          "label": "Community",
+          "href": "#home-community",
+          "targetId": "home-community",
+          "visible": true,
+          "order": 3
+        }
+      ],
+      "cards": [
+        {
+          "id": "about",
+          "eyebrow": "ABOUT PAINS",
+          "titleLines": [
+            "데이터로 스포츠를",
+            "다시 씁니다."
+          ],
+          "description": "익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석하며, 기록 속에 숨은 맥락과 의미를 함께 발견합니다.",
+          "image": "images/pains-sports-analytics-blue.png",
+          "alt": "PAINS 소개",
+          "primaryCta": {
+            "label": "ABOUT PAINS",
+            "href": "about"
+          },
+          "visible": true,
+          "order": 1
+        },
+        {
+          "id": "projects",
+          "eyebrow": "PROJECTS",
+          "titleLines": [
+            "질문에서 출발해",
+            "결과를 만듭니다."
+          ],
+          "description": "야구, 축구, 농구, F1, e-sports 등 모든 스포츠에서.\n연구를 진행하고 부원들과 공유합니다.",
+          "image": "images/project-field-model.png",
+          "alt": "PAINS 프로젝트",
+          "caption": {
+            "fig": "FIG.02",
+            "label": "PROJECT"
+          },
+          "primaryCta": {
+            "label": "VIEW PROJECTS",
+            "href": "activity"
+          },
+          "visible": true,
+          "order": 2
+        },
+        {
+          "id": "community",
+          "eyebrow": "COMMUNITY",
+          "titleLines": [
+            "함께 보고,",
+            "함께 즐기고,",
+            "함께 성장합니다."
+          ],
           "description": "스포츠 경기 단체 관람, 연사초청, MT, 체육대회와 소모임을 통해 서로 다른 관심 종목을 가진 부원들이 하나가 되어 교류합니다.",
+          "image": "images/community-summer-mt-2026.jpg",
+          "alt": "PAINS 여름 MT 단체사진",
           "images": [
-            { "src": "images/community-summer-mt-2026.jpg", "alt": "PAINS 여름 MT 단체사진" },
-            { "src": "images/activity4.png", "alt": "PAINS 친목 활동" }
+            {
+              "src": "images/community-summer-mt-2026.jpg",
+              "alt": "PAINS 여름 MT 단체사진"
+            },
+            {
+              "src": "images/activity4.png",
+              "alt": "PAINS 친목 활동"
+            }
           ],
           "visible": true,
           "order": 3
@@ -120,9 +682,27 @@
       ]
     },
     "projectVariants": [
-      { "label": "PROJECT", "image": "images/project-field-model.png", "alt": "PAINS 프로젝트", "visible": true, "order": 1 },
-      { "label": "SEMINAR", "image": "images/seminar-20260515.jpg", "alt": "PAINS 세미나 현장", "visible": true, "order": 2 },
-      { "label": "COLUMN", "image": "images/project-column.png", "alt": "PAINS 프로젝트 칼럼", "visible": true, "order": 3 }
+      {
+        "label": "PROJECT",
+        "image": "images/project-field-model.png",
+        "alt": "PAINS 프로젝트",
+        "visible": true,
+        "order": 1
+      },
+      {
+        "label": "SEMINAR",
+        "image": "images/seminar-20260515.jpg",
+        "alt": "PAINS 세미나 현장",
+        "visible": true,
+        "order": 2
+      },
+      {
+        "label": "COLUMN",
+        "image": "images/project-column.png",
+        "alt": "PAINS 프로젝트 칼럼",
+        "visible": true,
+        "order": 3
+      }
     ],
     "calendar": {
       "title": "일정 안내",
@@ -144,7 +724,9 @@
       "image": "images/소개사진.jpg",
       "alt": "PAINS 부원 단체사진"
     },
-    "meta": { "collective": "Korea University · Sports Data Analysis Circle" },
+    "meta": {
+      "collective": "Korea University · Sports Data Analysis Circle"
+    },
     "presidentMessage": {
       "visible": true,
       "eyebrow": "President Message",
@@ -163,41 +745,213 @@
     "generation": "11기",
     "titleTemplate": "{generation} 운영진 조직도",
     "members": [
-      { "id": "president", "role": "회장", "name": "전영재", "major": "언어학과 24", "image": "images/회장v2.png" },
-      { "id": "treasurer", "role": "총무", "name": "손영현", "major": "통계학과 23", "image": "images/총무.png", "staff": true },
-      { "id": "vicePresident", "role": "부회장", "name": "하승민", "major": "데이터과학과 23", "image": "images/부회장.png" },
-      { "id": "planning", "role": "기획부장", "name": "나영우", "major": "보건환경융합과학부 25", "image": "images/기획부장v2.png" },
-      { "id": "publicRelations", "role": "홍보부장", "name": "김가현", "major": "미디어학부 24", "image": "images/홍보부장v2.png" },
-      { "id": "education", "role": "교육부장", "name": "이지섭", "major": "통계학과 24", "image": "images/교육부장.png" }
+      {
+        "id": "president",
+        "role": "회장",
+        "name": "전영재",
+        "major": "언어학과 24",
+        "image": "images/회장v2.png",
+        "staff": false,
+        "visible": true,
+        "order": 1
+      },
+      {
+        "id": "treasurer",
+        "role": "총무",
+        "name": "손영현",
+        "major": "통계학과 23",
+        "image": "images/총무.png",
+        "staff": true,
+        "visible": true,
+        "order": 2
+      },
+      {
+        "id": "vicePresident",
+        "role": "부회장",
+        "name": "하승민",
+        "major": "데이터과학과 23",
+        "image": "images/부회장.png",
+        "staff": false,
+        "visible": true,
+        "order": 3
+      },
+      {
+        "id": "planning",
+        "role": "기획부장",
+        "name": "나영우",
+        "major": "보건환경융합과학부 25",
+        "image": "images/기획부장v2.png",
+        "staff": false,
+        "visible": true,
+        "order": 4
+      },
+      {
+        "id": "publicRelations",
+        "role": "홍보부장",
+        "name": "김가현",
+        "major": "미디어학부 24",
+        "image": "images/홍보부장v2.png",
+        "staff": false,
+        "visible": true,
+        "order": 5
+      },
+      {
+        "id": "education",
+        "role": "교육부장",
+        "name": "이지섭",
+        "major": "통계학과 24",
+        "image": "images/교육부장.png",
+        "staff": false,
+        "visible": true,
+        "order": 6
+      }
     ]
   },
   "societies": {
     "title": "PAINS 소모임 안내",
     "description": "PAINS에서는 다양한 소모임을 통해 비슷한 관심사를 가진 부원들 간의 친목을 장려하고 있습니다.\n아래 현재 개설된 소모임을 확인해보세요!\n자세한 내용은 PAINS 공지방과 잡담방을 확인해주시기 바랍니다.",
     "items": [
-      { "name": "e스포츠 소모임", "leader": "손영현", "description": "e스포츠를 하는 것, 보는 것을 즐기는 모든 분들에게 열려있습니다. 많은 관심 부탁드립니다!", "image": "images/e스포츠 소모임.jpg", "visible": true, "order": 1 },
-      { "name": "LG 트윈스 팬 소모임", "leader": "김가현", "description": "LG팬분들 많은 관심 부탁드립니다!", "image": "images/LG 트윈스 팬 소모임.png", "visible": true, "order": 2 },
-      { "name": "F1 소모임", "leader": "이가람", "description": "F1에 관심 있으신 분들 많은 관심 부탁드립니다!!", "image": "images/F1 소모임.jpg", "visible": true, "order": 3 },
-      { "name": "카츠손으로먹기연구회", "leader": "최나훈", "description": "주기적으로 서울 투어 및 맛집 탐방하실 열정적인 부원들을 모집합니다!!", "image": "images/카츠손으로먹기연구회.png", "visible": true, "order": 4 },
-      { "name": "보드게임 소모임", "leader": "정윤도", "description": "공강 긴 분, 금요일 할 것 없는 분, 보드게임 잘 모르는 분 모두 환영합니다!", "image": "images/보드게임 소모임.jpg", "visible": true, "order": 5 },
-      { "name": "KIA 타이거즈 팬 소모임", "leader": "서지우", "description": "타 소모임 팀과 연합하여 경기 직관합시다~!\nKIA 타이거즈 팬 분들, 혹은 팬이 되실 분들 많은 관심 부탁드립니다:)", "image": "images/KIA 타이거즈 팬 소모임.jpg", "visible": true, "order": 6 },
-      { "name": "롯데자이언츠의우승을위한소모임", "leader": "전영재", "description": "롯데 우승 or nothing\n롯데가 우승하기 전까지 절대 해체하지 않을 소모임입니다.", "image": "images/롯데자이언츠의우승을위한소모임.jpg", "visible": true, "order": 7 },
-      { "name": "영화소모임", "leader": "이지섭", "description": "장르 관계 없이 다양한 영화 같이 보실 분 모집합니다!", "image": "images/영화소모임.png", "visible": true, "order": 8 },
-      { "name": "두산 소모임", "leader": "이지섭", "description": "함께 직관 및 단관하실 두산 팬 모집!!\n선예매도 가능합니다!", "image": "images/두산 소모임.png", "visible": true, "order": 9 },
-      { "name": "NC 다이노스 소모임", "leader": "최나훈", "description": "KBO 리그 9번째 심장, NC 다이노스와 함께할 부원들을 모집합니다. 단체 직관 및 친목 활동 함께하실 분들 환영해요", "image": "images/NC 다이노스 소모임.png", "visible": true, "order": 10 },
-      { "name": "호박고구마회", "leader": "김가현", "description": "호박고구마회 하면 1년에 책 3권 이상 읽을 수 있습니다.\n같이 좋은 책 발굴해요!!", "image": "images/호박고구마회.jpg", "visible": true, "order": 11 },
-      { "name": "회귀분석 스터디 소모임", "leader": "이지섭", "description": "박민규 교수님 '회귀분석' 수업 들으시는 분들 같이 공부하고 의견나누면 좋겠습니다!!!", "image": "images/회귀분석 스터디 소모임.png", "visible": true, "order": 12 },
-      { "name": "키움 히어로즈 소모임", "leader": "이정호", "description": "키움 히어로즈 직관/단관 소모임입니다!\np.s. 저점매수 관심 있으신 분??", "image": "images/키움 히어로즈 소모임.png", "visible": true, "order": 13 },
-      { "name": "노래방 소모임", "leader": "하승민", "description": "노래방이 제2의 집인 사람, 혼자 노래 부르기 심심했던 사람 모두 환영입니다!\n모임장이 노래를 제일 못하기 때문에 노래 실력은 상관없습니다!", "image": "images/노래방 소모임.jpg", "visible": true, "order": 14 },
-      { "name": "삼성 라이온즈 소모임", "leader": "성유현", "description": "이젠 할 때가 됐다! V9\n삼팬들 모입시다", "image": "images/삼성 라이온즈 소모임.jpg", "visible": true, "order": 15 },
-      { "name": "Champains", "leader": "전영재", "description": "Champains supernova", "image": "images/Champains.jpg", "visible": true, "order": 16 }
+      {
+        "name": "e스포츠 소모임",
+        "leader": "손영현",
+        "description": "e스포츠를 하는 것, 보는 것을 즐기는 모든 분들에게 열려있습니다. 많은 관심 부탁드립니다!",
+        "image": "images/e스포츠 소모임.jpg",
+        "visible": true,
+        "order": 1
+      },
+      {
+        "name": "LG 트윈스 팬 소모임",
+        "leader": "김가현",
+        "description": "LG팬분들 많은 관심 부탁드립니다!",
+        "image": "images/LG 트윈스 팬 소모임.png",
+        "visible": true,
+        "order": 2
+      },
+      {
+        "name": "F1 소모임",
+        "leader": "이가람",
+        "description": "F1에 관심 있으신 분들 많은 관심 부탁드립니다!!",
+        "image": "images/F1 소모임.jpg",
+        "visible": true,
+        "order": 3
+      },
+      {
+        "name": "카츠손으로먹기연구회",
+        "leader": "최나훈",
+        "description": "주기적으로 서울 투어 및 맛집 탐방하실 열정적인 부원들을 모집합니다!!",
+        "image": "images/카츠손으로먹기연구회.png",
+        "visible": true,
+        "order": 4
+      },
+      {
+        "name": "보드게임 소모임",
+        "leader": "정윤도",
+        "description": "공강 긴 분, 금요일 할 것 없는 분, 보드게임 잘 모르는 분 모두 환영합니다!",
+        "image": "images/보드게임 소모임.jpg",
+        "visible": true,
+        "order": 5
+      },
+      {
+        "name": "KIA 타이거즈 팬 소모임",
+        "leader": "서지우",
+        "description": "타 소모임 팀과 연합하여 경기 직관합시다~!\nKIA 타이거즈 팬 분들, 혹은 팬이 되실 분들 많은 관심 부탁드립니다:)",
+        "image": "images/KIA 타이거즈 팬 소모임.jpg",
+        "visible": true,
+        "order": 6
+      },
+      {
+        "name": "롯데자이언츠의우승을위한소모임",
+        "leader": "전영재",
+        "description": "롯데 우승 or nothing\n롯데가 우승하기 전까지 절대 해체하지 않을 소모임입니다.",
+        "image": "images/롯데자이언츠의우승을위한소모임.jpg",
+        "visible": true,
+        "order": 7
+      },
+      {
+        "name": "영화소모임",
+        "leader": "이지섭",
+        "description": "장르 관계 없이 다양한 영화 같이 보실 분 모집합니다!",
+        "image": "images/영화소모임.png",
+        "visible": true,
+        "order": 8
+      },
+      {
+        "name": "두산 소모임",
+        "leader": "이지섭",
+        "description": "함께 직관 및 단관하실 두산 팬 모집!!\n선예매도 가능합니다!",
+        "image": "images/두산 소모임.png",
+        "visible": true,
+        "order": 9
+      },
+      {
+        "name": "NC 다이노스 소모임",
+        "leader": "최나훈",
+        "description": "KBO 리그 9번째 심장, NC 다이노스와 함께할 부원들을 모집합니다. 단체 직관 및 친목 활동 함께하실 분들 환영해요",
+        "image": "images/NC 다이노스 소모임.png",
+        "visible": true,
+        "order": 10
+      },
+      {
+        "name": "호박고구마회",
+        "leader": "김가현",
+        "description": "호박고구마회 하면 1년에 책 3권 이상 읽을 수 있습니다.\n같이 좋은 책 발굴해요!!",
+        "image": "images/호박고구마회.jpg",
+        "visible": true,
+        "order": 11
+      },
+      {
+        "name": "회귀분석 스터디 소모임",
+        "leader": "이지섭",
+        "description": "박민규 교수님 회귀분석 수업 들으시는 분들 같이 공부하고 의견나누면 좋겠습니다!!!",
+        "image": "images/회귀분석 스터디 소모임.png",
+        "visible": true,
+        "order": 12
+      },
+      {
+        "name": "키움 히어로즈 소모임",
+        "leader": "이정호",
+        "description": "키움 히어로즈 직관/단관 소모임입니다!\np.s. 저점매수 관심 있으신 분??",
+        "image": "images/키움 히어로즈 소모임.png",
+        "visible": true,
+        "order": 13
+      },
+      {
+        "name": "노래방 소모임",
+        "leader": "하승민",
+        "description": "노래방이 제2의 집인 사람, 혼자 노래 부르기 심심했던 사람 모두 환영입니다!\n모임장이 노래를 제일 못하기 때문에 노래 실력은 상관없습니다!",
+        "image": "images/노래방 소모임.jpg",
+        "visible": true,
+        "order": 14
+      },
+      {
+        "name": "삼성 라이온즈 소모임",
+        "leader": "성유현",
+        "description": "이젠 할 때가 됐다! V9\n삼팬들 모입시다",
+        "image": "images/삼성 라이온즈 소모임.jpg",
+        "visible": true,
+        "order": 15
+      },
+      {
+        "name": "Champains",
+        "leader": "전영재",
+        "description": "Champains supernova",
+        "image": "images/Champains.jpg",
+        "visible": true,
+        "order": 16
+      }
     ]
   },
   "events": {
     "title": "이벤트 안내",
     "description": "PAINS에서 진행하는 다양한 이벤트에 참여해보세요!",
     "items": [
-      { "title": "나의 응원 유형은? - PBTI", "href": "PBTItest", "image": "images/NOTICE_ACTIVITIES.png", "visible": true, "order": 1 }
+      {
+        "title": "나의 응원 유형은? - PBTI",
+        "href": "PBTItest",
+        "image": "images/NOTICE_ACTIVITIES.png",
+        "visible": true,
+        "order": 1
+      }
     ]
   },
   "study": {
@@ -260,86 +1014,324 @@
     "applyVisible": true,
     "timeline": [
       {
-        "step": "서류 신청", "date": "2026. 02. 26 (목) - 2026. 03. 07 (토)", "note": "", "highlight": false, "visible": true, "order": 1
+        "step": "서류 신청",
+        "date": "",
+        "note": "",
+        "highlight": false,
+        "visible": true,
+        "order": 1
       },
       {
-        "step": "서류 합격자 발표", "date": "2026. 03. 09 (월) 중", "note": "홈페이지 안내", "highlight": false, "visible": true, "order": 2
+        "step": "서류 합격자 발표",
+        "date": "",
+        "note": "",
+        "highlight": false,
+        "visible": true,
+        "order": 2
       },
       {
-        "step": "면접 진행", "date": "2026. 03. 11 (수) - 2026. 03. 13 (금)", "note": "기간 중 일정 협의", "highlight": false, "visible": true, "order": 3
+        "step": "면접 진행",
+        "date": "",
+        "note": "",
+        "highlight": false,
+        "visible": true,
+        "order": 3
       },
       {
-        "step": "최종 선발 공지", "date": "2026. 03. 15 (일) 중", "note": "홈페이지 안내", "highlight": false, "visible": true, "order": 4
+        "step": "최종 선발 공지",
+        "date": "",
+        "note": "",
+        "highlight": false,
+        "visible": true,
+        "order": 4
       },
       {
-        "date": "2026. 03. 16 (월) 19:00", "note": "참여 필수",
-        "step": "신입 기수 OT", "highlight": true, "visible": true, "order": 5
+        "step": "신입 기수 OT",
+        "date": "2026. 03. 16 (월) 19:00",
+        "note": "참여 필수",
+        "highlight": true,
+        "visible": true,
+        "order": 5
       }
     ],
     "activities": [
-      {"id":"seminar","title":"정기 세미나","description":"학기 중과 방학 중 2번씩 개최되는 정기 세미나에서는 조별 프로젝트를 공유하고 피드백을 주고받는 시간을 가집니다.","image":"images/activity_edited_1.png","alt":"정기 세미나 사진","visible":true,"order":1},
-      {"id":"lecture","title":"통계 세미나와 연사 초청 강연","description":"기초 통계학 강의와 연사 초청 강연 등의 활동을 통해 부원들의 통계분석 역량 향상을 도모합니다.","image":"images/activity2.png","alt":"정기 활동 사진","visible":true,"order":2},
-      {"id":"sports-day","title":"PAINS 체육대회","description":"보는 것만큼 직접 하는 것도 열정적인 부원들과 함께 매 학기 체육대회를 개최합니다.","image":"images/activity03.png","alt":"체육대회 사진","visible":true,"order":3},
-      {"id":"community","title":"MT 및 기타 행사","description":"학기 초와 방학 중 MT, 단체 직관 행사 등 여러 부원들과 친해질 수 있는 행사들이 개최됩니다.","image":"images/activity4.png","alt":"MT 및 기타 행사 사진","visible":true,"order":4}
+      {
+        "id": "seminar",
+        "title": "정기 세미나",
+        "description": "학기 중과 방학 중 2번씩 개최되는 정기 세미나에서는 조별 프로젝트를 공유하고 피드백을 주고받는 시간을 가집니다.",
+        "image": "images/activity_edited_1.png",
+        "alt": "정기 세미나 사진",
+        "visible": true,
+        "order": 1
+      },
+      {
+        "id": "lecture",
+        "title": "통계 세미나와 연사 초청 강연",
+        "description": "기초 통계학 강의와 연사 초청 강연 등의 활동을 통해 부원들의 통계분석 역량 향상을 도모합니다.",
+        "image": "images/activity2.png",
+        "alt": "정기 활동 사진",
+        "visible": true,
+        "order": 2
+      },
+      {
+        "id": "sports-day",
+        "title": "PAINS 체육대회",
+        "description": "보는 것만큼 직접 하는 것도 열정적인 부원들과 함께 매 학기 체육대회를 개최합니다.",
+        "image": "images/activity03.png",
+        "alt": "체육대회 사진",
+        "visible": true,
+        "order": 3
+      },
+      {
+        "id": "community",
+        "title": "MT 및 기타 행사",
+        "description": "학기 초와 방학 중 MT, 단체 직관 행사 등 여러 부원들과 친해질 수 있는 행사들이 개최됩니다.",
+        "image": "images/activity4.png",
+        "alt": "MT 및 기타 행사 사진",
+        "visible": true,
+        "order": 4
+      }
     ],
     "departments": [
-      {"title":"📅 기획부","description":"세미나 준비, MT 등 전반적인 친목 활동 기획 및 기타 이벤트 기획","visible":true,"order":1},
-      {"title":"📢 홍보부","description":"홍보 플랫폼(SNS, 블로그) 관리, 리쿠르팅 홍보, 동아리 내 디자인 업무(포스터 등)","visible":true,"order":2},
-      {"title":"📘 교육부","description":"초심자용 강의 제작 (Python / 세이버메트릭스 강의), 동아리 자료 및 파일 관리","visible":true,"order":3}
+      {
+        "title": "📅 기획부",
+        "description": "세미나 준비, MT 등 전반적인 친목 활동 기획 및 기타 이벤트 기획",
+        "visible": true,
+        "order": 1
+      },
+      {
+        "title": "📢 홍보부",
+        "description": "홍보 플랫폼(SNS 등) 관리, 리쿠르팅 홍보, 동아리 내 플랫폼 관리 업무(노션 등)",
+        "visible": true,
+        "order": 2
+      },
+      {
+        "title": "📘 교육부",
+        "description": "초심자용 강의 제작 (스포츠데이터분석, 세이버메트릭스), 동아리 자료 및 파일 관리",
+        "visible": true,
+        "order": 3
+      }
     ],
     "lists": {
       "eligibility": [
-        {"text":"연속 또는 비연속으로 1년(2학기) 이상 활동 가능한 재/휴학 대학생 (신입생 환영) - 한 학기 활동은 개강부터 방학 중 세미나까지를 기준으로 합니다.","visible":true,"order":1},
-        {"text":"3월 16일 월요일 OT에 대면 참여가 가능한 사람","visible":true,"order":2},
-        {"text":"즐겨보는 스포츠가 있는 사람","visible":true,"order":3},
-        {"text":"스포츠를 데이터 분석의 측면에서 접근해보고 싶은 사람","visible":true,"order":4}
+        {
+          "text": "연속 또는 비연속으로 1년(2학기) 이상 활동 가능한 재/휴학 대학생 (신입생 환영) - 한 학기 활동은 개강부터 방학 중 세미나까지를 기준으로 합니다.",
+          "visible": true,
+          "order": 1
+        },
+        {
+          "text": "3월 16일 월요일 OT에 대면 참여가 가능한 사람",
+          "visible": true,
+          "order": 2
+        },
+        {
+          "text": "즐겨보는 스포츠가 있는 사람",
+          "visible": true,
+          "order": 3
+        },
+        {
+          "text": "스포츠를 데이터 분석의 측면에서 접근해보고 싶은 사람",
+          "visible": true,
+          "order": 4
+        }
       ],
       "regularSchedule": [
-        {"text":"일반 정기 활동: 3월 19일, 3월 27일, 5월 1일","visible":true,"order":1},
-        {"text":"PAINS 체육대회: 5월 중(미정)","visible":true,"order":2},
-        {"text":"학기 중 세미나: 5월 14일, 5월 15일","visible":true,"order":3},
-        {"text":"방학 중 세미나: 8월 중(미정)","visible":true,"order":4}
+        {
+          "text": "일반 정기 활동: 3월 19일, 3월 27일, 5월 1일",
+          "visible": true,
+          "order": 1
+        },
+        {
+          "text": "PAINS 체육대회: 5월 중(미정)",
+          "visible": true,
+          "order": 2
+        },
+        {
+          "text": "학기 중 세미나: 5월 14일, 5월 15일",
+          "visible": true,
+          "order": 3
+        },
+        {
+          "text": "방학 중 세미나: 8월 중(미정)",
+          "visible": true,
+          "order": 4
+        }
       ],
       "irregularSchedule": [
-        {"text":"봄 MT: 4월 3일 - 4월 4일 (예정)","visible":true,"order":1},
-        {"text":"스포츠 단체 직관: 5월 중(미정)","visible":true,"order":2},
-        {"text":"월드컵 단체 관람: 월드컵 기간(계획 중)","visible":true,"order":3},
-        {"text":"여름 MT: 7월 중(미정)","visible":true,"order":4}
+        {
+          "text": "봄 MT: 4월 3일 - 4월 4일 (예정)",
+          "visible": true,
+          "order": 1
+        },
+        {
+          "text": "스포츠 단체 직관: 5월 중(미정)",
+          "visible": true,
+          "order": 2
+        },
+        {
+          "text": "월드컵 단체 관람: 월드컵 기간(계획 중)",
+          "visible": true,
+          "order": 3
+        },
+        {
+          "text": "여름 MT: 7월 중(미정)",
+          "visible": true,
+          "order": 4
+        }
       ]
     },
     "stats": {
       "gender": [
-        {"label":"여자","value":20,"color":"#FF6B81","visible":true,"order":1},
-        {"label":"남자","value":80,"color":"#4D96FF","visible":true,"order":2}
+        {
+          "label": "여자",
+          "value": 11,
+          "color": "#FF6B81",
+          "visible": true,
+          "order": 1
+        },
+        {
+          "label": "남자",
+          "value": 39,
+          "color": "#4D96FF",
+          "visible": true,
+          "order": 2
+        }
       ],
       "major": [
-        {"label":"데이터과학과","value":6,"color":"#FF6B6B","visible":true,"order":1},
-        {"label":"통계학과","value":6,"color":"#FF9F43","visible":true,"order":2},
-        {"label":"중어중문학과","value":4,"color":"#FDCB6E","visible":true,"order":3},
-        {"label":"경제학과","value":3,"color":"#20BF6B","visible":true,"order":4},
-        {"label":"언어학과","value":2,"color":"#0FB9B1","visible":true,"order":5},
-        {"label":"컴퓨터학과","value":2,"color":"#2D98DA","visible":true,"order":6},
-        {"label":"경영학과","value":2,"color":"#3867D6","visible":true,"order":7},
-        {"label":"행정학과","value":2,"color":"#8854D0","visible":true,"order":8},
-        {"label":"화학과","value":2,"color":"#A55EEA","visible":true,"order":9},
-        {"label":"사회학과","value":2,"color":"#F06292","visible":true,"order":10},
-        {"label":"국제학부","value":2,"color":"#4B6584","visible":true,"order":11},
-        {"label":"기타","value":12,"color":"#9980FA","visible":true,"order":12}
+        {
+          "label": "통계학과",
+          "value": 9,
+          "color": "#FF9F43",
+          "visible": true,
+          "order": 1
+        },
+        {
+          "label": "데이터과학과",
+          "value": 5,
+          "color": "#FF6B6B",
+          "visible": true,
+          "order": 2
+        },
+        {
+          "label": "국제학부",
+          "value": 4,
+          "color": "#FDCB6E",
+          "visible": true,
+          "order": 3
+        },
+        {
+          "label": "컴퓨터학과",
+          "value": 3,
+          "color": "",
+          "visible": true,
+          "order": 4
+        },
+        {
+          "label": "사회학과",
+          "value": 3,
+          "color": "#20BF6B",
+          "visible": true,
+          "order": 5
+        },
+        {
+          "label": "화학과",
+          "value": 3,
+          "color": "#0FB9B1",
+          "visible": true,
+          "order": 6
+        },
+        {
+          "label": "언어학과",
+          "value": 2,
+          "color": "#2D98DA",
+          "visible": true,
+          "order": 7
+        },
+        {
+          "label": "전기전자공학부",
+          "value": 2,
+          "color": "#3867D6",
+          "visible": true,
+          "order": 8
+        },
+        {
+          "label": "행정학과",
+          "value": 2,
+          "color": "#8854D0",
+          "visible": true,
+          "order": 9
+        },
+        {
+          "label": "경제학과",
+          "value": 2,
+          "color": "#4B6584",
+          "visible": true,
+          "order": 10
+        },
+        {
+          "label": "기타",
+          "value": 15,
+          "color": "#9980FA",
+          "visible": true,
+          "order": 11
+        }
       ],
       "admissionYear": [
-        {"label":"19","value":1,"color":"#ab3333","visible":true,"order":1},
-        {"label":"20","value":2,"color":"#ab3333","visible":true,"order":2},
-        {"label":"21","value":3,"color":"#ab3333","visible":true,"order":3},
-        {"label":"22","value":4,"color":"#ab3333","visible":true,"order":4},
-        {"label":"23","value":4,"color":"#ab3333","visible":true,"order":5},
-        {"label":"24","value":17,"color":"#ab3333","visible":true,"order":6},
-        {"label":"25","value":14,"color":"#ab3333","visible":true,"order":7}
+        {
+          "label": "20",
+          "value": 1,
+          "color": "#ab3333",
+          "visible": true,
+          "order": 1
+        },
+        {
+          "label": "21",
+          "value": 3,
+          "color": "#ab3333",
+          "visible": true,
+          "order": 2
+        },
+        {
+          "label": "22",
+          "value": 5,
+          "color": "#ab3333",
+          "visible": true,
+          "order": 3
+        },
+        {
+          "label": "23",
+          "value": 5,
+          "color": "#ab3333",
+          "visible": true,
+          "order": 4
+        },
+        {
+          "label": "24",
+          "value": 13,
+          "color": "#ab3333",
+          "visible": true,
+          "order": 5
+        },
+        {
+          "label": "25",
+          "value": 17,
+          "color": "#ab3333",
+          "visible": true,
+          "order": 6
+        },
+        {
+          "label": "26",
+          "value": 6,
+          "color": "#ab3333",
+          "visible": true,
+          "order": 7
+        }
       ]
     }
   },
   "resultPage": {
-    "pageTitle": "PAINS - 11기 최종 합격자 안내",
-    "title": "11기 최종 합격자 안내",
+    "pageTitle": "PAINS - 12기 최종 합격자 안내",
+    "title": "12기 최종 합격자 안내",
     "subtitle": "지원 시 제출한 학번과 이름을 입력해주세요.",
     "idLabel": "학번 (ID)",
     "idPlaceholder": "예: 2026123456",
@@ -352,8 +1344,8 @@
     "loadingStatusLabel": "결과 로딩중",
     "passStatusLabel": "합 격",
     "failStatusLabel": "불합격",
-    "passDescription": "축하드립니다! 귀하는 PAINS 11기 최종 면접에 합격하셨습니다.<br>아래 OT 일정을 확인해주시기 바랍니다.",
-    "failDescription": "2026년 상반기 PAINS 11기 리크루팅에 지원해주셔서 진심으로 감사드립니다.<br>지원자님의 뛰어난 역량과 열정에도 불구하고, 한정된 선발 인원으로 인해 아쉽게도 이번 기수에는 함께하지 못하게 되었습니다. 비록 이번에는 좋은 인연으로 이어지지 못했지만 보여주신 관심에 깊이 감사드리며 앞으로의 행보를 진심으로 응원하겠습니다.<br>PAINS는 매 기수 리크루팅을 진행하고 있으니, 이후에도 PAINS에 많은 관심 부탁드립니다.",
+    "passDescription": "축하드립니다! 귀하는 PAINS 12기 최종 면접에 합격하셨습니다.<br>아래 OT 일정을 확인해주시기 바랍니다.",
+    "failDescription": "2026년 하반기 PAINS 12기 리크루팅에 지원해주셔서 진심으로 감사드립니다.<br>지원자님의 뛰어난 역량과 열정에도 불구하고, 한정된 선발 인원으로 인해 아쉽게도 이번 기수에는 함께하지 못하게 되었습니다. 비록 이번에는 좋은 인연으로 이어지지 못했지만 보여주신 관심에 깊이 감사드리며 앞으로의 행보를 진심으로 응원하겠습니다.<br>PAINS는 매 기수 리크루팅을 진행하고 있으니, 이후에도 PAINS에 많은 관심 부탁드립니다.",
     "missingInputMessage": "학번과 이름을 모두 입력해주세요.",
     "notFoundMessage": "일치하는 지원 정보를 찾을 수 없습니다.\n학번과 이름을 다시 확인해주세요.",
     "lockedMessageTemplate": "아직 결과 발표 기간이 아닙니다.\n발표 일시: {releaseDate} {releaseTime}",
@@ -368,5 +1360,1978 @@
     "warningMessage": "* OT는 3월 16일 월요일 오후 7시 상남정경관 101호에서 진행될 예정입니다.",
     "noticeMessage1": "* 합격자는 OT 시작 전 채팅방에 초대되어 OT에 대한 안내가 진행될 예정입니다.",
     "noticeMessage2": "* 정당한 사유 없이 OT에 불참할 경우 합격이 취소될 수 있으니 유의바랍니다."
-  }
+  },
+  "projects": [
+    {
+      "title": "상위 컨스트럭터 퀄리파잉 빌드업 비교",
+      "year": "2026",
+      "generation": "11기",
+      "period": "학기 중 프로젝트",
+      "sport": "F1",
+      "driveUrl": "https://drive.google.com/file/d/1xm-jdN8MP4-b1wj1xa77topASl31HtlI/view?usp=drive_link",
+      "driveId": "bcc8a03d-8489-4fac-ab57-d6eb6e561b53_F1_6조.pdf",
+      "pdfUrl": "",
+      "file": "bcc8a03d-8489-4fac-ab57-d6eb6e561b53_F1_6조.pdf"
+    },
+    {
+      "title": "팀 탈압박을 정의하는 방법",
+      "year": "2026",
+      "generation": "11기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1S68zfAnxdYF3LqwaqfFvbN5mrwoJ4BQe/view?usp=drive_link",
+      "driveId": "0199751a-aa3b-4d5e-98d2-46128b03dad6_축구_5조.pdf",
+      "pdfUrl": "",
+      "file": "0199751a-aa3b-4d5e-98d2-46128b03dad6_축구_5조.pdf"
+    },
+    {
+      "title": "xG값에 대한 탐구 및 모델링",
+      "year": "2026",
+      "generation": "11기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1PeaVrL2b3LjG4t-9Xs-wcp6FRBTisJ73/view?usp=drive_link",
+      "driveId": "f49d5dd5-aa4a-4332-be63-ecb983b4b33c_축구_4조.pdf",
+      "pdfUrl": "",
+      "file": "f49d5dd5-aa4a-4332-be63-ecb983b4b33c_축구_4조.pdf"
+    },
+    {
+      "title": "KBO 아시안쿼터 투구 성적 예측 분석",
+      "year": "2026",
+      "generation": "11기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1ujJ0in-zVXS2jgL1DVJWubwdxd1t6RMY/view?usp=drive_link",
+      "driveId": "859f1404-362d-4adf-9b0b-f905718f409b_야구_3조.pdf",
+      "pdfUrl": "",
+      "file": "859f1404-362d-4adf-9b0b-f905718f409b_야구_3조.pdf"
+    },
+    {
+      "title": "ABS 챌린지 전략 : 머신러닝 기반 판정 시스템 구축 및 ABS 챌린지 전",
+      "year": "2026",
+      "generation": "11기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1Ap6hTH9baj3QeZPNM10H9a9KgV4B1GyQ/view?usp=drive_link",
+      "driveId": "681d18d5-288b-4ad7-9ce4-f15f7e238204_야구_2조.pdf",
+      "pdfUrl": "",
+      "file": "681d18d5-288b-4ad7-9ce4-f15f7e238204_야구_2조.pdf"
+    },
+    {
+      "title": "KBO 리그 내 강한 2번 타자 이론의 실효성 검증",
+      "year": "2026",
+      "generation": "11기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1Pp_Uy9fBcoBbrALuLLMGyyZgui7uzHrs/view?usp=drive_link",
+      "driveId": "da91d6ed-163a-45ed-ae27-fad8c0e9df76_야구_1조.pdf",
+      "pdfUrl": "",
+      "file": "da91d6ed-163a-45ed-ae27-fad8c0e9df76_야구_1조.pdf"
+    },
+    {
+      "title": "끊어진 연결고리: 데이터로 시각화한 2024 전북의 붕괴",
+      "year": "2026",
+      "generation": "10기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/10bP7CoNIINbYHsVeooJk5cL05ZSP4n6_/view?usp=sharing",
+      "driveId": "10bP7CoNIINbYHsVeooJk5cL05ZSP4n6_",
+      "pdfUrl": "",
+      "file": "10V_09.pdf"
+    },
+    {
+      "title": "회귀분석을 이용한 팀메이트 간 실력 비교 지표 제시",
+      "year": "2026",
+      "generation": "10기",
+      "period": "방학 중 프로젝트",
+      "sport": "F1",
+      "driveUrl": "https://drive.google.com/file/d/1IMO2NDk2uvV7jiME_1kfENrLXw3DWVU5/view?usp=sharing",
+      "driveId": "1IMO2NDk2uvV7jiME_1kfENrLXw3DWVU5",
+      "pdfUrl": "",
+      "file": "10V_08.pdf"
+    },
+    {
+      "title": "리그 성적이 월즈(WORLDS) 성적과 유의미한 차이를 보이는 이유는 무엇일까?",
+      "year": "2026",
+      "generation": "10기",
+      "period": "방학 중 프로젝트",
+      "sport": "e스포츠",
+      "driveUrl": "https://drive.google.com/file/d/1ZGRrPvZLRZi49IWftiX7gGu46qwraw54/view?usp=sharing",
+      "driveId": "1ZGRrPvZLRZi49IWftiX7gGu46qwraw54",
+      "pdfUrl": "",
+      "file": "10V_07.pdf"
+    },
+    {
+      "title": "2026 북중미 월드컵 예측 및 대한민국의 전술 분석",
+      "year": "2026",
+      "generation": "10기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1KSWQ6aA7vy-T52kxqlD6ztTIZhQX5956/view?usp=sharing",
+      "driveId": "1KSWQ6aA7vy-T52kxqlD6ztTIZhQX5956",
+      "pdfUrl": "",
+      "file": "10V_06.pdf"
+    },
+    {
+      "title": "어뢰배트 도입 효과 추정",
+      "year": "2026",
+      "generation": "10기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1uEmB5hmM40RNOdqpXHgC_lfz7VgR9J2I/view?usp=sharing",
+      "driveId": "1uEmB5hmM40RNOdqpXHgC_lfz7VgR9J2I",
+      "pdfUrl": "",
+      "file": "10V_05.pdf"
+    },
+    {
+      "title": "MLB 선수들의 정규시즌과 포스트시즌 성적차이의 통계적 분석",
+      "year": "2026",
+      "generation": "10기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/138LuVj8-504QT4efFlFSMOWqFN-3z8zY/view?usp=sharing",
+      "driveId": "138LuVj8-504QT4efFlFSMOWqFN-3z8zY",
+      "pdfUrl": "",
+      "file": "10V_04.pdf"
+    },
+    {
+      "title": "KBO 투구 데이터의 정량적 분석과 모델 구축",
+      "year": "2026",
+      "generation": "10기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1X-KSVP7y7HR5gh5OKeu6fKCML5EN88X8/view?usp=sharing",
+      "driveId": "1X-KSVP7y7HR5gh5OKeu6fKCML5EN88X8",
+      "pdfUrl": "",
+      "file": "10V_03.pdf"
+    },
+    {
+      "title": "잠실 구장 이적 효과'는 실재하는가?",
+      "year": "2026",
+      "generation": "10기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1z7WYVWCvQZP8cVA9L8MHMcZmxMng2wVk/view?usp=sharing",
+      "driveId": "1z7WYVWCvQZP8cVA9L8MHMcZmxMng2wVk",
+      "pdfUrl": "",
+      "file": "10V_02.pdf"
+    },
+    {
+      "title": "역대 KBO 최강팀은?",
+      "year": "2026",
+      "generation": "10기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/17_0eyx6QpWphEt6LgtOnQOHpvvEIdD_O/view?usp=sharing",
+      "driveId": "17_0eyx6QpWphEt6LgtOnQOHpvvEIdD_O",
+      "pdfUrl": "",
+      "file": "10V_01.pdf"
+    },
+    {
+      "title": "세이버 매트릭스를 통해 분석한 2026 KBO 드래프트",
+      "year": "2025",
+      "generation": "10기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1BJlTFld2hF8HoQJNSLQmN89_4Eta5QZB/view?usp=sharing",
+      "driveId": "1BJlTFld2hF8HoQJNSLQmN89_4Eta5QZB",
+      "pdfUrl": "",
+      "file": "10S_07.pdf"
+    },
+    {
+      "title": "2026 드래프트 1라운드 예측",
+      "year": "2025",
+      "generation": "10기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1y-jeSak09AGVJ0rUA2mysDYx-YE-NL6Y/view?usp=sharing",
+      "driveId": "1y-jeSak09AGVJ0rUA2mysDYx-YE-NL6Y",
+      "pdfUrl": "",
+      "file": "10S_06.pdf"
+    },
+    {
+      "title": "마무리 투수를 평가하는 새로운 지표 만들기",
+      "year": "2025",
+      "generation": "10기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1Ku7dXMtm-qKSrPToBPGwliFaWmupSXlv/view?usp=sharing",
+      "driveId": "1Ku7dXMtm-qKSrPToBPGwliFaWmupSXlv",
+      "pdfUrl": "",
+      "file": "10S_05.pdf"
+    },
+    {
+      "title": "좌익축구-우익축구의 관점에서 바라본 2024 K리그",
+      "year": "2025",
+      "generation": "10기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/17pglu0AqWiW5WvqgewCFCrEX5mO9y0BT/view?usp=sharing",
+      "driveId": "17pglu0AqWiW5WvqgewCFCrEX5mO9y0BT",
+      "pdfUrl": "",
+      "file": "10S_04.pdf"
+    },
+    {
+      "title": "뎀벨레, 그가 발롱도르 위너가 될 수 있었던 이유",
+      "year": "2025",
+      "generation": "10기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1nC5JA429cUrk3I5hQ7wA9x_vNhyx6wft/view?usp=sharing",
+      "driveId": "1nC5JA429cUrk3I5hQ7wA9x_vNhyx6wft",
+      "pdfUrl": "",
+      "file": "10S_03.pdf"
+    },
+    {
+      "title": "NBA 벤치진의 플레이오프 영향력 분석",
+      "year": "2025",
+      "generation": "10기",
+      "period": "학기 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1R2QIq2fvIGpesJNquh9Z520J391eCixr/view?usp=sharing",
+      "driveId": "1R2QIq2fvIGpesJNquh9Z520J391eCixr",
+      "pdfUrl": "",
+      "file": "10S_02.pdf"
+    },
+    {
+      "title": "브레이킹 데이터를 통한 주행 스타일 군집화",
+      "year": "2025",
+      "generation": "10기",
+      "period": "학기 중 프로젝트",
+      "sport": "F1",
+      "driveUrl": "https://drive.google.com/file/d/1Tp11vxmaq3OdVHfhh14gvnyOCHWMG8JI/view?usp=sharing",
+      "driveId": "1Tp11vxmaq3OdVHfhh14gvnyOCHWMG8JI",
+      "pdfUrl": "",
+      "file": "10S_01.pdf"
+    },
+    {
+      "title": "KBTI - 타자편",
+      "year": "2025",
+      "generation": "9기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/17tEivmL40hrUUVxGGR1faYQNdwmtnSMH/view?usp=sharing",
+      "driveId": "17tEivmL40hrUUVxGGR1faYQNdwmtnSMH",
+      "pdfUrl": "",
+      "file": "09V_09.pdf"
+    },
+    {
+      "title": "KBO 투수 FA 성패 분석 - 불펜FA를 중심으로",
+      "year": "2025",
+      "generation": "9기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1bYOKtXzrbiCrPLzqN055qBEzitt7UkDV/view?usp=sharing",
+      "driveId": "1bYOKtXzrbiCrPLzqN055qBEzitt7UkDV",
+      "pdfUrl": "",
+      "file": "09V_08.pdf"
+    },
+    {
+      "title": "구단 운영 비용과 팀 성적의 연관성",
+      "year": "2025",
+      "generation": "9기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1GKtIcSgtF5SUp2NtB1RMUNyUiH2RrSYK/view?usp=sharing",
+      "driveId": "1GKtIcSgtF5SUp2NtB1RMUNyUiH2RrSYK",
+      "pdfUrl": "",
+      "file": "09V_07.pdf"
+    },
+    {
+      "title": "회귀분석을 통해 바라본 언더컷",
+      "year": "2025",
+      "generation": "9기",
+      "period": "방학 중 프로젝트",
+      "sport": "F1",
+      "driveUrl": "https://drive.google.com/file/d/1i-34tKJvBY4TX34Ues4KgeXp8LaPUwkg/view?usp=sharing",
+      "driveId": "1i-34tKJvBY4TX34Ues4KgeXp8LaPUwkg",
+      "pdfUrl": "",
+      "file": "09V_06.pdf"
+    },
+    {
+      "title": "NBA 드래프트 종합 분석 - PreDraft 스탯에 따른 픽순위와 퍼포먼스 분석",
+      "year": "2025",
+      "generation": "9기",
+      "period": "방학 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1dXkUI8z2lxuCWJkt5Azpb8u9q31yvo71/view?usp=sharing",
+      "driveId": "1dXkUI8z2lxuCWJkt5Azpb8u9q31yvo71",
+      "pdfUrl": "",
+      "file": "09V_05.pdf"
+    },
+    {
+      "title": "트레블 팀의 전술 DNA: 우승 팀들의 공통된 전략을 찾아서",
+      "year": "2025",
+      "generation": "9기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1CGfFyKiA35DS2o5toO0-QFpyZQyU9uEV/view?usp=sharing",
+      "driveId": "1CGfFyKiA35DS2o5toO0-QFpyZQyU9uEV",
+      "pdfUrl": "",
+      "file": "09V_04.pdf"
+    },
+    {
+      "title": "한국 프로야구의 명장을 찾아서",
+      "year": "2025",
+      "generation": "9기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1PDR7aTxWRlpAJgRwgOSpc779b61hdjVR/view?usp=sharing",
+      "driveId": "1PDR7aTxWRlpAJgRwgOSpc779b61hdjVR",
+      "pdfUrl": "",
+      "file": "09V_03.pdf"
+    },
+    {
+      "title": "Football Manager를 이용한 유망주 분석 및 시뮬레이션",
+      "year": "2025",
+      "generation": "9기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1JgPkRL9UvQGPGJHNWdO3VlqJK396rgWH/view?usp=sharing",
+      "driveId": "1JgPkRL9UvQGPGJHNWdO3VlqJK396rgWH",
+      "pdfUrl": "",
+      "file": "09V_02.pdf"
+    },
+    {
+      "title": "회귀분석 기반 KBL WS 도출 및 적정 연봉 산정",
+      "year": "2025",
+      "generation": "9기",
+      "period": "방학 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1S89oG6N3gyDRHrQ5GLOtk1BN7yZbXGUO/view?usp=sharing",
+      "driveId": "1S89oG6N3gyDRHrQ5GLOtk1BN7yZbXGUO",
+      "pdfUrl": "",
+      "file": "09V_01.pdf"
+    },
+    {
+      "title": "선취점의 중요성 : 선취점의 가치와 상황 별 선취점이 가지는 의미 분석",
+      "year": "2025",
+      "generation": "9기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1wVdlvIYwTV8gzEn4z7LeaS3n4IAL-b4j/view?usp=sharing",
+      "driveId": "1wVdlvIYwTV8gzEn4z7LeaS3n4IAL-b4j",
+      "pdfUrl": "",
+      "file": "09S_08.pdf"
+    },
+    {
+      "title": "KBO 구단의 두드러지는 월별 승률 분석",
+      "year": "2025",
+      "generation": "9기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1ucrlAZDa__Os2fEhvR8zQu02A5R8qh7I/view?usp=sharing",
+      "driveId": "1ucrlAZDa__Os2fEhvR8zQu02A5R8qh7I",
+      "pdfUrl": "",
+      "file": "09S_07.pdf"
+    },
+    {
+      "title": "KBO 2025 시즌 투수 분석 -롱릴리프를 중심으로-",
+      "year": "2025",
+      "generation": "9기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1Srf5s8SAjA0QMh9r5y3OogEcsD9KNxiE/view?usp=sharing",
+      "driveId": "1Srf5s8SAjA0QMh9r5y3OogEcsD9KNxiE",
+      "pdfUrl": "",
+      "file": "09S_06.pdf"
+    },
+    {
+      "title": "K리그에 적합한 피타고리안 승점 예측하기",
+      "year": "2025",
+      "generation": "9기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1zbDrN6bCPZjeFDN1pU5rjXkp3Hfpl5wr/view?usp=sharing",
+      "driveId": "1zbDrN6bCPZjeFDN1pU5rjXkp3Hfpl5wr",
+      "pdfUrl": "",
+      "file": "09S_05.pdf"
+    },
+    {
+      "title": "클롭과 슬롯의 리버풀은 어떻게 다를까?",
+      "year": "2025",
+      "generation": "9기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1QQuSESYE86BsG-dqEUKGdU5raSa_XdbN/view?usp=sharing",
+      "driveId": "1QQuSESYE86BsG-dqEUKGdU5raSa_XdbN",
+      "pdfUrl": "",
+      "file": "09S_04.pdf"
+    },
+    {
+      "title": "포지션별 샐러리 배분과 팀 성과 분석",
+      "year": "2025",
+      "generation": "9기",
+      "period": "학기 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1bKj4u9Y0ox4PYEV6spUaZJhnkUxyWTqO/view?usp=sharing",
+      "driveId": "1bKj4u9Y0ox4PYEV6spUaZJhnkUxyWTqO",
+      "pdfUrl": "",
+      "file": "09S_03.pdf"
+    },
+    {
+      "title": "NBA 클러치 타임 퍼포먼스 비교 연구: 커리 vs 릴라드",
+      "year": "2025",
+      "generation": "9기",
+      "period": "학기 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1K89wJFeo5vqSuA_DxqBwwjNU4yCQF726/view?usp=sharing",
+      "driveId": "1K89wJFeo5vqSuA_DxqBwwjNU4yCQF726",
+      "pdfUrl": "",
+      "file": "09S_02.pdf"
+    },
+    {
+      "title": "DRS 존에서의 최적 추월 조건 분석",
+      "year": "2025",
+      "generation": "9기",
+      "period": "학기 중 프로젝트",
+      "sport": "F1",
+      "driveUrl": "https://drive.google.com/file/d/1NofwAoNusbIWnuQJmqHrCi4QHOCnXZE_/view?usp=sharing",
+      "driveId": "1NofwAoNusbIWnuQJmqHrCi4QHOCnXZE_",
+      "pdfUrl": "",
+      "file": "09S_01.pdf"
+    },
+    {
+      "title": "패싱과 러싱 스탯으로 보는 슈퍼볼 59 프리뷰",
+      "year": "2025",
+      "generation": "8기",
+      "period": "방학 중 프로젝트",
+      "sport": "미식축구",
+      "driveUrl": "https://drive.google.com/file/d/17V3c8tJDtE1KF7K6GRasIkjFcsjCZqft/view?usp=sharing",
+      "driveId": "17V3c8tJDtE1KF7K6GRasIkjFcsjCZqft",
+      "pdfUrl": "",
+      "file": "08V_09.pdf"
+    },
+    {
+      "title": "자유투에 대한 종합 연구",
+      "year": "2025",
+      "generation": "8기",
+      "period": "방학 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1WacqR5qGluNVIj90fX7crpggi1gQRWON/view?usp=sharing",
+      "driveId": "1WacqR5qGluNVIj90fX7crpggi1gQRWON",
+      "pdfUrl": "",
+      "file": "08V_08.pdf"
+    },
+    {
+      "title": "축구 선수의 클러치 능력 검증: 기대 승점 기반 클러치 지표 개발 및 분석",
+      "year": "2025",
+      "generation": "8기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1YKsLEf6S2yzoydoX_BktFiJFTWeTs0oH/view?usp=sharing",
+      "driveId": "1YKsLEf6S2yzoydoX_BktFiJFTWeTs0oH",
+      "pdfUrl": "",
+      "file": "08V_07.pdf"
+    },
+    {
+      "title": "도루의 가치를 포함한 공격 스탯 분석",
+      "year": "2025",
+      "generation": "8기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/15EsaR0M0jmKy7qLm5EFqkj8bJoWabqiv/view?usp=sharing",
+      "driveId": "15EsaR0M0jmKy7qLm5EFqkj8bJoWabqiv",
+      "pdfUrl": "",
+      "file": "08V_06.pdf"
+    },
+    {
+      "title": "포수의 가치 파악 - 수비형 / 공격형 포수 분석을 중심으로",
+      "year": "2025",
+      "generation": "8기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1u3DkD20TR2oZyYqW0GaEN182BnkpCqIB/view?usp=sharing",
+      "driveId": "1u3DkD20TR2oZyYqW0GaEN182BnkpCqIB",
+      "pdfUrl": "",
+      "file": "08V_05.pdf"
+    },
+    {
+      "title": "최근 3년 랩타임 분석을 통한 맥라렌의 퍼포먼스 향상 평가 (부제: 맥라렌은 어떻게 다시 강팀이 되었나)",
+      "year": "2025",
+      "generation": "8기",
+      "period": "방학 중 프로젝트",
+      "sport": "F1",
+      "driveUrl": "https://drive.google.com/file/d/1E6-drt12rto2C7Y4DVrdVuVlVz2aC8ok/view?usp=sharing",
+      "driveId": "1E6-drt12rto2C7Y4DVrdVuVlVz2aC8ok",
+      "pdfUrl": "",
+      "file": "08V_04.pdf"
+    },
+    {
+      "title": "KBO 타자의 컨디션 예측(feat. LCA, LSTM)",
+      "year": "2025",
+      "generation": "8기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1CoG8k9g7Ne_8CPg1njAy1DvbIPQJcPFq/view?usp=sharing",
+      "driveId": "1CoG8k9g7Ne_8CPg1njAy1DvbIPQJcPFq",
+      "pdfUrl": "",
+      "file": "08V_03.pdf"
+    },
+    {
+      "title": "2024 두산 베어스 투수 교체 패턴 분석: 이승엽은 정말 무지성 졸장인가?",
+      "year": "2025",
+      "generation": "8기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1xNAlCAtwFyZJrD_nVrD8OMFy69btZIWP/view?usp=sharing",
+      "driveId": "1xNAlCAtwFyZJrD_nVrD8OMFy69btZIWP",
+      "pdfUrl": "",
+      "file": "08V_02.pdf"
+    },
+    {
+      "title": "KBO 구단별 고과산정 방식 알아보기 -비fa선수 연봉 예측하기",
+      "year": "2025",
+      "generation": "8기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1EbXMsS_qy9gpgUZRV62NkA6yIKLf5c_2/view?usp=sharing",
+      "driveId": "1EbXMsS_qy9gpgUZRV62NkA6yIKLf5c_2",
+      "pdfUrl": "",
+      "file": "08V_01.pdf"
+    },
+    {
+      "title": "2024 한국 야구 허수 판독기",
+      "year": "2024",
+      "generation": "8기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1Y6hilfL0xHlezBYgeHhvQcqBGWGzXg7e/view?usp=sharing",
+      "driveId": "1Y6hilfL0xHlezBYgeHhvQcqBGWGzXg7e",
+      "pdfUrl": "",
+      "file": "08S_07.pdf"
+    },
+    {
+      "title": "BABIP-성적 연관성",
+      "year": "2024",
+      "generation": "8기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/12Js20_nsai8lXTKrPtTdFbHP7D-3VXlx/view?usp=sharing",
+      "driveId": "12Js20_nsai8lXTKrPtTdFbHP7D-3VXlx",
+      "pdfUrl": "",
+      "file": "08S_06.pdf"
+    },
+    {
+      "title": "2024 두산 베어스의 타순 배치 성향 분석",
+      "year": "2024",
+      "generation": "8기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1sLwF2to1EA7oQ--Fmh17ne34sH0nnvQX/view?usp=sharing",
+      "driveId": "1sLwF2to1EA7oQ--Fmh17ne34sH0nnvQX",
+      "pdfUrl": "",
+      "file": "08S_05.pdf"
+    },
+    {
+      "title": "구장도 좌우놀이? : 한화 이글스의 베이스볼 드림파크 이전 시의 타격 성적 분석 및 예측",
+      "year": "2024",
+      "generation": "8기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1kmd5O6pChsSJy37OqPGcT57ZUpZbcWEF/view?usp=sharing",
+      "driveId": "1kmd5O6pChsSJy37OqPGcT57ZUpZbcWEF",
+      "pdfUrl": "",
+      "file": "08S_04.pdf"
+    },
+    {
+      "title": "투수의 지표와 연봉 간의 상관관계와 해석 -선발과 불펜의 차이를 중심으로-",
+      "year": "2024",
+      "generation": "8기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1XRr7GG_UZhAz01F50zJKFvpPnWGxj4CQ/view?usp=sharing",
+      "driveId": "1XRr7GG_UZhAz01F50zJKFvpPnWGxj4CQ",
+      "pdfUrl": "",
+      "file": "08S_03.pdf"
+    },
+    {
+      "title": "4대 리그 플레이 성향 분석 및 활용",
+      "year": "2024",
+      "generation": "8기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/18Q4TruTNdD7FreiJbpS7gotCHrWMMdw3/view?usp=sharing",
+      "driveId": "18Q4TruTNdD7FreiJbpS7gotCHrWMMdw3",
+      "pdfUrl": "",
+      "file": "08S_02.pdf"
+    },
+    {
+      "title": "NBA 식스맨의 역할",
+      "year": "2024",
+      "generation": "8기",
+      "period": "학기 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1gfjqU7vp8B-SXRsBdGAQ4lsFTNVKWMi6/view?usp=sharing",
+      "driveId": "1gfjqU7vp8B-SXRsBdGAQ4lsFTNVKWMi6",
+      "pdfUrl": "",
+      "file": "08S_01.pdf"
+    },
+    {
+      "title": "선발 ERA 개선",
+      "year": "2024",
+      "generation": "7기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1FX79IbBIBhVxMPrWghta-VtwQ-NuNm_l/view?usp=sharing",
+      "driveId": "1FX79IbBIBhVxMPrWghta-VtwQ-NuNm_l",
+      "pdfUrl": "",
+      "file": "07V_11.pdf"
+    },
+    {
+      "title": "신인 드래프트, 정배와 소신 중 정답은 있을까?",
+      "year": "2024",
+      "generation": "7기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1My2l-2oxu_HgA2WHB2UcpxuoGpnBmQxj/view?usp=sharing",
+      "driveId": "1My2l-2oxu_HgA2WHB2UcpxuoGpnBmQxj",
+      "pdfUrl": "",
+      "file": "07V_10.pdf"
+    },
+    {
+      "title": "NBA 선수 트렌드 변화",
+      "year": "2024",
+      "generation": "7기",
+      "period": "방학 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1NGe7iKlOUudqZ7n974LhxRc-GE5t88gl/view?usp=sharing",
+      "driveId": "1NGe7iKlOUudqZ7n974LhxRc-GE5t88gl",
+      "pdfUrl": "",
+      "file": "07V_09.pdf"
+    },
+    {
+      "title": "많이 쉬는 팀이 진짜 유리할까?",
+      "year": "2024",
+      "generation": "7기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1s9uuLz3_pwrtt9G8W2RyaxPL-0ytgEMc/view?usp=sharing",
+      "driveId": "1s9uuLz3_pwrtt9G8W2RyaxPL-0ytgEMc",
+      "pdfUrl": "",
+      "file": "07V_08.pdf"
+    },
+    {
+      "title": "경기 기여도를 반영한 히트맵 재구성 : 축구판 WAR 히트맵 만들기",
+      "year": "2024",
+      "generation": "7기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1IF4zd-m5KltJekrEQkPCzPvvjHd19R1d/view?usp=sharing",
+      "driveId": "1IF4zd-m5KltJekrEQkPCzPvvjHd19R1d",
+      "pdfUrl": "",
+      "file": "07V_07.pdf"
+    },
+    {
+      "title": "k-means 군집분석을 이용한 스트라이커 유형 분류 및 스트라이커 추천 시스템 구축",
+      "year": "2024",
+      "generation": "7기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1zCSWIrgBwuvSHKWVafj5FsvkqVrWFQxT/view?usp=sharing",
+      "driveId": "1zCSWIrgBwuvSHKWVafj5FsvkqVrWFQxT",
+      "pdfUrl": "",
+      "file": "07V_06.pdf"
+    },
+    {
+      "title": "축구판 WAR 만들기",
+      "year": "2024",
+      "generation": "7기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1h97_So1z7cYhW4uKsj3Hs1KqfZLs15jG/view?usp=sharing",
+      "driveId": "1h97_So1z7cYhW4uKsj3Hs1KqfZLs15jG",
+      "pdfUrl": "",
+      "file": "07V_05.pdf"
+    },
+    {
+      "title": "좌우놀이는 효과적인가?",
+      "year": "2024",
+      "generation": "7기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/18LnWld7j3aVQP2EY1VLkhM02KZyi-rV0/view?usp=sharing",
+      "driveId": "18LnWld7j3aVQP2EY1VLkhM02KZyi-rV0",
+      "pdfUrl": "",
+      "file": "07V_04.pdf"
+    },
+    {
+      "title": "KBO 골든글러브 예측 모델 구현하기",
+      "year": "2024",
+      "generation": "7기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1_r5M_ff9x1sfo2UrEqNu00XNZ6jUIBSc/view?usp=sharing",
+      "driveId": "1_r5M_ff9x1sfo2UrEqNu00XNZ6jUIBSc",
+      "pdfUrl": "",
+      "file": "07V_03.pdf"
+    },
+    {
+      "title": "2023 LG트윈스의 우승 요인 분석과 앞으로의 방향성 제안",
+      "year": "2024",
+      "generation": "7기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1Ue-ZFh7xF_zDf-JjZTTdYVEt9MDuJq1b/view?usp=sharing",
+      "driveId": "1Ue-ZFh7xF_zDf-JjZTTdYVEt9MDuJq1b",
+      "pdfUrl": "",
+      "file": "07V_02.pdf"
+    },
+    {
+      "title": "롯데 자이언츠 김태형 감독 부임 전후 비교",
+      "year": "2024",
+      "generation": "7기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/15BTgyxYDQiHKSvmpi9078ET4DCXvkjVO/view?usp=sharing",
+      "driveId": "15BTgyxYDQiHKSvmpi9078ET4DCXvkjVO",
+      "pdfUrl": "",
+      "file": "07V_01.pdf"
+    },
+    {
+      "title": "잠실 라이벌 - 2021 트레이드편",
+      "year": "2024",
+      "generation": "7기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1brKc_pVm5hFRwrOlF0JLFD80zW2wMbAc/view?usp=sharing",
+      "driveId": "1brKc_pVm5hFRwrOlF0JLFD80zW2wMbAc",
+      "pdfUrl": "",
+      "file": "07S_07.pdf"
+    },
+    {
+      "title": "3볼 타격의 효율성",
+      "year": "2024",
+      "generation": "7기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/11ny3S7Wp1VTS8oNAmejw89HYv3n2BTgf/view?usp=sharing",
+      "driveId": "11ny3S7Wp1VTS8oNAmejw89HYv3n2BTgf",
+      "pdfUrl": "",
+      "file": "07S_06.pdf"
+    },
+    {
+      "title": "선수 유형별 ABS 도입에 따른 유불리 분석 -투수를 중심으로-",
+      "year": "2024",
+      "generation": "7기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1anfxtfjyPKR44mIQ9Dp5iNL1Y5uDBJvs/view?usp=sharing",
+      "driveId": "1anfxtfjyPKR44mIQ9Dp5iNL1Y5uDBJvs",
+      "pdfUrl": "",
+      "file": "07S_05.pdf"
+    },
+    {
+      "title": "2020년 발롱도르는 레반도프스키가 받아야 할까?",
+      "year": "2024",
+      "generation": "7기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1ePfGnIJ_OksKEeDlhip_i59j7bO7QdDV/view?usp=sharing",
+      "driveId": "1ePfGnIJ_OksKEeDlhip_i59j7bO7QdDV",
+      "pdfUrl": "",
+      "file": "07S_04.pdf"
+    },
+    {
+      "title": "각 리그와 토너먼트에서 성적에 영향을 미치는 세부 스탯 분석",
+      "year": "2024",
+      "generation": "7기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/11FRrXjGCF-z4Zbyep_MBKP4n-B1O87cO/view?usp=sharing",
+      "driveId": "11FRrXjGCF-z4Zbyep_MBKP4n-B1O87cO",
+      "pdfUrl": "",
+      "file": "07S_03.pdf"
+    },
+    {
+      "title": "리그 승리 및 득점과 세부지표 간 관계 분석",
+      "year": "2024",
+      "generation": "7기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1UUCnSNx8bIcjffxrTAIg14-ZUJyOMBk4/view?usp=sharing",
+      "driveId": "1UUCnSNx8bIcjffxrTAIg14-ZUJyOMBk4",
+      "pdfUrl": "",
+      "file": "07S_02.pdf"
+    },
+    {
+      "title": "NBA 플레이오프에서 업셋이 일어나는 이유",
+      "year": "2024",
+      "generation": "7기",
+      "period": "학기 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1F8L2I2TJogfPyMD8Rfv9M8hSQSAW9ZB1/view?usp=sharing",
+      "driveId": "1F8L2I2TJogfPyMD8Rfv9M8hSQSAW9ZB1",
+      "pdfUrl": "",
+      "file": "07S_01.pdf"
+    },
+    {
+      "title": "F1 입문자를 위한 주요 서킷 가이드와 랭킹 (F1에서 가장 흥미진진한 서킷은 어디?)",
+      "year": "2024",
+      "generation": "6기",
+      "period": "방학 중 프로젝트",
+      "sport": "F1",
+      "driveUrl": "https://drive.google.com/file/d/1acT4v1LmIuDejn37zycAPTF8EAxy_5o1/view?usp=sharing",
+      "driveId": "1acT4v1LmIuDejn37zycAPTF8EAxy_5o1",
+      "pdfUrl": "",
+      "file": "06V_07.pdf"
+    },
+    {
+      "title": "이정후의 MLB 성적 예측",
+      "year": "2024",
+      "generation": "6기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1FJNjki3kuzk370-ScCSZJ7atwPM_6al_/view?usp=sharing",
+      "driveId": "1FJNjki3kuzk370-ScCSZJ7atwPM_6al_",
+      "pdfUrl": "",
+      "file": "06V_06.pdf"
+    },
+    {
+      "title": "볼펜 투수 혹사가 다음 시즌에 미치는 영향",
+      "year": "2024",
+      "generation": "6기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/17LP0G_Lg6V_LBESiWcnmxCrM6g5C_78W/view?usp=sharing",
+      "driveId": "17LP0G_Lg6V_LBESiWcnmxCrM6g5C_78W",
+      "pdfUrl": "",
+      "file": "06V_05.pdf"
+    },
+    {
+      "title": "감독 랭킹 고안",
+      "year": "2024",
+      "generation": "6기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1XGAN3x--k7FFw8STSeNF5blMtndibdL-/view?usp=sharing",
+      "driveId": "1XGAN3x--k7FFw8STSeNF5blMtndibdL-",
+      "pdfUrl": "",
+      "file": "06V_04.pdf"
+    },
+    {
+      "title": "축구 스카우팅 웹 개발하기",
+      "year": "2024",
+      "generation": "6기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1UO-LQMDevLFvw-8ai2tsWze5McbOfNX-/view?usp=sharing",
+      "driveId": "1UO-LQMDevLFvw-8ai2tsWze5McbOfNX-",
+      "pdfUrl": "",
+      "file": "06V_03.pdf"
+    },
+    {
+      "title": "회귀 모델을 활용한 23-24시즌 NBA 팀의 승수 예측",
+      "year": "2024",
+      "generation": "6기",
+      "period": "방학 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1Sjda6_2q8STnWew__WQJNMeHBVFRNe0n/view?usp=sharing",
+      "driveId": "1Sjda6_2q8STnWew__WQJNMeHBVFRNe0n",
+      "pdfUrl": "",
+      "file": "06V_02.pdf"
+    },
+    {
+      "title": "군집분석을 통한 K리그와 EPL 유명 구단의 전술적 성향 도출 및 비교",
+      "year": "2024",
+      "generation": "6기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1z8bWtED4Xg6zbDUUN-C2A9IHZtnZBFgd/view?usp=sharing",
+      "driveId": "1z8bWtED4Xg6zbDUUN-C2A9IHZtnZBFgd",
+      "pdfUrl": "",
+      "file": "06V_01.pdf"
+    },
+    {
+      "title": "KBO 유망주 분석 - 롯데, 키움, 한화를 중심으로",
+      "year": "2023",
+      "generation": "6기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1Bcgof-2OiZalZmW3Ojd1022FAsKuUn_k/view?usp=sharing",
+      "driveId": "1Bcgof-2OiZalZmW3Ojd1022FAsKuUn_k",
+      "pdfUrl": "",
+      "file": "06S_08.pdf"
+    },
+    {
+      "title": "2024 예비 FA 불펜투수 통계적 기록 분석",
+      "year": "2023",
+      "generation": "6기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1PnIHldKaCk7GM7u08BZkdfdd9d4e-KHm/view?usp=sharing",
+      "driveId": "1PnIHldKaCk7GM7u08BZkdfdd9d4e-KHm",
+      "pdfUrl": "",
+      "file": "06S_07.pdf"
+    },
+    {
+      "title": "KBO 드래프트 1라운더들의 리그 정착 가능성 분석",
+      "year": "2023",
+      "generation": "6기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1qX4I68pfoGXYPnScJrhphz7sOfSdHfBB/view?usp=sharing",
+      "driveId": "1qX4I68pfoGXYPnScJrhphz7sOfSdHfBB",
+      "pdfUrl": "",
+      "file": "06S_06.pdf"
+    },
+    {
+      "title": "축구에서의 '전방압박'에 대해 알아보자",
+      "year": "2023",
+      "generation": "6기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/12HAXAFBB97OmatewqKA7qdkB3aiYfGC5/view?usp=sharing",
+      "driveId": "12HAXAFBB97OmatewqKA7qdkB3aiYfGC5",
+      "pdfUrl": "",
+      "file": "06S_05.pdf"
+    },
+    {
+      "title": "추가 시간 증가에 따른 영향 분석",
+      "year": "2023",
+      "generation": "6기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1u9R1RePUT-sq8qGTFOdx0IKGUZl9uZCN/view?usp=sharing",
+      "driveId": "1u9R1RePUT-sq8qGTFOdx0IKGUZl9uZCN",
+      "pdfUrl": "",
+      "file": "06S_04.pdf"
+    },
+    {
+      "title": "AFC 2023 카타르 아시안컵 분석",
+      "year": "2023",
+      "generation": "6기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1piyuqwLK9OHCL5QLFLXCaUW1yHlUTfyZ/view?usp=sharing",
+      "driveId": "1piyuqwLK9OHCL5QLFLXCaUW1yHlUTfyZ",
+      "pdfUrl": "",
+      "file": "06S_03.pdf"
+    },
+    {
+      "title": "릴라드와 NBA",
+      "year": "2023",
+      "generation": "6기",
+      "period": "학기 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1wISTzWMZuSdXBcYP30ZiPhx2MvQx2nOW/view?usp=sharing",
+      "driveId": "1wISTzWMZuSdXBcYP30ZiPhx2MvQx2nOW",
+      "pdfUrl": "",
+      "file": "06S_02.pdf"
+    },
+    {
+      "title": "2023년 F1에 새로 도입된 스프린트 제도의 영향 분석",
+      "year": "2023",
+      "generation": "6기",
+      "period": "학기 중 프로젝트",
+      "sport": "F1",
+      "driveUrl": "https://drive.google.com/file/d/1AHBsCD58FTU6HbgzLzjeedQGw2CcwImi/view?usp=sharing",
+      "driveId": "1AHBsCD58FTU6HbgzLzjeedQGw2CcwImi",
+      "pdfUrl": "",
+      "file": "06S_01.pdf"
+    },
+    {
+      "title": "NFL에서 패싱 게임과 러싱 게임이 가져오는 차이점",
+      "year": "2023",
+      "generation": "5기",
+      "period": "방학 중 프로젝트",
+      "sport": "미식축구",
+      "driveUrl": "https://drive.google.com/file/d/167SblcNR7fXcQzG9ufxFuIPyMfTNflba/view?usp=sharing",
+      "driveId": "167SblcNR7fXcQzG9ufxFuIPyMfTNflba",
+      "pdfUrl": "",
+      "file": "05V_08.pdf"
+    },
+    {
+      "title": "좋은 수비수는 스탯으로 확인할 수 있는가 -가드 수비수를 중심으로-",
+      "year": "2023",
+      "generation": "5기",
+      "period": "방학 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1xid5zPiVtZ8GxPezZLQey6FkmZtBnIQV/view?usp=sharing",
+      "driveId": "1xid5zPiVtZ8GxPezZLQey6FkmZtBnIQV",
+      "pdfUrl": "",
+      "file": "05V_07.pdf"
+    },
+    {
+      "title": "선수들의 시장 가치는 객관적일까?",
+      "year": "2023",
+      "generation": "5기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1yUMEzYgEcZQedUhGbuWVMAQOh4bjL1QN/view?usp=sharing",
+      "driveId": "1yUMEzYgEcZQedUhGbuWVMAQOh4bjL1QN",
+      "pdfUrl": "",
+      "file": "05V_06.pdf"
+    },
+    {
+      "title": "Retriever-LLM 모델 기반의 축구 특화형 챗봇",
+      "year": "2023",
+      "generation": "5기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1QB1I0uTgOpnT2njma5E4x2W4yETfOsAc/view?usp=sharing",
+      "driveId": "1QB1I0uTgOpnT2njma5E4x2W4yETfOsAc",
+      "pdfUrl": "",
+      "file": "05V_05.pdf"
+    },
+    {
+      "title": "KBO 리그의 이동거리가 팀 성적에 미치는 영향",
+      "year": "2023",
+      "generation": "5기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1jMHNsCL6En7p-kH_ie-Qy7027xBw_YGI/view?usp=sharing",
+      "driveId": "1jMHNsCL6En7p-kH_ie-Qy7027xBw_YGI",
+      "pdfUrl": "",
+      "file": "05V_04.pdf"
+    },
+    {
+      "title": "스카우팅 리포트로 보는 유망주들의 성공 가능성",
+      "year": "2023",
+      "generation": "5기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1kJkaPh0YnNwEXt5KwMTahRHgochHIGwi/view?usp=sharing",
+      "driveId": "1kJkaPh0YnNwEXt5KwMTahRHgochHIGwi",
+      "pdfUrl": "",
+      "file": "05V_03.pdf"
+    },
+    {
+      "title": "구단 홈런의 효율을 극대화할 수 있는 홈구장 모델 제시",
+      "year": "2023",
+      "generation": "5기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1fMNPTs5Di2PjKJogNUC4Fr06fTdcclRL/view?usp=sharing",
+      "driveId": "1fMNPTs5Di2PjKJogNUC4Fr06fTdcclRL",
+      "pdfUrl": "",
+      "file": "05V_02.pdf"
+    },
+    {
+      "title": "비디오 판독에 대한 고찰",
+      "year": "2023",
+      "generation": "5기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1uCr5q_V96JO8DUmD9ZTahmj9jNs-1clh/view?usp=sharing",
+      "driveId": "1uCr5q_V96JO8DUmD9ZTahmj9jNs-1clh",
+      "pdfUrl": "",
+      "file": "05V_01.pdf"
+    },
+    {
+      "title": "국제대회 출전이 시즌 성적에 미치는 영향",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1LyqMqIG-0QKewofOc1oFnrHBlRVaLISi/view?usp=sharing",
+      "driveId": "1LyqMqIG-0QKewofOc1oFnrHBlRVaLISi",
+      "pdfUrl": "",
+      "file": "05S_20.pdf"
+    },
+    {
+      "title": "2023 외인타자 계약요인 분석",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1gD6vJl-j9EJfmcW7dPgxCxduTw3MYGPQ/view?usp=sharing",
+      "driveId": "1gD6vJl-j9EJfmcW7dPgxCxduTw3MYGPQ",
+      "pdfUrl": "",
+      "file": "05S_19.pdf"
+    },
+    {
+      "title": "롯데 자이언츠와 LG 트윈스의 2022시즌 리뷰&2023시즌 프리뷰",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1sc1lZc-3FLs46ZDdou89uJfXuOGeNzvo/view?usp=sharing",
+      "driveId": "1sc1lZc-3FLs46ZDdou89uJfXuOGeNzvo",
+      "pdfUrl": "",
+      "file": "05S_18.pdf"
+    },
+    {
+      "title": "잠실더비 2022 LG 트윈스 VS 두산 베어스",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1Y7Ux0TqiLt6thOqaqf-kJcq1UcT1kvwk/view?usp=sharing",
+      "driveId": "1Y7Ux0TqiLt6thOqaqf-kJcq1UcT1kvwk",
+      "pdfUrl": "",
+      "file": "05S_17.pdf"
+    },
+    {
+      "title": "선발투수의 불운, 누구의 문제인가",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1VeTds1rpXXDpLid0vUofG6uBMZl-upec/view?usp=sharing",
+      "driveId": "1VeTds1rpXXDpLid0vUofG6uBMZl-upec",
+      "pdfUrl": "",
+      "file": "05S_16.pdf"
+    },
+    {
+      "title": "도루 시도가 어느 팀에 효율적인가",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1rVDCUJ9iD33JtnXRGCou9HnbavxI0qHr/view?usp=sharing",
+      "driveId": "1rVDCUJ9iD33JtnXRGCou9HnbavxI0qHr",
+      "pdfUrl": "",
+      "file": "05S_15.pdf"
+    },
+    {
+      "title": "최고의 절망이자 최후의 희망-토미 존 서저리에 대하여",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1kU98BWp-xtYj3E8LWgKoVwFqAycQawKo/view?usp=sharing",
+      "driveId": "1kU98BWp-xtYj3E8LWgKoVwFqAycQawKo",
+      "pdfUrl": "",
+      "file": "05S_14.pdf"
+    },
+    {
+      "title": "염경엽의 발야구는 LG를 우승 시킬 수 있을까?",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1a63CFHgYttTO3XdBsB9kAWZRrFCHB8s0/view?usp=sharing",
+      "driveId": "1a63CFHgYttTO3XdBsB9kAWZRrFCHB8s0",
+      "pdfUrl": "",
+      "file": "05S_13.pdf"
+    },
+    {
+      "title": "인버티드 풀백' 진첸코의 역할 분석",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1hGwMpU6uHQlrjTIbu9j5c1E2IgaRgYyT/view?usp=sharing",
+      "driveId": "1hGwMpU6uHQlrjTIbu9j5c1E2IgaRgYyT",
+      "pdfUrl": "",
+      "file": "05S_12.pdf"
+    },
+    {
+      "title": "집 나가면 개고생?",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1CtnnAmVvfDGqUZfDji94YBK53p67w9oT/view?usp=sharing",
+      "driveId": "1CtnnAmVvfDGqUZfDji94YBK53p67w9oT",
+      "pdfUrl": "",
+      "file": "05S_11.pdf"
+    },
+    {
+      "title": "2022/23시즌 맨시티 vs 아스날 리그 2차전 승부 예측",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1-2HTXmwzOxolKcUlAFRu9K5XvGZkr977/view?usp=sharing",
+      "driveId": "1-2HTXmwzOxolKcUlAFRu9K5XvGZkr977",
+      "pdfUrl": "",
+      "file": "05S_10.pdf"
+    },
+    {
+      "title": "해외파 22-23 시즌 결산",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/12U_Io9O5IIYwc6oTsaRmgA5RRRRpOO7S/view?usp=sharing",
+      "driveId": "12U_Io9O5IIYwc6oTsaRmgA5RRRRpOO7S",
+      "pdfUrl": "",
+      "file": "05S_09.pdf"
+    },
+    {
+      "title": "제대로 불붙은 EPL 강등 경쟁",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1120gSs8KYM7ksLvFILTzQz8Huh-oNnXc/view?usp=sharing",
+      "driveId": "1120gSs8KYM7ksLvFILTzQz8Huh-oNnXc",
+      "pdfUrl": "",
+      "file": "05S_08.pdf"
+    },
+    {
+      "title": "KBL내 필리핀 농구선수의 활약에 대한 고찰",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1orW58yzMyvxOua0I9qSffXIO7TURWFxF/view?usp=sharing",
+      "driveId": "1orW58yzMyvxOua0I9qSffXIO7TURWFxF",
+      "pdfUrl": "",
+      "file": "05S_07.pdf"
+    },
+    {
+      "title": "2차 스탯을 통한 NBA 22-23 시즌 MVP 예측",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1LgSwnpnxvlzTzNMoxxqGN1J-b-PQgB_4/view?usp=sharing",
+      "driveId": "1LgSwnpnxvlzTzNMoxxqGN1J-b-PQgB_4",
+      "pdfUrl": "",
+      "file": "05S_06.pdf"
+    },
+    {
+      "title": "Michael Jordan VS LeBron James - 누가 GOAT인가?",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1209qNODdFx1YdUhAEteBPMv-klR5oWMU/view?usp=sharing",
+      "driveId": "1209qNODdFx1YdUhAEteBPMv-klR5oWMU",
+      "pdfUrl": "",
+      "file": "05S_05.pdf"
+    },
+    {
+      "title": "배구에서 세터의 중요성에 대한 탐구 - 이윤정과 이원정 세터를 중심으로(가제)",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "배구",
+      "driveUrl": "https://drive.google.com/file/d/1j39Qf2ezL3Bb8meEie-rkr1keHC3cw-B/view?usp=sharing",
+      "driveId": "1j39Qf2ezL3Bb8meEie-rkr1keHC3cw-B",
+      "pdfUrl": "",
+      "file": "05S_04.pdf"
+    },
+    {
+      "title": "성향 점수 매칭을 통한 2022 F1 최대 라이벌리 실력 비교",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "F1",
+      "driveUrl": "https://drive.google.com/file/d/1iiRxYvAm1pI3aHWqW0RQvVol2NbNXVgn/view?usp=sharing",
+      "driveId": "1iiRxYvAm1pI3aHWqW0RQvVol2NbNXVgn",
+      "pdfUrl": "",
+      "file": "05S_03.pdf"
+    },
+    {
+      "title": "SG 기록으로 보는 장타 vs 퍼팅",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "골프",
+      "driveUrl": "https://drive.google.com/file/d/1ejzEaioDQe1BP5_0XBXYxET_dwOp70c3/view?usp=sharing",
+      "driveId": "1ejzEaioDQe1BP5_0XBXYxET_dwOp70c3",
+      "pdfUrl": "",
+      "file": "05S_02.pdf"
+    },
+    {
+      "title": "LPGA SG데이터 기반 순위 모델링 및 해석",
+      "year": "2023",
+      "generation": "5기",
+      "period": "학기 중 프로젝트",
+      "sport": "골프",
+      "driveUrl": "https://drive.google.com/file/d/1WuhNFn_YU7BS_Hh8RabeZm5KJPd4_z8s/view?usp=sharing",
+      "driveId": "1WuhNFn_YU7BS_Hh8RabeZm5KJPd4_z8s",
+      "pdfUrl": "",
+      "file": "05S_01.pdf"
+    },
+    {
+      "title": "누가 남고 누가 떠나야 하는가",
+      "year": "2023",
+      "generation": "4기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1-jEyXMSczPENpAVHQ-ss5gR_q5kt_KMw/view?usp=sharing",
+      "driveId": "1-jEyXMSczPENpAVHQ-ss5gR_q5kt_KMw",
+      "pdfUrl": "",
+      "file": "04V_09.pdf"
+    },
+    {
+      "title": "위기의 프리미어리그 1위 아스날, 토마스 파티를 대체하라",
+      "year": "2023",
+      "generation": "4기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1VJSEOLkz1PAFLy3rHECN4BXiD12OGxgw/view?usp=sharing",
+      "driveId": "1VJSEOLkz1PAFLy3rHECN4BXiD12OGxgw",
+      "pdfUrl": "",
+      "file": "04V_08.pdf"
+    },
+    {
+      "title": "22-23 시즌 4R 우리카드&대한항공 수비 전략 분석",
+      "year": "2023",
+      "generation": "4기",
+      "period": "방학 중 프로젝트",
+      "sport": "배구",
+      "driveUrl": "https://drive.google.com/file/d/16g3Rso2vi_x9zWMBexRavDnP_qfBaLUN/view?usp=sharing",
+      "driveId": "16g3Rso2vi_x9zWMBexRavDnP_qfBaLUN",
+      "pdfUrl": "",
+      "file": "04V_07.pdf"
+    },
+    {
+      "title": "한국프로야구 트레이드 가치 모델 적용",
+      "year": "2023",
+      "generation": "4기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1xh6l7amD8hftVzg4Yhiwy-bcOZS1OWpT/view?usp=sharing",
+      "driveId": "1xh6l7amD8hftVzg4Yhiwy-bcOZS1OWpT",
+      "pdfUrl": "",
+      "file": "04V_06.pdf"
+    },
+    {
+      "title": "스트라이크 존 편파판정은 존재하는가?",
+      "year": "2023",
+      "generation": "4기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1BvMeY_syt-urrzCbK2iWbdXpilpK5fFA/view?usp=sharing",
+      "driveId": "1BvMeY_syt-urrzCbK2iWbdXpilpK5fFA",
+      "pdfUrl": "",
+      "file": "04V_05.pdf"
+    },
+    {
+      "title": "초구 상황에 따른 롯데 자이언츠 최준용의 경기 성적 예측",
+      "year": "2023",
+      "generation": "4기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1iq0oo_LznpmPsJgRPhqpG3dQRBvkS_8H/view?usp=sharing",
+      "driveId": "1iq0oo_LznpmPsJgRPhqpG3dQRBvkS_8H",
+      "pdfUrl": "",
+      "file": "04V_04.pdf"
+    },
+    {
+      "title": "V리그 여자부에서 공격 유형과 난이도를 반영한 지표에 대한 탐구 및 22-23시즌 종료 후 FA대상 아웃사이드히터(OH) 선수들의 적정 계약 금액 도출",
+      "year": "2023",
+      "generation": "4기",
+      "period": "방학 중 프로젝트",
+      "sport": "배구",
+      "driveUrl": "https://drive.google.com/file/d/1Sl9IpY2LmkLQzaK04zWOvLK0lZyEgmV3/view?usp=sharing",
+      "driveId": "1Sl9IpY2LmkLQzaK04zWOvLK0lZyEgmV3",
+      "pdfUrl": "",
+      "file": "04V_03.pdf"
+    },
+    {
+      "title": "여자 배구 선수들의 에이징 커브: 2004년부터 현재 V-리그를 중심으로",
+      "year": "2023",
+      "generation": "4기",
+      "period": "방학 중 프로젝트",
+      "sport": "배구",
+      "driveUrl": "https://drive.google.com/file/d/1lOOQobwWzTvfHf8qxDIaXyKykVfGSUpG/view?usp=sharing",
+      "driveId": "1lOOQobwWzTvfHf8qxDIaXyKykVfGSUpG",
+      "pdfUrl": "",
+      "file": "04V_02.pdf"
+    },
+    {
+      "title": "패스를 통한 어시스트 상황에서 해당 패스의 득점 확률 변동 계산 : PL 최고의 패스마스터 찾기 - 패스를 더 잘 줄 수는 없었는가?",
+      "year": "2023",
+      "generation": "4기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1ax83xL4DoNXaELs8SpZuSvTuYnSD0YvC/view?usp=sharing",
+      "driveId": "1ax83xL4DoNXaELs8SpZuSvTuYnSD0YvC",
+      "pdfUrl": "",
+      "file": "04V_01.pdf"
+    },
+    {
+      "title": "KBO 리그에서 '클러치 히터'란 존재하는가? -'잘타잘'의 여부에 대한 증명-",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/12DYhIgrUt7kq_Oyvqunw2PGPIHkyCO46/view?usp=sharing",
+      "driveId": "12DYhIgrUt7kq_Oyvqunw2PGPIHkyCO46",
+      "pdfUrl": "",
+      "file": "04S_28.pdf"
+    },
+    {
+      "title": "마차도와 손아섭의 이탈은 득이었을까?",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1MOo-YyKv-omsBKtzXaCUdDHOht_8qXrg/view?usp=sharing",
+      "driveId": "1MOo-YyKv-omsBKtzXaCUdDHOht_8qXrg",
+      "pdfUrl": "",
+      "file": "04S_27.pdf"
+    },
+    {
+      "title": "신인왕을 선정하는 기준: 최근 3년간 신인왕 비교를 통해",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1F-op9OLMqnXekxeOje90rByN4ryrkG84/view?usp=sharing",
+      "driveId": "1F-op9OLMqnXekxeOje90rByN4ryrkG84",
+      "pdfUrl": "",
+      "file": "04S_26.pdf"
+    },
+    {
+      "title": "라스트 댄스' 이대호의 기록 돌아보기",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1Nn4jZ6e4Ltc4EZnpPZeF9nAK7Z2eD034/view?usp=sharing",
+      "driveId": "1Nn4jZ6e4Ltc4EZnpPZeF9nAK7Z2eD034",
+      "pdfUrl": "",
+      "file": "04S_25.pdf"
+    },
+    {
+      "title": "박찬호, 이정후, 손아섭으로 알아보는 BABIP 지표의 신뢰성",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1j4GlAGctZ_s_u-Mdv1-nzplWeuBG2yZB/view?usp=sharing",
+      "driveId": "1j4GlAGctZ_s_u-Mdv1-nzplWeuBG2yZB",
+      "pdfUrl": "",
+      "file": "04S_24.pdf"
+    },
+    {
+      "title": "도루 증가가 야구 흥행을 이끌 수 있는가",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1WUKffeeJHmiOF891LFg7pgojvsZLkh_i/view?usp=sharing",
+      "driveId": "1WUKffeeJHmiOF891LFg7pgojvsZLkh_i",
+      "pdfUrl": "",
+      "file": "04S_23.pdf"
+    },
+    {
+      "title": "클러치 스탯의 허상과 클러치 히터의 존재",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1JWzFZZs2I6hnU0YDhU-iXoW4QiwTiYlR/view?usp=sharing",
+      "driveId": "1JWzFZZs2I6hnU0YDhU-iXoW4QiwTiYlR",
+      "pdfUrl": "",
+      "file": "04S_22.pdf"
+    },
+    {
+      "title": "KBO리그 양극화 양상에 대한 분석 및 고찰",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1WvTTFB2_HlI2ynmcVQPQ3eDb_7-7M9bK/view?usp=sharing",
+      "driveId": "1WvTTFB2_HlI2ynmcVQPQ3eDb_7-7M9bK",
+      "pdfUrl": "",
+      "file": "04S_21.pdf"
+    },
+    {
+      "title": "패스트볼의 구속 증가에 따른 슬라이더 구종 가치 상승 현상 (KBO로의 적용)",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/16yvd5AjpoUb0DtRSr34hat5DJU4xdvoJ/view?usp=sharing",
+      "driveId": "16yvd5AjpoUb0DtRSr34hat5DJU4xdvoJ",
+      "pdfUrl": "",
+      "file": "04S_20.pdf"
+    },
+    {
+      "title": "120억의 가치: 2022년 구자욱의 아쉬운 기록들을 살펴보며",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/17erl4_8ySBB_AWfgSgTlmX2L8eCkr6VJ/view?usp=sharing",
+      "driveId": "17erl4_8ySBB_AWfgSgTlmX2L8eCkr6VJ",
+      "pdfUrl": "",
+      "file": "04S_19.pdf"
+    },
+    {
+      "title": "한국시리즈에서의 구속 변화",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1SQ7JM074k9c5zkpWP40-Q4m9qZJA-zX8/view?usp=sharing",
+      "driveId": "1SQ7JM074k9c5zkpWP40-Q4m9qZJA-zX8",
+      "pdfUrl": "",
+      "file": "04S_18.pdf"
+    },
+    {
+      "title": "2022 두산 정리",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/18qNh3Gr5ImjRH0TnzKmK9JMYWstDzjWf/view?usp=sharing",
+      "driveId": "18qNh3Gr5ImjRH0TnzKmK9JMYWstDzjWf",
+      "pdfUrl": "",
+      "file": "04S_17.pdf"
+    },
+    {
+      "title": "프로 야구 선수들의 에이징 커브는 언제 오는가? (feat. 롯데)",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1ijZ2DJkg9Y4BN1VBfH9tg1bELqWx3K1q/view?usp=sharing",
+      "driveId": "1ijZ2DJkg9Y4BN1VBfH9tg1bELqWx3K1q",
+      "pdfUrl": "",
+      "file": "04S_16.pdf"
+    },
+    {
+      "title": "KBO 골든글러브의 수상 기준, 과연 공정할까?",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1nmaHg2cAjJkUnY543y47BvUaVSPxaymk/view?usp=sharing",
+      "driveId": "1nmaHg2cAjJkUnY543y47BvUaVSPxaymk",
+      "pdfUrl": "",
+      "file": "04S_15.pdf"
+    },
+    {
+      "title": "KBO 스피드업 고찰",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/121uLg7MoWbd2oOuC3WDOu2IlJVsi-i27/view?usp=sharing",
+      "driveId": "121uLg7MoWbd2oOuC3WDOu2IlJVsi-i27",
+      "pdfUrl": "",
+      "file": "04S_14.pdf"
+    },
+    {
+      "title": "초구 타격의 역설",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/13oL1rNvgVyUBRKBan_DJBJEDqgc0DTWp/view?usp=sharing",
+      "driveId": "13oL1rNvgVyUBRKBan_DJBJEDqgc0DTWp",
+      "pdfUrl": "",
+      "file": "04S_13.pdf"
+    },
+    {
+      "title": "레스터 나락의 범인은 누구일까?",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/11zGb7gGCdfL_ro3LoMFqQP2Rrd_97Adh/view?usp=sharing",
+      "driveId": "11zGb7gGCdfL_ro3LoMFqQP2Rrd_97Adh",
+      "pdfUrl": "",
+      "file": "04S_12.pdf"
+    },
+    {
+      "title": "토마스 파티의 대체자/서브 자원 찾기 - 이 선수 원 볼란치 되나요?",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1adTmxW12mfVIfHVj6TEfWny_RledN3xZ/view?usp=sharing",
+      "driveId": "1adTmxW12mfVIfHVj6TEfWny_RledN3xZ",
+      "pdfUrl": "",
+      "file": "04S_11.pdf"
+    },
+    {
+      "title": "축구리그에서 해발고도는 경기력에 영향을 주는가? - 2021년 에콰도르 세리에 A를 중심으로",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1cYDxQd24kW7OeO7DnLKUIi2lUq04ASUH/view?usp=sharing",
+      "driveId": "1cYDxQd24kW7OeO7DnLKUIi2lUq04ASUH",
+      "pdfUrl": "",
+      "file": "04S_10.pdf"
+    },
+    {
+      "title": "환골탈태' 제주스, 대체 무엇이 달라졌는가?",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1S7f8avcDwKvneoebHp1VeohYbIvmmYL1/view?usp=sharing",
+      "driveId": "1S7f8avcDwKvneoebHp1VeohYbIvmmYL1",
+      "pdfUrl": "",
+      "file": "04S_09.pdf"
+    },
+    {
+      "title": "과거 월드컵 조별 예선 결과 모델링 및 2022 카타르 월드컵 조별 예선 예측",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/10xeY8iyfijJwdOfwvYo3iYaKc1rA1f7y/view?usp=sharing",
+      "driveId": "10xeY8iyfijJwdOfwvYo3iYaKc1rA1f7y",
+      "pdfUrl": "",
+      "file": "04S_08.pdf"
+    },
+    {
+      "title": "나폴리의 세리에 A 우승 가능성 검토",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1f4cjG4gjU-9EYXRvIcMezZtcMUrr2Z-z/view?usp=sharing",
+      "driveId": "1f4cjG4gjU-9EYXRvIcMezZtcMUrr2Z-z",
+      "pdfUrl": "",
+      "file": "04S_07.pdf"
+    },
+    {
+      "title": "시즌 전 여름 이적 시장에서 지출한 이적 비용과 팀의 성적 사이 상관관계 분석 - 정말 돈을 더 많이 쓴 팀이 더 잘하고 있을까?",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1kilorPCrdCAOWqYZF4MdnU0DUabsfn-L/view?usp=sharing",
+      "driveId": "1kilorPCrdCAOWqYZF4MdnU0DUabsfn-L",
+      "pdfUrl": "",
+      "file": "04S_06.pdf"
+    },
+    {
+      "title": "팀 에이스가 팀 내에서 어떤 역할을 하는가? - 남자배구/여자배구",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "배구",
+      "driveUrl": "https://drive.google.com/file/d/1BkJtR7aYaQ1lUDuPF2KCCEme17Xgrnqn/view?usp=sharing",
+      "driveId": "1BkJtR7aYaQ1lUDuPF2KCCEme17Xgrnqn",
+      "pdfUrl": "",
+      "file": "04S_05.pdf"
+    },
+    {
+      "title": "김연경 합류로 인한 21-22 시즌과 22-23 시즌 흥국 생명 변화 예측",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "배구",
+      "driveUrl": "https://drive.google.com/file/d/1TKAkWttdedX20Vs7idtKgcZKtJN26Zre/view?usp=sharing",
+      "driveId": "1TKAkWttdedX20Vs7idtKgcZKtJN26Zre",
+      "pdfUrl": "",
+      "file": "04S_04.pdf"
+    },
+    {
+      "title": "리브 샌드박스는 어떻게 강팀이 되었나",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "e스포츠",
+      "driveUrl": "https://drive.google.com/file/d/1K_PHaJJayyNopYCvgdPQP2OHCxXk379y/view?usp=sharing",
+      "driveId": "1K_PHaJJayyNopYCvgdPQP2OHCxXk379y",
+      "pdfUrl": "",
+      "file": "04S_03.pdf"
+    },
+    {
+      "title": "2022년 롤드컵, 다데상의 수상자는 누가 되어야 하는가?",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "e스포츠",
+      "driveUrl": "https://drive.google.com/file/d/191gUa-26oPBTFL4qXYopxBgz2A7qo8Id/view?usp=sharing",
+      "driveId": "191gUa-26oPBTFL4qXYopxBgz2A7qo8Id",
+      "pdfUrl": "",
+      "file": "04S_02.pdf"
+    },
+    {
+      "title": "쇼트게임의 중요성 - 김효주 2019 LPGA",
+      "year": "2022",
+      "generation": "4기",
+      "period": "학기 중 프로젝트",
+      "sport": "골프",
+      "driveUrl": "https://drive.google.com/file/d/1djRefcmxvwEvgN501snk5sxqY-1cmCfi/view?usp=sharing",
+      "driveId": "1djRefcmxvwEvgN501snk5sxqY-1cmCfi",
+      "pdfUrl": "",
+      "file": "04S_01.pdf"
+    },
+    {
+      "title": "한화와 롯데가 지속적으로 낮은 순위를 기록하는 원인에 대한 분석",
+      "year": "2022",
+      "generation": "3기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1RdndUiEMc4_gvM62AOxwozGF7Cr22e0u/view?usp=sharing",
+      "driveId": "1RdndUiEMc4_gvM62AOxwozGF7Cr22e0u",
+      "pdfUrl": "",
+      "file": "03V_06.pdf"
+    },
+    {
+      "title": "포수 리드의 실질적 효과에 대한 탐구",
+      "year": "2022",
+      "generation": "3기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1gApTWz8jTU73DJJwHoVKFwg4NDl_t0RY/view?usp=sharing",
+      "driveId": "1gApTWz8jTU73DJJwHoVKFwg4NDl_t0RY",
+      "pdfUrl": "",
+      "file": "03V_05.pdf"
+    },
+    {
+      "title": "2021 손아섭은 스탯 관리형 타자인가",
+      "year": "2022",
+      "generation": "3기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1liYzw3IGHGg20YwlCOVSKcyRtJiAd7nx/view?usp=sharing",
+      "driveId": "1liYzw3IGHGg20YwlCOVSKcyRtJiAd7nx",
+      "pdfUrl": "",
+      "file": "03V_04.pdf"
+    },
+    {
+      "title": "KBO 리그 신인드래프트 지명권의 가치 판정",
+      "year": "2022",
+      "generation": "3기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1E_JghVeGjOv2TFt75eDCFilF69F-X56T/view?usp=sharing",
+      "driveId": "1E_JghVeGjOv2TFt75eDCFilF69F-X56T",
+      "pdfUrl": "",
+      "file": "03V_03.pdf"
+    },
+    {
+      "title": "선수 타이틀과 팀 성적의 비교",
+      "year": "2022",
+      "generation": "3기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1ASg25Nq2ZrfK5KPpcT3PETIC1F5aAU9L/view?usp=sharing",
+      "driveId": "1ASg25Nq2ZrfK5KPpcT3PETIC1F5aAU9L",
+      "pdfUrl": "",
+      "file": "03V_02.pdf"
+    },
+    {
+      "title": "블로커 수 및 높이가 선수들의 공격력에 미치는 영향",
+      "year": "2022",
+      "generation": "3기",
+      "period": "방학 중 프로젝트",
+      "sport": "배구",
+      "driveUrl": "https://drive.google.com/file/d/1I8NprxIoHMtTQuOf3cxtf98iSS6WXt3s/view?usp=sharing",
+      "driveId": "1I8NprxIoHMtTQuOf3cxtf98iSS6WXt3s",
+      "pdfUrl": "",
+      "file": "03V_01.pdf"
+    },
+    {
+      "title": "LCK 각 포지션에 따른 에이징커브 알아보기",
+      "year": "2022",
+      "generation": "2기",
+      "period": "방학 중 프로젝트",
+      "sport": "e스포츠",
+      "driveUrl": "https://drive.google.com/file/d/1M5-Jsz6aomKxAkmEld1E3Gtcsa_LCRrp/view?usp=sharing",
+      "driveId": "1M5-Jsz6aomKxAkmEld1E3Gtcsa_LCRrp",
+      "pdfUrl": "",
+      "file": "02V_08.pdf"
+    },
+    {
+      "title": "롤에서의 팀 단위 전투(한타)를 통계적으로 나타낼 수 있는가? -2022 LCK 스프링을 중심으로",
+      "year": "2022",
+      "generation": "2기",
+      "period": "방학 중 프로젝트",
+      "sport": "e스포츠",
+      "driveUrl": "https://drive.google.com/file/d/1IojVAYOThRgOJR104qJTv5-sqcezMXMv/view?usp=sharing",
+      "driveId": "1IojVAYOThRgOJR104qJTv5-sqcezMXMv",
+      "pdfUrl": "",
+      "file": "02V_06.pdf"
+    },
+    {
+      "title": "V리그 여자부에서 '포지티브(Positive) 리시브'가 갖는 가치에 대한 탐구",
+      "year": "2022",
+      "generation": "2기",
+      "period": "방학 중 프로젝트",
+      "sport": "배구",
+      "driveUrl": "https://drive.google.com/file/d/11XJiAou_OIOxNBv48nHHEZ5SrwSkDE2F/view?usp=sharing",
+      "driveId": "11XJiAou_OIOxNBv48nHHEZ5SrwSkDE2F",
+      "pdfUrl": "",
+      "file": "02V_05.pdf"
+    },
+    {
+      "title": "각 1차스탯이 각 2차 스탯(PPP, PER, BPM, WS/48)에 미치는 영향과 1차 스탯에 비해 효율이나 기여도가 떨어지는 선수 분석",
+      "year": "2022",
+      "generation": "2기",
+      "period": "방학 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "https://drive.google.com/file/d/1SXHB6mQe-jyZ4BwCpgF_N4E6f94YmwXj/view?usp=sharing",
+      "driveId": "1SXHB6mQe-jyZ4BwCpgF_N4E6f94YmwXj",
+      "pdfUrl": "",
+      "file": "02V_04.pdf"
+    },
+    {
+      "title": "기대득점으로 산출한 예상 순위와 실제 순위 간의 간극과 그 원인 분석 - EPL과 분데스리가를 중심으로",
+      "year": "2022",
+      "generation": "2기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1Ze2BjEF0EjC-lS03iSnYTif1rn0iO9pF/view?usp=sharing",
+      "driveId": "1Ze2BjEF0EjC-lS03iSnYTif1rn0iO9pF",
+      "pdfUrl": "",
+      "file": "02V_03.pdf"
+    },
+    {
+      "title": "한국 프로야구 리그에서의 수비 시프트의 효용성 분석과 새로운 수비지표 탐구",
+      "year": "2022",
+      "generation": "2기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1JbjeKuLeQq8inOotYBgZjIOrwiHlveM8/view?usp=sharing",
+      "driveId": "1JbjeKuLeQq8inOotYBgZjIOrwiHlveM8",
+      "pdfUrl": "",
+      "file": "02V_02.pdf"
+    },
+    {
+      "title": "KBO 주전 선수들의 성적을 고려한 팀 별 최적의 타순 구성 - R을 활용한 가상 야구 게임 모델 활용",
+      "year": "2022",
+      "generation": "2기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/17lPytbwXsJXBwIF5O6kesqwKcMqs-di8/view?usp=sharing",
+      "driveId": "17lPytbwXsJXBwIF5O6kesqwKcMqs-di8",
+      "pdfUrl": "",
+      "file": "02V_01.pdf"
+    },
+    {
+      "title": "근 3년간 PL 선수들의 몸값 구하기 - 다변량 Factor Analysis를 이용한",
+      "year": "2021",
+      "generation": "1기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "https://drive.google.com/file/d/1qMxqJ4Umad95iQds8kRkBIr_wg-ODDV2/view?usp=sharing",
+      "driveId": "1qMxqJ4Umad95iQds8kRkBIr_wg-ODDV2",
+      "pdfUrl": "",
+      "file": "01V_06.pdf"
+    },
+    {
+      "title": "FA 연봉 예측 5편.스카우팅 리포트 - 내야수",
+      "year": "2021",
+      "generation": "1기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/12LGAIJsybRuQZj1MAHPTtvdP7qOAst0r/view?usp=sharing",
+      "driveId": "12LGAIJsybRuQZj1MAHPTtvdP7qOAst0r",
+      "pdfUrl": "",
+      "file": "01V_05.pdf"
+    },
+    {
+      "title": "FA 연봉 예측 4편.스카우팅 리포트 - 외야수(2)",
+      "year": "2021",
+      "generation": "1기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1m_wD3mSyNaLpEnbXUXhziS7WI1eoC29h/view?usp=sharing",
+      "driveId": "1m_wD3mSyNaLpEnbXUXhziS7WI1eoC29h",
+      "pdfUrl": "",
+      "file": "01V_04.pdf"
+    },
+    {
+      "title": "FA 연봉 예측 3편.스카우팅 리포트 - 외야수(1)",
+      "year": "2021",
+      "generation": "1기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1BbE54S_xzZGPIn51Bz38FrpR-vRPYPmb/view?usp=sharing",
+      "driveId": "1BbE54S_xzZGPIn51Bz38FrpR-vRPYPmb",
+      "pdfUrl": "",
+      "file": "01V_03.pdf"
+    },
+    {
+      "title": "FA 연봉 예측 2편.스카우팅 리포트 - 선발투수, 포수",
+      "year": "2021",
+      "generation": "1기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1CHyzPjpVeaFnyv9iueBL2r7sFNjk-v7i/view?usp=sharing",
+      "driveId": "1CHyzPjpVeaFnyv9iueBL2r7sFNjk-v7i",
+      "pdfUrl": "",
+      "file": "01V_02.pdf"
+    },
+    {
+      "title": "21시즌 후 FA대상 선수들의 연봉 예측 - 회귀 분석 방법론을 이용",
+      "year": "2021",
+      "generation": "1기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "https://drive.google.com/file/d/1S1m1pwMhE7p-L0bLJtY2_n8oerYD6CWw/view?usp=sharing",
+      "driveId": "1S1m1pwMhE7p-L0bLJtY2_n8oerYD6CWw",
+      "pdfUrl": "",
+      "file": "01V_01.pdf"
+    }
+  ],
+  "notices": [
+    {
+      "title": "Sample Notice",
+      "date": "2026-03-16",
+      "generation": "11기",
+      "department": "운영위원회",
+      "driveUrl": "https://drive.google.com/file/d/FILE_ID/view?usp=sharing",
+      "driveId": "",
+      "pdfUrl": "",
+      "file": "sample-notice.pdf",
+      "important": false
+    },
+    {
+      "title": "고려대학교 스포츠 통계 동아리 PAINS 출석 세칙 - 20250308 시행",
+      "date": "2025-03-08",
+      "generation": "9기",
+      "department": "운영위원회",
+      "driveUrl": "https://drive.google.com/file/d/1qdRh_rUcJApOHvBox8l1H0-yW6E76JVh/view?usp=sharing",
+      "driveId": "1qdRh_rUcJApOHvBox8l1H0-yW6E76JVh",
+      "pdfUrl": "",
+      "file": "AttendanceBylaws_20250308.pdf",
+      "important": true
+    },
+    {
+      "title": "11기 오리엔테이션 자료",
+      "date": "2026-03-16",
+      "generation": "11기",
+      "department": "운영위원회",
+      "driveUrl": "https://drive.google.com/file/d/180xgN-Z29c5KdFgZZsz-RUiWBHhYoRYg/view?usp=sharing",
+      "driveId": "180xgN-Z29c5KdFgZZsz-RUiWBHhYoRYg",
+      "pdfUrl": "",
+      "file": "11thOT_20260316.pdf",
+      "important": false
+    },
+    {
+      "title": "11기 1차 정기활동 통계 강의 자료",
+      "date": "2026-03-19",
+      "generation": "11기",
+      "department": "교육부",
+      "driveUrl": "https://drive.google.com/file/d/1EIjGbvRJsQp39nkl5oA3MUc4M7BbWl2x/view?usp=sharing",
+      "driveId": "1EIjGbvRJsQp39nkl5oA3MUc4M7BbWl2x",
+      "pdfUrl": "",
+      "file": "11th1st_20260319.pdf",
+      "important": false
+    },
+    {
+      "title": "11기 2차 정기활동 연사 소개 자료",
+      "date": "2026-03-27",
+      "generation": "11기",
+      "department": "운영위원회",
+      "driveUrl": "https://drive.google.com/file/d/1YpXJM95NACyYM6B_KJnIG21i3mOPi0it/view?usp=sharing",
+      "driveId": "1YpXJM95NACyYM6B_KJnIG21i3mOPi0it",
+      "pdfUrl": "",
+      "file": "11th2ndMain_20260327.pdf",
+      "important": false
+    },
+    {
+      "title": "11기 2차 정기활동 연사 발표 자료 - 백소윤 연사",
+      "date": "2026-03-27",
+      "generation": "11기",
+      "department": "운영위원회",
+      "driveUrl": "https://drive.google.com/file/d/1OZY3qW8lb6fR1z-AcaR5Qnfz_twPyr41/view?usp=sharing",
+      "driveId": "1OZY3qW8lb6fR1z-AcaR5Qnfz_twPyr41",
+      "pdfUrl": "",
+      "file": "11th2ndBaekSoYun_20260327.pdf",
+      "important": false
+    },
+    {
+      "title": "PAINS 2025학년도 연보",
+      "date": "2026-03-17",
+      "generation": "11기",
+      "department": "운영위원회",
+      "driveUrl": "https://drive.google.com/file/d/143kXMZz0n5RkiZQzuxxiP6zdkGXmFzJK/view?usp=sharing",
+      "driveId": "143kXMZz0n5RkiZQzuxxiP6zdkGXmFzJK",
+      "pdfUrl": "",
+      "file": "AnnualReport_2025.pdf",
+      "important": true
+    }
+  ]
 }
