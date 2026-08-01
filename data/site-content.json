@@ -2,21 +2,23 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-08-01T17:04:55.795Z"
+    "updatedAt": "2026-08-01T17:17:07.932Z"
   },
   "settings": {
-    "projectArchiveApiUrl": "https://script.google.com/macros/s/AKfycbwuNda5HuzwNhp7ecL0BTMt4eCgE8z9y1F8_kDR-ZaEp72mYngLp0DQ4ibWcKDEZyg/exec",
+    "projectArchiveApiUrl": "",
     "applyEnabled": "AUTO",
-    "applyStartAt": "2026-02-26 00:00",
+    "applyStartAt": "2026-02-26 0:00",
     "applyEndAt": "2026-03-07 23:59",
     "applyClosedMessage": "지원 기간이 아닙니다.",
     "applyHref": "apply",
     "resultEnabled": "AUTO",
-    "resultStartAt": "2026-03-09 00:00",
+    "resultStartAt": "2026-03-09 0:00",
     "resultEndAt": "2026-03-16 23:59",
     "resultClosedMessage": "지원 결과 조회 기간이 아닙니다.",
     "resultHref": "result",
-    "resultApiUrl": "https://script.google.com/macros/s/AKfycbxL7shd9op70ZSSuEYe3Iod6wSoRfQ_UKLs7DU1TdOAWoFr1Xr-d8ZDzBBQ_Iq1kEivPg/exec"
+    "resultApiUrl": "https://script.google.com/macros/s/AKfycbxL7shd9op70ZSSuEYe3Iod6wSoRfQ_UKLs7DU1TdOAWoFr1Xr-d8ZDzBBQ_Iq1kEivPg/exec",
+    "noticeArchiveApiUrl": "",
+    "pdfProxyUrl": "https://pdf-proxy.painsports1905.workers.dev/?url="
   },
   "pages": {},
   "home": {
@@ -33,7 +35,7 @@
       "meta": [
         "KOREA UNIVERSITY",
         "SPORTS STATISTICS",
-        "SEOUL · EST. 2020"
+        "SEOUL · EST. 2021"
       ]
     },
     "scrollLabel": "",
@@ -51,7 +53,7 @@
       "index": "05 / SCHEDULE",
       "label": "UPCOMING",
       "title": "다가오는 일정",
-      "description": "정기 세미나부터 소모임·행사까지, PAINS의 다음 일정을 확인하세요."
+      "description": "PAINS의 다음 일정을 확인하세요."
     },
     "schedule": [
       {
@@ -546,7 +548,7 @@
     },
     "metrics": [
       {
-        "value": "167+",
+        "value": "172+",
         "label": "PROJECTS",
         "visible": true,
         "order": 1
@@ -558,7 +560,7 @@
         "order": 2
       },
       {
-        "value": "2020",
+        "value": "2021",
         "label": "FOUNDED",
         "visible": true,
         "order": 3
@@ -566,7 +568,7 @@
     ],
     "archiveLinks": [
       {
-        "label": "167+ PROJECTS",
+        "label": "172+ PROJECTS",
         "action": "EXPLORE →",
         "href": "activity",
         "visible": true,
@@ -714,7 +716,8 @@
       "eyebrow": "About PAINS",
       "title": "We Are\nPAINS",
       "description": "PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.",
-      "image": "images/소개사진.jpg"
+      "image": "images/소개사진.jpg",
+      "alt": "PAINS 부원 단체사진"
     },
     "whoWeAre": {
       "eyebrow": "Who We Are",
@@ -728,7 +731,7 @@
       "collective": "Korea University · Sports Data Analysis Circle"
     },
     "presidentMessage": {
-      "visible": true,
+      "visible": "TRUE",
       "eyebrow": "President Message",
       "title": "회장 인사말",
       "paragraphs": [
@@ -976,9 +979,9 @@
     "navContactLabel": "문의하기",
     "navApplyLabel": "지원하기",
     "overviewTitle": "📢 모집 개요",
-    "overviewText": "스포츠 통계분석 동아리 PAINS가 2026년을 함께할 12기 신입 부원을 모집합니다!\nPAINS는 2020년에 스포츠와 통계분석에 관심이 많은 사람들이 모여 만든 동아리입니다.\nPAINS는 2024년까지 통계학과 동아리로 활동했으며, 2026년부터는 애기능동아리연합회 소속 동아리로 출범하게 됩니다. 스포츠를 사랑하고 데이터 분석에 열정이 있다면 전공에 관계없이 누구나 환영합니다.",
+    "overviewText": "스포츠 통계분석 동아리 PAINS가 2026년을 함께할 12기 신입 부원을 모집합니다!\nPAINS는 2021년에 스포츠와 통계분석에 관심이 많은 사람들이 모여 만든 동아리입니다.\nPAINS는 2024년까지 통계학과 동아리로 활동했으며, 2026년부터는 애기능동아리연합회 소속 동아리로 소속되어 활동하고 있습니다. 스포츠를 사랑하고 데이터 분석에 열정이 있다면 전공에 관계없이 누구나 환영합니다.",
     "introTitle": "🎯 동아리 소개",
-    "introDescription": "현재 PAINS는 45명의 부원들이 하나의 관심사를 깊이 나누며 활동하고 있습니다.\n성별, 학과, 학번 그 무엇도 상관없습니다. 스포츠에 대한 관심과 열정만 있으면 충분합니다.",
+    "introDescription": "현재 PAINS는 50명의 부원들이 하나의 관심사를 깊이 나누며 활동하고 있습니다.\n성별, 학과, 학번 그 무엇도 상관없습니다. 스포츠에 대한 관심과 열정만 있으면 충분합니다.",
     "genderChartTitle": "부원 성별 분포",
     "majorChartTitle": "부원 전공 분포",
     "admissionYearChartTitle": "학번 분포",
@@ -992,7 +995,7 @@
     "regularScheduleTitle": "🗓️ 정기 활동 일정",
     "irregularScheduleTitle": "⚡ 비정기 활동 일정",
     "feeTitle": "💸 회비 안내",
-    "feeAmount": "학기 당 3만~3만 5천원 (추후 확정)",
+    "feeAmount": "학기 당 3만 5천원 (추후 확정)",
     "feeDescription": "회비는 주로 동아리 활동 중 장소대여, 홍보자료 제작, 프로젝트 지원 등에 사용됩니다.",
     "feeLinkPrefix": "회비 사용 내역은",
     "feeLinkLabel": "회비 내역 조회 페이지",
@@ -3276,7 +3279,7 @@
       "driveId": "1qdRh_rUcJApOHvBox8l1H0-yW6E76JVh",
       "pdfUrl": "",
       "file": "AttendanceBylaws_20250308.pdf",
-      "important": true
+      "important": false
     },
     {
       "title": "11기 오리엔테이션 자료",
@@ -3331,7 +3334,7 @@
       "driveId": "143kXMZz0n5RkiZQzuxxiP6zdkGXmFzJK",
       "pdfUrl": "",
       "file": "AnnualReport_2025.pdf",
-      "important": true
+      "important": false
     }
   ]
 }
