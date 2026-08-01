@@ -266,30 +266,20 @@
   async function loadContent() {
     if (window.__painsContentPromise) return window.__painsContentPromise;
 
-    const cachedContent = readContentCache();
-    const fallbackPromise = fetch(`${FALLBACK_CONTENT_URL}?v=${Date.now()}`, { cache: 'no-store' })
+    const contentPromise = fetch(`${FALLBACK_CONTENT_URL}?v=${Date.now()}`, { cache: 'no-store' })
       .then((res) => {
-        if (!res.ok) throw new Error(`Fallback content fetch failed: ${res.status}`);
+        if (!res.ok) throw new Error(`Content fetch failed: ${res.status}`);
         return res.json();
       })
-      .catch(() => null);
-    const refreshPromise = fetch(`${REMOTE_CONTENT_URL}?v=${Date.now()}`, { cache: 'no-store' })
-      .then((res) => {
-        if (!res.ok) throw new Error(`Remote content fetch failed: ${res.status}`);
-        return res.json();
-      })
-      .then((content) => {
-        writeContentCache(content);
-        return content;
-      })
-      .catch(() => fallbackPromise)
       .catch((error) => {
         console.warn('[PAINS] 콘텐츠 데이터를 불러오지 못했습니다. HTML fallback을 유지합니다.', error);
         return null;
       });
 
-    window.__painsContentRefreshPromise = refreshPromise;
-    window.__painsContentPromise = cachedContent ? Promise.resolve(cachedContent) : fallbackPromise;
+    // 배포된 JSON만 콘텐츠 원본으로 사용합니다. 브라우저 캐시나 Apps Script가
+    // 나중에 화면 전체를 덮어쓰지 않으므로 이전 내용이 잠깐 보이는 현상이 없습니다.
+    window.__painsContentRefreshPromise = Promise.resolve(null);
+    window.__painsContentPromise = contentPromise;
 
     return window.__painsContentPromise;
   }
@@ -1530,37 +1520,19 @@
       revealContent();
     }
 
-    const refreshRenderPromise = window.__painsContentRefreshPromise.then((freshContent) => {
-      if (freshContent && freshContent !== window.__painsContentLatest) {
-        applyContent(freshContent);
-      }
-    });
-
     const currentPage = page();
-    keepLiveContent(loadLiveCoreFromSheet(), applyLiveCore, refreshRenderPromise);
-
-    if (currentPage === 'apply') {
-      const liveRecruitmentPromise = loadLiveRecruitmentFromSheet();
-      const applyLiveRecruitment = (recruitment) => {
-        const current = window.__painsContentLatest || {};
-        applyContent({
-          ...current,
-          recruitment: { ...(current.recruitment || {}), ...recruitment }
-        });
-      };
-      keepLiveContent(liveRecruitmentPromise, applyLiveRecruitment, refreshRenderPromise);
-    }
-
+    // 일정만 예외적으로 Google Sheet를 직접 읽습니다.
     if (currentPage === 'index') {
-      keepLiveContent(loadLiveHomeFromSheet(), applyLiveHome, refreshRenderPromise);
-    }
-
-    if (['members', 'society', 'event', 'result'].includes(currentPage)) {
-      keepLiveContent(
-        loadLivePageSectionFromSheet(currentPage),
-        applyLivePageSection,
-        refreshRenderPromise
-      );
+      loadLiveHomeScheduleFromSheet().then((schedule) => {
+        const current = cloneContent(window.__painsContentLatest || {});
+        current.home ||= {};
+        current.home.schedule = schedule;
+        window.__painsContentLatest = current;
+        renderHomeSchedule(schedule);
+        document.dispatchEvent(new CustomEvent('pains:schedule-ready', { detail: schedule }));
+      }).catch(() => {
+        // 시트를 읽지 못하면 배포 JSON의 일정 목록을 유지합니다.
+      });
     }
   }
 
