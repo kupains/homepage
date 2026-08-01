@@ -129,6 +129,10 @@
     return `https://drive.google.com/uc?export=download&id=${encodeURIComponent(id)}`;
   }
 
+  function drivePreviewUrl(id) {
+    return `https://drive.google.com/file/d/${encodeURIComponent(id)}/view`;
+  }
+
   function projectPdfUrl(p) {
     const url = norm(firstValue(
       p.pdfUrl,
@@ -430,10 +434,13 @@
 
     let directUrl = '';
     let downloadUrl = '';
+    let nativePreviewUrl = '';
 
     if (driveId) {
       directUrl = driveDownloadUrl(driveId);
       downloadUrl = directUrl;
+      // Google Drive 파일은 PDF 프록시가 차단하므로 Drive 자체 뷰어로 엽니다.
+      nativePreviewUrl = drivePreviewUrl(driveId);
     } else if (pdfUrl) {
       directUrl = isHttpUrl(pdfUrl) ? pdfUrl : encodeURI(pdfUrl);
       downloadUrl = directUrl;
@@ -450,7 +457,8 @@
       : directUrl;
 
     const viewerFile = file || (driveId ? `${title}.pdf` : '');
-    const previewUrl = buildViewerUrl({ title, file: viewerFile, srcUrl, directUrl, downloadUrl });
+    const previewUrl = nativePreviewUrl
+      || buildViewerUrl({ title, file: viewerFile, srcUrl, directUrl, downloadUrl });
 
     return {
       previewUrl,
