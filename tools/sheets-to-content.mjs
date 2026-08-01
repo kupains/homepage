@@ -161,8 +161,17 @@ function setByPath(target, path, value) {
 }
 
 async function fetchTab(tabName) {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
-  const res = await fetch(url);
+  // gviz 응답은 같은 URL을 반복 호출하면 예전 시트 값을 돌려줄 수 있습니다.
+  // 매 배포마다 고유 쿼리와 no-cache 헤더를 사용해 현재 셀 값을 강제로 읽습니다.
+  const cacheBust = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&headers=1&sheet=${encodeURIComponent(tabName)}&_=${cacheBust}`;
+  const res = await fetch(url, {
+    cache: 'no-store',
+    headers: {
+      'Cache-Control': 'no-cache, no-store, max-age=0',
+      Pragma: 'no-cache'
+    }
+  });
   if (!res.ok) {
     console.warn(`[skip] ${tabName}: ${res.status}`);
     return [];
@@ -172,7 +181,9 @@ async function fetchTab(tabName) {
     console.warn(`[skip] ${tabName}: sheet is not available as CSV`);
     return [];
   }
-  return toObjects(csv);
+  const objects = toObjects(csv);
+  console.log(`[sheet] ${tabName}: ${objects.length} rows`);
+  return objects;
 }
 
 async function main() {

@@ -27,6 +27,10 @@ jobs:
           PAINS_SHEET_ID: 1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo
         run: node tools/sheets-to-content.mjs
 
+      - name: Show generated content summary
+        run: |
+          node -e "const c=require('./data/site-content.json'); console.log({updatedAt:c.meta?.updatedAt, schedule:c.home?.schedule?.length, projects:c.projects?.length, notices:c.notices?.length, members:c.organization?.members?.length})"
+
       - name: Commit generated content
         run: |
           if git diff --quiet -- data/site-content.json; then
