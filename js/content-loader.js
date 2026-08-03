@@ -4,6 +4,17 @@
   const FALLBACK_CONTENT_URL = 'data/site-content.json';
   const CONTENT_SHEET_ID = '1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo';
   const ASSET_WAIT_LIMIT_MS = 300;
+  const LIVE_APPLY_PATHS = new Set([
+    'recruitment.bannerText',
+    'recruitment.bannerButtonLabel',
+    'recruitment.bannerVisible',
+    'recruitment.applyCtaTitle',
+    'recruitment.applyCtaSubtitle',
+    'recruitment.formUrl',
+    'recruitment.formLabel',
+    'recruitment.applyPeriod',
+    'recruitment.applyVisible'
+  ]);
 
   const page = () => location.pathname.split('/').pop().replace(/\.html$/, '') || 'index';
   const isVisible = (item) => item && boolValue(item.visible, true);
@@ -605,10 +616,8 @@
       if (item && label) item.textContent = label;
     });
 
-    if (r.bannerVisible === false) {
-      const banner = document.querySelector('.bottom-banner');
-      if (banner) banner.style.display = 'none';
-    }
+    const banner = document.querySelector('.bottom-banner');
+    if (banner) banner.style.display = r.bannerVisible === false ? 'none' : '';
 
     const overviewSection = document.querySelector('#sec-overview');
     if (overviewSection && r.overviewTitle) text('h3', r.overviewTitle, overviewSection);
@@ -675,6 +684,7 @@
         if (r.formLabel) formLink.textContent = r.formLabel;
         formLink.style.display = applyOpen ? '' : 'none';
         if (applyOpen && r.formUrl) formLink.href = r.formUrl;
+        else formLink.removeAttribute('href');
       }
     }
 
@@ -761,10 +771,66 @@
       }));
   }
 
+  async function loadLiveSettingsFromSheet() {
+    const rows = await loadGvizTab('settings', 'A:C');
+    const settings = {};
+    rows.forEach((row) => {
+      const key = String(row.key || '').trim();
+      if (key) settings[key] = row.value ?? '';
+    });
+    return settings;
+  }
+
+  async function loadLiveApplyOperationsFromSheet() {
+    const rows = await loadGvizTab('recruitment', 'A:D');
+    const recruitment = {};
+    rows.forEach((row) => {
+      const path = String(row.path || '').trim();
+      if (!LIVE_APPLY_PATHS.has(path)) return;
+      const key = path.slice('recruitment.'.length);
+      const value = row.value ?? '';
+      recruitment[key] = /(?:Visible)$/.test(key) ? boolValue(value, true) : value;
+    });
+    return recruitment;
+  }
+
+  async function refreshLiveOperationalContent(currentPage) {
+    const jobs = [loadLiveSettingsFromSheet()];
+    if (currentPage === 'apply') jobs.push(loadLiveApplyOperationsFromSheet());
+
+    const results = await Promise.allSettled(jobs);
+    const current = cloneContent(window.__painsContentLatest || {});
+    let changed = false;
+
+    if (results[0]?.status === 'fulfilled') {
+      current.settings = { ...(current.settings || {}), ...results[0].value };
+      changed = true;
+    }
+    if (currentPage === 'apply' && results[1]?.status === 'fulfilled') {
+      current.recruitment = { ...(current.recruitment || {}), ...results[1].value };
+      changed = true;
+    }
+    if (!changed) return;
+
+    renderAccessGates(current);
+    if (currentPage === 'apply') renderApply(current);
+    if (currentPage === 'result') renderResult(current);
+    window.__painsContentLatest = current;
+    document.dispatchEvent(new CustomEvent('pains:operations-ready', { detail: current }));
+  }
+
   function renderResultGate(content) {
     const r = content?.resultPage || {};
     const resultOpen = featureGate(content, 'result', false);
-    if (resultOpen) return;
+    if (resultOpen) {
+      const button = document.getElementById('btn-search');
+      if (button) {
+        button.disabled = false;
+        button.textContent = r.buttonLabel || '결과 확인하기';
+        button.onclick = typeof window.checkResult === 'function' ? window.checkResult : null;
+      }
+      return;
+    }
 
     const message = r.closedMessage || content?.settings?.resultClosedMessage || '지원 결과 조회 기간이 아닙니다.';
     text('.search-card .sub-title', message);
@@ -1285,6 +1351,14 @@
     ]);
   }
 
+  async function loadLatestContent() {
+    const content = await loadContent();
+    if (window.__painsOperationsPromise) {
+      await window.__painsOperationsPromise.catch(() => null);
+    }
+    return window.__painsContentLatest || content;
+  }
+
   async function init() {
     try {
       const content = await initialContentPromise;
@@ -1295,7 +1369,12 @@
     }
 
     const currentPage = page();
-    // 일정만 예외적으로 Google Sheet를 직접 읽습니다.
+    // 운영성 데이터는 배포 없이 Google Sheet/API에서 최신값을 읽습니다.
+    // 본문·사진은 배포 JSON을 유지해 첫 화면 속도와 내용 안정성을 보장합니다.
+    window.__painsOperationsPromise = refreshLiveOperationalContent(currentPage).catch(() => {
+      // 시트를 읽지 못하면 배포 JSON의 설정과 지원 운영값을 유지합니다.
+    });
+
     if (currentPage === 'index') {
       loadLiveHomeScheduleFromSheet().then((schedule) => {
         const current = cloneContent(window.__painsContentLatest || {});
@@ -1312,7 +1391,7 @@
 
   const initialContentPromise = loadContent();
   window.PainsContent = {
-    load: loadContent,
+    load: loadLatestContent,
     apply: applyContent,
     assetUrl,
     featureGate,

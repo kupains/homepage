@@ -1,6 +1,6 @@
 # PAINS 콘텐츠 운영 가이드
 
-목표는 명확합니다. **주요 콘텐츠와 사진은 배포본에 고정하고, 홈의 일정만 접속할 때 Google Sheet에서 최신값을 읽습니다.**
+목표는 명확합니다. **주요 콘텐츠와 사진은 배포본에 고정하고, 일정·지원/결과 설정·지원 링크는 접속할 때 Google Sheet에서 최신값을 읽습니다.**
 
 운영진은 평소에 Codespace를 열지 않습니다. Google Sheets/Drive를 수정한 뒤 시트 메뉴의 **홈페이지 관리 → 변경사항 사이트에 반영**을 누릅니다.
 
@@ -12,13 +12,13 @@
 4. GitHub Actions가 시트 내용과 사진을 가져와 정적 파일로 커밋하고 사이트를 다시 배포합니다.
 5. 보통 1~2분 뒤 배포된 주요 콘텐츠와 사진이 바뀝니다.
 
-`Schedule` 탭은 예외입니다. 홈의 다가오는 일정은 페이지를 열 때 이 탭을 직접 한 번 조회하므로, 일정만 수정한 경우에는 재배포 버튼을 누르지 않아도 됩니다.
+`Schedule`, `settings`, `recruitment` 탭의 지원 운영값은 예외입니다. 일정, 지원/결과 공개 기간, 지원 폼 링크·기간·버튼은 페이지를 열 때 직접 조회하므로 재배포 버튼을 누르지 않아도 됩니다. 지원자 결과는 `Applies`를 결과 조회 API가 요청 시 읽습니다.
 
 ## 연결 방식
 
 브라우저는 배포된 `data/site-content.json`에서 주요 콘텐츠를 읽습니다. 배포 작업은 `tools/sheets-to-content.mjs`로 시트 탭을 읽고 JSON을 생성하며, 외부/Drive 사진은 `images/cms/` 아래 정적 파일로 내려받습니다. 사진 파일명에는 내용 해시가 들어가므로 같은 Drive 파일을 교체해도 새 배포에서 캐시가 자동 갱신됩니다.
 
-브라우저가 Google Sheet를 직접 읽는 경로는 홈의 `Schedule` 탭뿐입니다. 일정 조회가 실패하면 배포 JSON에 들어 있던 일정이 안전한 대체값으로 남습니다.
+브라우저가 Google Sheet를 직접 읽는 경로는 `Schedule`, `settings`, `recruitment`의 지원 운영값입니다. 조회가 실패하면 배포 JSON의 값이 안전한 대체값으로 남습니다. 개인정보가 있는 `Applies`는 브라우저에 공개하지 않고 결과 조회 API를 통해서만 한 명씩 조회합니다.
 
 ## 추천 방식
 
@@ -141,6 +141,8 @@ https://drive.google.com/file/d/FILE_ID/view?usp=sharing
 | resultApiUrl | 결과 조회 Apps Script Web app URL |
 
 지원/결과 조회 메뉴는 `settings`에서 관리합니다.
+
+`settings` 변경은 사이트 접속 시 실시간 반영되며 재배포가 필요 없습니다. `recruitment`의 `formUrl`, `formLabel`, `applyPeriod`, `applyVisible`, 지원 CTA·배너 항목도 같은 방식으로 실시간 반영됩니다.
 
 - 항상 열기: `applyEnabled` 또는 `resultEnabled`를 `TRUE`
 - 항상 닫기: `FALSE`

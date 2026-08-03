@@ -18,7 +18,7 @@
  *
  * 주요 콘텐츠/사진은 버튼을 눌렀을 때 GitHub에 정적으로 배포합니다.
  * Schedule 탭만 홈페이지가 열릴 때 직접 조회합니다.
- * Members / Requests / Applies 등 출석·운영 탭은 홈페이지에서 참조하지 않습니다.
+ * Members / Requests는 홈페이지에서 참조하지 않습니다. Applies는 결과 조회 API가 사용합니다.
  */
 
 var SHEET_ID = '1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo';
@@ -1119,12 +1119,12 @@ function readmeRows() {
     ['순서 바꾸기', '', 'order 숫자를 고칩니다. projects 탭만 반대로(큰 숫자가 위) 정렬됩니다'],
 
     ['── 반영 방법 ──', '', ''],
-    ['일정만 고쳤을 때', 'Schedule 탭', '따로 할 일 없습니다. 사이트를 열 때 최신 일정을 조회합니다'],
-    ['그 밖의 내용·사진을 고쳤을 때', '', '★ 홈페이지 관리 → 변경사항 사이트에 반영을 누릅니다'],
+    ['일정·지원/결과 운영값을 고쳤을 때', 'Schedule / settings / recruitment 탭의 지원하기 섹션 / Applies', '재배포 불필요. 사이트 또는 결과 조회 시 최신값을 직접 조회합니다'],
+    ['그 밖의 본문·사진을 고쳤을 때', '', '★ 홈페이지 관리 → 변경사항 사이트에 반영을 누릅니다'],
     ['content-api.gs 를 고쳤을 때', '', 'Apps Script에 저장한 뒤 시트를 새로 엽니다'],
 
     ['── 주의 ──', '', ''],
-    ['운영 데이터 탭', 'Members / Requests / Schedule / Applies', 'Schedule만 홈페이지 일정과 자동 연동되며, 나머지는 홈페이지에서 참조하지 않습니다'],
+    ['운영 데이터 탭', 'Members / Requests / Applies', 'Members·Requests는 홈페이지 미사용. Applies는 결과 조회 API용이므로 삭제·이름 변경 금지'],
     ['_backup_ 으로 시작하는 탭', '', '업그레이드 직전 상태의 자동 백업입니다. 확인 후 지우셔도 됩니다']
   ];
 }

@@ -779,14 +779,3 @@ function ensureContentLoader() {
 }
 
 ensureContentLoader();
-
-document.addEventListener('pains:content-ready', function (event) {
-    var r = event.detail && event.detail.recruitment;
-    if (!r) return;
-
-    var applyLink = document.getElementById('link-apply');
-    if (applyLink && r.applyVisible !== false) {
-        applyLink.href = 'apply';
-        applyLink.removeAttribute('onclick');
-    }
-});
