@@ -106,7 +106,7 @@ https://drive.google.com/file/d/FILE_ID/view?usp=sharing
 
 `copy`
 
-홈과 소개 페이지의 글자·사진 전부를 여기서 관리합니다. `섹션`, `path`, `value`, `어디에 보이나` 4열이며, 행 순서는 실제 사이트를 스크롤하는 순서와 같습니다. 값을 바꿀 곳은 `value` 열뿐입니다.
+홈, PAINS 소개, 회원정보/결석계 등 주요 페이지의 글자·사진을 여기서 관리합니다. `섹션`, `path`, `value`, `어디에 보이나` 4열이며, 페이지별 섹션이 연속해서 모여 있습니다. 값을 바꿀 곳은 `value` 열뿐입니다.
 
 여기에 없는 항목은 홈페이지 어디에도 표시되지 않으므로 일부러 넣지 않았습니다.
 
@@ -114,8 +114,11 @@ https://drive.google.com/file/d/FILE_ID/view?usp=sharing
 | --- | --- |
 | home.hero.description | 고려대학교 스포츠 통계 동아리 PAINS입니다. |
 | about.hero.title | PAINS 소개 |
+| about.hero.image | PAINS 소개 대표 사진. 로컬 경로 또는 Drive 공유 링크 |
+| attendance.member.title | 회원정보 조회 제목 |
+| attendance.absence.intro | 결석계 제출 안내. 셀 안 줄바꿈 가능 |
+| attendance.messages.confirmTemplate | 결석계 제출 확인창. `{eventName}`, `{absenceType}` 유지 |
 | about.presidentMessage.paragraphs.0 | 첫 번째 인사말 문단 |
-| about.hero.image | Google Drive 이미지 URL |
 | organization.generation | 11기 |
 | organization.titleTemplate | {generation} 운영진 조직도 |
 

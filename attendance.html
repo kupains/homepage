@@ -232,7 +232,7 @@
 
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="js/content-boot.js?v=20260802-hide-original"></script>
-    <script defer src="js/content-loader.js?v=20260803-live-ops"></script>
+    <script defer src="js/content-loader.js?v=20260803-copy-editor"></script>
 </head>
 <body>
 
@@ -241,24 +241,24 @@
     <div class="overlay" id="overlay"></div>
 
     <section>
-        <h2>회원 정보 조회</h2>
-        <p style="text-align: center; color:#666; font-size:0.95rem; margin-bottom:25px; word-break: keep-all;">
+        <h2 id="attendance-member-title">회원 정보 조회</h2>
+        <p id="attendance-member-subtitle" style="text-align: center; color:#666; font-size:0.95rem; margin-bottom:25px; word-break: keep-all;">
             학번과 이름을 입력하여 회원 정보를 확인하세요.
         </p>
 
         <div class="input-group">
-            <label>학번</label>
+            <label id="attendance-check-id-label">학번</label>
             <input type="text" id="check-id" placeholder="예: 2024123456">
         </div>
         <div class="input-group">
-            <label>이름</label>
+            <label id="attendance-check-name-label">이름</label>
             <input type="text" id="check-name" placeholder="예: 홍길동">
         </div>
 
         <button class="btn-check" onclick="checkUsedCount()" id="btn-check-submit">조회하기</button>
 
         <div id="result-area">
-            <p class="result-msg"><span id="user-name-display" style="font-weight:bold; color:#ab3333; font-size: 1.2rem;"></span>님의 정보 및 출석 현황</p>
+            <p class="result-msg"><span id="user-name-display" style="font-weight:bold; color:#ab3333; font-size: 1.2rem;"></span><span id="attendance-result-suffix">님의 정보 및 출석 현황</span></p>
 
             <div class="badge-container">
                 <div class="count-badge" id="status-badge" style="background-color: #f5f5f5; box-shadow: none;">
@@ -268,23 +268,23 @@
                     </div>
                 </div>
                 <div class="count-badge">
-                    <span class="label-text">사용한 결석계</span>
+                    <span class="label-text" id="attendance-used-label">사용한 결석계</span>
                     <div class="value-wrap">
                         <span id="used-count" class="number">0</span>
-                        <span class="unit">회</span>
+                        <span class="unit" id="attendance-used-unit">회</span>
                     </div>
                 </div>
                 <div class="count-badge" id="attendance-badge" style="background-color: #ab3333; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">
-                    <span class="label-text" style="color: #f5f5f5;">현재 출석률</span>
+                    <span class="label-text" id="attendance-rate-label" style="color: #f5f5f5;">현재 출석률</span>
                     <div class="value-wrap">
                         <span id="attendance-rate" class="number">0</span>
-                        <span class="unit">%</span>
+                        <span class="unit" id="attendance-rate-unit">%</span>
                     </div>
                 </div>
             </div>
 
             <div class="attendance-box">
-                <div class="attendance-box-title">[정기 활동 출석 현황 안내]</div>
+                <div class="attendance-box-title" id="attendance-regular-title">[정기 활동 출석 현황 안내]</div>
                 <table class="attendance-table">
                     <tbody id="regular-attendance-body">
                         <tr>
@@ -296,7 +296,7 @@
             </div>
 
             <div class="attendance-box">
-                <div class="attendance-box-title">[비정기 활동 출석 현황 안내]</div>
+                <div class="attendance-box-title" id="attendance-irregular-title">[비정기 활동 출석 현황 안내]</div>
                 <table class="attendance-table">
                     <tbody id="irregular-attendance-body">
                         <tr>
@@ -308,17 +308,17 @@
             </div>
 
             <div class="rule-box" style="background-color: #f8f9fa; border-color: #e9ecef; border-left-color: #333;">
-                <strong>[출석률 계산 안내]</strong><br>
-                현재 출석률은 다음 수식을 바탕으로 계산됩니다.
+                <strong id="attendance-calculation-title">[출석률 계산 안내]</strong><br>
+                <span id="attendance-calculation-intro">현재 출석률은 다음 수식을 바탕으로 계산됩니다.</span>
                 <div style="text-align: center; margin: 15px 0; max-width: 100%;">
                     $$\text{출석률}(\%)=\left(\frac{\text{정기활동 출석인정 수}+\lfloor 0.5 \times \text{비정기활동 출석 수}\rfloor}{\text{이번 기수의 정기활동 수}}\right)\times 100$$
                 </div>
             </div>
 
             <div class="rule-box">
-                <strong>[운영회칙 안내]</strong><br>
-                준회원 및 정회원은 <strong>한 기수에 결석계를 3번째 사용하는 시점부터 1회당 5,000원의 결석비를 납부</strong>하여야 합니다.
-                <div class="rule-sub-text">
+                <strong id="attendance-bylaw-title">[운영회칙 안내]</strong><br>
+                <span id="attendance-bylaw-lead">준회원 및 정회원은 한 기수에 결석계를 3번째 사용하는 시점부터 1회당 5,000원의 결석비를 납부하여야 합니다.</span>
+                <div class="rule-sub-text" id="attendance-bylaw-notes">
                     ※ 제출한 결석계는 일정 기간 이후 반영됩니다. 활동 후 2일 이상 경과에도 결석계 반영이 되어 있지 않을 경우 운영진에게 문의바랍니다.<br>
                     ※ 결석계 유형을 변경하거나, 결석계 취소를 원하실 경우 운영진에게 문의바랍니다.<br>
                     ※ 지각, 조퇴가 아닌 결석의 경우 결석계를 제출하였더라도 출석률에는 출석으로 반영되지 않습니다.
@@ -328,37 +328,37 @@
     </section>
 
     <section>
-        <h2>결석계 제출</h2>
-        <p style="text-align: left; color:#666; font-size:0.95rem; margin-bottom:25px; word-break: keep-all; margin-top: 6px">
+        <h2 id="attendance-absence-title">결석계 제출</h2>
+        <p id="attendance-absence-intro" style="text-align: left; color:#666; font-size:0.95rem; margin-bottom:25px; word-break: keep-all; margin-top: 6px">
             <strong>3주 내 예정된 정기활동</strong>에 대해서만 제출 가능합니다.<br>
             21일 전부터 활동 전날까지만 제출이 가능하며, 당일에는 제출이 불가합니다.
         </p>
 
         <div class="input-group">
-            <label>학번</label>
+            <label id="attendance-submit-id-label">학번</label>
             <input type="text" id="submit-id" placeholder="예: 2024123456">
         </div>
         <div class="input-group">
-            <label>이름</label>
+            <label id="attendance-submit-name-label">이름</label>
             <input type="text" id="submit-name" placeholder="예: 홍길동">
         </div>
 
         <div class="input-group">
-            <label>활동 선택</label>
+            <label id="attendance-event-label">활동 선택</label>
             <div id="event-list-container" class="event-list">
                 <div class="no-event">불러오는 중...</div>
             </div>
         </div>
 
         <div class="input-group">
-            <label>결석계 종류</label>
+            <label id="attendance-type-label">결석계 종류</label>
             <select id="submit-type">
                 <option value="결석">결석</option>
                 <option value="지각">지각</option>
                 <option value="조퇴">조퇴</option>
                 <option value="지각 & 조퇴">지각 & 조퇴</option>
             </select>
-            <div style="font-size: 0.85rem; color: #666; margin-top: 12px; line-height: 1.6; padding: 12px; background: #f9fafb; border-radius: 8px; border: 1px solid #eee;">
+            <div id="attendance-absence-guide" style="font-size: 0.85rem; color: #666; margin-top: 12px; line-height: 1.6; padding: 12px; background: #f9fafb; border-radius: 8px; border: 1px solid #eee;">
                 ▶ <strong>지각:</strong> 명시된 시작 시각 10분 이후 참여<br>
                 ▶ <strong>조퇴:</strong> 명시된 종료 시각 10분 이전 퇴실<br>
                 ▶ <strong>지각 & 조퇴:</strong> 지각과 조퇴를 모두 해야하는 경우<br>
@@ -389,6 +389,17 @@
 
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxL7shd9op70ZSSuEYe3Iod6wSoRfQ_UKLs7DU1TdOAWoFr1Xr-d8ZDzBBQ_Iq1kEivPg/exec";
         const SCHEDULE_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRBnuUvyE2CDV-hG26xCVdnt88JhQgtusdEndJwTzaI62TXPdWTNldVvua9RLkXj1s34qiM0CEcNvbr/pub?gid=305458048&single=true&output=csv";
+
+        function attendanceValue(path, fallback = "") {
+            const root = window.__painsContentLatest?.attendance || {};
+            const value = String(path || "").split(".").reduce((current, key) => current?.[key], root);
+            return value === undefined || value === null || String(value).trim() === "" ? fallback : value;
+        }
+
+        function attendanceTemplate(value, vars) {
+            if (window.PainsContent?.template) return window.PainsContent.template(value, vars);
+            return String(value || "").replace(/\{(\w+)\}/g, (_, key) => vars[key] ?? "");
+        }
 
         const STATUS_DESCRIPTIONS = {
             "출석": "활동에 정상적으로 참여하여 출석으로 처리된 상태입니다.",
@@ -498,7 +509,10 @@
             const desc = document.getElementById("status-modal-desc");
 
             title.textContent = statusText;
-            desc.textContent = STATUS_DESCRIPTIONS[statusText] || "출석 상태에 대한 설명입니다.";
+            const configured = window.__painsContentLatest?.attendance?.statusDescriptions || {};
+            desc.textContent = configured[statusText]
+                || STATUS_DESCRIPTIONS[statusText]
+                || attendanceValue("modal.defaultDescription", "출석 상태에 대한 설명입니다.");
 
             overlay.classList.add("show");
             modal.classList.add("show");
@@ -539,13 +553,13 @@
             const id = document.getElementById('check-id').value.trim();
             const name = document.getElementById('check-name').value.trim();
 
-            if (!id || !name) { alert("학번과 이름을 입력해주세요."); return; }
+            if (!id || !name) { alert(attendanceValue("messages.missingCredentials", "학번과 이름을 입력해주세요.")); return; }
 
             const btn = document.getElementById('btn-check-submit');
             const resultArea = document.getElementById('result-area');
 
             btn.disabled = true;
-            btn.innerText = "조회 중...";
+            btn.innerText = attendanceValue("member.loadingButton", "조회 중...");
 
             try {
                 const response = await fetch(`${SCRIPT_URL}?type=attendance&id=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}&token=PAINS_2026_CUSTOM_KEY`);
@@ -612,20 +626,21 @@
                         MathJax.typesetPromise();
                     }
                 } else {
-                    alert("일치하는 부원 정보가 없습니다.");
+                    alert(attendanceValue("messages.memberNotFound", "일치하는 부원 정보가 없습니다."));
                     resultArea.style.display = "none";
                 }
             } catch (error) {
                 console.error("Error:", error);
-                alert("조회 중 오류가 발생했습니다.");
+                alert(attendanceValue("messages.lookupError", "조회 중 오류가 발생했습니다."));
             } finally {
                 btn.disabled = false;
-                btn.innerText = "조회하기";
+                btn.innerText = attendanceValue("member.lookupButton", "조회하기");
             }
         }
 
         async function loadUpcomingEvents() {
             const container = document.getElementById('event-list-container');
+            container.innerHTML = `<div class="no-event">${escapeHtml(attendanceValue("absence.loadingEvents", "불러오는 중..."))}</div>`;
 
             try {
                 const response = await fetch(SCHEDULE_CSV_URL);
@@ -660,7 +675,8 @@
                 availableEvents.sort((a, b) => a.date - b.date);
 
                 if (availableEvents.length === 0) {
-                    container.innerHTML = '<div class="no-event">현재 제출 가능한 정기활동이 없습니다.<br>(활동 21일 전부터 전날까지만 결석계 제출이 가능합니다)</div>';
+                    const message = attendanceValue("absence.noEvents", "현재 제출 가능한 정기활동이 없습니다.\n(활동 21일 전부터 전날까지만 결석계 제출이 가능합니다)");
+                    container.innerHTML = `<div class="no-event">${escapeHtml(message).replace(/\n/g, "<br>")}</div>`;
                 } else {
                     let html = "";
                     availableEvents.forEach(evt => {
@@ -679,7 +695,7 @@
 
             } catch (error) {
                 console.error("Schedule Load Error:", error);
-                container.innerHTML = '<div class="no-event">일정을 불러오지 못했습니다.</div>';
+                container.innerHTML = `<div class="no-event">${escapeHtml(attendanceValue("absence.scheduleError", "일정을 불러오지 못했습니다."))}</div>`;
             }
         }
 
@@ -689,8 +705,8 @@
             const selected = document.querySelector('input[name="selected_event"]:checked');
             const absenceType = document.getElementById('submit-type').value;
 
-            if (!id || !name) { alert("학번과 이름을 입력해주세요."); return; }
-            if (!selected) { alert("결석계를 제출할 활동을 선택해주세요."); return; }
+            if (!id || !name) { alert(attendanceValue("messages.missingCredentials", "학번과 이름을 입력해주세요.")); return; }
+            if (!selected) { alert(attendanceValue("messages.missingEvent", "결석계를 제출할 활동을 선택해주세요.")); return; }
 
             const btn = document.getElementById('btn-submit-form');
             const originalBtnText = btn.innerText;
@@ -700,7 +716,7 @@
             const dateStr = dateMatch ? dateMatch[1] : "";
 
             btn.disabled = true;
-            btn.innerText = "정보 확인 중...";
+            btn.innerText = attendanceValue("absence.checkingButton", "정보 확인 중...");
 
             try {
                 const encodedEventName = encodeURIComponent(eventName);
@@ -708,14 +724,21 @@
                 const checkData = await checkResponse.json();
 
                 if (checkData.result === 'duplicate') {
-                    alert("이미 해당 활동에 대한 결석계를 제출하셨습니다.\n결석계 취소나 변경을 원하실 경우, 운영진에게 문의해주세요.");
+                    alert(attendanceValue("messages.duplicate", "이미 해당 활동에 대한 결석계를 제출하셨습니다.\n결석계 취소나 변경을 원하실 경우, 운영진에게 문의해주세요."));
                     btn.disabled = false;
                     btn.innerText = originalBtnText;
                     return;
                 }
 
                 if (checkData.result === 'fail') {
-                    alert("일치하는 부원 정보가 없습니다.\n학번과 이름을 다시 확인해주세요.");
+                    alert(attendanceValue("messages.submitMemberNotFound", "일치하는 부원 정보가 없습니다.\n학번과 이름을 다시 확인해주세요."));
+                    btn.disabled = false;
+                    btn.innerText = originalBtnText;
+                    return;
+                }
+
+                if (checkData.result === 'error') {
+                    alert(attendanceValue("messages.serverError", "서버 연결 중 오류가 발생했습니다."));
                     btn.disabled = false;
                     btn.innerText = originalBtnText;
                     return;
@@ -723,19 +746,23 @@
 
             } catch (e) {
                 console.error(e);
-                alert("서버 연결 중 오류가 발생했습니다.");
+                alert(attendanceValue("messages.serverError", "서버 연결 중 오류가 발생했습니다."));
                 btn.disabled = false;
                 btn.innerText = originalBtnText;
                 return;
             }
 
-            if (!confirm(`[${eventName}] 활동에 대해\n[${absenceType}] 결석계를 제출하시겠습니까?`)) {
+            const confirmMessage = attendanceTemplate(
+                attendanceValue("messages.confirmTemplate", "[{eventName}] 활동에 대해\n[{absenceType}] 결석계를 제출하시겠습니까?"),
+                { eventName, absenceType }
+            );
+            if (!confirm(confirmMessage)) {
                 btn.disabled = false;
                 btn.innerText = originalBtnText;
                 return;
             }
 
-            btn.innerText = "제출 중...";
+            btn.innerText = attendanceValue("absence.submittingButton", "제출 중...");
 
             fetch(SCRIPT_URL, {
                 method: "POST",
@@ -751,18 +778,18 @@
                 })
             })
             .then(() => {
-                alert("결석계가 제출되었습니다.");
+                alert(attendanceValue("messages.success", "결석계가 제출되었습니다."));
                 const checkedRadio = document.querySelector('input[name="selected_event"]:checked');
                 if (checkedRadio) checkedRadio.checked = false;
                 document.getElementById('submit-type').value = "결석";
             })
             .catch(err => {
                 console.error(err);
-                alert("제출 중 오류가 발생했습니다.");
+                alert(attendanceValue("messages.submitError", "제출 중 오류가 발생했습니다."));
             })
             .finally(() => {
                 btn.disabled = false;
-                btn.innerText = "제출하기";
+                btn.innerText = attendanceValue("absence.submitButton", "제출하기");
             });
         }
 

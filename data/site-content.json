@@ -2,7 +2,7 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-08-03T04:19:52.812Z"
+    "updatedAt": "2026-08-03T05:02:23.906Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
@@ -717,7 +717,9 @@
       "title": "We Are\nPAINS",
       "description": "PAINS는 스포츠 통계를 사랑하는 사람들이 모여, 같이 프로젝트를 수행하며 스포츠 통계에 대한 학문적 탐구를 진행하는 동아리입니다.",
       "image": "images/소개사진.jpg",
-      "alt": "PAINS 부원 단체사진"
+      "alt": "PAINS 부원 단체사진",
+      "captionLeft": "Fig. 01",
+      "captionRight": "Sport × Data"
     },
     "whoWeAre": {
       "eyebrow": "Who We Are",
@@ -728,7 +730,8 @@
       "alt": "PAINS 부원 단체사진"
     },
     "meta": {
-      "collective": "Korea University · Sports Data Analysis Circle"
+      "collective": "Korea University · Sports Data Analysis Circle",
+      "indexLabel": "01 / About"
     },
     "presidentMessage": {
       "visible": "TRUE",
@@ -741,7 +744,8 @@
       "desktopImage": "images/activity_edited_1.png",
       "mobileImage": "images/PAINS_logo.png",
       "desktopAlt": "PAINS 활동 사진",
-      "mobileAlt": "PAINS CI 로고"
+      "mobileAlt": "PAINS CI 로고",
+      "indexLabel": "02 / Message"
     }
   },
   "organization": {
@@ -3364,5 +3368,75 @@
       "file": "AnnualReport_2025.pdf",
       "important": false
     }
-  ]
+  ],
+  "attendance": {
+    "common": {
+      "idLabel": "학번",
+      "idPlaceholder": "예: 2024123456",
+      "nameLabel": "이름",
+      "namePlaceholder": "예: 홍길동"
+    },
+    "member": {
+      "title": "회원 정보 조회",
+      "subtitle": "학번과 이름을 입력하여 회원 정보를 확인하세요.",
+      "lookupButton": "조회하기",
+      "loadingButton": "조회 중...",
+      "resultSuffix": "님의 정보 및 출석 현황",
+      "statusLabel": "회원 자격",
+      "usedCountLabel": "사용한 결석계",
+      "usedCountUnit": "회",
+      "attendanceRateLabel": "현재 출석률",
+      "attendanceRateUnit": "%",
+      "regularTitle": "[정기 활동 출석 현황 안내]",
+      "irregularTitle": "[비정기 활동 출석 현황 안내]",
+      "calculationTitle": "[출석률 계산 안내]",
+      "calculationIntro": "현재 출석률은 다음 수식을 바탕으로 계산됩니다.",
+      "bylawTitle": "[운영회칙 안내]",
+      "bylawLead": "준회원 및 정회원은 한 기수에 결석계를 3번째 사용하는 시점부터 1회당 5,000원의 결석비를 납부하여야 합니다.",
+      "bylawNotes": "※ 제출한 결석계는 일정 기간 이후 반영됩니다. 활동 후 2일 이상 경과에도 결석계 반영이 되어 있지 않을 경우 운영진에게 문의바랍니다.\n※ 결석계 유형을 변경하거나, 결석계 취소를 원하실 경우 운영진에게 문의바랍니다.\n※ 지각, 조퇴가 아닌 결석의 경우 결석계를 제출하였더라도 출석률에는 출석으로 반영되지 않습니다."
+    },
+    "absence": {
+      "title": "결석계 제출",
+      "intro": "3주 내 예정된 정기활동에 대해서만 제출 가능합니다.\n21일 전부터 활동 전날까지만 제출이 가능하며, 당일에는 제출이 불가합니다.",
+      "eventLabel": "활동 선택",
+      "typeLabel": "결석계 종류",
+      "guide": "▶ 지각: 명시된 시작 시각 10분 이후 참여\n▶ 조퇴: 명시된 종료 시각 10분 이전 퇴실\n▶ 지각 & 조퇴: 지각과 조퇴를 모두 해야하는 경우\n※ 단, 최소 전체 활동 시간의 50% 이상 활동하지 못하면 일부 참여했더라도 인정 결석으로 처리됩니다.\n※ 일반적인 정기활동 시간은 시작 시각으로부터 2시간입니다. 상황에 따라 변동될 수 있습니다.\n※ 결석계를 제출했더라도 출석 또는 참여하면 결석계는 사용되지 않습니다.",
+      "submitButton": "제출하기",
+      "checkingButton": "정보 확인 중...",
+      "submittingButton": "제출 중...",
+      "loadingEvents": "불러오는 중...",
+      "noEvents": "현재 제출 가능한 정기활동이 없습니다.\n(활동 21일 전부터 전날까지만 결석계 제출이 가능합니다)",
+      "scheduleError": "일정을 불러오지 못했습니다."
+    },
+    "modal": {
+      "title": "출석 상태 안내",
+      "defaultDescription": "출석 상태에 대한 설명입니다.",
+      "closeLabel": "닫기"
+    },
+    "statusDescriptions": {
+      "출석": "활동에 정상적으로 참여하여 출석으로 처리된 상태입니다.",
+      "인정 결석": "사유가 인정되어 결석으로 기록되었지만, 운영 기준에 따라 인정 처리된 상태입니다.",
+      "인정 지각": "사유가 인정되어 지각으로 기록되었지만, 운영 기준에 따라 인정 처리된 상태입니다.",
+      "인정 조퇴": "사유가 인정되어 조퇴로 기록되었지만, 운영 기준에 따라 인정 처리된 상태입니다.",
+      "사전 통지 결석": "활동 전에 미리 알린 결석으로 접수된 상태입니다.",
+      "사전 통지 지각": "활동 전에 미리 알린 지각으로 접수된 상태입니다.",
+      "사전 통지 조퇴": "활동 전에 미리 알린 조퇴로 접수된 상태입니다.",
+      "무단 결석": "사전 안내 없이 활동에 참여하지 않아 무단 결석으로 처리된 상태입니다.",
+      "무단 지각": "사전 안내 없이 늦게 참여하여 무단 지각으로 처리된 상태입니다.",
+      "무단 조퇴": "사전 안내 없이 중도 퇴실하여 무단 조퇴로 처리된 상태입니다.",
+      "결석": "비정기 활동에 참여하지 않은 상태입니다."
+    },
+    "messages": {
+      "missingCredentials": "학번과 이름을 입력해주세요.",
+      "memberNotFound": "일치하는 부원 정보가 없습니다.",
+      "lookupError": "조회 중 오류가 발생했습니다.",
+      "missingEvent": "결석계를 제출할 활동을 선택해주세요.",
+      "duplicate": "이미 해당 활동에 대한 결석계를 제출하셨습니다.\n결석계 취소나 변경을 원하실 경우, 운영진에게 문의해주세요.",
+      "submitMemberNotFound": "일치하는 부원 정보가 없습니다.\n학번과 이름을 다시 확인해주세요.",
+      "serverError": "서버 연결 중 오류가 발생했습니다.",
+      "confirmTemplate": "[{eventName}] 활동에 대해\n[{absenceType}] 결석계를 제출하시겠습니까?",
+      "success": "결석계가 제출되었습니다.",
+      "submitError": "제출 중 오류가 발생했습니다."
+    }
+  }
 }

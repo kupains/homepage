@@ -1083,7 +1083,10 @@
     text('.about-hero p', about.hero?.description);
     image('.about-hero__media img', about.hero?.image, '');
     image('.about-visual img', about.hero?.image, about.hero?.alt || 'PAINS 부원 단체사진');
+    text('[data-about-index]', about.meta?.indexLabel);
     text('[data-about-collective]', about.meta?.collective);
+    text('[data-about-caption-left]', about.hero?.captionLeft);
+    text('[data-about-caption-right]', about.hero?.captionRight);
 
     const who = document.querySelector('.about-banner--dark');
     if (who) {
@@ -1097,6 +1100,7 @@
     const president = document.querySelector('.about-banner--president');
     if (president) {
       president.hidden = !boolValue(about.presidentMessage?.visible, true);
+      text('[data-president-index]', about.presidentMessage?.indexLabel, president);
       text('.section-kicker', about.presidentMessage?.eyebrow, president);
       text('h3', about.presidentMessage?.title, president);
       const copy = president.querySelector('.about-banner__copy');
@@ -1109,6 +1113,61 @@
       }
       image('.about-banner__media img.desktop-only', about.presidentMessage?.desktopImage, about.presidentMessage?.desktopAlt, president);
       image('.about-banner__media img.mobile-only', about.presidentMessage?.mobileImage, about.presidentMessage?.mobileAlt, president);
+    }
+  }
+
+  function renderAttendance(content) {
+    const attendance = content?.attendance;
+    if (!attendance) return;
+
+    const common = attendance.common || {};
+    const member = attendance.member || {};
+    const absence = attendance.absence || {};
+    const modal = attendance.modal || {};
+
+    text('#attendance-member-title', member.title);
+    text('#attendance-member-subtitle', member.subtitle);
+    text('#attendance-check-id-label', common.idLabel);
+    text('#attendance-check-name-label', common.nameLabel);
+    text('#btn-check-submit', member.lookupButton);
+    text('#attendance-result-suffix', member.resultSuffix);
+    text('#status-label', member.statusLabel);
+    text('#attendance-used-label', member.usedCountLabel);
+    text('#attendance-used-unit', member.usedCountUnit);
+    text('#attendance-rate-label', member.attendanceRateLabel);
+    text('#attendance-rate-unit', member.attendanceRateUnit);
+    text('#attendance-regular-title', member.regularTitle);
+    text('#attendance-irregular-title', member.irregularTitle);
+    text('#attendance-calculation-title', member.calculationTitle);
+    text('#attendance-calculation-intro', member.calculationIntro);
+    text('#attendance-bylaw-title', member.bylawTitle);
+    text('#attendance-bylaw-lead', member.bylawLead);
+    multiline(document.querySelector('#attendance-bylaw-notes'), member.bylawNotes);
+
+    text('#attendance-absence-title', absence.title);
+    multiline(document.querySelector('#attendance-absence-intro'), absence.intro);
+    text('#attendance-submit-id-label', common.idLabel);
+    text('#attendance-submit-name-label', common.nameLabel);
+    text('#attendance-event-label', absence.eventLabel);
+    text('#attendance-type-label', absence.typeLabel);
+    multiline(document.querySelector('#attendance-absence-guide'), absence.guide);
+    text('#btn-submit-form', absence.submitButton);
+
+    text('#status-modal-title', modal.title);
+    text('#status-modal-desc', modal.defaultDescription);
+    text('#status-modal-close', modal.closeLabel);
+
+    const checkId = document.querySelector('#check-id');
+    const submitId = document.querySelector('#submit-id');
+    const checkName = document.querySelector('#check-name');
+    const submitName = document.querySelector('#submit-name');
+    if (common.idPlaceholder) {
+      if (checkId) checkId.placeholder = common.idPlaceholder;
+      if (submitId) submitId.placeholder = common.idPlaceholder;
+    }
+    if (common.namePlaceholder) {
+      if (checkName) checkName.placeholder = common.namePlaceholder;
+      if (submitName) submitName.placeholder = common.namePlaceholder;
     }
   }
 
@@ -1331,6 +1390,7 @@
     const current = page();
     if (current === 'index') renderHome(content);
     if (current === 'about') renderAbout(content);
+    if (current === 'attendance') renderAttendance(content);
     if (current === 'members') renderOrganization(content);
     if (current === 'society') renderSocieties(content);
     if (current === 'event') renderEvents(content);
