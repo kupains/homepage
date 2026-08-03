@@ -5,9 +5,9 @@ const PAINS_LAYOUT = {
     homeHref: 'index',
     footerText: '&copy; 2026 PAINS. All rights reserved.',
     socials: [
-        { href: 'https://www.instagram.com/ku_pains', title: 'Instagram', icon: 'images/instagram.png', alt: 'Instagram' },
-        { href: 'https://www.notion.so/painsports/PAINS-a9294ba2a44b4ea6a53f0d5ae069749e', title: 'Notion', icon: 'images/notion.png', alt: 'Notion' },
-        { href: 'https://blog.naver.com/painsports', title: 'Blog', icon: 'images/naver_blog.png', alt: 'Naver Blog' }
+        { href: 'https://www.instagram.com/ku_pains', title: 'Instagram', icon: 'images/optimized/instagram.webp', alt: 'Instagram' },
+        { href: 'https://www.notion.so/painsports/PAINS-a9294ba2a44b4ea6a53f0d5ae069749e', title: 'Notion', icon: 'images/optimized/notion.webp', alt: 'Notion' },
+        { href: 'https://blog.naver.com/painsports', title: 'Blog', icon: 'images/optimized/naver_blog.webp', alt: 'Naver Blog' }
     ],
     menuGroups: [
         {
@@ -104,6 +104,22 @@ function buildSidebarHTML() {
     }).join('');
 }
 
+function buildMobileNavHTML(currentPage) {
+    const resolvedPage = PAGE_ALIASES[currentPage] || currentPage || 'home';
+    const item = (href, page, symbol, label, extra = '') => `
+        <a href="${href}" class="mobile-tabbar__item${resolvedPage === page ? ' is-active' : ''}" ${extra}>
+            <span aria-hidden="true">${symbol}</span><strong>${label}</strong>
+        </a>`;
+
+    return [
+        item('index', 'home', '⌂', '홈'),
+        item('activity', 'activity', '▦', '활동'),
+        item('index#home-schedule', 'schedule', '◷', '일정'),
+        item('apply', 'apply', '＋', '지원', 'data-gate-link="apply"'),
+        '<button type="button" class="mobile-tabbar__item" onclick="toggleMenu()" aria-label="전체 메뉴 열기"><span aria-hidden="true">☰</span><strong>메뉴</strong></button>'
+    ].join('');
+}
+
 function ensureLayoutShell() {
     const body = document.body;
     if (!body) return {};
@@ -137,18 +153,27 @@ function ensureLayoutShell() {
         body.appendChild(footer);
     }
 
-    return { header, sidebar, overlay, footer };
+    let mobileNav = document.querySelector('.mobile-tabbar');
+    if (!mobileNav) {
+        mobileNav = document.createElement('nav');
+        mobileNav.className = 'mobile-tabbar';
+        mobileNav.setAttribute('aria-label', '모바일 빠른 메뉴');
+        body.appendChild(mobileNav);
+    }
+
+    return { header, sidebar, overlay, footer, mobileNav };
 }
 
 function loadSidebar(currentPage) {
     console.log('PAINS Menu v4.3 Loaded (Width Control Delegated to HTML)');
 
-    const { header, sidebar, overlay, footer } = ensureLayoutShell();
-    if (!header || !sidebar || !overlay || !footer) return;
+    const { header, sidebar, overlay, footer, mobileNav } = ensureLayoutShell();
+    if (!header || !sidebar || !overlay || !footer || !mobileNav) return;
 
     header.innerHTML = buildHeaderHTML();
     sidebar.innerHTML = buildSidebarHTML();
     footer.innerHTML = buildFooterHTML();
+    mobileNav.innerHTML = buildMobileNavHTML(currentPage);
 
     header.classList.add('pains-header');
     sidebar.classList.add('sidebar');
@@ -156,9 +181,16 @@ function loadSidebar(currentPage) {
     footer.classList.add('pains-footer');
     document.body.classList.add('pains-theme');
 
+    if (!document.querySelector('link[rel~="icon"]')) {
+        const favicon = document.createElement('link');
+        favicon.rel = 'icon';
+        favicon.type = 'image/png';
+        favicon.href = 'images/optimized/favicon-32.png';
+        document.head.appendChild(favicon);
+    }
+
     initGlobalStyles();
     highlightCurrentPage(currentPage);
-    syncHeaderHeight();
     initScrollEvent();
     initEscapeClose();
     initHeaderKeyboardAccess();
@@ -187,8 +219,6 @@ function initGlobalStyles() {
     const style = document.createElement('style');
     style.id = 'pains-dynamic-style';
     style.innerHTML = `
-        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
-
         /* ========================================== */
         /* 1. 글로벌 폰트 불러오기 (@font-face)       */
         /* ========================================== */
@@ -252,7 +282,7 @@ function initGlobalStyles() {
 
         /* 📖 사이트 전체 본문 기본 폰트 적용 (ATOZ4) */
         body.pains-theme:not(.home-page) {
-            font-family: 'PAINS Latin Body', 'Pretendard', sans-serif !important;
+            font-family: 'PAINS Latin Body', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif !important;
             background:
                 radial-gradient(circle at top left, rgba(171, 51, 51, 0.07), transparent 28%),
                 linear-gradient(180deg, #f8f9fb 0%, var(--pains-bg) 100%) !important;
@@ -271,15 +301,15 @@ function initGlobalStyles() {
         body.pains-theme:not(.home-page) h3,
         body.pains-theme:not(.home-page) .society-name,
         body.pains-theme:not(.home-page) .title {
-            font-family: 'PAINS Latin Title', 'Pretendard', sans-serif !important;
+            font-family: 'PAINS Latin Title', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif !important;
         }
 
         /* 📖 폼 요소(입력창, 버튼)에 본문 폰트 적용 (ATOZ4) */
-        body.pains-theme input,
-        body.pains-theme select,
-        body.pains-theme textarea,
-        body.pains-theme button {
-            font-family: 'PAINS Latin Body', 'Pretendard', sans-serif !important;
+        body.pains-theme:not(.home-page) input,
+        body.pains-theme:not(.home-page) select,
+        body.pains-theme:not(.home-page) textarea,
+        body.pains-theme:not(.home-page) button {
+            font-family: 'PAINS Latin Body', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif !important;
             border-radius: 12px !important;
             border-color: rgba(216, 222, 232, 0.95) !important;
             box-shadow: none !important;
@@ -581,10 +611,10 @@ function initGlobalStyles() {
             color: var(--pains-accent) !important;
         }
 
-        body.pains-theme button,
-        body.pains-theme .btn,
-        body.pains-theme input[type="submit"],
-        body.pains-theme .btn-today-reset {
+        body.pains-theme:not(.home-page) button,
+        body.pains-theme:not(.home-page) .btn,
+        body.pains-theme:not(.home-page) input[type="submit"],
+        body.pains-theme:not(.home-page) .btn-today-reset {
             font-family: 'ATOZ4', sans-serif !important;
             font-weight: normal !important;
             border-radius: 12px !important;
@@ -619,8 +649,13 @@ function initGlobalStyles() {
 
         @media (max-width: 768px) {
             :root {
-                --pains-header-height: 66px;
+                --pains-header-height: 60px;
                 --pains-sidebar-width: min(88vw, 320px);
+            }
+
+            body.pains-theme {
+                padding-bottom: calc(68px + env(safe-area-inset-bottom)) !important;
+                touch-action: manipulation;
             }
 
             body.pains-theme:not(.home-page) {
@@ -630,6 +665,16 @@ function initGlobalStyles() {
             body.pains-theme header,
             body.pains-theme .pains-header {
                 padding: 0 16px !important;
+                transition: none;
+            }
+
+            body.pains-theme header.nav-up { transform: none; }
+
+            body.pains-theme:not(.home-page) input,
+            body.pains-theme:not(.home-page) select,
+            body.pains-theme:not(.home-page) textarea {
+                min-height: 48px;
+                font-size: 16px !important;
             }
 
             body.pains-theme:not(.home-page) section,
@@ -644,7 +689,51 @@ function initGlobalStyles() {
                 max-width: 100%;
                 border-radius: 0;
             }
+
+            .mobile-tabbar {
+                position: fixed;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 1000;
+                display: grid;
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+                min-height: calc(64px + env(safe-area-inset-bottom));
+                padding: 4px 6px env(safe-area-inset-bottom);
+                background: #fff;
+                border-top: 1px solid rgba(216, 222, 232, 0.95);
+                box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
+            }
+
+            .mobile-tabbar__item {
+                min-width: 0;
+                min-height: 56px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3px;
+                padding: 4px 2px;
+                border: 0 !important;
+                border-radius: 10px !important;
+                background: transparent !important;
+                box-shadow: none !important;
+                color: #667085 !important;
+                text-decoration: none;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif !important;
+                cursor: pointer;
+            }
+
+            .mobile-tabbar__item span { font-size: 19px; line-height: 1; }
+            .mobile-tabbar__item strong { font-size: 10px; line-height: 1.2; font-weight: 700; }
+            .mobile-tabbar__item.is-active { color: var(--pains-accent) !important; background: var(--pains-accent-soft) !important; }
+            body.home-page .mobile-tabbar { background: #080d15; border-top-color: rgba(255,255,255,.14); box-shadow: none; }
+            body.home-page .mobile-tabbar__item { color: rgba(255,255,255,.68) !important; }
+            body.home-page .mobile-tabbar__item.is-active { color: #fff !important; background: rgba(255,255,255,.1) !important; }
+            body.menu-open .mobile-tabbar { visibility: hidden; }
         }
+
+        @media (min-width: 769px) { .mobile-tabbar { display: none; } }
     `;
     document.head.appendChild(style);
 }
@@ -671,16 +760,25 @@ function initScrollEvent() {
     const header = document.querySelector('header');
     if (!header) return;
 
-    window.addEventListener('scroll', function () {
-        const st = window.scrollY || document.documentElement.scrollTop;
-        if (Math.abs(lastScrollTop - st) <= delta) return;
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        header.classList.remove('nav-up');
+        return;
+    }
 
-        if (st > lastScrollTop && st > header.offsetHeight + 20) {
-            header.classList.add('nav-up');
-        } else {
-            header.classList.remove('nav-up');
-        }
-        lastScrollTop = st <= 0 ? 0 : st;
+    const headerHeight = Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--pains-header-height')) || 72;
+    let ticking = false;
+
+    window.addEventListener('scroll', function () {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(() => {
+            const st = window.scrollY || document.documentElement.scrollTop;
+            if (Math.abs(lastScrollTop - st) > delta) {
+                header.classList.toggle('nav-up', st > lastScrollTop && st > headerHeight + 20);
+                lastScrollTop = st <= 0 ? 0 : st;
+            }
+            ticking = false;
+        });
     }, { passive: true });
 }
 
@@ -773,7 +871,7 @@ function ensureContentLoader() {
     if (Array.from(document.scripts).some((script) => script.src.includes(src))) return;
 
     const script = document.createElement('script');
-    script.src = `${src}?v=${Date.now()}`;
+    script.src = `${src}?v=20260803-mobile1`;
     script.defer = true;
     document.head.appendChild(script);
 }

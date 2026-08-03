@@ -1,7 +1,3 @@
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
-@font-face{font-family:KBO;src:url('fonts/KBO_medium.woff') format('woff');font-display:swap}
-@font-face{font-family:'PAINS Sans Latin';src:url('fonts/SCDream5.otf') format('opentype');font-weight:100 900;font-style:normal;font-display:swap;unicode-range:U+0000-024F}
-
 /* ============================================================
    PAINS — Home
    "Data-center" visual language: monochrome, hairline grids,
@@ -18,8 +14,8 @@
   --muted:rgba(242,241,236,.56);     /* muted text on dark */
   --muted-ink:#615d54;               /* muted text on light */
   --page:min(1240px,calc(100% - clamp(40px,8vw,128px)));
-  --sans:'PAINS Sans Latin','Pretendard','Noto Sans KR','Apple SD Gothic Neo',Arial,sans-serif;
-  --mono:ui-monospace,'SF Mono','Cascadia Code','Roboto Mono',Menlo,Consolas,'Pretendard',sans-serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR','Apple SD Gothic Neo',Arial,sans-serif;
+  --mono:ui-monospace,'SF Mono','Cascadia Code','Roboto Mono',Menlo,Consolas,sans-serif;
 }
 *{box-sizing:border-box}
 html{background:var(--black)}
@@ -48,6 +44,10 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 .hero-brand span:not(:first-child){text-align:center}.hero-brand span:last-child{text-align:right}
 .hero-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-top:16px;color:rgba(255,255,255,.72);font-family:var(--mono);font-weight:500;font-size:10px;letter-spacing:.16em}
 .hero-meta span:nth-child(2){text-align:center}.hero-meta span:last-child{text-align:right}
+.home-hero__lead{display:none;margin:18px 0 0;color:rgba(255,255,255,.86);font-size:15px;font-weight:600;letter-spacing:-.02em}
+.home-hero__actions{display:none;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.home-cta{display:flex;min-height:48px;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.5);color:#fff;text-decoration:none;font-size:14px;font-weight:700}
+.home-cta--primary{border-color:var(--paper);background:var(--paper);color:var(--ink)}
 .scroll-mark{position:absolute;z-index:2;right:24px;bottom:34px;display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.82);text-decoration:none;font-family:var(--mono);font-size:10px;letter-spacing:.2em}
 .scroll-mark span{font-size:15px;animation:nudge 1.8s ease-in-out infinite}
 @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
@@ -172,10 +172,23 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
 }
 @media(max-width:760px){
   :root{--page:calc(100% - 36px)}
-  .home-hero__content{padding:104px 0 24px}
+  body.pains-theme.home-page main{display:flex;flex-direction:column}
+  .home-hero{order:1;min-height:72svh}
+  #home-schedule{order:2}
+  #manifesto{order:3}
+  #home-about{order:4}
+  #home-projects{order:5}
+  #home-community{order:6}
+  .archive-cta{order:7}
+  body.pains-theme.home-page header.pains-header{background:rgba(7,11,18,.97)!important;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .home-hero__media img{filter:none}
+  .home-hero__content{min-height:72svh;padding:92px 0 28px}
   .hero-brand{padding-bottom:12px}.hero-brand span{font-size:16vw;letter-spacing:-.1em}
   .hero-meta{grid-template-columns:1fr 1fr;gap:8px;font-size:8px}.hero-meta span:nth-child(2){text-align:right}.hero-meta span:last-child{display:none}
-  .manifesto,.community,.archive-cta{padding-left:20px;padding-right:20px}
+  .home-hero__lead{display:block}
+  .home-hero__actions{display:grid}
+  .manifesto,.community,.archive-cta{padding:64px 20px}
+  .module__inner{gap:28px;padding:60px 0}
   .manifesto__copy,.community__head{display:block}
   .manifesto__copy h2{margin-top:24px!important;font-size:clamp(42px,12vw,58px)!important}
   .manifesto__copy>p:last-child{margin-top:24px!important}
@@ -187,16 +200,20 @@ body.pains-theme.home-page .hamburger-btn span{background:#fff!important}
   .home-data-strip>div:last-child{border-bottom:0}
   .archive-cta>a{grid-template-columns:auto 1fr auto;gap:16px;padding:22px 0}
   .archive-cta>a>span:first-child{font-size:clamp(24px,7.5vw,38px)}
-  .schedule{padding-left:20px;padding-right:20px}
+  .schedule{padding:64px 20px}
+  .schedule .section-index{font-size:0}
+  .schedule .section-index::after{content:"UPCOMING SCHEDULE";font-size:10px}
   .schedule__head{display:block}
   .schedule__head .kicker{margin-bottom:20px}
   .schedule__head h2{margin-top:0!important;font-size:clamp(32px,9vw,46px)!important}
   .schedule__head>p:last-child{margin-top:18px!important}
-  .schedule__item{gap:14px;padding:20px 2px}
+  .schedule__item{grid-template-columns:66px 1fr;gap:12px;padding:18px 2px}
   .schedule__date{min-width:66px;flex-direction:column;align-items:flex-start;gap:2px}
   .schedule__date b{font-size:21px}
-  .schedule__tag{padding:5px 10px}
-  .project-variants button{display:flex;justify-content:center;padding:11px 8px}
-  .project-variants button strong{display:none}
+  .schedule__tag{grid-column:2;justify-self:start;padding:5px 10px}
+  .project-variants button{display:flex;min-height:46px;justify-content:center;gap:6px;padding:11px 8px}
+  .project-variants button span{font-size:8px}
+  .project-variants button strong{display:block;font-size:9px}
 }
+@media(hover:none){.frame img,.text-link span,.archive-cta>a>span:first-child{transition:none}.figure:hover .frame img,.figure--blue:hover .frame img{filter:none;transform:none}.schedule__item:hover{padding-left:4px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.scroll-mark span{animation:none}.frame img,.text-link span,.archive-cta>a>span:first-child{transition:none}}

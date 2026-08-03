@@ -3,7 +3,6 @@
 
   const FALLBACK_CONTENT_URL = 'data/site-content.json';
   const CONTENT_SHEET_ID = '1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo';
-  const ASSET_WAIT_LIMIT_MS = 300;
   const LIVE_APPLY_PATHS = new Set([
     'recruitment.bannerText',
     'recruitment.bannerButtonLabel',
@@ -19,13 +18,6 @@
   const page = () => location.pathname.split('/').pop().replace(/\.html$/, '') || 'index';
   const isVisible = (item) => item && boolValue(item.visible, true);
   const byOrder = (a, b) => Number(a.order ?? 999) - Number(b.order ?? 999);
-  const pendingAssetLoads = [];
-
-  function delay(ms) {
-    return new Promise((resolve) => {
-      window.setTimeout(resolve, ms);
-    });
-  }
 
   function revealContent() {
     if (window.__painsCmsLoadingTimer) {
@@ -86,6 +78,21 @@
   function assetUrl(src) {
     const value = String(src || '').trim();
     if (!value) return value;
+
+    const optimizedLocalAssets = {
+      'images/pains-data-stadium.png': 'images/optimized/pains-data-stadium-1280.webp',
+      'images/pains-sports-analytics-blue.png': 'images/optimized/pains-sports-analytics-blue-1280.webp',
+      'images/project-field-model.png': 'images/optimized/project-field-model-1280.webp',
+      'images/seminar-20260515.jpg': 'images/optimized/seminar-20260515-1280.webp',
+      'images/project-column.png': 'images/optimized/project-column-1280.webp',
+      'images/community-summer-mt-2026.jpg': 'images/optimized/community-summer-mt-2026-1280.webp',
+      'images/activity4.png': 'images/optimized/activity4-1280.webp',
+      'images/activity_edited_1.png': 'images/optimized/activity_edited_1-1280.webp',
+      'images/activity2.png': 'images/optimized/activity2-1280.webp',
+      'images/activity03.png': 'images/optimized/activity03-1280.webp',
+      'images/소개사진.jpg': 'images/optimized/소개사진-1280.webp'
+    };
+    if (optimizedLocalAssets[value]) return optimizedLocalAssets[value];
 
     const driveMatch = value.match(/drive\.google\.com\/file\/d\/([^/]+)/)
       || value.match(/[?&]id=([^&]+)/);
@@ -175,22 +182,22 @@
   }
 
   function configureGateLink(id, isOpen, href, message) {
-    const link = document.getElementById(`link-${id}`);
-    if (!link) return;
+    const links = document.querySelectorAll(`#link-${id}, [data-gate-link="${id}"]`);
+    links.forEach((link) => {
+      link.removeAttribute('onclick');
+      link.onclick = null;
+      link.href = href || id;
+      link.classList.toggle('is-disabled-link', !isOpen);
+      link.setAttribute('aria-disabled', String(!isOpen));
 
-    link.removeAttribute('onclick');
-    link.onclick = null;
-    link.href = href || id;
-    link.classList.toggle('is-disabled-link', !isOpen);
-    link.setAttribute('aria-disabled', String(!isOpen));
-
-    if (!isOpen) {
-      link.onclick = (event) => {
-        event.preventDefault();
-        alert(message);
-        return false;
-      };
-    }
+      if (!isOpen) {
+        link.onclick = (event) => {
+          event.preventDefault();
+          alert(message);
+          return false;
+        };
+      }
+    });
   }
 
   function renderAccessGates(content) {
@@ -213,24 +220,28 @@
   }
 
   function trackAsset(src) {
-    const url = assetUrl(src);
-    if (!url) return url;
+    return assetUrl(src);
+  }
 
-    pendingAssetLoads.push(new Promise((resolve) => {
-      const img = new Image();
-      img.onload = resolve;
-      img.onerror = resolve;
-      img.src = url;
-      if (img.complete) resolve();
-    }));
+  function applyImageSource(img, src) {
+    if (!img || !src) return;
+    const url = trackAsset(src);
+    img.src = url;
 
-    return url;
+    const responsive = url.match(/^(.*)-1280\.webp(?:\?.*)?$/i);
+    if (responsive) {
+      img.srcset = `${responsive[1]}-640.webp 640w, ${responsive[1]}-1280.webp 1280w`;
+      img.sizes = img.closest('.home-hero') ? '100vw' : '(max-width: 820px) calc(100vw - 36px), 50vw';
+    } else {
+      img.removeAttribute('srcset');
+      img.removeAttribute('sizes');
+    }
   }
 
   function image(selector, src, alt, root = document) {
     const img = root.querySelector(selector);
     if (!img || !src) return;
-    img.src = trackAsset(src);
+    applyImageSource(img, src);
     if (alt !== undefined) img.alt = alt;
   }
 
@@ -259,7 +270,7 @@
   async function loadContent() {
     if (window.__painsContentPromise) return window.__painsContentPromise;
 
-    const contentPromise = fetch(`${FALLBACK_CONTENT_URL}?v=${Date.now()}`, { cache: 'no-store' })
+    const contentPromise = fetch(FALLBACK_CONTENT_URL, { cache: 'default' })
       .then((res) => {
         if (!res.ok) throw new Error(`Content fetch failed: ${res.status}`);
         return res.json();
@@ -366,7 +377,7 @@
           card.images.forEach((item, index) => {
             const img = boundRoot.querySelector(index === 0 ? '[data-field="image"]' : '[data-field="image2"]');
             if (!img || !item?.src) return;
-            img.src = trackAsset(item.src);
+            applyImageSource(img, item.src);
             if (item.alt !== undefined) img.alt = item.alt;
           });
         }
@@ -393,7 +404,7 @@
         card.images.forEach((item, index) => {
           const img = imgs[index];
           if (!img) return;
-          img.src = trackAsset(item.src);
+          applyImageSource(img, item.src);
           if (item.alt !== undefined) img.alt = item.alt;
         });
       }
@@ -458,7 +469,9 @@
         const media = document.createElement('div');
         media.className = 'activity-img-wrapper';
         const img = document.createElement('img');
-        img.src = trackAsset(item.image || '');
+        applyImageSource(img, item.image || '');
+        img.loading = 'lazy';
+        img.decoding = 'async';
         img.alt = item.alt || item.title || '';
         media.appendChild(img);
         const body = document.createElement('div');
@@ -1000,7 +1013,10 @@
       .find((el) => !el.classList.contains('home-eyebrow'));
     if (heroDescription && home.hero?.description) heroDescription.textContent = home.hero.description;
     image('.home-hero__media img', home.hero?.image, '');
-    textAll('.home-hero__actions .home-cta', [home.hero?.primaryCta, home.hero?.secondaryCta]);
+    textAll('.home-hero__actions .home-cta', [
+      home.hero?.primaryCta || '일정 보기',
+      home.hero?.secondaryCta || '지원하기'
+    ]);
 
     renderTimeline(home.timeline);
 
@@ -1040,7 +1056,7 @@
       const button = projectButtons[index];
       if (!button) return;
       button.hidden = false;
-      button.dataset.projectSrc = variant.image || '';
+      button.dataset.projectSrc = assetUrl(variant.image || '');
       button.dataset.projectAlt = variant.alt || '';
       button.dataset.projectLabel = variant.label || '';
       text('span', String(index + 1).padStart(2, '0'), button);
@@ -1403,14 +1419,6 @@
     document.dispatchEvent(new CustomEvent('pains:content-ready', { detail: content }));
   }
 
-  async function waitForAssets() {
-    if (!pendingAssetLoads.length) return;
-    await Promise.race([
-      Promise.allSettled(pendingAssetLoads),
-      delay(ASSET_WAIT_LIMIT_MS)
-    ]);
-  }
-
   async function loadLatestContent() {
     const content = await loadContent();
     if (window.__painsOperationsPromise) {
@@ -1423,7 +1431,6 @@
     try {
       const content = await initialContentPromise;
       if (content) applyContent(content);
-      await waitForAssets();
     } finally {
       revealContent();
     }

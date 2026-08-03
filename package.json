@@ -1,0 +1,16 @@
+{
+  "name": "pains-homepage",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "optimize:images": "node tools/optimize-images.mjs",
+    "sync:content": "node tools/sheets-to-content.mjs",
+    "test:mobile": "node tools/mobile-smoke.mjs"
+  },
+  "dependencies": {
+    "sharp": "0.35.3"
+  },
+  "devDependencies": {
+    "puppeteer-core": "25.4.0"
+  }
+}

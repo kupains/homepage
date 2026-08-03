@@ -2,6 +2,7 @@
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import sharp from 'sharp';
 
 const SHEET_ID = process.env.PAINS_SHEET_ID;
 const OUT = resolve(process.cwd(), process.env.PAINS_CONTENT_OUT || 'data/site-content.json');
@@ -281,11 +282,27 @@ async function downloadImage(sourceUrl) {
   if (!bytes.length) throw new Error('received an empty file');
 
   const hash = createHash('sha256').update(bytes).digest('hex').slice(0, 20);
-  const filename = `${hash}${imageExtension(contentType, fetchUrl)}`;
   await mkdir(ASSET_DIR, { recursive: true });
-  await writeFile(resolve(ASSET_DIR, filename), bytes);
-  console.log(`[asset] ${sourceUrl} -> ${ASSET_PUBLIC_PATH}/${filename}`);
-  return `${ASSET_PUBLIC_PATH}/${filename}`;
+
+  const extension = imageExtension(contentType, fetchUrl);
+  if (extension === '.gif' || extension === '.svg') {
+    const filename = `${hash}${extension}`;
+    await writeFile(resolve(ASSET_DIR, filename), bytes);
+    console.log(`[asset] ${sourceUrl} -> ${ASSET_PUBLIC_PATH}/${filename}`);
+    return `${ASSET_PUBLIC_PATH}/${filename}`;
+  }
+
+  for (const width of [640, 1280]) {
+    const filename = `${hash}-${width}.webp`;
+    const optimized = await sharp(bytes)
+      .rotate()
+      .resize({ width, height: width, fit: 'inside', withoutEnlargement: true })
+      .webp({ quality: width === 640 ? 70 : 74, effort: 6, smartSubsample: true })
+      .toBuffer();
+    await writeFile(resolve(ASSET_DIR, filename), optimized);
+    console.log(`[asset] ${sourceUrl} -> ${ASSET_PUBLIC_PATH}/${filename}`);
+  }
+  return `${ASSET_PUBLIC_PATH}/${hash}-1280.webp`;
 }
 
 async function mirrorRemoteImages(content) {

@@ -14,6 +14,14 @@
     if (!src) return;
 
     image.src = src;
+    const responsive = src.match(/^(.*)-1280\.webp(?:\?.*)?$/i);
+    if (responsive) {
+      image.srcset = `${responsive[1]}-640.webp 640w, ${responsive[1]}-1280.webp 1280w`;
+      image.sizes = '(max-width: 820px) calc(100vw - 36px), 50vw';
+    } else {
+      image.removeAttribute('srcset');
+      image.removeAttribute('sizes');
+    }
     image.alt = button.dataset.projectAlt || '';
     if (caption) caption.textContent = button.dataset.projectLabel || '';
     root.classList.toggle('is-column', (button.dataset.projectLabel || '').toUpperCase() === 'COLUMN');
@@ -28,6 +36,7 @@
   buttons.forEach((button, index) => {
     button.addEventListener('click', () => selectVariant(button));
     button.addEventListener('pointerenter', () => {
+      if (window.matchMedia('(hover: none)').matches) return;
       const src = button.dataset.projectSrc;
       if (src) new Image().src = src;
     }, { once: true });
