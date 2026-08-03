@@ -2,7 +2,7 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-08-03T02:56:58.378Z"
+    "updatedAt": "2026-08-03T03:18:05.160Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
@@ -548,7 +548,7 @@
     },
     "metrics": [
       {
-        "value": "172+",
+        "value": "173+",
         "label": "PROJECTS",
         "visible": true,
         "order": 1
@@ -568,7 +568,7 @@
     ],
     "archiveLinks": [
       {
-        "label": "172+ PROJECTS",
+        "label": "173+ PROJECTS",
         "action": "EXPLORE →",
         "href": "activity",
         "visible": true,
@@ -983,7 +983,6 @@
   "recruitment": {
     "pageTitle": "PAINS - 신입부원 모집",
     "generation": "12기",
-    "sidebarTitle": "12기 신입부원 모집",
     "heroTitle": "PAINS 신입부원 모집",
     "heroDescription": "고려대학교 교내 유일 스포츠 통계분석 동아리 PAINS가 12기 신입부원을 모집합니다.",
     "bannerText": "🔥 PAINS 12기 신입부원 모집 마감 임박!",
@@ -1003,7 +1002,6 @@
     "genderChartTitle": "부원 성별 분포",
     "majorChartTitle": "부원 전공 분포",
     "admissionYearChartTitle": "학번 분포",
-    "admissionCountLabel": "인원(명)",
     "activitiesTitle": "📸 PAINS 활동 톺아보기",
     "activitiesDescription": "PAINS에서는 학기 중 다양한 학술 활동과 친목 활동을 진행합니다.",
     "departmentsTitle": "🏢 부서 운영",
@@ -1033,10 +1031,12 @@
     "formLabel": "지원서 작성하러 가기",
     "applyPeriod": "지원 기간: 2026년 02월 26일 - 2026년 03월 07일",
     "applyVisible": true,
+    "sidebarTitle": "12기 신입부원 모집",
+    "admissionCountLabel": "인원(명)",
     "timeline": [
       {
         "step": "서류 신청",
-        "date": "",
+        "date": "2026. 02. 26 (목) - 2026. 03. 07 (토)",
         "note": "",
         "highlight": false,
         "visible": true,
@@ -1044,24 +1044,24 @@
       },
       {
         "step": "서류 합격자 발표",
-        "date": "",
-        "note": "",
+        "date": "2026. 03. 09 (월) 중",
+        "note": "홈페이지 안내",
         "highlight": false,
         "visible": true,
         "order": 2
       },
       {
         "step": "면접 진행",
-        "date": "",
-        "note": "",
+        "date": "2026. 03. 11 (수) - 2026. 03. 13 (금)",
+        "note": "기간 중 일정 협의",
         "highlight": false,
         "visible": true,
         "order": 3
       },
       {
         "step": "최종 선발 공지",
-        "date": "",
-        "note": "",
+        "date": "2026. 03. 15 (일) 중",
+        "note": "홈페이지 안내",
         "highlight": false,
         "visible": true,
         "order": 4
@@ -1384,7 +1384,7 @@
   },
   "projects": [
     {
-      "title": "",
+      "title": "F1 피트스탑 예측 모델",
       "year": "2026",
       "generation": "11기",
       "period": "방학 중 프로젝트",

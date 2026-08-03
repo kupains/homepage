@@ -111,6 +111,13 @@ var TAB = {
 // page_content 는 renderGenericPage() 기능 자체는 코드에 남아있으므로,
 // 나중에 필요하면 page/selector/type/value/visible/order 헤더로 탭만 다시 만들면 됩니다.
 var DEPRECATED_TABS = ['home_timeline', 'home_axes', 'home_story_nav', 'page_content', 'home_schedule'];
+var LEGACY_RECRUITMENT_TABS = [
+  'recruitment_timeline',
+  'recruitment_activities',
+  'recruitment_departments',
+  'recruitment_lists',
+  'recruitment_stats'
+];
 
 // 시트에 남아있는 옛 문구를 현재 사이트 문구로 승격시킵니다.
 // upgradeSheetV2() 가 copy 탭을 다시 쓸 때, 값이 아래 "옛값"과 정확히 일치할 때만 바꿉니다.
@@ -427,6 +434,43 @@ function setByPath(target, path, value) {
   cursor[/^\d+$/.test(lastKey) && Array.isArray(cursor) ? Number(lastKey) : lastKey] = value;
 }
 
+function normalizeRecruitment_(recruitment) {
+  recruitment = recruitment || {};
+  if (Object.prototype.hasOwnProperty.call(recruitment, 'bannerVisible')) {
+    recruitment.bannerVisible = bool(recruitment.bannerVisible);
+  }
+  if (Object.prototype.hasOwnProperty.call(recruitment, 'applyVisible')) {
+    recruitment.applyVisible = bool(recruitment.applyVisible);
+  }
+
+  function normalizeItems(items, numericFields) {
+    return (Array.isArray(items) ? items : []).filter(function (item) {
+      return item && typeof item === 'object';
+    }).map(function (item, index) {
+      if (Object.prototype.hasOwnProperty.call(item, 'visible')) item.visible = bool(item.visible);
+      if (Object.prototype.hasOwnProperty.call(item, 'highlight')) item.highlight = bool(item.highlight, false);
+      if (Object.prototype.hasOwnProperty.call(item, 'order')) item.order = num(item.order, index + 1);
+      numericFields.forEach(function (field) {
+        if (Object.prototype.hasOwnProperty.call(item, field)) item[field] = num(item[field], 0);
+      });
+      return item;
+    }).sort(function (a, b) { return num(a.order, 999) - num(b.order, 999); });
+  }
+
+  recruitment.timeline = normalizeItems(recruitment.timeline, []);
+  recruitment.activities = normalizeItems(recruitment.activities, []);
+  recruitment.departments = normalizeItems(recruitment.departments, []);
+  recruitment.lists = recruitment.lists || {};
+  Object.keys(recruitment.lists).forEach(function (group) {
+    recruitment.lists[group] = normalizeItems(recruitment.lists[group], []);
+  });
+  recruitment.stats = recruitment.stats || {};
+  Object.keys(recruitment.stats).forEach(function (group) {
+    recruitment.stats[group] = normalizeItems(recruitment.stats[group], ['value']);
+  });
+  return recruitment;
+}
+
 function fetchReleaseFiles_(owner, repo, tag) {
   try {
     var url = 'https://api.github.com/repos/' + owner + '/' + repo + '/releases/tags/' + tag;
@@ -616,94 +660,72 @@ function buildContent() {
     });
   });
 
-  var recruitData = keyRows(TAB.recruitment);
-  if (recruitData.length) {
-    var r = {};
-    recruitData.forEach(function (row) {
-      if (row.key) r[row.key] = row.value || '';
+  var recruitRows = rows(TAB.recruitment);
+  var unifiedRecruitment = recruitRows.filter(function (row) { return row.path; });
+  if (unifiedRecruitment.length) {
+    content.recruitment = {};
+    unifiedRecruitment.forEach(function (row) {
+      var path = String(row.path || '').trim();
+      if (!path) return;
+      setByPath(content, path.indexOf('recruitment.') === 0 ? path : 'recruitment.' + path, row.value || '');
     });
-    content.recruitment = r;
-    content.recruitment.bannerVisible = bool(r.bannerVisible);
-    content.recruitment.applyVisible = bool(r.applyVisible);
-  }
-
-  var recruitTimeline = rows(TAB.recruitmentTimeline);
-  if (recruitTimeline.length) {
-    if (!content.recruitment) content.recruitment = {};
-    content.recruitment.timeline = recruitTimeline.map(function (row) {
-      return {
-        step: row.step,
-        date: row.date || '',
-        note: row.note || '',
-        highlight: bool(row.highlight, false),
-        visible: bool(row.visible),
-        order: num(row.order, 999)
-      };
-    }).sort(function (a, b) { return a.order - b.order; });
-  }
-
-  var recruitActivities = rows(TAB.recruitmentActivities);
-  if (recruitActivities.length) {
-    content.recruitment.activities = recruitActivities.map(function (row) {
-      return {
-        id: row.id || '',
-        title: row.title || '',
-        description: row.description || '',
-        image: row.image || '',
-        alt: row.alt || '',
-        visible: bool(row.visible),
-        order: num(row.order, 999)
-      };
-    }).sort(function (a, b) { return a.order - b.order; });
-  }
-
-  var recruitDepartments = rows(TAB.recruitmentDepartments);
-  if (recruitDepartments.length) {
-    content.recruitment.departments = recruitDepartments.map(function (row) {
-      return {
-        title: row.title || '',
-        description: row.description || '',
-        visible: bool(row.visible),
-        order: num(row.order, 999)
-      };
-    }).sort(function (a, b) { return a.order - b.order; });
-  }
-
-  var recruitLists = rows(TAB.recruitmentLists);
-  if (recruitLists.length) {
-    content.recruitment.lists = { eligibility: [], regularSchedule: [], irregularSchedule: [] };
-    recruitLists.forEach(function (row) {
-      var group = row.group || '';
-      if (!content.recruitment.lists[group]) content.recruitment.lists[group] = [];
-      content.recruitment.lists[group].push({
-        text: row.text || '',
-        visible: bool(row.visible),
-        order: num(row.order, 999)
+  } else {
+    var recruitData = keyRows(TAB.recruitment);
+    if (recruitData.length) {
+      var r = {};
+      recruitData.forEach(function (row) {
+        if (row.key) r[row.key] = row.value || '';
       });
-    });
-    Object.keys(content.recruitment.lists).forEach(function (group) {
-      content.recruitment.lists[group].sort(function (a, b) { return a.order - b.order; });
-    });
-  }
+      content.recruitment = r;
+    }
 
-  var recruitStats = rows(TAB.recruitmentStats);
-  if (recruitStats.length) {
-    content.recruitment.stats = { gender: [], major: [], admissionYear: [] };
-    recruitStats.forEach(function (row) {
-      var group = row.group || '';
-      if (!content.recruitment.stats[group]) content.recruitment.stats[group] = [];
-      content.recruitment.stats[group].push({
-        label: row.label || '',
-        value: num(row.value, 0),
-        color: row.color || '',
-        visible: bool(row.visible),
-        order: num(row.order, 999)
+    var recruitTimeline = rows(TAB.recruitmentTimeline);
+    if (recruitTimeline.length) {
+      content.recruitment.timeline = recruitTimeline.map(function (row) {
+        return { step: row.step, date: row.date || '', note: row.note || '', highlight: row.highlight,
+          visible: row.visible, order: row.order };
       });
-    });
-    Object.keys(content.recruitment.stats).forEach(function (group) {
-      content.recruitment.stats[group].sort(function (a, b) { return a.order - b.order; });
-    });
+    }
+
+    var recruitActivities = rows(TAB.recruitmentActivities);
+    if (recruitActivities.length) {
+      content.recruitment.activities = recruitActivities.map(function (row) {
+        return { id: row.id || '', title: row.title || '', description: row.description || '',
+          image: row.image || '', alt: row.alt || '', visible: row.visible, order: row.order };
+      });
+    }
+
+    var recruitDepartments = rows(TAB.recruitmentDepartments);
+    if (recruitDepartments.length) {
+      content.recruitment.departments = recruitDepartments.map(function (row) {
+        return { title: row.title || '', description: row.description || '', visible: row.visible, order: row.order };
+      });
+    }
+
+    var recruitLists = rows(TAB.recruitmentLists);
+    if (recruitLists.length) {
+      content.recruitment.lists = { eligibility: [], regularSchedule: [], irregularSchedule: [] };
+      recruitLists.forEach(function (row) {
+        var group = row.group || '';
+        if (!group) return;
+        if (!content.recruitment.lists[group]) content.recruitment.lists[group] = [];
+        content.recruitment.lists[group].push({ text: row.text || '', visible: row.visible, order: row.order });
+      });
+    }
+
+    var recruitStats = rows(TAB.recruitmentStats);
+    if (recruitStats.length) {
+      content.recruitment.stats = { gender: [], major: [], admissionYear: [] };
+      recruitStats.forEach(function (row) {
+        var group = row.group || '';
+        if (!group) return;
+        if (!content.recruitment.stats[group]) content.recruitment.stats[group] = [];
+        content.recruitment.stats[group].push({ label: row.label || '', value: row.value,
+          color: row.color || '', visible: row.visible, order: row.order });
+      });
+    }
   }
+  content.recruitment = normalizeRecruitment_(content.recruitment);
 
   var resultData = keyRows(TAB.resultPage);
   if (resultData.length) {
@@ -729,11 +751,7 @@ function setupPainsCms() {
   writeTab(TAB.societies, societyRows());
   writeTab(TAB.events, eventRows());
   writeTab(TAB.recruitment, recruitmentRows());
-  writeTab(TAB.recruitmentTimeline, recruitmentTimelineRows());
-  writeTab(TAB.recruitmentActivities, recruitmentActivityRows());
-  writeTab(TAB.recruitmentDepartments, recruitmentDepartmentRows());
-  writeTab(TAB.recruitmentLists, recruitmentListRows());
-  writeTab(TAB.recruitmentStats, recruitmentStatRows());
+  hideLegacyRecruitmentTabs_(ss);
   writeTab(TAB.resultPage, resultPageRows());
   writeTab(TAB.projects, projectRows());
   writeTab(TAB.notices, noticeRows());
@@ -1090,12 +1108,7 @@ function readmeRows() {
     ['이벤트 목록', 'events 탭', ''],
     ['프로젝트 아카이브', 'projects 탭', '★ 오래된 것이 위, 최신이 아래. 새 프로젝트는 맨 아래에 추가 (order 는 비워둘 것)'],
     ['공지사항', 'notices 탭', '날짜는 아무 형식으로 넣어도 됩니다. important=TRUE 면 상단 고정'],
-    ['모집 페이지 기본 문구', 'recruitment 탭', '상단·소개·회비·문의·지원 버튼 문구'],
-    ['모집 단일 일정', 'recruitment_timeline 탭', '1차/2차 구분 없이 한 파이프라인'],
-    ['모집 활동 사진', 'recruitment_activities 탭', '제목·설명·사진 주소·대체 문구'],
-    ['모집 부서 소개', 'recruitment_departments 탭', '부서명·설명'],
-    ['지원 자격·활동 일정', 'recruitment_lists 탭', 'group 값은 eligibility / regularSchedule / irregularSchedule'],
-    ['부원 분포 그래프', 'recruitment_stats 탭', 'group 값은 gender / major / admissionYear. 값과 색상 수정 가능'],
+    ['모집 페이지 전체', 'recruitment 탭', '기본 문구·모집 일정·활동 사진·부서·지원 자격·활동 일정·분포 그래프를 섹션별로 한 번에 관리'],
     ['합격 조회 페이지 문구', 'result_page 탭', ''],
     ['지원·결과 조회 기간 열고 닫기', 'settings 탭', 'applyEnabled / resultEnabled 를 TRUE·FALSE·AUTO 로'],
 
@@ -1363,7 +1376,76 @@ function eventRows() {
   ];
 }
 
+function hideLegacyRecruitmentTabs_(ss) {
+  LEGACY_RECRUITMENT_TABS.forEach(function (name) {
+    var sheet = ss.getSheetByName(name);
+    if (sheet) sheet.hideSheet();
+  });
+}
+
 function recruitmentRows() {
+  var output = [['섹션', 'path', 'value', '어디에 보이나']];
+
+  recruitmentBaseRows_().slice(1).forEach(function (row) {
+    output.push([recruitmentSectionForKey_(row[0]), 'recruitment.' + row[0], row[1], row[2]]);
+  });
+
+  appendRecruitmentRecords_(output, '모집 일정', 'recruitment.timeline', recruitmentTimelineRows(), '일정');
+  appendRecruitmentRecords_(output, '활동 사진', 'recruitment.activities', recruitmentActivityRows(), '활동 카드');
+  appendRecruitmentRecords_(output, '부서 소개', 'recruitment.departments', recruitmentDepartmentRows(), '부서');
+
+  var listCounters = {};
+  var listRows = recruitmentListRows();
+  var listHeaders = listRows[0];
+  listRows.slice(1).forEach(function (row) {
+    var group = row[0];
+    var index = listCounters[group] || 0;
+    listCounters[group] = index + 1;
+    var section = group === 'eligibility' ? '지원 자격' : (group === 'regularSchedule' ? '정기 활동 일정' : '비정기 활동 일정');
+    listHeaders.slice(1).forEach(function (field, fieldIndex) {
+      output.push([section, 'recruitment.lists.' + group + '.' + index + '.' + field,
+        row[fieldIndex + 1], (index + 1) + '번째 항목 · ' + field]);
+    });
+  });
+
+  var statCounters = {};
+  var statRows = recruitmentStatRows();
+  var statHeaders = statRows[0];
+  statRows.slice(1).forEach(function (row) {
+    var group = row[0];
+    var index = statCounters[group] || 0;
+    statCounters[group] = index + 1;
+    var section = group === 'gender' ? '분포 그래프 · 성별' : (group === 'major' ? '분포 그래프 · 전공' : '분포 그래프 · 학번');
+    statHeaders.slice(1).forEach(function (field, fieldIndex) {
+      output.push([section, 'recruitment.stats.' + group + '.' + index + '.' + field,
+        row[fieldIndex + 1], (index + 1) + '번째 그래프 항목 · ' + field]);
+    });
+  });
+
+  return output;
+}
+
+function recruitmentSectionForKey_(key) {
+  if (/^nav/.test(key) || key === 'sidebarTitle') return '왼쪽 메뉴';
+  if (/^(overview|intro|genderChart|majorChart|admissionYearChart|admissionCount)/.test(key)) return '모집 개요 · 소개';
+  if (/^(activities|departments|recruitTitle|eligibilityTitle|regularScheduleTitle|irregularScheduleTitle)/.test(key)) return '섹션 제목';
+  if (/^fee/.test(key)) return '회비 안내';
+  if (/^(contact|instagram)/.test(key)) return '문의 안내';
+  if (/^(apply|form)/.test(key)) return '지원하기';
+  return '페이지 · 상단';
+}
+
+function appendRecruitmentRecords_(output, section, basePath, table, itemLabel) {
+  var headers = table[0];
+  table.slice(1).forEach(function (row, index) {
+    headers.forEach(function (field, fieldIndex) {
+      output.push([section, basePath + '.' + index + '.' + field, row[fieldIndex],
+        (index + 1) + '번째 ' + itemLabel + ' · ' + field]);
+    });
+  });
+}
+
+function recruitmentBaseRows_() {
   return [
     ['key', 'value', 'memo'],
     ['pageTitle', 'PAINS - 신입부원 모집', '브라우저 탭 제목'],
@@ -1382,9 +1464,9 @@ function recruitmentRows() {
     ['navContactLabel', '문의하기', '왼쪽 메뉴 문구'],
     ['navApplyLabel', '지원하기', '왼쪽 메뉴 문구'],
     ['overviewTitle', '📢 모집 개요', '모집 개요 제목'],
-    ['overviewText', '스포츠 통계분석 동아리 PAINS가 2026년을 함께할 12기 신입 부원을 모집합니다!\nPAINS는 2020년에 스포츠와 통계분석에 관심이 많은 사람들이 모여 만든 동아리입니다.\nPAINS는 2024년까지 통계학과 동아리로 활동했으며, 2026년부터는 애기능동아리연합회 소속 동아리로 출범하게 됩니다. 스포츠를 사랑하고 데이터 분석에 열정이 있다면 전공에 관계없이 누구나 환영합니다.', '모집 개요 본문. 줄바꿈 가능'],
+    ['overviewText', '스포츠 통계분석 동아리 PAINS가 2026년을 함께할 12기 신입 부원을 모집합니다!\nPAINS는 2021년에 스포츠와 통계분석에 관심이 많은 사람들이 모여 만든 동아리입니다.\nPAINS는 2024년까지 통계학과 동아리로 활동했으며, 2026년부터는 애기능동아리연합회 소속 동아리로 소속되어 활동하고 있습니다. 스포츠를 사랑하고 데이터 분석에 열정이 있다면 전공에 관계없이 누구나 환영합니다.', '모집 개요 본문. 줄바꿈 가능'],
     ['introTitle', '🎯 동아리 소개', '동아리 소개 제목'],
-    ['introDescription', '현재 PAINS는 45명의 부원들이 하나의 관심사를 깊이 나누며 활동하고 있습니다.\n성별, 학과, 학번 그 무엇도 상관없습니다. 스포츠에 대한 관심과 열정만 있으면 충분합니다.', '동아리 소개 본문. 줄바꿈 가능'],
+    ['introDescription', '현재 PAINS는 50명의 부원들이 하나의 관심사를 깊이 나누며 활동하고 있습니다.\n성별, 학과, 학번 그 무엇도 상관없습니다. 스포츠에 대한 관심과 열정만 있으면 충분합니다.', '동아리 소개 본문. 줄바꿈 가능'],
     ['genderChartTitle', '부원 성별 분포', '성별 그래프 제목'],
     ['majorChartTitle', '부원 전공 분포', '전공 그래프 제목'],
     ['admissionYearChartTitle', '학번 분포', '학번 그래프 제목'],
@@ -1398,7 +1480,7 @@ function recruitmentRows() {
     ['regularScheduleTitle', '🗓️ 정기 활동 일정', '정기 활동 제목'],
     ['irregularScheduleTitle', '⚡ 비정기 활동 일정', '비정기 활동 제목'],
     ['feeTitle', '💸 회비 안내', '회비 섹션 제목'],
-    ['feeAmount', '학기 당 3만~3만 5천원 (추후 확정)', '회비 금액 안내 문구'],
+    ['feeAmount', '학기 당 3만 5천원 (추후 확정)', '회비 금액 안내 문구'],
     ['feeDescription', '회비는 주로 동아리 활동 중 장소대여, 홍보자료 제작, 프로젝트 지원 등에 사용됩니다.', '회비 설명'],
     ['feeLinkPrefix', '회비 사용 내역은', '회비 링크 앞 문구'],
     ['feeLinkLabel', '회비 내역 조회 페이지', '회비 링크 문구'],
@@ -1446,8 +1528,8 @@ function recruitmentDepartmentRows() {
   return [
     ['title', 'description', 'visible', 'order'],
     ['📅 기획부', '세미나 준비, MT 등 전반적인 친목 활동 기획 및 기타 이벤트 기획', 'TRUE', '1'],
-    ['📢 홍보부', '홍보 플랫폼(SNS, 블로그) 관리, 리쿠르팅 홍보, 동아리 내 디자인 업무(포스터 등)', 'TRUE', '2'],
-    ['📘 교육부', '초심자용 강의 제작 (Python / 세이버메트릭스 강의), 동아리 자료 및 파일 관리', 'TRUE', '3']
+    ['📢 홍보부', '홍보 플랫폼(SNS 등) 관리, 리쿠르팅 홍보, 동아리 내 플랫폼 관리 업무(노션 등)', 'TRUE', '2'],
+    ['📘 교육부', '초심자용 강의 제작 (스포츠데이터분석, 세이버메트릭스), 동아리 자료 및 파일 관리', 'TRUE', '3']
   ];
 }
 
@@ -1472,27 +1554,26 @@ function recruitmentListRows() {
 function recruitmentStatRows() {
   return [
     ['group', 'label', 'value', 'color', 'visible', 'order'],
-    ['gender', '여자', '20', '#FF6B81', 'TRUE', '1'],
-    ['gender', '남자', '80', '#4D96FF', 'TRUE', '2'],
-    ['major', '데이터과학과', '6', '#FF6B6B', 'TRUE', '1'],
-    ['major', '통계학과', '6', '#FF9F43', 'TRUE', '2'],
-    ['major', '중어중문학과', '4', '#FDCB6E', 'TRUE', '3'],
-    ['major', '경제학과', '3', '#20BF6B', 'TRUE', '4'],
-    ['major', '언어학과', '2', '#0FB9B1', 'TRUE', '5'],
-    ['major', '컴퓨터학과', '2', '#2D98DA', 'TRUE', '6'],
-    ['major', '경영학과', '2', '#3867D6', 'TRUE', '7'],
-    ['major', '행정학과', '2', '#8854D0', 'TRUE', '8'],
-    ['major', '화학과', '2', '#A55EEA', 'TRUE', '9'],
-    ['major', '사회학과', '2', '#F06292', 'TRUE', '10'],
-    ['major', '국제학부', '2', '#4B6584', 'TRUE', '11'],
-    ['major', '기타', '12', '#9980FA', 'TRUE', '12'],
-    ['admissionYear', '19', '1', '#ab3333', 'TRUE', '1'],
-    ['admissionYear', '20', '2', '#ab3333', 'TRUE', '2'],
-    ['admissionYear', '21', '3', '#ab3333', 'TRUE', '3'],
-    ['admissionYear', '22', '4', '#ab3333', 'TRUE', '4'],
-    ['admissionYear', '23', '4', '#ab3333', 'TRUE', '5'],
-    ['admissionYear', '24', '17', '#ab3333', 'TRUE', '6'],
-    ['admissionYear', '25', '14', '#ab3333', 'TRUE', '7']
+    ['gender', '여자', '11', '#FF6B81', 'TRUE', '1'],
+    ['gender', '남자', '39', '#4D96FF', 'TRUE', '2'],
+    ['major', '통계학과', '9', '#FF9F43', 'TRUE', '1'],
+    ['major', '데이터과학과', '5', '#FF6B6B', 'TRUE', '2'],
+    ['major', '국제학부', '4', '#FDCB6E', 'TRUE', '3'],
+    ['major', '컴퓨터학과', '3', '', 'TRUE', '4'],
+    ['major', '사회학과', '3', '#20BF6B', 'TRUE', '5'],
+    ['major', '화학과', '3', '#0FB9B1', 'TRUE', '6'],
+    ['major', '언어학과', '2', '#2D98DA', 'TRUE', '7'],
+    ['major', '전기전자공학부', '2', '#3867D6', 'TRUE', '8'],
+    ['major', '행정학과', '2', '#8854D0', 'TRUE', '9'],
+    ['major', '경제학과', '2', '#4B6584', 'TRUE', '10'],
+    ['major', '기타', '15', '#9980FA', 'TRUE', '11'],
+    ['admissionYear', '20', '1', '#ab3333', 'TRUE', '1'],
+    ['admissionYear', '21', '3', '#ab3333', 'TRUE', '2'],
+    ['admissionYear', '22', '5', '#ab3333', 'TRUE', '3'],
+    ['admissionYear', '23', '5', '#ab3333', 'TRUE', '4'],
+    ['admissionYear', '24', '13', '#ab3333', 'TRUE', '5'],
+    ['admissionYear', '25', '17', '#ab3333', 'TRUE', '6'],
+    ['admissionYear', '26', '6', '#ab3333', 'TRUE', '7']
   ];
 }
 

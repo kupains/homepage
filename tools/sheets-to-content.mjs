@@ -156,11 +156,50 @@ function setByPath(target, path, value) {
   const keys = String(path || '').split('.').map((v) => v.trim()).filter(Boolean);
   if (!keys.length) return;
   let cursor = target;
-  keys.slice(0, -1).forEach((key) => {
-    if (!cursor[key] || typeof cursor[key] !== 'object') cursor[key] = {};
+  keys.slice(0, -1).forEach((key, index) => {
+    const nextKey = keys[index + 1];
+    if (!cursor[key] || typeof cursor[key] !== 'object') {
+      cursor[key] = /^\d+$/.test(nextKey) ? [] : {};
+    }
     cursor = cursor[key];
   });
-  cursor[keys[keys.length - 1]] = value;
+  const lastKey = keys[keys.length - 1];
+  cursor[/^\d+$/.test(lastKey) && Array.isArray(cursor) ? Number(lastKey) : lastKey] = value;
+}
+
+function normalizeRecruitment(recruitment = {}) {
+  if ('bannerVisible' in recruitment) recruitment.bannerVisible = bool(recruitment.bannerVisible);
+  if ('applyVisible' in recruitment) recruitment.applyVisible = bool(recruitment.applyVisible);
+
+  const normalizeItems = (items, fields) => (Array.isArray(items) ? items : [])
+    .filter((item) => item && typeof item === 'object')
+    .map((item, index) => {
+      const normalized = { ...item };
+      if ('visible' in normalized) normalized.visible = bool(normalized.visible);
+      if ('highlight' in normalized) normalized.highlight = bool(normalized.highlight, false);
+      if ('order' in normalized) normalized.order = number(normalized.order, index + 1);
+      fields.forEach((field) => {
+        if (field in normalized) normalized[field] = number(normalized[field], 0);
+      });
+      return normalized;
+    })
+    .sort((a, b) => number(a.order, 999) - number(b.order, 999));
+
+  recruitment.timeline = normalizeItems(recruitment.timeline, []);
+  recruitment.activities = normalizeItems(recruitment.activities, []);
+  recruitment.departments = normalizeItems(recruitment.departments, []);
+
+  recruitment.lists ||= {};
+  Object.keys(recruitment.lists).forEach((group) => {
+    recruitment.lists[group] = normalizeItems(recruitment.lists[group], []);
+  });
+
+  recruitment.stats ||= {};
+  Object.keys(recruitment.stats).forEach((group) => {
+    recruitment.stats[group] = normalizeItems(recruitment.stats[group], ['value']);
+  });
+
+  return recruitment;
 }
 
 async function fetchTab(tabName) {
@@ -438,81 +477,90 @@ async function main() {
   }
 
   const recruitment = await fetchTab(tabs.recruitment);
-  if (recruitment.length) {
-    content.recruitment ||= {};
-    recruitment.forEach((row) => {
-      if (row.key) content.recruitment[row.key] = row.value ?? '';
+  const unifiedRecruitment = recruitment.filter((row) => row.path);
+  if (unifiedRecruitment.length) {
+    content.recruitment = {};
+    unifiedRecruitment.forEach((row) => {
+      const path = String(row.path || '').trim();
+      if (!path) return;
+      setByPath(content, path.startsWith('recruitment.') ? path : `recruitment.${path}`, row.value ?? '');
     });
-    content.recruitment.bannerVisible = bool(content.recruitment.bannerVisible);
-    content.recruitment.applyVisible = bool(content.recruitment.applyVisible);
-  }
+  } else {
+    if (recruitment.length) {
+      content.recruitment = {};
+      recruitment.forEach((row) => {
+        if (row.key) content.recruitment[row.key] = row.value ?? '';
+      });
+    }
 
-  const recruitmentTimeline = await fetchTab(tabs.recruitmentTimeline);
-  if (recruitmentTimeline.length) {
-    content.recruitment.timeline = recruitmentTimeline.map((row, index) => ({
-      step: row.step,
-      date: row.date,
-      note: row.note,
-      highlight: bool(row.highlight, false),
-      visible: bool(row.visible),
-      order: number(row.order, index + 1)
-    }));
-  }
-
-  const recruitmentActivities = await fetchTab(tabs.recruitmentActivities);
-  if (recruitmentActivities.length) {
-    content.recruitment.activities = recruitmentActivities.map((row, index) => ({
-      id: row.id,
-      title: row.title,
-      description: row.description,
-      image: row.image,
-      alt: row.alt,
-      visible: bool(row.visible),
-      order: number(row.order, index + 1)
-    }));
-  }
-
-  const recruitmentDepartments = await fetchTab(tabs.recruitmentDepartments);
-  if (recruitmentDepartments.length) {
-    content.recruitment.departments = recruitmentDepartments.map((row, index) => ({
-      title: row.title,
-      description: row.description,
-      visible: bool(row.visible),
-      order: number(row.order, index + 1)
-    }));
-  }
-
-  const recruitmentLists = await fetchTab(tabs.recruitmentLists);
-  if (recruitmentLists.length) {
-    content.recruitment.lists = { eligibility: [], regularSchedule: [], irregularSchedule: [] };
-    recruitmentLists.forEach((row, index) => {
-      const group = row.group;
-      if (!group) return;
-      content.recruitment.lists[group] ||= [];
-      content.recruitment.lists[group].push({
-        text: row.text,
+    const recruitmentTimeline = await fetchTab(tabs.recruitmentTimeline);
+    if (recruitmentTimeline.length) {
+      content.recruitment.timeline = recruitmentTimeline.map((row, index) => ({
+        step: row.step,
+        date: row.date,
+        note: row.note,
+        highlight: bool(row.highlight, false),
         visible: bool(row.visible),
         order: number(row.order, index + 1)
-      });
-    });
-  }
+      }));
+    }
 
-  const recruitmentStats = await fetchTab(tabs.recruitmentStats);
-  if (recruitmentStats.length) {
-    content.recruitment.stats = { gender: [], major: [], admissionYear: [] };
-    recruitmentStats.forEach((row, index) => {
-      const group = row.group;
-      if (!group) return;
-      content.recruitment.stats[group] ||= [];
-      content.recruitment.stats[group].push({
-        label: row.label,
-        value: number(row.value, 0),
-        color: row.color,
+    const recruitmentActivities = await fetchTab(tabs.recruitmentActivities);
+    if (recruitmentActivities.length) {
+      content.recruitment.activities = recruitmentActivities.map((row, index) => ({
+        id: row.id,
+        title: row.title,
+        description: row.description,
+        image: row.image,
+        alt: row.alt,
         visible: bool(row.visible),
         order: number(row.order, index + 1)
+      }));
+    }
+
+    const recruitmentDepartments = await fetchTab(tabs.recruitmentDepartments);
+    if (recruitmentDepartments.length) {
+      content.recruitment.departments = recruitmentDepartments.map((row, index) => ({
+        title: row.title,
+        description: row.description,
+        visible: bool(row.visible),
+        order: number(row.order, index + 1)
+      }));
+    }
+
+    const recruitmentLists = await fetchTab(tabs.recruitmentLists);
+    if (recruitmentLists.length) {
+      content.recruitment.lists = { eligibility: [], regularSchedule: [], irregularSchedule: [] };
+      recruitmentLists.forEach((row, index) => {
+        const group = row.group;
+        if (!group) return;
+        content.recruitment.lists[group] ||= [];
+        content.recruitment.lists[group].push({
+          text: row.text,
+          visible: bool(row.visible),
+          order: number(row.order, index + 1)
+        });
       });
-    });
+    }
+
+    const recruitmentStats = await fetchTab(tabs.recruitmentStats);
+    if (recruitmentStats.length) {
+      content.recruitment.stats = { gender: [], major: [], admissionYear: [] };
+      recruitmentStats.forEach((row, index) => {
+        const group = row.group;
+        if (!group) return;
+        content.recruitment.stats[group] ||= [];
+        content.recruitment.stats[group].push({
+          label: row.label,
+          value: number(row.value, 0),
+          color: row.color,
+          visible: bool(row.visible),
+          order: number(row.order, index + 1)
+        });
+      });
+    }
   }
+  content.recruitment = normalizeRecruitment(content.recruitment);
 
   const resultPage = await fetchTab(tabs.resultPage);
   if (resultPage.length) {
