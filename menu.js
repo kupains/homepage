@@ -648,6 +648,11 @@ function initGlobalStyles() {
         }
 
         @media (max-width: 768px) {
+            html {
+                scroll-behavior: auto;
+                overscroll-behavior-y: none;
+            }
+
             :root {
                 --pains-header-height: 60px;
                 --pains-sidebar-width: min(88vw, 320px);
@@ -655,7 +660,8 @@ function initGlobalStyles() {
 
             body.pains-theme {
                 padding-bottom: calc(68px + env(safe-area-inset-bottom)) !important;
-                touch-action: manipulation;
+                overscroll-behavior-y: none;
+                touch-action: pan-y pinch-zoom;
             }
 
             body.pains-theme:not(.home-page) {
@@ -666,6 +672,9 @@ function initGlobalStyles() {
             body.pains-theme .pains-header {
                 padding: 0 16px !important;
                 transition: none;
+                transform: translate3d(0, 0, 0);
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
             }
 
             body.pains-theme header.nav-up { transform: none; }
@@ -703,6 +712,10 @@ function initGlobalStyles() {
                 background: #fff;
                 border-top: 1px solid rgba(216, 222, 232, 0.95);
                 box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
+                transform: translate3d(0, 0, 0);
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                contain: layout paint;
             }
 
             .mobile-tabbar__item {
