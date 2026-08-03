@@ -54,7 +54,7 @@
         }
     </style>
     <script src="js/content-boot.js?v=20260802-hide-original"></script>
-    <script defer src="js/content-loader.js?v=20260803-hybrid-static"></script>
+    <script defer src="js/content-loader.js?v=20260803-study-copy"></script>
 </head>
 <body>
 
@@ -65,25 +65,25 @@
     <div class="container">
 
         <div class="section-card">
-            <h3>PAINS 11기 스포츠데이터분석 스터디 계획 안내</h3>
+            <h3 id="js-study-title">PAINS 11기 스포츠데이터분석 스터디 계획 안내</h3>
 
-            <h4>스터디 목표</h4>
-            <p class="content-text">
+            <h4 id="js-study-goal-label">스터디 목표</h4>
+            <p class="content-text" id="js-study-goal">
                 다양한 데이터 분석 방법에 대해 학습하고, 실습을 통해 분석 과정을 이해하며 최종적으로 간단한 프로젝트를 진행하며 동아리 활동에 유용한 기본적인 데이터 분석 능력을 기릅니다. </p>
 
-            <h4>시간 및 장소</h4>
-            <p class="content-text">
+            <h4 id="js-study-time-place-label">시간 및 장소</h4>
+            <p class="content-text" id="js-study-time-place">
                 <strong>평일 오후 7~9시 (변동 가능)</strong>, 교내 스터디룸 (월·화·수 3개 분반 개설 예정) </p>
 
-            <h4>진행 방식</h4>
-            <ul class="info-list">
+            <h4 id="js-study-method-label">진행 방식</h4>
+            <ul class="info-list" id="js-study-method-items">
                 <li>대면으로 진행되며, 총 6차시로 구성됩니다.</li>
                 <li>1~3차시에서는 다양한 데이터 분석 방법 및 코딩을 통한 구현 방법을 배우며, 간단한 실습 과제가 부여되고 스터디장과 조교의 피드백이 제공됩니다.</li>
                 <li>중간고사 기간 이후 4~6차시에서는 앞서 배운 내용을 바탕으로 직접 간단한 스포츠데이터분석 프로젝트를 진행할 예정입니다.</li>
             </ul>
 
-            <h4>대상</h4>
-            <ul class="info-list">
+            <h4 id="js-study-target-label">대상</h4>
+            <ul class="info-list" id="js-study-target-items">
                 <li>11기 신입부원 및 스터디 참여 의사가 있는 모든 부원 </li>
                 <li><strong>11기 신입부원은 스터디 필참 대상</strong>이며, 그 외 인원은 수요 조사 후 최근 기수부터 우선으로 배정될 예정</li>
                 <li>신입부원만으로 최대 인원이 이루어지면 기존 기수 비모집</li>
@@ -92,10 +92,10 @@
         </div>
 
         <div class="section-card">
-            <h3>차시별 주제 (예정)</h3>
+            <h3 id="js-study-topics-title">차시별 주제 (예정)</h3>
 
             <table class="study-table">
-                <tbody>
+                <tbody id="js-study-topics">
                     <tr>
                         <th>1차시 </th>
                         <td>- OT(R, 파이썬 안내), 회귀분석 </td>
@@ -128,10 +128,10 @@
         </div>
 
          <div class="section-card">
-            <h3>세이버메트릭스 차시별 주제 (예정)</h3>
+            <h3 id="js-study-sabermetrics-title">세이버메트릭스 차시별 주제 (예정)</h3>
 
             <table class="study-table">
-                <tbody>
+                <tbody id="js-study-sabermetrics-topics">
                     <tr>
                         <th>1차시 </th>
                         <td>- OT / Classic - 공격 </td>
@@ -164,23 +164,23 @@
         </div>
 
         <div class="section-card">
-            <h3>유의 사항</h3>
+            <h3 id="js-study-notice-title">유의 사항</h3>
 
-            <ul class="info-list">
+            <ul class="info-list" id="js-study-notice-items">
                 <li>과제 제출 기한은 <strong>다음 차시 전날 11시까지</strong>이며, 조교의 개인톡으로 제출합니다. </li>
                 <li>과제 지각 제출 시 벌금이 부과되며, 벌금은 추후 스터디 회식에서 사용됩니다. </li>
             </ul>
 
             <div class="rule-box">
-                <strong>[스터디 규정]</strong> 스터디 규정에 따라 다음과 같은 규칙이 적용됩니다. <br>
+                <strong id="js-study-rule-title">[스터디 규정]</strong> <span id="js-study-rule-intro">스터디 규정에 따라 다음과 같은 규칙이 적용됩니다.</span> <br>
                 <br>
-                <strong>1) 수료 조건</strong><br>
-                6회차 스터디 기준, <strong>4회 이상 출석</strong> (사유 불문) <br>
+                <strong id="js-study-completion-title">1) 수료 조건</strong><br>
+                <span id="js-study-completion-text">6회차 스터디 기준, 4회 이상 출석 (사유 불문)</span> <br>
                 <br>
-                <strong>2) 결석 및 지각 규정</strong><br>
-                ▶ <strong>무단 결석 1회 이상:</strong> 수료 미인정 <br>
-                무단 결석은 연락 여부로 결정되며, 스터디 시작 1시간 전까지 스터디장에게 결석 사유와 함께 연락이 필요합니다. <br>
-                ▶ <strong>지각 2회 이상:</strong> 음료 돌리기 (수료 조건에는 영향 X) </div>
+                <strong id="js-study-absence-title">2) 결석 및 지각 규정</strong><br>
+                <span id="js-study-absence-text">▶ 무단 결석 1회 이상: 수료 미인정
+무단 결석은 연락 여부로 결정되며, 스터디 시작 1시간 전까지 스터디장에게 결석 사유와 함께 연락이 필요합니다.
+▶ 지각 2회 이상: 음료 돌리기 (수료 조건에는 영향 X)</span> </div>
         </div>
 
     </div>

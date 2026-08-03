@@ -1164,18 +1164,71 @@
   function renderStudy(content) {
     const study = content?.study;
     if (!study) return;
-    text('.section-card h3', study.title);
-    const headings = document.querySelectorAll('.section-card:first-child h4');
-    headings.forEach((heading) => {
-      if (heading.textContent.trim() === '스터디 목표') {
-        const p = heading.nextElementSibling;
-        if (p && study.goal) p.textContent = study.goal;
-      }
-      if (heading.textContent.trim() === '시간 및 장소') {
-        const p = heading.nextElementSibling;
-        if (p && study.timePlace) p.textContent = study.timePlace;
-      }
-    });
+    const items = (value) => String(value || '')
+      .split('|')
+      .map((item) => item.trim())
+      .filter(Boolean);
+
+    const renderList = (selector, value) => {
+      const list = document.querySelector(selector);
+      if (!list || !value) return;
+      list.replaceChildren();
+      items(value).forEach((item) => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        list.appendChild(li);
+      });
+    };
+
+    const renderTopics = (selector, value) => {
+      const body = document.querySelector(selector);
+      if (!body || !value) return;
+      body.replaceChildren();
+      items(value).forEach((item) => {
+        const [rawLabel, ...topicParts] = item.split('::');
+        const label = String(rawLabel || '').trim();
+        const topic = topicParts.join('::').trim();
+        const row = document.createElement('tr');
+
+        if (!topic || label.includes('중간고사')) {
+          const divider = document.createElement('td');
+          divider.colSpan = 2;
+          divider.className = 'divider-row';
+          divider.textContent = label ? `(${label})` : '';
+          row.appendChild(divider);
+        } else {
+          const th = document.createElement('th');
+          const td = document.createElement('td');
+          th.textContent = label;
+          td.textContent = topic;
+          row.append(th, td);
+        }
+        body.appendChild(row);
+      });
+    };
+
+    text('#js-study-title', study.title);
+    text('#js-study-goal-label', study.goalLabel);
+    text('#js-study-goal', study.goal);
+    text('#js-study-time-place-label', study.timePlaceLabel);
+    text('#js-study-time-place', study.timePlace);
+    text('#js-study-method-label', study.methodLabel);
+    text('#js-study-target-label', study.targetLabel);
+    text('#js-study-topics-title', study.topicsTitle);
+    text('#js-study-sabermetrics-title', study.sabermetricsTitle);
+    text('#js-study-notice-title', study.noticeTitle);
+    text('#js-study-rule-title', study.ruleTitle);
+    text('#js-study-rule-intro', study.ruleIntro);
+    text('#js-study-completion-title', study.completionTitle);
+    text('#js-study-completion-text', study.completionText);
+    text('#js-study-absence-title', study.absenceTitle);
+    multiline(document.querySelector('#js-study-absence-text'), study.absenceText);
+
+    renderList('#js-study-method-items', study.methodItems);
+    renderList('#js-study-target-items', study.targetItems);
+    renderTopics('#js-study-topics', study.topics);
+    renderTopics('#js-study-sabermetrics-topics', study.sabermetricsTopics);
+    renderList('#js-study-notice-items', study.noticeItems);
   }
 
   function renderGenericPage(content) {
