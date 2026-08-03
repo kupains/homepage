@@ -132,6 +132,8 @@
     <script>
         loadSidebar('result');
 
+        const RESULT_API_TOKEN = 'PAINS_2026_CUSTOM_KEY';
+
         function firstFilled(...values) {
             return values.find((value) => value !== undefined && value !== null && String(value).trim() !== '');
         }
@@ -195,12 +197,27 @@
 
             try {
                 const timestamp = new Date().getTime();
-                const targetUrl = `${resultApiUrl}?id=${encodeURIComponent(id)}&name=${encodeURIComponent(name)}&t=${timestamp}`;
+                const query = new URLSearchParams({
+                    id,
+                    name,
+                    token: RESULT_API_TOKEN,
+                    t: String(timestamp)
+                });
+                const separator = resultApiUrl.includes('?') ? '&' : '?';
+                const targetUrl = `${resultApiUrl}${separator}${query.toString()}`;
 
                 const response = await fetch(targetUrl, {
                     cache: 'no-store'
                 });
+                if (!response.ok) {
+                    throw new Error(`Result API request failed: ${response.status}`);
+                }
                 const data = await response.json();
+
+                if (data.result === "error") {
+                    alert(firstFilled(data.message, resultText(page, 'errorMessage', '')));
+                    return;
+                }
 
                 if (data.result === "fail") {
                     alert(resultText(page, 'notFoundMessage', ''));
@@ -212,6 +229,11 @@
                         resultText(page, 'lockedMessageTemplate', ''),
                         data
                     ));
+                    return;
+                }
+
+                if (data.result !== "success" || !["합격", "불합격"].includes(data.status)) {
+                    alert(resultText(page, 'errorMessage', ''));
                     return;
                 }
 
@@ -247,7 +269,7 @@
 
                     interviewBox.style.display = "block";
 
-                } else {
+                } else if (data.status === "불합격") {
                     badge.innerText = resultText(page, 'failStatusLabel', '');
                     badge.className = "status-badge status-fail";
 
