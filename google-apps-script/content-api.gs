@@ -7,18 +7,17 @@
  * 1. 시트 열기 > 확장 프로그램 > Apps Script
  * 2. 이 파일 전체를 붙여넣기
  * 3. setupPainsCms() 실행  (주의: 모든 CMS 탭을 시드값으로 덮어씀)
- * 4. 배포 > 새 배포 > 웹 앱 > 액세스 "모든 사용자"
- * 5. 배포된 URL을 js/content-loader.js 의 REMOTE_CONTENT_URL 에 넣기
+ * 4. setGithubSyncToken() 실행 후 GitHub fine-grained token 저장
+ * 5. 시트의 "홈페이지 관리 → 변경사항 사이트에 반영" 메뉴로 배포
  *
  * [이미 쓰고 있는 시트를 최신 구조로 올릴 때]  ← 보통 이 경우
  * 1. 이 파일 전체를 붙여넣기
  * 2. upgradeSheetV2() 실행   (기존에 입력한 값은 보존됩니다)
  * 3. migrateProjectsOrder() 실행  (프로젝트 순서를 역순 방식으로 1회 전환)
- * 4. 배포 > 배포 관리 > 편집 > 버전 "새 버전" > 배포
- *    ★ 이 4번을 빠뜨리면 코드를 붙여넣어도 사이트에는 아무것도 반영되지 않습니다.
- *      (URL은 그대로 유지되므로 content-loader.js는 고칠 필요 없습니다)
+ * 4. setGithubSyncToken() 실행 후 시트의 반영 메뉴 사용
  *
- * Schedule 탭은 홈페이지의 유일한 일정 원본으로 사용합니다.
+ * 주요 콘텐츠/사진은 버튼을 눌렀을 때 GitHub에 정적으로 배포합니다.
+ * Schedule 탭만 홈페이지가 열릴 때 직접 조회합니다.
  * Members / Requests / Applies 등 출석·운영 탭은 홈페이지에서 참조하지 않습니다.
  */
 
@@ -795,7 +794,7 @@ function upgradeSheetV2() {
   log.push('README 갱신 완료');
 
   log.push('');
-  log.push('다음 단계: migrateProjectsOrder() 실행 → 배포 > 배포 관리 > 편집 > 새 버전 > 배포');
+  log.push('다음 단계: migrateProjectsOrder() 실행 → 홈페이지 관리 메뉴에서 변경사항 사이트에 반영');
 
   SpreadsheetApp.flush();
   return log.join('\n');
@@ -859,7 +858,7 @@ function migrateProjectsOrder(force) {
 
   return '프로젝트 ' + data.length + '건 순서 전환 완료' + topLabel + '\n'
     + 'order 열을 비웠습니다. 이제 맨 아래에 행을 추가하면 사이트 최상단에 표시됩니다.\n'
-    + '★ 배포 > 배포 관리 > 편집 > 새 버전 > 배포 를 해야 사이트에 반영됩니다.';
+    + '★ 홈페이지 관리 메뉴에서 변경사항 사이트에 반영을 눌러야 적용됩니다.';
 }
 
 // ── upgradeSheetV2 내부 도우미 ──────────────────────────────────────────────
@@ -1107,8 +1106,9 @@ function readmeRows() {
     ['순서 바꾸기', '', 'order 숫자를 고칩니다. projects 탭만 반대로(큰 숫자가 위) 정렬됩니다'],
 
     ['── 반영 방법 ──', '', ''],
-    ['시트만 고쳤을 때', '', '따로 할 일 없습니다. 15초 뒤 사이트에 반영됩니다'],
-    ['content-api.gs 를 고쳤을 때', '', '★ 배포 > 배포 관리 > 편집 > 버전 "새 버전" > 배포 를 해야 반영됩니다'],
+    ['일정만 고쳤을 때', 'Schedule 탭', '따로 할 일 없습니다. 사이트를 열 때 최신 일정을 조회합니다'],
+    ['그 밖의 내용·사진을 고쳤을 때', '', '★ 홈페이지 관리 → 변경사항 사이트에 반영을 누릅니다'],
+    ['content-api.gs 를 고쳤을 때', '', 'Apps Script에 저장한 뒤 시트를 새로 엽니다'],
 
     ['── 주의 ──', '', ''],
     ['운영 데이터 탭', 'Members / Requests / Schedule / Applies', 'Schedule만 홈페이지 일정과 자동 연동되며, 나머지는 홈페이지에서 참조하지 않습니다'],

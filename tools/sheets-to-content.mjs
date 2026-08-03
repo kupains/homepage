@@ -1,10 +1,13 @@
 #!/usr/bin/env node
-import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const SHEET_ID = process.env.PAINS_SHEET_ID;
 const OUT = resolve(process.cwd(), process.env.PAINS_CONTENT_OUT || 'data/site-content.json');
 const BASE = resolve(process.cwd(), process.env.PAINS_CONTENT_BASE || 'data/site-content.json');
+const ASSET_DIR = resolve(process.cwd(), process.env.PAINS_ASSET_DIR || 'images/cms');
+const ASSET_PUBLIC_PATH = String(process.env.PAINS_ASSET_PUBLIC_PATH || 'images/cms').replace(/^\/+|\/+$/g, '');
 
 const tabs = {
   copy: 'copy',
@@ -184,6 +187,102 @@ async function fetchTab(tabName) {
   const objects = toObjects(csv);
   console.log(`[sheet] ${tabName}: ${objects.length} rows`);
   return objects;
+}
+
+function driveImageUrl(value) {
+  const raw = String(value || '').trim();
+  const match = raw.match(/drive\.google\.com\/file\/d\/([^/?#]+)/i)
+    || raw.match(/drive\.google\.com\/(?:uc|thumbnail).*?[?&]id=([^&#]+)/i);
+  if (!match?.[1]) return raw;
+  return `https://drive.google.com/thumbnail?id=${encodeURIComponent(match[1])}&sz=w2400`;
+}
+
+function imageExtension(contentType, sourceUrl) {
+  const mime = String(contentType || '').split(';')[0].trim().toLowerCase();
+  const byMime = {
+    'image/avif': '.avif',
+    'image/gif': '.gif',
+    'image/jpeg': '.jpg',
+    'image/png': '.png',
+    'image/svg+xml': '.svg',
+    'image/webp': '.webp'
+  };
+  if (byMime[mime]) return byMime[mime];
+
+  try {
+    const match = new URL(sourceUrl).pathname.match(/\.(avif|gif|jpe?g|png|svg|webp)$/i);
+    if (match) return `.${match[1].toLowerCase().replace('jpeg', 'jpg')}`;
+  } catch (_) {
+    // The caller already validates remote URLs; use a neutral extension as a last resort.
+  }
+  return '.img';
+}
+
+function isImageField(key) {
+  return key === 'src'
+    || /(?:^|_)(?:image|photo|thumbnail|logo|background)(?:\d+|Url)?$/i.test(key)
+    || /(?:Image|Photo|Thumbnail|Logo|Background)(?:\d+|Url)?$/.test(key);
+}
+
+async function downloadImage(sourceUrl) {
+  const fetchUrl = driveImageUrl(sourceUrl);
+  const response = await fetch(fetchUrl, {
+    redirect: 'follow',
+    cache: 'no-store',
+    headers: { 'User-Agent': 'PAINS-site-content-sync/1.0' }
+  });
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.toLowerCase().startsWith('image/')) {
+    throw new Error(`expected an image but received ${contentType || 'an unknown content type'}`);
+  }
+
+  const bytes = Buffer.from(await response.arrayBuffer());
+  if (!bytes.length) throw new Error('received an empty file');
+
+  const hash = createHash('sha256').update(bytes).digest('hex').slice(0, 20);
+  const filename = `${hash}${imageExtension(contentType, fetchUrl)}`;
+  await mkdir(ASSET_DIR, { recursive: true });
+  await writeFile(resolve(ASSET_DIR, filename), bytes);
+  console.log(`[asset] ${sourceUrl} -> ${ASSET_PUBLIC_PATH}/${filename}`);
+  return `${ASSET_PUBLIC_PATH}/${filename}`;
+}
+
+async function mirrorRemoteImages(content) {
+  const targets = [];
+
+  function walk(value) {
+    if (Array.isArray(value)) {
+      value.forEach(walk);
+      return;
+    }
+    if (!value || typeof value !== 'object') return;
+
+    Object.entries(value).forEach(([key, child]) => {
+      if (typeof child === 'string' && isImageField(key) && /^https?:\/\//i.test(child.trim())) {
+        targets.push({ owner: value, key, url: child.trim() });
+        return;
+      }
+      walk(child);
+    });
+  }
+
+  walk(content);
+  if (!targets.length) return;
+
+  const downloads = new Map();
+  targets.forEach(({ url }) => {
+    if (!downloads.has(url)) downloads.set(url, downloadImage(url));
+  });
+
+  for (const target of targets) {
+    try {
+      target.owner[target.key] = await downloads.get(target.url);
+    } catch (error) {
+      throw new Error(`Could not mirror image ${target.url}: ${error.message}`);
+    }
+  }
 }
 
 async function main() {
@@ -472,6 +571,11 @@ async function main() {
     source: `google-sheet:${SHEET_ID}`,
     updatedAt: new Date().toISOString()
   };
+
+  // 사진은 배포 시점에 내려받아 GitHub Pages의 정적 파일로 고정합니다.
+  // 브라우저가 Google Drive/외부 저장소를 다시 조회하지 않게 하고,
+  // 파일 내용 해시를 URL에 넣어 사진 교체 시 브라우저 캐시도 자동 갱신합니다.
+  await mirrorRemoteImages(content);
 
   await writeFile(OUT, `${JSON.stringify(content, null, 2)}\n`, 'utf8');
   console.log(`Updated ${OUT}`);
