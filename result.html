@@ -25,6 +25,17 @@
         .search-card h2 { font-family: 'KBO_Dia', sans-serif; color: #ab3333; margin-bottom: 0.5rem; font-size: 1.6rem; }
         .sub-title { color: #666; font-size: 0.9rem; margin-bottom: 30px; }
 
+        .round-selector {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+            margin: 24px 0 18px; padding: 5px; border-radius: 14px; background: #f1f3f6;
+        }
+        .round-selector button {
+            min-height: 46px; border: 0; border-radius: 10px; background: transparent;
+            color: #697386; font-size: 0.95rem; font-weight: 700; cursor: pointer;
+        }
+        .round-selector button.is-active { background: #ab3333; color: #fff; box-shadow: 0 6px 16px rgba(171,51,51,.2); }
+        .round-selector button.is-closed:not(.is-active)::after { content: ' · 닫힘'; font-size: .72rem; opacity: .72; }
+
         .input-group { margin-bottom: 15px; text-align: left; }
         .input-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.9rem; color: #555; }
         .input-group input {
@@ -69,7 +80,7 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
     <script defer src="js/content-boot.js?v=20260803-instant"></script>
-    <script defer src="js/content-loader.js?v=20260803-mobile1"></script>
+    <script defer src="js/content-loader.js?v=20260803-rounds1"></script>
 </head>
 <body>
 
@@ -80,6 +91,10 @@
     <div class="container">
         <div class="search-card">
             <h2>11기 최종 합격자 안내</h2>
+            <div class="round-selector" role="tablist" aria-label="결과 조회 차수 선택">
+                <button type="button" id="round-1-button" role="tab" aria-selected="true" onclick="setResultRound(1)">1차 결과</button>
+                <button type="button" id="round-2-button" role="tab" aria-selected="false" onclick="setResultRound(2)">2차 결과</button>
+            </div>
             <p class="sub-title">지원 시 제출한 학번과 이름을 입력해주세요.</p>
 
             <div class="input-group">
@@ -131,6 +146,9 @@
         loadSidebar('result');
 
         const RESULT_API_TOKEN = 'PAINS_2026_CUSTOM_KEY';
+        let selectedResultRound = 1;
+        let resultRoundInitialized = false;
+        let latestResultConfig = null;
 
         function firstFilled(...values) {
             return values.find((value) => value !== undefined && value !== null && String(value).trim() !== '');
@@ -138,16 +156,121 @@
 
         async function getResultConfig() {
             const content = await window.PainsContent?.load?.();
-            return {
+            const config = {
                 content: content || window.__painsContentLatest || {},
                 settings: content?.settings || window.__painsContentLatest?.settings || {},
                 page: content?.resultPage || window.__painsContentLatest?.resultPage || {}
             };
+            applyResultRoundConfig(config.content);
+            return config;
         }
 
         function resultText(page, key, fallback) {
             return firstFilled(page[key], fallback);
         }
+
+        function roundText(page, round, key, fallback) {
+            const roundKey = `round${round}${key.charAt(0).toUpperCase()}${key.slice(1)}`;
+            return firstFilled(page[roundKey], page[key], fallback);
+        }
+
+        function hasRoundSettings(settings) {
+            return [1, 2].some((round) => [
+                `result${round}Enabled`, `result${round}Open`, `result${round}Visible`,
+                `result${round}StartAt`, `result${round}EndAt`
+            ].some((key) => Object.prototype.hasOwnProperty.call(settings || {}, key)));
+        }
+
+        function isResultRoundOpen(content, round) {
+            if (!window.PainsContent?.featureGate) return true;
+            const settings = content?.settings || {};
+            return hasRoundSettings(settings)
+                ? window.PainsContent.featureGate(content, `result${round}`, false)
+                : window.PainsContent.featureGate(content, 'result', false);
+        }
+
+        function roundClosedMessage(settings, page, round) {
+            return firstFilled(
+                page[`round${round}ClosedMessage`],
+                settings[`result${round}ClosedMessage`],
+                page.closedMessage,
+                settings.resultClosedMessage,
+                `${round}차 결과 조회 기간이 아닙니다.`
+            );
+        }
+
+        function setResultRound(round) {
+            selectedResultRound = Number(round) === 2 ? 2 : 1;
+            resultRoundInitialized = true;
+            if (latestResultConfig) applyResultRoundConfig(latestResultConfig);
+        }
+
+        function applyResultRoundConfig(content) {
+            const resolved = content || window.__painsContentLatest || {};
+            const settings = resolved.settings || {};
+            const page = resolved.resultPage || {};
+            latestResultConfig = resolved;
+
+            const open = {
+                1: isResultRoundOpen(resolved, 1),
+                2: isResultRoundOpen(resolved, 2)
+            };
+            if (!resultRoundInitialized) {
+                selectedResultRound = open[1] ? 1 : (open[2] ? 2 : 1);
+                resultRoundInitialized = true;
+            }
+
+            [1, 2].forEach((round) => {
+                const button = document.getElementById(`round-${round}-button`);
+                if (!button) return;
+                const active = selectedResultRound === round;
+                button.textContent = roundText(page, round, 'label', `${round}차 결과`);
+                button.classList.toggle('is-active', active);
+                button.classList.toggle('is-closed', !open[round]);
+                button.setAttribute('aria-selected', String(active));
+                button.setAttribute('aria-label', `${button.textContent}${open[round] ? '' : ' (조회 닫힘)'}`);
+            });
+
+            const round = selectedResultRound;
+            const roundOpen = open[round];
+            const title = roundText(page, round, 'title', `${round}차 결과 안내`);
+            const subtitle = roundOpen
+                ? roundText(page, round, 'subtitle', page.subtitle || '')
+                : roundClosedMessage(settings, page, round);
+            const pageTitle = roundText(page, round, 'pageTitle', page.pageTitle || title);
+
+            if (pageTitle) document.title = pageTitle;
+            const heading = document.querySelector('.search-card h2');
+            if (heading && title) heading.textContent = title;
+            const subtitleNode = document.querySelector('.search-card .sub-title');
+            if (subtitleNode) subtitleNode.textContent = subtitle;
+
+            const resultArea = document.getElementById('result-area');
+            if (resultArea) resultArea.style.display = 'none';
+
+            const button = document.getElementById('btn-search');
+            if (button) {
+                button.disabled = false;
+                button.textContent = roundOpen
+                    ? roundText(page, round, 'buttonLabel', page.buttonLabel || '결과 확인하기')
+                    : roundText(page, round, 'closedButtonLabel', page.closedButtonLabel || '조회 기간이 아닙니다');
+                button.onclick = roundOpen ? checkResult : (event) => {
+                    event.preventDefault();
+                    alert(roundClosedMessage(settings, page, round));
+                    return false;
+                };
+            }
+
+            const scheduleTitle = document.querySelector('.interview-box h4');
+            if (scheduleTitle) scheduleTitle.textContent = roundText(page, round, 'scheduleTitle', page.otTitle || '일정 안내');
+            const warning = document.querySelector('.warning-msg');
+            if (warning) warning.textContent = roundText(page, round, 'warningMessage', page.warningMessage || '');
+            const notices = document.querySelectorAll('.notice-msg');
+            if (notices[0]) notices[0].textContent = roundText(page, round, 'noticeMessage1', page.noticeMessage1 || '');
+            if (notices[1]) notices[1].textContent = roundText(page, round, 'noticeMessage2', page.noticeMessage2 || '');
+        }
+
+        window.applyResultRoundConfig = applyResultRoundConfig;
 
         function fillTemplate(value, vars) {
             if (window.PainsContent?.template) return window.PainsContent.template(value, vars);
@@ -156,10 +279,9 @@
 
         async function checkResult() {
             const { content, settings, page } = await getResultConfig();
-            const resultOpen = window.PainsContent?.featureGate
-                ? window.PainsContent.featureGate(content, 'result', false)
-                : true;
-            const closedMessage = firstFilled(page.closedMessage, settings.resultClosedMessage);
+            const round = selectedResultRound;
+            const resultOpen = isResultRoundOpen(content, round);
+            const closedMessage = roundClosedMessage(settings, page, round);
 
             if (!resultOpen) {
                 alert(closedMessage);
@@ -174,7 +296,7 @@
             const name = document.getElementById('input-name').value.trim();
 
             if (!id || !name) {
-                alert(resultText(page, 'missingInputMessage', ''));
+                alert(roundText(page, round, 'missingInputMessage', resultText(page, 'missingInputMessage', '')));
                 return;
             }
 
@@ -189,7 +311,7 @@
             const resultArea = document.getElementById('result-area');
 
             btn.disabled = true;
-            btn.innerText = resultText(page, 'loadingLabel', btn.innerText);
+            btn.innerText = roundText(page, round, 'loadingLabel', resultText(page, 'loadingLabel', btn.innerText));
             loader.style.display = "block";
             resultArea.style.display = "none";
 
@@ -198,6 +320,7 @@
                 const query = new URLSearchParams({
                     id,
                     name,
+                    round: String(round),
                     token: RESULT_API_TOKEN,
                     t: String(timestamp)
                 });
@@ -218,7 +341,7 @@
                 }
 
                 if (data.result === "fail") {
-                    alert(resultText(page, 'notFoundMessage', ''));
+                    alert(roundText(page, round, 'notFoundMessage', resultText(page, 'notFoundMessage', '')));
                     return;
                 }
 
@@ -240,8 +363,8 @@
                 const desc = document.getElementById('result-desc');
                 const interviewBox = document.getElementById('interview-box');
                 const mapImage = document.getElementById('display-map');
-                const defaultValue = resultText(page, 'defaultValue', '');
-                const messageTemplate = resultText(page, 'resultMessageTemplate', '{name}');
+                const defaultValue = roundText(page, round, 'defaultValue', resultText(page, 'defaultValue', ''));
+                const messageTemplate = roundText(page, round, 'resultMessageTemplate', resultText(page, 'resultMessageTemplate', '{name}'));
                 const resultMsg = document.querySelector('.result-msg');
                 if (resultMsg) {
                     resultMsg.innerHTML = fillTemplate(messageTemplate, {
@@ -250,16 +373,16 @@
                 }
 
                 if (data.status === "합격") {
-                    badge.innerText = resultText(page, 'passStatusLabel', '');
+                    badge.innerText = roundText(page, round, 'passStatusLabel', resultText(page, 'passStatusLabel', ''));
                     badge.className = "status-badge status-pass";
-                    desc.innerHTML = resultText(page, 'passDescription', '');
+                    desc.innerHTML = roundText(page, round, 'passDescription', resultText(page, 'passDescription', ''));
 
                     const loc = data.interviewLocation || defaultValue;
                     document.getElementById('display-date').innerText = data.interviewDate || defaultValue;
                     document.getElementById('display-time').innerText = data.interviewTime || defaultValue;
                     document.getElementById('display-location').innerText = loc;
 
-                    const mapUrl = firstFilled(data.mapUrl, page.mapImage);
+                    const mapUrl = firstFilled(data.mapUrl, page[`round${round}MapImage`], page.mapImage);
                     if (mapUrl) {
                         mapImage.src = window.PainsContent?.assetUrl ? window.PainsContent.assetUrl(mapUrl) : mapUrl;
                         mapImage.style.display = 'block';
@@ -268,10 +391,10 @@
                     interviewBox.style.display = "block";
 
                 } else if (data.status === "불합격") {
-                    badge.innerText = resultText(page, 'failStatusLabel', '');
+                    badge.innerText = roundText(page, round, 'failStatusLabel', resultText(page, 'failStatusLabel', ''));
                     badge.className = "status-badge status-fail";
 
-                    desc.innerHTML = resultText(page, 'failDescription', '');
+                    desc.innerHTML = roundText(page, round, 'failDescription', resultText(page, 'failDescription', ''));
 
                     interviewBox.style.display = "none";
                     mapImage.style.display = 'none';
@@ -284,7 +407,7 @@
                 alert(resultText(page, 'errorMessage', ''));
             } finally {
                 btn.disabled = false;
-                btn.innerText = resultText(page, 'buttonLabel', btn.innerText);
+                btn.innerText = roundText(page, round, 'buttonLabel', resultText(page, 'buttonLabel', btn.innerText));
                 loader.style.display = "none";
             }
         }

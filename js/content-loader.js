@@ -161,6 +161,16 @@
 
   function featureGate(content, prefix, fallbackOpen = false) {
     const settings = content?.settings || {};
+    if (prefix === 'result') {
+      const hasRoundGate = [1, 2].some((round) => [
+        `result${round}Enabled`, `result${round}Open`, `result${round}Visible`,
+        `result${round}StartAt`, `result${round}EndAt`
+      ].some((key) => Object.prototype.hasOwnProperty.call(settings, key)));
+      if (hasRoundGate) {
+        return featureGate(content, 'result1', false) || featureGate(content, 'result2', false);
+      }
+    }
+
     const manual = firstValue(
       settings[`${prefix}Enabled`],
       settings[`${prefix}Open`],
@@ -833,6 +843,11 @@
   }
 
   function renderResultGate(content) {
+    if (typeof window.applyResultRoundConfig === 'function') {
+      window.applyResultRoundConfig(content);
+      return;
+    }
+
     const r = content?.resultPage || {};
     const resultOpen = featureGate(content, 'result', false);
     if (resultOpen) {
