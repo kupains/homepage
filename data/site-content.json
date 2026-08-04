@@ -2,11 +2,11 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-08-03T07:52:35.045Z"
+    "updatedAt": "2026-08-04T14:25:24.894Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
-    "applyEnabled": "AUTO",
+    "applyEnabled": "FALSE",
     "applyStartAt": "2026-02-26 0:00",
     "applyEndAt": "2026-03-07 23:59",
     "applyClosedMessage": "지원 기간이 아닙니다.",
@@ -19,11 +19,11 @@
     "resultApiUrl": "https://script.google.com/macros/s/AKfycbyjaZK8O0EZOxC9eNFDAArnt8dU9dnTX-U0Co8vTE6x-NEDF9d_HcMa6Md6Va-yUIKApg/exec",
     "noticeArchiveApiUrl": "",
     "pdfProxyUrl": "https://pdf-proxy.painsports1905.workers.dev/?url=",
-    "result1Enabled": "FALSE",
+    "result1Enabled": "TRUE",
     "result1StartAt": "",
     "result1EndAt": "",
     "result1ClosedMessage": "1차 결과 조회 기간이 아닙니다.",
-    "result2Enabled": "FALSE",
+    "result2Enabled": "TRUE",
     "result2StartAt": "",
     "result2EndAt": "",
     "result2ClosedMessage": "2차 결과 조회 기간이 아닙니다."
@@ -568,7 +568,7 @@
         "order": 2
       },
       {
-        "value": "2021",
+        "value": "2099",
         "label": "FOUNDED",
         "visible": true,
         "order": 3
