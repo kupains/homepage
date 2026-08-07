@@ -2,11 +2,11 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-08-04T14:27:35.359Z"
+    "updatedAt": "2026-08-07T01:35:55.349Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
-    "applyEnabled": "FALSE",
+    "applyEnabled": "TRUE",
     "applyStartAt": "2026-02-26 0:00",
     "applyEndAt": "2026-03-07 23:59",
     "applyClosedMessage": "지원 기간이 아닙니다.",
@@ -16,7 +16,7 @@
     "resultEndAt": "2026-03-16 23:59",
     "resultClosedMessage": "지원 결과 조회 기간이 아닙니다.",
     "resultHref": "result",
-    "resultApiUrl": "https://script.google.com/macros/s/AKfycbyjaZK8O0EZOxC9eNFDAArnt8dU9dnTX-U0Co8vTE6x-NEDF9d_HcMa6Md6Va-yUIKApg/exec",
+    "resultApiUrl": "https://script.google.com/macros/s/AKfycbxgfkCdZ0dlDqvLH4zpjRjS02VBcFs7StPkY_5J7fT4eqt8fjbFNqpTgaQgawiBprvM/exec",
     "noticeArchiveApiUrl": "",
     "pdfProxyUrl": "https://pdf-proxy.painsports1905.workers.dev/?url=",
     "result1Enabled": "TRUE",
@@ -1396,7 +1396,7 @@
     "round1PageTitle": "PAINS - 12기 1차 합격자 안내",
     "round1Title": "12기 1차 합격자 안내",
     "round1Subtitle": "지원 시 제출한 학번과 이름을 입력해주세요.",
-    "round2Label": "2차 결과",
+    "round2Label": "최종 결과",
     "round2PageTitle": "PAINS - 12기 최종 합격자 안내",
     "round2Title": "12기 최종 합격자 안내",
     "round2Subtitle": "지원 시 제출한 학번과 이름을 입력해주세요.",
