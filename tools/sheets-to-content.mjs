@@ -7,6 +7,7 @@ import sharp from 'sharp';
 const SHEET_ID = process.env.PAINS_SHEET_ID;
 const OUT = resolve(process.cwd(), process.env.PAINS_CONTENT_OUT || 'data/site-content.json');
 const BASE = resolve(process.cwd(), process.env.PAINS_CONTENT_BASE || 'data/site-content.json');
+const HOME_HTML = resolve(process.cwd(), process.env.PAINS_HOME_HTML || 'index.html');
 const ASSET_DIR = resolve(process.cwd(), process.env.PAINS_ASSET_DIR || 'images/cms');
 const ASSET_PUBLIC_PATH = String(process.env.PAINS_ASSET_PUBLIC_PATH || 'images/cms').replace(/^\/+|\/+$/g, '');
 
@@ -43,6 +44,50 @@ Optional:
 The sheet must be public/published enough for CSV export.
 Missing tabs are skipped, so you can migrate content gradually.
 `);
+}
+
+function escapeHtmlText(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
+}
+
+async function syncHomeHtmlFallback(content) {
+  let html = await readFile(HOME_HTML, 'utf8');
+  const metrics = Array.isArray(content?.home?.metrics) ? content.home.metrics : [];
+  const archiveLinks = Array.isArray(content?.home?.archiveLinks) ? content.home.archiveLinks : [];
+  const heroMeta = Array.isArray(content?.home?.hero?.meta) ? content.home.hero.meta : [];
+
+  metrics.slice(0, 3).forEach((metric) => {
+    if (!metric?.label || metric.value === undefined) return;
+    const label = escapeHtmlText(metric.label);
+    const value = escapeHtmlText(metric.value);
+    const pattern = new RegExp(`<div><strong>[^<]*<\\/strong><span>${label}<\\/span><\\/div>`);
+    html = html.replace(pattern, `<div><strong>${value}</strong><span>${label}</span></div>`);
+  });
+
+  const projectArchive = archiveLinks.find((item) => item?.href === 'activity');
+  if (projectArchive?.label) {
+    html = html.replace(
+      /<a href="activity"><span>[^<]*<\/span><span>EXPLORE →<\/span><\/a>/,
+      `<a href="activity"><span>${escapeHtmlText(projectArchive.label)}</span><span>EXPLORE →</span></a>`
+    );
+  }
+
+  if (heroMeta.length) {
+    const metaMarkup = heroMeta
+      .slice(0, 3)
+      .map((value) => `          <span>${escapeHtmlText(value)}</span>`)
+      .join('\n');
+    html = html.replace(
+      /        <div class="hero-meta">[\s\S]*?        <\/div>/,
+      `        <div class="hero-meta">\n${metaMarkup}\n        </div>`
+    );
+  }
+
+  await writeFile(HOME_HTML, html, 'utf8');
+  console.log(`Updated ${HOME_HTML}`);
 }
 
 function parseCsv(text) {
@@ -643,6 +688,7 @@ async function main() {
   await mirrorRemoteImages(content);
 
   await writeFile(OUT, `${JSON.stringify(content, null, 2)}\n`, 'utf8');
+  await syncHomeHtmlFallback(content);
   console.log(`Updated ${OUT}`);
 }
 
