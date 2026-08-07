@@ -2,7 +2,7 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-08-07T02:43:26.163Z"
+    "updatedAt": "2026-08-07T02:54:58.582Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
@@ -1407,8 +1407,8 @@
     "round1ScheduleTitle": "면접 일정 안내",
     "round2ScheduleTitle": "OT 일정 안내",
     "round1WarningMessage": "* 면접 일시와 장소를 반드시 확인해주세요.",
-    "round1NoticeMessage1": "* 면접 시 주의사항은 다음과 같습니다.\n\n1. 면접 시간 정시에 맞추어 들어와 주시기를 부탁드립니다. (3분 이상 지각하시면 자동 불합격 처리됩니다.)\n2. 30초 정도로 간단한 자기소개를 부탁드립니다.\n3. PAINS 활동에 도움이 될 만한 과거 경력 (통계 프로그램 or 스포츠)이 있다면, painsports1905@gmail.com 으로 n월 nn일 23시 59분 59초까지 보내주시기를 바랍니다.",
-    "round1NoticeMessage2": "* 부득이한 사정이 있는 경우 운영진에게 미리 연락해주세요.",
+    "round1NoticeMessage1": "* 면접 시 주의사항은 다음과 같습니다.<br>1. 면접 시간 정시에 맞추어 들어와 주시기를 부탁드립니다. (3분 이상 지각하시면 자동 불합격 처리됩니다.)<br>2. 30초 정도로 간단한 자기소개를 부탁드립니다.<br>3. PAINS 활동에 도움이 될 만한 과거 경력 (통계 프로그램 or 스포츠)이 있다면, painsports1905@gmail.com 으로 n월 nn일 23시 59분 59초까지 보내주시기를 바랍니다.",
+    "round1NoticeMessage2": "* 부득이한 사정이 있는 경우 메일을 통해 미리 연락해주세요.",
     "round2WarningMessage": "* OT 일시와 장소를 반드시 확인해주세요.",
     "round2NoticeMessage1": "* 합격자는 OT 시작 전 채팅방에 초대될 예정입니다.",
     "round2NoticeMessage2": "* 정당한 사유 없이 OT에 불참할 경우 합격이 취소될 수 있습니다."
