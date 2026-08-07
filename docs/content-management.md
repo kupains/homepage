@@ -167,7 +167,7 @@ https://drive.google.com/file/d/FILE_ID/view?usp=sharing
 
 `home_story_cards`
 
-`titleLines`는 줄마다 `|`로 나눕니다. 커뮤니티의 두 사진은 `image`와 `image2`를 각각 바꾸며, 두 값은 독립적으로 반영됩니다.
+모든 제목·설명·안내 문구의 줄바꿈은 Google Sheets 셀 안에서 `Alt + Enter`를 사용합니다. 기존 `|` 입력도 호환되지만 새 입력에는 사용하지 않습니다. 커뮤니티의 두 사진은 `image`와 `image2`를 각각 바꾸며, 두 값은 독립적으로 반영됩니다.
 
 | id | eyebrow | titleLines | description | image | alt | image2 | alt2 | captionFig | captionLabel | visible | order |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

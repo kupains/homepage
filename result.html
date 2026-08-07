@@ -154,6 +154,12 @@
             return values.find((value) => value !== undefined && value !== null && String(value).trim() !== '');
         }
 
+        function setResultMultilineText(node, value) {
+            if (!node || value === undefined || value === null) return;
+            node.textContent = String(value).replace(/<br\s*\/?>/gi, '\n');
+            node.style.whiteSpace = 'pre-line';
+        }
+
         async function getResultConfig() {
             const content = await window.PainsContent?.load?.();
             const config = {
@@ -254,7 +260,7 @@
             const heading = document.querySelector('.search-card h2');
             if (heading && title) heading.textContent = title;
             const subtitleNode = document.querySelector('.search-card .sub-title');
-            if (subtitleNode) subtitleNode.textContent = subtitle;
+            setResultMultilineText(subtitleNode, subtitle);
 
             const resultArea = document.getElementById('result-area');
             if (resultArea) resultArea.style.display = 'none';
@@ -275,10 +281,10 @@
             const scheduleTitle = document.querySelector('.interview-box h4');
             if (scheduleTitle) scheduleTitle.textContent = roundText(page, round, 'scheduleTitle', page.otTitle || '일정 안내');
             const warning = document.querySelector('.warning-msg');
-            if (warning) warning.textContent = roundText(page, round, 'warningMessage', page.warningMessage || '');
+            setResultMultilineText(warning, roundText(page, round, 'warningMessage', page.warningMessage || ''));
             const notices = document.querySelectorAll('.notice-msg');
-            if (notices[0]) notices[0].textContent = roundText(page, round, 'noticeMessage1', page.noticeMessage1 || '');
-            if (notices[1]) notices[1].textContent = roundText(page, round, 'noticeMessage2', page.noticeMessage2 || '');
+            setResultMultilineText(notices[0], roundText(page, round, 'noticeMessage1', page.noticeMessage1 || ''));
+            setResultMultilineText(notices[1], roundText(page, round, 'noticeMessage2', page.noticeMessage2 || ''));
         }
 
         window.applyResultRoundConfig = applyResultRoundConfig;
@@ -386,7 +392,7 @@
                 if (data.status === "합격") {
                     badge.innerText = roundText(page, round, 'passStatusLabel', resultText(page, 'passStatusLabel', ''));
                     badge.className = "status-badge status-pass";
-                    desc.innerHTML = roundText(page, round, 'passDescription', resultText(page, 'passDescription', ''));
+                    setResultMultilineText(desc, roundText(page, round, 'passDescription', resultText(page, 'passDescription', '')));
 
                     const loc = data.interviewLocation || defaultValue;
                     document.getElementById('display-date').innerText = data.interviewDate || defaultValue;
@@ -405,7 +411,7 @@
                     badge.innerText = roundText(page, round, 'failStatusLabel', resultText(page, 'failStatusLabel', ''));
                     badge.className = "status-badge status-fail";
 
-                    desc.innerHTML = roundText(page, round, 'failDescription', resultText(page, 'failDescription', ''));
+                    setResultMultilineText(desc, roundText(page, round, 'failDescription', resultText(page, 'failDescription', '')));
 
                     interviewBox.style.display = "none";
                     mapImage.style.display = 'none';

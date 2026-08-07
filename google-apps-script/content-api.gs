@@ -337,7 +337,7 @@ function generationNumber(value) {
 
 function splitLines(value) {
   return String(value || '')
-    .split('|')
+    .split(/\r?\n|\|/)
     .map(function (v) { return v.trim(); })
     .filter(Boolean);
 }
@@ -1115,7 +1115,7 @@ function readmeRows() {
 
     ['── 공통 규칙 ──', '', ''],
     ['홈 사진 넣는 법', '홈_사진 탭 · imageUrl 열', 'Drive에 올리고 "링크가 있는 모든 사용자" 로 공유 → 링크를 붙여넣기'],
-    ['줄바꿈', '', 'titleLines 는 | 로 줄을 나눕니다. 그 외 설명문은 셀 안에서 그냥 줄바꿈(Alt+Enter)'],
+    ['줄바꿈', '', '모든 제목·설명·안내 문구는 셀 안에서 Alt+Enter로 줄바꿈합니다.'],
     ['숨기기', '', 'visible 을 FALSE 로 바꾸면 사이트에서 사라집니다. TRUE 로 되돌리면 다시 보입니다'],
     ['순서 바꾸기', '', 'order 숫자를 고칩니다. projects 탭만 반대로(큰 숫자가 위) 정렬됩니다'],
 
@@ -1334,7 +1334,7 @@ function noticeRows() {
 
 /*
  * 홈 02 ABOUT / 03 PROJECTS / 04 COMMUNITY 카드.
- *   titleLines : | 로 줄을 나눕니다.
+ *   titleLines : 셀 안에서 Alt+Enter로 줄을 나눕니다. 기존 | 입력도 호환됩니다.
  *   image2     : community 행에서만 씁니다(사진 2장을 나란히 배치).
  *   captionFig / captionLabel : 사진 아래 작은 캡션. community 는 캡션이 없습니다.
  */
@@ -1673,12 +1673,12 @@ function resultPageRows() {
     ['loadingStatusLabel', '결과 로딩중', '결과 배지 기본 문구'],
     ['passStatusLabel', '합 격', '합격 배지 문구'],
     ['failStatusLabel', '불합격', '불합격 배지 문구'],
-    ['passDescription', '축하드립니다! 귀하는 PAINS 11기 최종 면접에 합격하셨습니다.<br>아래 OT 일정을 확인해주시기 바랍니다.', '합격 안내 문구. <br> 사용 가능'],
-    ['failDescription', '2026년 상반기 PAINS 11기 리크루팅에 지원해주셔서 진심으로 감사드립니다.<br>지원자님의 뛰어난 역량과 열정에도 불구하고, 한정된 선발 인원으로 인해 아쉽게도 이번 기수에는 함께하지 못하게 되었습니다. 비록 이번에는 좋은 인연으로 이어지지 못했지만 보여주신 관심에 깊이 감사드리며 앞으로의 행보를 진심으로 응원하겠습니다.<br>PAINS는 매 기수 리크루팅을 진행하고 있으니, 이후에도 PAINS에 많은 관심 부탁드립니다.', '불합격 안내 문구. <br> 사용 가능'],
-    ['round1PassDescription', '축하드립니다! 귀하는 PAINS 11기 리크루팅 1차 전형에 합격하셨습니다.<br>아래 면접 일정을 확인해주시기 바랍니다.', '1차 합격 안내 문구. <br> 사용 가능'],
-    ['round1FailDescription', 'PAINS 11기 리크루팅에 지원해주셔서 진심으로 감사드립니다.<br>아쉽게도 이번 1차 전형에서는 함께하지 못하게 되었습니다.', '1차 불합격 안내 문구. <br> 사용 가능'],
-    ['round2PassDescription', '축하드립니다! 귀하는 PAINS 11기 리크루팅 최종 면접에 합격하셨습니다.<br>아래 OT 일정을 확인해주시기 바랍니다.', '2차 합격 안내 문구. <br> 사용 가능'],
-    ['round2FailDescription', 'PAINS 11기 리크루팅에 지원해주셔서 진심으로 감사드립니다.<br>아쉽게도 이번 최종 전형에서는 함께하지 못하게 되었습니다.', '2차 불합격 안내 문구. <br> 사용 가능'],
+    ['passDescription', '축하드립니다! 귀하는 PAINS 11기 최종 면접에 합격하셨습니다.\n아래 OT 일정을 확인해주시기 바랍니다.', '합격 안내 문구. 셀 안에서 Alt+Enter 사용'],
+    ['failDescription', '2026년 상반기 PAINS 11기 리크루팅에 지원해주셔서 진심으로 감사드립니다.\n지원자님의 뛰어난 역량과 열정에도 불구하고, 한정된 선발 인원으로 인해 아쉽게도 이번 기수에는 함께하지 못하게 되었습니다. 비록 이번에는 좋은 인연으로 이어지지 못했지만 보여주신 관심에 깊이 감사드리며 앞으로의 행보를 진심으로 응원하겠습니다.\nPAINS는 매 기수 리크루팅을 진행하고 있으니, 이후에도 PAINS에 많은 관심 부탁드립니다.', '불합격 안내 문구. 셀 안에서 Alt+Enter 사용'],
+    ['round1PassDescription', '축하드립니다! 귀하는 PAINS 11기 리크루팅 1차 전형에 합격하셨습니다.\n아래 면접 일정을 확인해주시기 바랍니다.', '1차 합격 안내 문구. 셀 안에서 Alt+Enter 사용'],
+    ['round1FailDescription', 'PAINS 11기 리크루팅에 지원해주셔서 진심으로 감사드립니다.\n아쉽게도 이번 1차 전형에서는 함께하지 못하게 되었습니다.', '1차 불합격 안내 문구. 셀 안에서 Alt+Enter 사용'],
+    ['round2PassDescription', '축하드립니다! 귀하는 PAINS 11기 리크루팅 최종 면접에 합격하셨습니다.\n아래 OT 일정을 확인해주시기 바랍니다.', '2차 합격 안내 문구. 셀 안에서 Alt+Enter 사용'],
+    ['round2FailDescription', 'PAINS 11기 리크루팅에 지원해주셔서 진심으로 감사드립니다.\n아쉽게도 이번 최종 전형에서는 함께하지 못하게 되었습니다.', '2차 불합격 안내 문구. 셀 안에서 Alt+Enter 사용'],
     ['missingInputMessage', '학번과 이름을 모두 입력해주세요.', '학번/이름 미입력 alert'],
     ['notFoundMessage', '일치하는 지원 정보를 찾을 수 없습니다.\n학번과 이름을 다시 확인해주세요.', '지원 정보 없음 alert'],
     ['lockedMessageTemplate', '아직 결과 발표 기간이 아닙니다.\n발표 일시: {releaseDate} {releaseTime}', '결과 발표 전 alert. {releaseDate}, {releaseTime} 사용 가능'],
