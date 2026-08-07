@@ -28,9 +28,20 @@
     document.documentElement.classList.add('pains-cms-ready');
   }
 
+  function normalizeTextBreaks(value) {
+    return String(value ?? '').replace(/<br\s*\/?>/gi, '\n');
+  }
+
+  function setText(el, value) {
+    if (!el || value === undefined || value === null) return;
+    const normalized = normalizeTextBreaks(value);
+    el.textContent = normalized;
+    if (normalized.includes('\n')) el.style.whiteSpace = 'pre-line';
+  }
+
   function text(selector, value, root = document) {
     const el = root.querySelector(selector);
-    if (el && value !== undefined && value !== null) el.textContent = value;
+    setText(el, value);
   }
 
   function html(selector, value, root = document) {
@@ -42,13 +53,13 @@
     const nodes = root.querySelectorAll(selector);
     nodes.forEach((el, index) => {
       const value = values?.[index];
-      if (value !== undefined && value !== null) el.textContent = value;
+      setText(el, value);
     });
   }
 
   function multiline(el, value) {
     if (!el || value === undefined || value === null) return;
-    el.textContent = value;
+    el.textContent = normalizeTextBreaks(value);
     el.style.whiteSpace = 'pre-line';
   }
 
@@ -135,7 +146,7 @@
   }
 
   function splitSheetLines(value) {
-    return String(value || '').split('|').map((line) => line.trim()).filter(Boolean);
+    return String(value || '').split(/\r?\n|\|/).map((line) => line.trim()).filter(Boolean);
   }
 
   function parseKstDate(value, boundary = 'start') {

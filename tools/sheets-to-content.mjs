@@ -185,7 +185,7 @@ function normalizeTime(value) {
 
 function splitLines(value) {
   return String(value || '')
-    .split('|')
+    .split(/\r?\n|\|/)
     .map((v) => v.trim())
     .filter(Boolean);
 }
