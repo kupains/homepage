@@ -1309,7 +1309,7 @@ function settingsRows() {
     ['result2ClosedMessage', '2차 결과 조회 기간이 아닙니다.', '2차 결과 조회가 닫혀 있을 때 표시할 문구'],
     ['resultClosedMessage', '지원 결과 조회 기간이 아닙니다.', '1차와 2차가 모두 닫혀 있을 때 메뉴 클릭 시 표시할 문구'],
     ['resultHref', 'result', '지원 결과 안내 메뉴가 열렸을 때 이동할 페이지'],
-    ['resultApiUrl', 'https://script.google.com/macros/s/AKfycbyjaZK8O0EZOxC9eNFDAArnt8dU9dnTX-U0Co8vTE6x-NEDF9d_HcMa6Md6Va-yUIKApg/exec', '1차/2차 결과 조회 Apps Script Web app v2 URL']
+    ['resultApiUrl', 'https://script.google.com/macros/s/AKfycbxgfkCdZ0dlDqvLH4zpjRjS02VBcFs7StPkY_5J7fT4eqt8fjbFNqpTgaQgawiBprvM/exec', '1차/2차 결과 조회 Apps Script Web app v2 URL']
   ];
 }
 
