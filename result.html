@@ -200,7 +200,10 @@
         }
 
         function setResultRound(round) {
-            selectedResultRound = Number(round) === 2 ? 2 : 1;
+            const nextRound = Number(round) === 2 ? 2 : 1;
+            const resolved = latestResultConfig || window.__painsContentLatest || {};
+            if (!isResultRoundOpen(resolved, nextRound)) return;
+            selectedResultRound = nextRound;
             resultRoundInitialized = true;
             if (latestResultConfig) applyResultRoundConfig(latestResultConfig);
         }
@@ -215,20 +218,28 @@
                 1: isResultRoundOpen(resolved, 1),
                 2: isResultRoundOpen(resolved, 2)
             };
-            if (!resultRoundInitialized) {
-                selectedResultRound = open[1] ? 1 : (open[2] ? 2 : 1);
+            const visibleRounds = [1, 2].filter((round) => open[round]);
+            if (!resultRoundInitialized || !open[selectedResultRound]) {
+                selectedResultRound = visibleRounds[0] || 1;
                 resultRoundInitialized = true;
+            }
+
+            const selector = document.querySelector('.round-selector');
+            if (selector) {
+                selector.hidden = visibleRounds.length === 0;
+                selector.style.gridTemplateColumns = `repeat(${Math.max(visibleRounds.length, 1)}, minmax(0, 1fr))`;
             }
 
             [1, 2].forEach((round) => {
                 const button = document.getElementById(`round-${round}-button`);
                 if (!button) return;
                 const active = selectedResultRound === round;
+                button.hidden = !open[round];
                 button.textContent = roundText(page, round, 'label', `${round}차 결과`);
                 button.classList.toggle('is-active', active);
-                button.classList.toggle('is-closed', !open[round]);
+                button.classList.remove('is-closed');
                 button.setAttribute('aria-selected', String(active));
-                button.setAttribute('aria-label', `${button.textContent}${open[round] ? '' : ' (조회 닫힘)'}`);
+                button.setAttribute('aria-label', button.textContent);
             });
 
             const round = selectedResultRound;
