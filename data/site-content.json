@@ -2,7 +2,7 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-08-16T15:00:01.462Z"
+    "updatedAt": "2026-08-16T18:01:28.221Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
@@ -774,7 +774,7 @@
         "id": "treasurer",
         "role": "총무",
         "name": "이준서",
-        "major": "컴퓨터과학과 25",
+        "major": "컴퓨터학과 25",
         "image": "",
         "staff": true,
         "visible": true,
@@ -785,7 +785,7 @@
         "role": "부회장",
         "name": "이정훈",
         "major": "교육학과 22",
-        "image": "",
+        "image": "12기 부회장.jpg",
         "staff": false,
         "visible": true,
         "order": 3
@@ -795,7 +795,7 @@
         "role": "기획부장",
         "name": "나영우",
         "major": "보건환경융합과학부 25",
-        "image": "",
+        "image": "12기 기획부장.jpg",
         "staff": false,
         "visible": true,
         "order": 4
@@ -805,7 +805,7 @@
         "role": "홍보부장",
         "name": "성유현",
         "major": "국제학부 25",
-        "image": "",
+        "image": "12기 홍보부장.jpg",
         "staff": false,
         "visible": true,
         "order": 5
@@ -836,7 +836,7 @@
       },
       {
         "name": "LG 트윈스 팬 소모임",
-        "leader": "김가현",
+        "leader": "정윤도",
         "description": "LG팬분들 많은 관심 부탁드립니다!",
         "image": "images/LG 트윈스 팬 소모임.png",
         "visible": true,
@@ -876,7 +876,7 @@
       },
       {
         "name": "롯데자이언츠의우승을위한소모임",
-        "leader": "전영재",
+        "leader": "김도윤",
         "description": "롯데 우승 or nothing\n롯데가 우승하기 전까지 절대 해체하지 않을 소모임입니다.",
         "image": "images/롯데자이언츠의우승을위한소모임.jpg",
         "visible": true,
@@ -900,7 +900,7 @@
       },
       {
         "name": "NC 다이노스 소모임",
-        "leader": "최나훈",
+        "leader": "박세중",
         "description": "KBO 리그 9번째 심장, NC 다이노스와 함께할 부원들을 모집합니다. 단체 직관 및 친목 활동 함께하실 분들 환영해요",
         "image": "images/NC 다이노스 소모임.png",
         "visible": true,
@@ -908,7 +908,7 @@
       },
       {
         "name": "호박고구마회",
-        "leader": "김가현",
+        "leader": "정윤도",
         "description": "호박고구마회 하면 1년에 책 3권 이상 읽을 수 있습니다.\n같이 좋은 책 발굴해요!!",
         "image": "images/호박고구마회.jpg",
         "visible": true,
@@ -924,7 +924,7 @@
       },
       {
         "name": "키움 히어로즈 소모임",
-        "leader": "이정호",
+        "leader": "배지수",
         "description": "키움 히어로즈 직관/단관 소모임입니다!\np.s. 저점매수 관심 있으신 분??",
         "image": "images/키움 히어로즈 소모임.png",
         "visible": true,
@@ -932,7 +932,7 @@
       },
       {
         "name": "노래방 소모임",
-        "leader": "하승민",
+        "leader": "이정훈",
         "description": "노래방이 제2의 집인 사람, 혼자 노래 부르기 심심했던 사람 모두 환영입니다!\n모임장이 노래를 제일 못하기 때문에 노래 실력은 상관없습니다!",
         "image": "images/노래방 소모임.jpg",
         "visible": true,
@@ -1007,9 +1007,9 @@
     "navContactLabel": "문의하기",
     "navApplyLabel": "지원하기",
     "overviewTitle": "📢 모집 개요",
-    "overviewText": "스포츠 통계분석 동아리 PAINS가 2026년을 함께할 12기 신입 부원을 모집합니다!\nPAINS는 2021년에 스포츠와 통계분석에 관심이 많은 사람들이 모여 만든 동아리입니다.\nPAINS는 2024년까지 통계학과 동아리로 활동했으며, 2026년부터는 애기능동아리연합회 소속 동아리로 소속되어 활동하고 있습니다. 스포츠를 사랑하고 데이터 분석에 열정이 있다면 전공에 관계없이 누구나 환영합니다.",
+    "overviewText": "스포츠 통계분석 동아리 PAINS가 2026년을 함께할 12기 신입 부원을 모집합니다!\nPAINS는 2021년에 스포츠와 통계분석에 관심이 많은 사람들이 모여 만든 동아리입니다.\nPAINS는 2024년까지 통계학과 동아리로 활동했으며, 2026년부터는 애기능동아리연합회 소속 동아리로 소속되어 활동하고 있습니다. 스포츠를 사랑하고 데이터 분석에 열정이 있다면, 전공에 관계없이 누구나 환영합니다.",
     "introTitle": "🎯 동아리 소개",
-    "introDescription": "현재 PAINS는 50명의 부원들이 하나의 관심사를 깊이 나누며 활동하고 있습니다.\n성별, 학과, 학번 그 무엇도 상관없습니다. 스포츠에 대한 관심과 열정만 있으면 충분합니다.",
+    "introDescription": "현재 PAINS는 25명의 부원들이 하나의 관심사를 깊이 나누며 활동하고 있습니다.\n성별, 학과, 학번 그 무엇도 상관없습니다. 스포츠에 대한 관심과 열정만 있으면 충분합니다!",
     "genderChartTitle": "부원 성별 분포",
     "majorChartTitle": "부원 전공 분포",
     "admissionYearChartTitle": "학번 분포",
@@ -1032,22 +1032,22 @@
     "instagramLabel": "인스타그램 DM",
     "instagramHandle": "@ku_pains",
     "instagramUrl": "https://www.instagram.com/ku_pains",
-    "contactPhoneLabel": "회장 전영재",
-    "contactPhone": "010-3952-1473",
+    "contactPhoneLabel": "회장 손영현",
+    "contactPhone": "010-6241-5116",
     "contactEmailLabel": "PAINS 공식 이메일",
     "contactEmail": "painsports1905@gmail.com",
     "applyCtaTitle": "12기 지원하기",
     "applyCtaSubtitle": "신입생, 재학생 모두 환영합니다!",
-    "formUrl": "https://docs.google.com/forms/d/e/1FAIpQLSerzRF12IQLupIIg6-hfn9EPHYFL3riEmm19peCYW6aciNvlw/formResponse",
+    "formUrl": "https://forms.gle/wDDDSAvkAo3RmHHBA",
     "formLabel": "지원서 작성하러 가기",
-    "applyPeriod": "지원 기간: 2026년 02월 26일 - 2026년 03월 07일",
+    "applyPeriod": "지원 기간: 2026년 08월 19일 - 2026년 08월 31일",
     "applyVisible": true,
     "sidebarTitle": "12기 신입부원 모집",
     "admissionCountLabel": "인원(명)",
     "timeline": [
       {
         "step": "서류 신청",
-        "date": "2026. 02. 26 (목) - 2026. 03. 07 (토)",
+        "date": "2026. 08. 19 (수) - 2026. 08. 31 (월)",
         "note": "",
         "highlight": false,
         "visible": true,
@@ -1055,7 +1055,7 @@
       },
       {
         "step": "서류 합격자 발표",
-        "date": "2026. 03. 09 (월) 중",
+        "date": "2026. 09. 02 (수) 중",
         "note": "홈페이지 안내",
         "highlight": false,
         "visible": true,
@@ -1063,7 +1063,7 @@
       },
       {
         "step": "면접 진행",
-        "date": "2026. 03. 11 (수) - 2026. 03. 13 (금)",
+        "date": "2026. 09. 04 (금) - 2026. 09. 07 (월)",
         "note": "기간 중 일정 협의",
         "highlight": false,
         "visible": true,
@@ -1071,7 +1071,7 @@
       },
       {
         "step": "최종 선발 공지",
-        "date": "2026. 03. 15 (일) 중",
+        "date": "2026. 09. 09 (수) 중",
         "note": "홈페이지 안내",
         "highlight": false,
         "visible": true,
@@ -1079,7 +1079,7 @@
       },
       {
         "step": "신입 기수 OT",
-        "date": "2026. 03. 16 (월) 19:00",
+        "date": "2026. 09. 11 (금) 19:00",
         "note": "참여 필수",
         "highlight": true,
         "visible": true,
@@ -1091,7 +1091,7 @@
         "id": "seminar",
         "title": "정기 세미나",
         "description": "학기 중과 방학 중 2번씩 개최되는 정기 세미나에서는 조별 프로젝트를 공유하고 피드백을 주고받는 시간을 가집니다.",
-        "image": "images/activity_edited_1.png",
+        "image": "11기 2차 정기.jpg",
         "alt": "정기 세미나 사진",
         "visible": true,
         "order": 1
@@ -1100,7 +1100,7 @@
         "id": "lecture",
         "title": "통계 세미나와 연사 초청 강연",
         "description": "기초 통계학 강의와 연사 초청 강연 등의 활동을 통해 부원들의 통계분석 역량 향상을 도모합니다.",
-        "image": "images/activity2.png",
+        "image": "11기 연사초청.jpg",
         "alt": "정기 활동 사진",
         "visible": true,
         "order": 2
@@ -1133,13 +1133,13 @@
       },
       {
         "title": "📢 홍보부",
-        "description": "홍보 플랫폼(SNS 등) 관리, 리쿠르팅 홍보, 동아리 내 플랫폼 관리 업무(노션 등)",
+        "description": "동아리 노션/인스타 관리, 홍보 자료 제작, 홍보 이벤트 기획, 주간지 발행",
         "visible": true,
         "order": 2
       },
       {
         "title": "📘 교육부",
-        "description": "초심자용 강의 제작 (스포츠데이터분석, 세이버메트릭스), 동아리 자료 및 파일 관리",
+        "description": "스터디 진행 (기초 통계 강의 / 세이버메트릭스 / 데이터 분석), 동아리 파일 관리",
         "visible": true,
         "order": 3
       }
@@ -1152,7 +1152,7 @@
           "order": 1
         },
         {
-          "text": "3월 16일 월요일 OT에 대면 참여가 가능한 사람",
+          "text": "9월 11일 금요일 OT에 대면 참여가 가능한 사람",
           "visible": true,
           "order": 2
         },
@@ -1169,45 +1169,45 @@
       ],
       "regularSchedule": [
         {
-          "text": "일반 정기 활동: 3월 19일, 3월 27일, 5월 1일",
+          "text": "일반 정기 활동: 9월 18일, 9월 28일",
           "visible": true,
           "order": 1
         },
         {
-          "text": "PAINS 체육대회: 5월 중(미정)",
+          "text": "PAINS 체육대회: 11월 중(미정)",
           "visible": true,
           "order": 2
         },
         {
-          "text": "학기 중 세미나: 5월 14일, 5월 15일",
+          "text": "학기 중 세미나: 11월 중(미정)",
           "visible": true,
           "order": 3
         },
         {
-          "text": "방학 중 세미나: 8월 중(미정)",
+          "text": "방학 중 세미나: 2월 중(미정)",
           "visible": true,
           "order": 4
         }
       ],
       "irregularSchedule": [
         {
-          "text": "봄 MT: 4월 3일 - 4월 4일 (예정)",
+          "text": "학기중 MT: 11월 6일 - 11월 7일 (예정)",
           "visible": true,
           "order": 1
         },
         {
-          "text": "스포츠 단체 직관: 5월 중(미정)",
+          "text": "스포츠 단체 직관: 10월 중(미정)",
           "visible": true,
           "order": 2
         },
         {
           "text": "월드컵 단체 관람: 월드컵 기간(계획 중)",
-          "visible": true,
+          "visible": false,
           "order": 3
         },
         {
           "text": "여름 MT: 7월 중(미정)",
-          "visible": true,
+          "visible": false,
           "order": 4
         }
       ]
@@ -1216,14 +1216,14 @@
       "gender": [
         {
           "label": "여자",
-          "value": 11,
+          "value": 4,
           "color": "#FF6B81",
           "visible": true,
           "order": 1
         },
         {
           "label": "남자",
-          "value": 39,
+          "value": 21,
           "color": "#4D96FF",
           "visible": true,
           "order": 2
@@ -1232,42 +1232,42 @@
       "major": [
         {
           "label": "통계학과",
-          "value": 9,
+          "value": 5,
           "color": "#FF9F43",
           "visible": true,
           "order": 1
         },
         {
-          "label": "데이터과학과",
-          "value": 5,
+          "label": "국제학부",
+          "value": 4,
           "color": "#FF6B6B",
           "visible": true,
           "order": 2
         },
         {
-          "label": "국제학부",
-          "value": 4,
+          "label": "경제학과",
+          "value": 2,
           "color": "#FDCB6E",
           "visible": true,
           "order": 3
         },
         {
-          "label": "컴퓨터학과",
-          "value": 3,
+          "label": "행정학과",
+          "value": 2,
           "color": "",
           "visible": true,
           "order": 4
         },
         {
-          "label": "사회학과",
-          "value": 3,
+          "label": "화학과",
+          "value": 2,
           "color": "#20BF6B",
           "visible": true,
           "order": 5
         },
         {
-          "label": "화학과",
-          "value": 3,
+          "label": "기타",
+          "value": 9,
           "color": "#0FB9B1",
           "visible": true,
           "order": 6
@@ -1276,35 +1276,35 @@
           "label": "언어학과",
           "value": 2,
           "color": "#2D98DA",
-          "visible": true,
+          "visible": false,
           "order": 7
         },
         {
           "label": "전기전자공학부",
           "value": 2,
           "color": "#3867D6",
-          "visible": true,
+          "visible": false,
           "order": 8
         },
         {
           "label": "행정학과",
           "value": 2,
           "color": "#8854D0",
-          "visible": true,
+          "visible": false,
           "order": 9
         },
         {
           "label": "경제학과",
           "value": 2,
           "color": "#4B6584",
-          "visible": true,
+          "visible": false,
           "order": 10
         },
         {
           "label": "기타",
           "value": 15,
           "color": "#9980FA",
-          "visible": true,
+          "visible": false,
           "order": 11
         }
       ],
@@ -1313,40 +1313,40 @@
           "label": "20",
           "value": 1,
           "color": "#ab3333",
-          "visible": true,
+          "visible": false,
           "order": 1
         },
         {
           "label": "21",
           "value": 3,
           "color": "#ab3333",
-          "visible": true,
+          "visible": false,
           "order": 2
         },
         {
           "label": "22",
-          "value": 5,
+          "value": 4,
           "color": "#ab3333",
           "visible": true,
           "order": 3
         },
         {
           "label": "23",
-          "value": 5,
+          "value": 1,
           "color": "#ab3333",
           "visible": true,
           "order": 4
         },
         {
           "label": "24",
-          "value": 13,
+          "value": 3,
           "color": "#ab3333",
           "visible": true,
           "order": 5
         },
         {
           "label": "25",
-          "value": 17,
+          "value": 11,
           "color": "#ab3333",
           "visible": true,
           "order": 6
