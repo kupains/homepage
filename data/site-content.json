@@ -2,7 +2,7 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-08-07T03:02:11.920Z"
+    "updatedAt": "2026-08-16T15:00:01.462Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
@@ -556,13 +556,13 @@
     },
     "metrics": [
       {
-        "value": "173+",
+        "value": "181+",
         "label": "PROJECTS",
         "visible": true,
         "order": 1
       },
       {
-        "value": "11TH",
+        "value": "12TH",
         "label": "GENERATION",
         "visible": true,
         "order": 2
@@ -763,9 +763,9 @@
       {
         "id": "president",
         "role": "회장",
-        "name": "전영재",
-        "major": "언어학과 24",
-        "image": "images/회장v2.png",
+        "name": "손영현",
+        "major": "통계학과 23",
+        "image": "",
         "staff": false,
         "visible": true,
         "order": 1
@@ -773,9 +773,9 @@
       {
         "id": "treasurer",
         "role": "총무",
-        "name": "손영현",
-        "major": "통계학과 23",
-        "image": "images/총무.png",
+        "name": "이준서",
+        "major": "컴퓨터과학과 25",
+        "image": "",
         "staff": true,
         "visible": true,
         "order": 2
@@ -783,9 +783,9 @@
       {
         "id": "vicePresident",
         "role": "부회장",
-        "name": "하승민",
-        "major": "데이터과학과 23",
-        "image": "images/부회장.png",
+        "name": "이정훈",
+        "major": "교육학과 22",
+        "image": "",
         "staff": false,
         "visible": true,
         "order": 3
@@ -795,7 +795,7 @@
         "role": "기획부장",
         "name": "나영우",
         "major": "보건환경융합과학부 25",
-        "image": "images/기획부장v2.png",
+        "image": "",
         "staff": false,
         "visible": true,
         "order": 4
@@ -803,9 +803,9 @@
       {
         "id": "publicRelations",
         "role": "홍보부장",
-        "name": "김가현",
-        "major": "미디어학부 24",
-        "image": "images/홍보부장v2.png",
+        "name": "성유현",
+        "major": "국제학부 25",
+        "image": "",
         "staff": false,
         "visible": true,
         "order": 5
@@ -815,7 +815,7 @@
         "role": "교육부장",
         "name": "이지섭",
         "major": "통계학과 24",
-        "image": "images/교육부장.png",
+        "image": "",
         "staff": false,
         "visible": true,
         "order": 6
@@ -1407,13 +1407,101 @@
     "round1ScheduleTitle": "면접 일정 안내",
     "round2ScheduleTitle": "OT 일정 안내",
     "round1WarningMessage": "* 면접 일시와 장소를 반드시 확인해주세요.",
-    "round1NoticeMessage1": "* 면접 시 주의사항은 다음과 같습니다.\n1. 면접 시간 정시에 맞추어 들어와 주시기를 부탁드립니다. (3분 이상 지각하시면 자동 불합격 처리됩니다.)\n2. 30초 정도로 간단한 자기소개를 부탁드립니다.\n3. PAINS 활동에 도움이 될 만한 과거 경력 (통계 프로그램 or 스포츠)이 있다면, painsports1905@gmail.com 으로 n월 nn일 23시 59분 59초까지 보내주시기를 바랍니다.",
+    "round1NoticeMessage1": "* 면접 시 주의사항은 다음과 같습니다.<br>1. 면접 시간 정시에 맞추어 들어와 주시기를 부탁드립니다. (3분 이상 지각하시면 자동 불합격 처리됩니다.)<br>2. 30초 정도로 간단한 자기소개를 부탁드립니다.<br>3. PAINS 활동에 도움이 될 만한 과거 경력 (통계 프로그램 or 스포츠)이 있다면, painsports1905@gmail.com 으로 n월 nn일 23시 59분 59초까지 보내주시기를 바랍니다.",
     "round1NoticeMessage2": "* 부득이한 사정이 있는 경우 메일을 통해 미리 연락해주세요.",
     "round2WarningMessage": "* OT 일시와 장소를 반드시 확인해주세요.",
     "round2NoticeMessage1": "* 합격자는 OT 시작 전 채팅방에 초대될 예정입니다.",
     "round2NoticeMessage2": "* 정당한 사유 없이 OT에 불참할 경우 합격이 취소될 수 있습니다."
   },
   "projects": [
+    {
+      "title": "투수 부상위험 지표 개발 -MLB to KBO",
+      "year": "2026",
+      "generation": "11기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "칼럼_11기방중_야구통합조.pdf",
+      "driveId": "https://drive.google.com/file/d/1KzGi9xWKJ48CVYo34EcAX5Nz1CPHaysG/view?usp=drive_link",
+      "pdfUrl": "",
+      "file": "칼럼_11기방중_야구통합조.pdf"
+    },
+    {
+      "title": "E-SPORTS 중계화면 OCR 기반 실시간 승률 예측 모델",
+      "year": "2026",
+      "generation": "11기",
+      "period": "방학 중 프로젝트",
+      "sport": "e스포츠",
+      "driveUrl": "칼럼_11기방중_이스포츠7조.pdf",
+      "driveId": "https://drive.google.com/file/d/11aWzhtzK06LdzlBiBEva_F6dCXSprVD3/view?usp=drive_link",
+      "pdfUrl": "",
+      "file": "칼럼_11기방중_이스포츠7조.pdf"
+    },
+    {
+      "title": "F1 2024 시즌 서킷 트랙 에볼루션 분석",
+      "year": "2026",
+      "generation": "11기",
+      "period": "방학 중 프로젝트",
+      "sport": "F1",
+      "driveUrl": "칼럼_11기방중_F16조.pdf",
+      "driveId": "https://drive.google.com/file/d/14LUI5ApWYJMh2JS5HbVir_KW6FnuAE-o/view?usp=drive_link",
+      "pdfUrl": "",
+      "file": "칼럼_11기방중_F16조.pdf"
+    },
+    {
+      "title": "KBL 클러치 슈터는 실재하는가?",
+      "year": "2026",
+      "generation": "11기",
+      "period": "방학 중 프로젝트",
+      "sport": "농구",
+      "driveUrl": "칼럼_11기방중_농구5조.pdf",
+      "driveId": "https://drive.google.com/file/d/1PHRrpPF260Hz4uSr5J6xFQZK7qI1Y9to/view?usp=drive_link",
+      "pdfUrl": "",
+      "file": "칼럼_11기방중_농구5조.pdf"
+    },
+    {
+      "title": "25/26 PL 미드필더 스카우팅 리포트",
+      "year": "2026",
+      "generation": "11기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "칼럼_11기방중_축구4조.pdf",
+      "driveId": "https://drive.google.com/file/d/1YaxS548zQoZ8Djbd1nrttczts8KrhG0Q/view?usp=drive_link",
+      "pdfUrl": "",
+      "file": "칼럼_11기방중_축구4조.pdf"
+    },
+    {
+      "title": "JFA는 지금도 세계로 나아간다. 일본 축구에 대한 테크니컬 리포트",
+      "year": "2026",
+      "generation": "11기",
+      "period": "방학 중 프로젝트",
+      "sport": "축구",
+      "driveUrl": "칼럼_11기방중_축구3조.pdf",
+      "driveId": "https://drive.google.com/file/d/1pQkMPP3do1vAQ2Wej6qKxeDAyA12q-Z8/view?usp=drive_link",
+      "pdfUrl": "",
+      "file": "칼럼_11기방중_축구3조.pdf"
+    },
+    {
+      "title": "데이터로 정량화한 KBO 불펜 운용 패턴",
+      "year": "2026",
+      "generation": "11기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "칼럼_11기방중_야구2조.pdf",
+      "driveId": "https://drive.google.com/file/d/1abd6Dr-Bj_xEgqSmMxTEAQWr-rEyMjRK/view?usp=drive_link",
+      "pdfUrl": "",
+      "file": "칼럼_11기방중_야구2조.pdf"
+    },
+    {
+      "title": "2025 MLB 불펜 투수의 평균 구속 변화와 구속 급락 위험 분석",
+      "year": "2026",
+      "generation": "11기",
+      "period": "방학 중 프로젝트",
+      "sport": "야구",
+      "driveUrl": "칼럼_11기방중_야구1조.pdf",
+      "driveId": "https://drive.google.com/file/d/1ODmfN3NVi1surGv9FkCTnE6V7Ps6uHSN/view?usp=drive_link",
+      "pdfUrl": "",
+      "file": "칼럼_11기방중_야구1조.pdf"
+    },
     {
       "title": "F1 피트스탑 예측 모델",
       "year": "2026",
