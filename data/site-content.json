@@ -2,7 +2,7 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-08-16T18:57:08.117Z"
+    "updatedAt": "2026-08-16T19:04:07.837Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
@@ -1157,7 +1157,7 @@
         "id": "seminar",
         "title": "정기 세미나",
         "description": "학기 중과 방학 중 2번씩 개최되는 정기 세미나에서는 조별 프로젝트를 공유하고 피드백을 주고받는 시간을 가집니다.",
-        "image": "images/activiy01.jpg",
+        "image": "images/cms/63c506d1ccc34179006e-1280.webp",
         "alt": "정기 세미나 사진",
         "visible": true,
         "order": 1
@@ -1166,7 +1166,7 @@
         "id": "lecture",
         "title": "통계 세미나와 연사 초청 강연",
         "description": "기초 통계학 강의와 연사 초청 강연 등의 활동을 통해 부원들의 통계분석 역량 향상을 도모합니다.",
-        "image": "images/activity02.png",
+        "image": "images/cms/aab6db726ee5213da6a6-1280.webp",
         "alt": "정기 활동 사진",
         "visible": true,
         "order": 2
