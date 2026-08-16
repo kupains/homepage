@@ -2,7 +2,7 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-08-16T19:21:40.917Z"
+    "updatedAt": "2026-08-16T19:25:15.068Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
@@ -1166,7 +1166,7 @@
         "id": "lecture",
         "title": "통계 세미나와 연사 초청 강연",
         "description": "기초 통계학 강의와 연사 초청 강연 등의 활동을 통해 부원들의 통계분석 역량 향상을 도모합니다.",
-        "image": "images/cms/aab6db726ee5213da6a6-1280.webp",
+        "image": "images/cms/1442d37d3720d5d61aa4-1280.webp",
         "alt": "정기 활동 사진",
         "visible": true,
         "order": 2
