@@ -2,7 +2,7 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-08-16T18:23:39.603Z"
+    "updatedAt": "2026-08-16T18:31:08.955Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
@@ -785,7 +785,7 @@
         "role": "부회장",
         "name": "이정훈",
         "major": "교육학과 22",
-        "image": "12기 부회장.jpg",
+        "image": "",
         "staff": false,
         "visible": true,
         "order": 3
@@ -795,7 +795,7 @@
         "role": "기획부장",
         "name": "나영우",
         "major": "보건환경융합과학부 25",
-        "image": "12기 기획부장.jpg",
+        "image": "",
         "staff": false,
         "visible": true,
         "order": 4
@@ -805,7 +805,7 @@
         "role": "홍보부장",
         "name": "성유현",
         "major": "국제학부 25",
-        "image": "12기 홍보부장.jpg",
+        "image": "",
         "staff": false,
         "visible": true,
         "order": 5
