@@ -2,7 +2,7 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-08-16T18:37:58.871Z"
+    "updatedAt": "2026-08-16T18:51:39.215Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
@@ -481,6 +481,72 @@
         "location": "TBD",
         "visible": true,
         "order": 38
+      },
+      {
+        "date": "2026-08-19",
+        "startTime": "",
+        "endDate": "2026-08-31",
+        "endTime": "",
+        "title": "12기 서류 모집 기간",
+        "tag": "리크루팅",
+        "location": "",
+        "visible": true,
+        "order": 39
+      },
+      {
+        "date": "2026-09-02",
+        "startTime": "13:00",
+        "endDate": "",
+        "endTime": "",
+        "title": "12기 1차 합격자 발표",
+        "tag": "리크루팅",
+        "location": "",
+        "visible": true,
+        "order": 40
+      },
+      {
+        "date": "2026-09-04",
+        "startTime": "",
+        "endDate": "2026-09-07",
+        "endTime": "",
+        "title": "12기 면접 기간",
+        "tag": "리크루팅",
+        "location": "",
+        "visible": true,
+        "order": 41
+      },
+      {
+        "date": "2026-09-09",
+        "startTime": "13:00",
+        "endDate": "",
+        "endTime": "",
+        "title": "12기 최종 합격자 발표",
+        "tag": "리크루팅",
+        "location": "",
+        "visible": true,
+        "order": 42
+      },
+      {
+        "date": "2026-09-11",
+        "startTime": "19:00",
+        "endDate": "",
+        "endTime": "",
+        "title": "12기 OT",
+        "tag": "비정기활동",
+        "location": "",
+        "visible": true,
+        "order": 43
+      },
+      {
+        "date": "2026-09-18",
+        "startTime": "",
+        "endDate": "",
+        "endTime": "",
+        "title": "12기 1차 정기활동",
+        "tag": "정기활동",
+        "location": "",
+        "visible": true,
+        "order": 44
       }
     ],
     "timeline": [
@@ -785,7 +851,7 @@
         "role": "부회장",
         "name": "이정훈",
         "major": "교육학과 22",
-        "image": "",
+        "image": "images/cms/1aab35615c5ede39f34c-1280.webp",
         "staff": false,
         "visible": true,
         "order": 3
@@ -795,7 +861,7 @@
         "role": "기획부장",
         "name": "나영우",
         "major": "보건환경융합과학부 25",
-        "image": "",
+        "image": "images/cms/95bd87646f8a9f07c50e-1280.webp",
         "staff": false,
         "visible": true,
         "order": 4
@@ -805,7 +871,7 @@
         "role": "홍보부장",
         "name": "성유현",
         "major": "국제학부 25",
-        "image": "",
+        "image": "images/cms/268a5bd0754a5ba630b7-1280.webp",
         "staff": false,
         "visible": true,
         "order": 5
@@ -1091,7 +1157,7 @@
         "id": "seminar",
         "title": "정기 세미나",
         "description": "학기 중과 방학 중 2번씩 개최되는 정기 세미나에서는 조별 프로젝트를 공유하고 피드백을 주고받는 시간을 가집니다.",
-        "image": "11기 2차 정기.jpg",
+        "image": "images/cms/63c506d1ccc34179006e-1280.webp",
         "alt": "정기 세미나 사진",
         "visible": true,
         "order": 1
@@ -1100,7 +1166,7 @@
         "id": "lecture",
         "title": "통계 세미나와 연사 초청 강연",
         "description": "기초 통계학 강의와 연사 초청 강연 등의 활동을 통해 부원들의 통계분석 역량 향상을 도모합니다.",
-        "image": "11기 연사초청.jpg",
+        "image": "images/cms/aab6db726ee5213da6a6-1280.webp",
         "alt": "정기 활동 사진",
         "visible": true,
         "order": 2
@@ -1389,7 +1455,7 @@
     "timeLabel": "시간:",
     "locationLabel": "장소:",
     "mapAlt": "면접장소 약도",
-    "warningMessage": "* OT는 3월 16일 월요일 오후 7시 상남정경관 101호에서 진행될 예정입니다.",
+    "warningMessage": "* OT는 9월 11일 금요일 오후 7시 (장소 추후 공지 예정)에서 진행될 예정입니다.",
     "noticeMessage1": "* 합격자는 OT 시작 전 채팅방에 초대되어 OT에 대한 안내가 진행될 예정입니다.",
     "noticeMessage2": "* 정당한 사유 없이 OT에 불참할 경우 합격이 취소될 수 있으니 유의바랍니다.",
     "round1Label": "1차 결과",
