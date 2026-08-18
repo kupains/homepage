@@ -2,7 +2,7 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-08-16T19:44:19.366Z"
+    "updatedAt": "2026-08-18T12:43:13.560Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
@@ -642,7 +642,7 @@
     ],
     "archiveLinks": [
       {
-        "label": "173+ PROJECTS",
+        "label": "181+ PROJECTS",
         "action": "EXPLORE →",
         "href": "activity",
         "visible": true,
@@ -812,7 +812,7 @@
       "eyebrow": "President Message",
       "title": "회장 인사말",
       "paragraphs": [
-        "안녕하십니까, 고려대학교 스포츠 통계분석 동아리 PAINS의 11기 회장 전영재입니다. PAINS는 스포츠를 사랑하는 사람들이 모여, 익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석해 보고자 만들어진 동아리입니다. 단순히 승패와 득실을 넘어 기록 속에 숨은 맥락과 의미를 발견하고 데이터를 통해 스포츠를 더 깊이 이해하는 경험을 함께 나누고 있습니다.",
+        "안녕하십니까, 고려대학교 스포츠 통계분석 동아리 PAINS의 12기 회장 손영현입니다. PAINS는 스포츠를 사랑하는 사람들이 모여, 익숙한 경기와 장면을 숫자와 통계라는 또 다른 언어로 해석해 보고자 만들어진 동아리입니다. 단순히 승패와 득실을 넘어 기록 속에 숨은 맥락과 의미를 발견하고 데이터를 통해 스포츠를 더 깊이 이해하는 경험을 함께 나누고 있습니다.",
         "각기 다른 배경을 가진 부원들이 모여 뜨거운 열정으로 스포츠에 대한 궁금증을 해소하는 경험을 함께 하는 동시에 통계뿐만이 아닌 AI와 데이터 과학 분야를 공부하며 부원 모두가 함께 성장하는 환경을 갖추고 있습니다. 매순간 달라지고 발전하는 PAINS의 활동에 많은 관심을 가져주시고 함께 해주셔서 감사합니다."
       ],
       "desktopImage": "images/activity_edited_1.png",
@@ -823,7 +823,7 @@
     }
   },
   "organization": {
-    "generation": "11기",
+    "generation": "12기",
     "titleTemplate": "{generation} 운영진 조직도",
     "members": [
       {
@@ -831,7 +831,7 @@
         "role": "회장",
         "name": "손영현",
         "major": "통계학과 23",
-        "image": "",
+        "image": "images/cms/b81dc980b20bbc3c9c42-1280.webp",
         "staff": false,
         "visible": true,
         "order": 1
@@ -841,7 +841,7 @@
         "role": "총무",
         "name": "이준서",
         "major": "컴퓨터학과 25",
-        "image": "",
+        "image": "images/cms/7d8d9c7766b02ccf03b0-1280.webp",
         "staff": true,
         "visible": true,
         "order": 2
@@ -881,7 +881,7 @@
         "role": "교육부장",
         "name": "이지섭",
         "major": "통계학과 24",
-        "image": "",
+        "image": "images/cms/082e2673309f6d6f7fe9-1280.webp",
         "staff": false,
         "visible": true,
         "order": 6
@@ -921,7 +921,7 @@
         "leader": "최나훈",
         "description": "주기적으로 서울 투어 및 맛집 탐방하실 열정적인 부원들을 모집합니다!!",
         "image": "images/카츠손으로먹기연구회.png",
-        "visible": true,
+        "visible": false,
         "order": 4
       },
       {
@@ -985,7 +985,7 @@
         "leader": "이지섭",
         "description": "박민규 교수님 회귀분석 수업 들으시는 분들 같이 공부하고 의견나누면 좋겠습니다!!!",
         "image": "images/회귀분석 스터디 소모임.png",
-        "visible": true,
+        "visible": false,
         "order": 12
       },
       {
@@ -1017,7 +1017,7 @@
         "leader": "전영재",
         "description": "Champains supernova",
         "image": "images/Champains.jpg",
-        "visible": true,
+        "visible": false,
         "order": 16
       }
     ]
@@ -1075,7 +1075,7 @@
     "overviewTitle": "📢 모집 개요",
     "overviewText": "스포츠 통계분석 동아리 PAINS가 2026년을 함께할 12기 신입 부원을 모집합니다!\nPAINS는 2021년에 스포츠와 통계분석에 관심이 많은 사람들이 모여 만든 동아리입니다.\nPAINS는 2024년까지 통계학과 동아리로 활동했으며, 2026년부터는 애기능동아리연합회 소속 동아리로 소속되어 활동하고 있습니다. 스포츠를 사랑하고 데이터 분석에 열정이 있다면, 전공에 관계없이 누구나 환영합니다.",
     "introTitle": "🎯 동아리 소개",
-    "introDescription": "현재 PAINS는 25명의 부원들이 하나의 관심사를 깊이 나누며 활동하고 있습니다.\n성별, 학과, 학번 그 무엇도 상관없습니다. 스포츠에 대한 관심과 열정만 있으면 충분합니다!",
+    "introDescription": "현재 PAINS는 50명의 부원들이 하나의 관심사를 깊이 나누며 활동하고 있습니다.\n성별, 학과, 학번 그 무엇도 상관없습니다. 스포츠에 대한 관심과 열정만 있으면 충분합니다!",
     "genderChartTitle": "부원 성별 분포",
     "majorChartTitle": "부원 전공 분포",
     "admissionYearChartTitle": "학번 분포",
@@ -1282,14 +1282,14 @@
       "gender": [
         {
           "label": "여자",
-          "value": 4,
+          "value": 11,
           "color": "#FF6B81",
           "visible": true,
           "order": 1
         },
         {
           "label": "남자",
-          "value": 21,
+          "value": 39,
           "color": "#4D96FF",
           "visible": true,
           "order": 2
@@ -1298,79 +1298,79 @@
       "major": [
         {
           "label": "통계학과",
-          "value": 5,
+          "value": 9,
           "color": "#FF9F43",
           "visible": true,
           "order": 1
         },
         {
-          "label": "국제학부",
-          "value": 4,
+          "label": "데이터과학과",
+          "value": 5,
           "color": "#FF6B6B",
           "visible": true,
           "order": 2
         },
         {
-          "label": "경제학과",
-          "value": 2,
+          "label": "국제학부",
+          "value": 4,
           "color": "#FDCB6E",
           "visible": true,
           "order": 3
         },
         {
-          "label": "행정학과",
-          "value": 2,
+          "label": "사회학과",
+          "value": 3,
           "color": "",
           "visible": true,
           "order": 4
         },
         {
-          "label": "화학과",
-          "value": 2,
+          "label": "컴퓨터학과",
+          "value": 3,
           "color": "#20BF6B",
           "visible": true,
           "order": 5
         },
         {
-          "label": "기타",
-          "value": 9,
+          "label": "화학과",
+          "value": 3,
           "color": "#0FB9B1",
           "visible": true,
           "order": 6
         },
         {
-          "label": "언어학과",
+          "label": "경제학과",
           "value": 2,
           "color": "#2D98DA",
-          "visible": false,
+          "visible": true,
           "order": 7
+        },
+        {
+          "label": "언어학과",
+          "value": 2,
+          "color": "#3867D6",
+          "visible": true,
+          "order": 8
         },
         {
           "label": "전기전자공학부",
           "value": 2,
-          "color": "#3867D6",
-          "visible": false,
-          "order": 8
+          "color": "#8854D0",
+          "visible": true,
+          "order": 9
         },
         {
           "label": "행정학과",
           "value": 2,
-          "color": "#8854D0",
-          "visible": false,
-          "order": 9
-        },
-        {
-          "label": "경제학과",
-          "value": 2,
           "color": "#4B6584",
-          "visible": false,
+          "visible": true,
           "order": 10
         },
         {
           "label": "기타",
           "value": 15,
           "color": "#9980FA",
-          "visible": false,
+          "visible": true,
           "order": 11
         }
       ],
@@ -1379,40 +1379,40 @@
           "label": "20",
           "value": 1,
           "color": "#ab3333",
-          "visible": false,
+          "visible": true,
           "order": 1
         },
         {
           "label": "21",
           "value": 3,
           "color": "#ab3333",
-          "visible": false,
+          "visible": true,
           "order": 2
         },
         {
           "label": "22",
-          "value": 4,
+          "value": 5,
           "color": "#ab3333",
           "visible": true,
           "order": 3
         },
         {
           "label": "23",
-          "value": 1,
+          "value": 5,
           "color": "#ab3333",
           "visible": true,
           "order": 4
         },
         {
           "label": "24",
-          "value": 3,
+          "value": 13,
           "color": "#ab3333",
           "visible": true,
           "order": 5
         },
         {
           "label": "25",
-          "value": 11,
+          "value": 17,
           "color": "#ab3333",
           "visible": true,
           "order": 6
