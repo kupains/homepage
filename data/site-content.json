@@ -2,7 +2,7 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-08-18T12:43:13.560Z"
+    "updatedAt": "2026-08-24T11:33:43.007Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
@@ -841,7 +841,7 @@
         "role": "총무",
         "name": "이준서",
         "major": "컴퓨터학과 25",
-        "image": "images/cms/7d8d9c7766b02ccf03b0-1280.webp",
+        "image": "images/cms/20ba496f339a2893f799-1280.webp",
         "staff": true,
         "visible": true,
         "order": 2
@@ -1320,7 +1320,7 @@
         {
           "label": "사회학과",
           "value": 3,
-          "color": "",
+          "color": "#ab3333",
           "visible": true,
           "order": 4
         },
