@@ -2,11 +2,11 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-09-01T15:26:55.999Z"
+    "updatedAt": "2026-09-01T15:57:36.677Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
-    "applyEnabled": "TRUE",
+    "applyEnabled": "FALSE",
     "applyStartAt": "2026-02-26 0:00",
     "applyEndAt": "2026-03-07 23:59",
     "applyClosedMessage": "지원 기간이 아닙니다.",
@@ -1064,7 +1064,7 @@
     "heroDescription": "고려대학교 교내 유일 스포츠 통계분석 동아리 PAINS가 12기 신입부원을 모집합니다.",
     "bannerText": "🔥 PAINS 12기 신입부원 모집 마감 임박!",
     "bannerButtonLabel": "지금 지원하기 >",
-    "bannerVisible": true,
+    "bannerVisible": false,
     "navOverviewLabel": "모집 개요",
     "navIntroLabel": "동아리 소개",
     "navRecruitLabel": "모집 일정",
@@ -1107,7 +1107,7 @@
     "formUrl": "https://forms.gle/wDDDSAvkAo3RmHHBA",
     "formLabel": "지원서 작성하러 가기",
     "applyPeriod": "지원 기간: 2026년 08월 19일 - 2026년 08월 31일",
-    "applyVisible": true,
+    "applyVisible": false,
     "sidebarTitle": "12기 신입부원 모집",
     "admissionCountLabel": "인원(명)",
     "timeline": [
