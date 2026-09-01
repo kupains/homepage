@@ -2,7 +2,7 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-09-01T15:57:36.677Z"
+    "updatedAt": "2026-09-01T16:01:47.430Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
@@ -23,7 +23,7 @@
     "result1StartAt": "",
     "result1EndAt": "",
     "result1ClosedMessage": "1차 결과 조회 기간이 아닙니다.",
-    "result2Enabled": "TRUE",
+    "result2Enabled": "FALSE",
     "result2StartAt": "",
     "result2EndAt": "",
     "result2ClosedMessage": "2차 결과 조회 기간이 아닙니다."
