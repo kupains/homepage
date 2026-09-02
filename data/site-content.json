@@ -2,7 +2,7 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-09-01T16:01:47.430Z"
+    "updatedAt": "2026-09-02T16:07:30.647Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
@@ -3474,72 +3474,6 @@
   ],
   "notices": [
     {
-      "title": "Sample Notice",
-      "date": "2026-03-16",
-      "generation": "11기",
-      "department": "운영위원회",
-      "driveUrl": "https://drive.google.com/file/d/FILE_ID/view?usp=sharing",
-      "driveId": "",
-      "pdfUrl": "",
-      "file": "sample-notice.pdf",
-      "important": false
-    },
-    {
-      "title": "고려대학교 스포츠 통계 동아리 PAINS 출석 세칙 - 20250308 시행",
-      "date": "2025-03-08",
-      "generation": "9기",
-      "department": "운영위원회",
-      "driveUrl": "https://drive.google.com/file/d/1qdRh_rUcJApOHvBox8l1H0-yW6E76JVh/view?usp=sharing",
-      "driveId": "1qdRh_rUcJApOHvBox8l1H0-yW6E76JVh",
-      "pdfUrl": "",
-      "file": "AttendanceBylaws_20250308.pdf",
-      "important": false
-    },
-    {
-      "title": "11기 오리엔테이션 자료",
-      "date": "2026-03-16",
-      "generation": "11기",
-      "department": "운영위원회",
-      "driveUrl": "https://drive.google.com/file/d/180xgN-Z29c5KdFgZZsz-RUiWBHhYoRYg/view?usp=sharing",
-      "driveId": "180xgN-Z29c5KdFgZZsz-RUiWBHhYoRYg",
-      "pdfUrl": "",
-      "file": "11thOT_20260316.pdf",
-      "important": false
-    },
-    {
-      "title": "11기 1차 정기활동 통계 강의 자료",
-      "date": "2026-03-19",
-      "generation": "11기",
-      "department": "교육부",
-      "driveUrl": "https://drive.google.com/file/d/1EIjGbvRJsQp39nkl5oA3MUc4M7BbWl2x/view?usp=sharing",
-      "driveId": "1EIjGbvRJsQp39nkl5oA3MUc4M7BbWl2x",
-      "pdfUrl": "",
-      "file": "11th1st_20260319.pdf",
-      "important": false
-    },
-    {
-      "title": "11기 2차 정기활동 연사 소개 자료",
-      "date": "2026-03-27",
-      "generation": "11기",
-      "department": "운영위원회",
-      "driveUrl": "https://drive.google.com/file/d/1YpXJM95NACyYM6B_KJnIG21i3mOPi0it/view?usp=sharing",
-      "driveId": "1YpXJM95NACyYM6B_KJnIG21i3mOPi0it",
-      "pdfUrl": "",
-      "file": "11th2ndMain_20260327.pdf",
-      "important": false
-    },
-    {
-      "title": "11기 2차 정기활동 연사 발표 자료 - 백소윤 연사",
-      "date": "2026-03-27",
-      "generation": "11기",
-      "department": "운영위원회",
-      "driveUrl": "https://drive.google.com/file/d/1OZY3qW8lb6fR1z-AcaR5Qnfz_twPyr41/view?usp=sharing",
-      "driveId": "1OZY3qW8lb6fR1z-AcaR5Qnfz_twPyr41",
-      "pdfUrl": "",
-      "file": "11th2ndBaekSoYun_20260327.pdf",
-      "important": false
-    },
-    {
       "title": "PAINS 2025학년도 연보",
       "date": "2026-03-17",
       "generation": "11기",
@@ -3548,6 +3482,17 @@
       "driveId": "143kXMZz0n5RkiZQzuxxiP6zdkGXmFzJK",
       "pdfUrl": "",
       "file": "AnnualReport_2025.pdf",
+      "important": false
+    },
+    {
+      "title": "고려대학교 스포츠 통계분석 동아리 PAINS 회칙 전부개정안",
+      "date": "2026-08-07",
+      "generation": "12기",
+      "department": "운영위원회",
+      "driveUrl": "https://drive.google.com/file/d/11PkkGwJug3Btogxibwnkm7HoURW-LWuf/view?usp=sharing",
+      "driveId": "11PkkGwJug3Btogxibwnkm7HoURW-LWuf",
+      "pdfUrl": "",
+      "file": "",
       "important": false
     }
   ],
