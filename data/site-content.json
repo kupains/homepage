@@ -2,7 +2,7 @@
   "meta": {
     "version": "2026-05-27-01",
     "source": "google-sheet:1-kCJGJfKqNTW1D09GdNoL6eyZXUDJO_Ef_EBY0grJNo",
-    "updatedAt": "2026-09-11T07:07:41.899Z"
+    "updatedAt": "2026-09-16T05:48:22.665Z"
   },
   "settings": {
     "projectArchiveApiUrl": "",
@@ -533,20 +533,108 @@
         "endTime": "",
         "title": "12기 OT",
         "tag": "비정기활동",
-        "location": "",
+        "location": "하나과학관 B132호",
         "visible": true,
         "order": 43
       },
       {
         "date": "2026-09-18",
+        "startTime": "19:00",
+        "endDate": "2026-09-18",
+        "endTime": "21:00",
+        "title": "12기 1차 정기활동",
+        "tag": "정기활동",
+        "location": "하나과학관 B132호",
+        "visible": true,
+        "order": 44
+      },
+      {
+        "date": "2026-09-21",
+        "startTime": "18:00",
+        "endDate": "",
+        "endTime": "",
+        "title": "아시안게임 단체 관람",
+        "tag": "비정기활동",
+        "location": "",
+        "visible": true,
+        "order": 45
+      },
+      {
+        "date": "2026-09-28",
+        "startTime": "19:00",
+        "endDate": "2026-09-28",
+        "endTime": "21:00",
+        "title": "12기 2차 정기활동",
+        "tag": "정기활동",
+        "location": "하나과학관 B132호",
+        "visible": true,
+        "order": 46
+      },
+      {
+        "date": "2026-10-31",
         "startTime": "",
         "endDate": "",
         "endTime": "",
-        "title": "12기 1차 정기활동",
+        "title": "제 6회 PAINS 체육대회",
         "tag": "정기활동",
         "location": "",
         "visible": true,
-        "order": 44
+        "order": 47
+      },
+      {
+        "date": "2026-11-06",
+        "startTime": "",
+        "endDate": "2026-11-07",
+        "endTime": "",
+        "title": "PAINS 12기 MT",
+        "tag": "비정기활동",
+        "location": "",
+        "visible": true,
+        "order": 48
+      },
+      {
+        "date": "2026-11-19",
+        "startTime": "19:00",
+        "endDate": "2026-11-19",
+        "endTime": "21:00",
+        "title": "12기 학기 중 세미나 1",
+        "tag": "정기활동",
+        "location": "",
+        "visible": true,
+        "order": 49
+      },
+      {
+        "date": "2026-11-20",
+        "startTime": "19:00",
+        "endDate": "2026-11-20",
+        "endTime": "21:00",
+        "title": "12기 학기 중 세미나 2",
+        "tag": "정기활동",
+        "location": "",
+        "visible": true,
+        "order": 50
+      },
+      {
+        "date": "2027-02-18",
+        "startTime": "19:00",
+        "endDate": "2027-02-18",
+        "endTime": "21:00",
+        "title": "12기 방학 중 세미나 1",
+        "tag": "정기활동",
+        "location": "",
+        "visible": true,
+        "order": 51
+      },
+      {
+        "date": "2027-02-19",
+        "startTime": "19:00",
+        "endDate": "2027-02-19",
+        "endTime": "21:00",
+        "title": "12기 방학 중 세미나 2",
+        "tag": "정기활동",
+        "location": "",
+        "visible": true,
+        "order": 52
       }
     ],
     "timeline": [
@@ -1019,6 +1107,14 @@
         "image": "images/Champains.jpg",
         "visible": false,
         "order": 16
+      },
+      {
+        "name": "프리미어리그 소모임",
+        "leader": "안재름",
+        "description": "프리미어리그를 보시거나 관심이 있으신 분들 모두 환영합니다!",
+        "image": "images/cms/7c92f059b6e8c9055111-1280.webp",
+        "visible": true,
+        "order": 17
       }
     ]
   },
